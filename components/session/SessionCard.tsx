@@ -13,6 +13,7 @@ interface SessionCardProps {
     themesViewed: boolean
   }
   index?: number
+  compact?: boolean
 }
 
 const sessionColors = [
@@ -23,7 +24,7 @@ const sessionColors = [
   { accent: "bg-gray-100", text: "text-gray-700", button: "bg-black hover:bg-gray-800" }
 ]
 
-export function SessionCard({ session, progress, index = 0 }: SessionCardProps) {
+export function SessionCard({ session, progress, index = 0, compact = false }: SessionCardProps) {
   const completionPercentage = progress
     ? Math.round(
       ((Number(progress.pdfViewed) +
@@ -36,6 +37,42 @@ export function SessionCard({ session, progress, index = 0 }: SessionCardProps) 
     : 0
 
   const colors = sessionColors[index % sessionColors.length]
+
+  // Compact mode: simplified card for accordion view
+  if (compact) {
+    return (
+      <Link href={`/sesiones/${session.id}`} className="block">
+        <div className="bg-gray-50 hover:bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col group border border-gray-200 h-full">
+          <div className="p-4 flex flex-col flex-grow">
+            <div className="flex items-center gap-2 mb-2">
+              {session.moduleNumber && (
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+                  Módulo {session.moduleNumber}
+                </span>
+              )}
+              {progress?.completed && (
+                <span className="text-xs text-green-700 font-medium bg-green-100 px-2 py-0.5 rounded-full ml-auto">
+                  ✓
+                </span>
+              )}
+            </div>
+            <h3 className="text-sm font-bold mb-2 text-black group-hover:text-gray-700 transition-colors line-clamp-2">
+              {session.title}
+            </h3>
+            <div className="mt-auto">
+              <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${completionPercentage === 100 ? 'bg-green-500' : 'bg-black'}`}
+                  style={{ width: `${completionPercentage}%` }}
+                />
+              </div>
+              <p className="text-xs text-gray-400 mt-1.5">{completionPercentage}% completado</p>
+            </div>
+          </div>
+        </div>
+      </Link>
+    )
+  }
 
   return (
     <Link href={`/sesiones/${session.id}`} className="block">

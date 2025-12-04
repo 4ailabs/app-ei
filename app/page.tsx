@@ -1,8 +1,8 @@
 import { auth } from "@/lib/auth-server"
-import { SessionCard } from "@/components/session/SessionCard"
+import { SessionsAccordion } from "@/components/session/SessionsAccordion"
 import { sessions } from "@/data/sessions"
 import { prisma } from "@/lib/prisma"
-import { Zap, GraduationCap, Clock, Award, Bell, Play, Sparkles, Lock, ArrowRight } from "lucide-react"
+import { GraduationCap, Clock, Award, Bell, Play, Sparkles, Lock, ArrowRight } from "lucide-react"
 import Link from "next/link"
 
 type ProgressData = {
@@ -216,17 +216,7 @@ export default async function HomePage() {
         </div>
 
         {isLoggedIn ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {sessions.map((sessionData, index) => (
-              <div key={sessionData.id} className="animate-slide-in-up" style={{ animationDelay: `${100 + index * 50}ms`, opacity: 0 }}>
-                <SessionCard
-                  session={sessionData}
-                  progress={progressMap[sessionData.id]}
-                  index={index}
-                />
-              </div>
-            ))}
-          </div>
+          <SessionsAccordion sessions={sessions} progressMap={progressMap} />
         ) : (
           <div className="text-center py-16 px-4">
             <div className="max-w-md mx-auto">
