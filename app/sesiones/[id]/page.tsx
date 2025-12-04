@@ -1,18 +1,8 @@
 import { auth } from "@/lib/auth-server"
 import { redirect, notFound } from "next/navigation"
 import { sessions } from "@/data/sessions"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PDFSection } from "@/components/session/PDFSection"
-import { VideoSection } from "@/components/session/VideoSection"
-import { AudioSection } from "@/components/session/AudioSection"
-import { ThemeExplorer } from "@/components/session/ThemeExplorer"
-import { ProtocolSection } from "@/components/session/ProtocolSection"
-import { AppSection } from "@/components/session/AppSection"
+import { SessionContentAccordion } from "@/components/session/SessionContentAccordion"
 import {
-  FileText,
-  Video,
-  Headphones,
-  BookOpen,
   ArrowLeft,
   Lightbulb,
   Settings,
@@ -20,6 +10,10 @@ import {
   Cpu,
   Leaf,
   Home,
+  FileText,
+  Video,
+  Headphones,
+  BookOpen,
   ClipboardList,
   Smartphone
 } from "lucide-react"
@@ -31,13 +25,6 @@ interface SessionPageProps {
 }
 
 const sessionIcons = [Lightbulb, Settings, Rocket, Cpu, Leaf]
-const sessionColors = [
-  { gradient: "#000000" },
-  { gradient: "#000000" },
-  { gradient: "#000000" },
-  { gradient: "#000000" },
-  { gradient: "#000000" }
-]
 
 export default async function SessionPage({ params }: SessionPageProps) {
   const session = await auth()
@@ -56,7 +43,16 @@ export default async function SessionPage({ params }: SessionPageProps) {
 
   const index = sessionId - 1
   const IconComponent = sessionIcons[index % sessionIcons.length]
-  const colors = sessionColors[index % sessionColors.length]
+
+  // Calculate content counts
+  const contentCounts = {
+    pdf: sessionData.pdfUrl ? 1 : 0,
+    videos: sessionData.videos.length,
+    audios: sessionData.audios.length,
+    themes: sessionData.themes.length,
+    protocols: sessionData.protocols?.length || 0,
+    apps: sessionData.apps?.length || 0
+  }
 
   return (
     <div className="min-h-screen bg-[#F7F8FA]">
@@ -87,7 +83,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
                 <div className="absolute bottom-8 left-8 right-8">
                   <div className="flex gap-2 mb-4">
                     <span className="text-sm font-bold uppercase tracking-wider px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white inline-block">
-                      Día {sessionData.day}
+                      Bloque {sessionData.day}
                     </span>
                     {sessionData.moduleNumber && (
                       <span className="text-sm font-bold uppercase tracking-wider px-4 py-2 rounded-full bg-black/40 backdrop-blur-sm text-white inline-block">
@@ -113,7 +109,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black text-white">
-                        Día {sessionData.day}
+                        Bloque {sessionData.day}
                       </span>
                       {sessionData.moduleNumber && (
                         <span className="text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-gray-200 text-gray-700">
@@ -129,81 +125,55 @@ export default async function SessionPage({ params }: SessionPageProps) {
                 </div>
               </div>
             )}
+
+            {/* Quick Stats Bar */}
+            <div className="px-8 py-4 bg-gray-50 border-t border-gray-100">
+              <div className="flex flex-wrap gap-4 text-sm">
+                {contentCounts.pdf > 0 && (
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <FileText className="h-4 w-4" />
+                    <span>1 PDF</span>
+                  </div>
+                )}
+                {contentCounts.videos > 0 && (
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Video className="h-4 w-4" />
+                    <span>{contentCounts.videos} videos</span>
+                  </div>
+                )}
+                {contentCounts.audios > 0 && (
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Headphones className="h-4 w-4" />
+                    <span>{contentCounts.audios} audios</span>
+                  </div>
+                )}
+                {contentCounts.themes > 0 && (
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <BookOpen className="h-4 w-4" />
+                    <span>{contentCounts.themes} temas</span>
+                  </div>
+                )}
+                {contentCounts.protocols > 0 && (
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <ClipboardList className="h-4 w-4" />
+                    <span>{contentCounts.protocols} protocolos</span>
+                  </div>
+                )}
+                {contentCounts.apps > 0 && (
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Smartphone className="h-4 w-4" />
+                    <span>{contentCounts.apps} apps</span>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
-          {/* Tabs Section */}
-          <Tabs defaultValue="pdf" className="w-full animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-            <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 mb-8 bg-white p-2 rounded-2xl shadow-sm border border-gray-200 h-auto gap-2">
-              <TabsTrigger
-                value="pdf"
-                className="flex items-center justify-center gap-2 rounded-xl py-3 px-2 text-sm font-medium data-[state=active]:bg-black data-[state=active]:text-white transition-all"
-              >
-                <FileText className="h-4 w-4" />
-                <span className="hidden sm:inline font-medium">PDF</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="videos"
-                className="flex items-center justify-center gap-2 rounded-xl py-3 px-2 text-sm font-medium data-[state=active]:bg-black data-[state=active]:text-white transition-all"
-              >
-                <Video className="h-4 w-4" />
-                <span className="hidden sm:inline font-medium">Videos</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="audios"
-                className="flex items-center justify-center gap-2 rounded-xl py-3 px-2 text-sm font-medium data-[state=active]:bg-black data-[state=active]:text-white transition-all"
-              >
-                <Headphones className="h-4 w-4" />
-                <span className="hidden sm:inline font-medium">Audios</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="temas"
-                className="flex items-center justify-center gap-2 rounded-xl py-3 px-2 text-sm font-medium data-[state=active]:bg-black data-[state=active]:text-white transition-all"
-              >
-                <BookOpen className="h-4 w-4" />
-                <span className="hidden sm:inline font-medium">Temas</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="protocolos"
-                className="flex items-center justify-center gap-2 rounded-xl py-3 px-2 text-sm font-medium data-[state=active]:bg-black data-[state=active]:text-white transition-all"
-              >
-                <ClipboardList className="h-4 w-4" />
-                <span className="hidden sm:inline font-medium">Protocolos</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="apps"
-                className="flex items-center justify-center gap-2 rounded-xl py-3 px-2 text-sm font-medium data-[state=active]:bg-black data-[state=active]:text-white transition-all"
-              >
-                <Smartphone className="h-4 w-4" />
-                <span className="hidden sm:inline font-medium">Apps</span>
-              </TabsTrigger>
-            </TabsList>
-
-            <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-6 md:p-8">
-              <TabsContent value="pdf" className="mt-0 animate-fade-in">
-                <PDFSection pdfUrl={sessionData.pdfUrl} sessionId={sessionData.id} />
-              </TabsContent>
-
-              <TabsContent value="videos" className="mt-0 animate-fade-in">
-                <VideoSection videos={sessionData.videos} />
-              </TabsContent>
-
-              <TabsContent value="audios" className="mt-0 animate-fade-in">
-                <AudioSection audios={sessionData.audios} />
-              </TabsContent>
-
-              <TabsContent value="temas" className="mt-0 animate-fade-in">
-                <ThemeExplorer themes={sessionData.themes} />
-              </TabsContent>
-
-              <TabsContent value="protocolos" className="mt-0 animate-fade-in">
-                <ProtocolSection protocols={sessionData.protocols || []} />
-              </TabsContent>
-
-              <TabsContent value="apps" className="mt-0 animate-fade-in">
-                <AppSection apps={sessionData.apps || []} />
-              </TabsContent>
-            </div>
-          </Tabs>
+          {/* Unified Content with Collapsible Sections */}
+          <SessionContentAccordion
+            sessionData={sessionData}
+            contentCounts={contentCounts}
+          />
         </div>
       </div>
     </div>
