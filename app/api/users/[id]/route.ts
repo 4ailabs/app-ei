@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs"
 // GET - Obtener un usuario específico
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -15,8 +15,10 @@ export async function GET(
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
     }
 
+    const { id } = await params
+
     const user = await prisma.user.findUnique({
-      where: { id: params.id },
+      where: { id },
       select: {
         id: true,
         email: true,
@@ -32,7 +34,7 @@ export async function GET(
 
     // Obtener progreso del usuario
     const progress = await prisma.progress.findMany({
-      where: { userId: params.id },
+      where: { userId: id },
       select: {
         sessionId: true,
         completed: true,
@@ -69,7 +71,7 @@ export async function GET(
 // PUT - Actualizar usuario
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -78,6 +80,7 @@ export async function PUT(
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
     }
 
+    const { id } = await params
     const body = await request.json()
     const { email, password, name, approved } = body
 
@@ -91,7 +94,7 @@ export async function PUT(
     if (approved !== undefined) updateData.approved = approved
 
     const user = await prisma.user.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
       select: {
         id: true,
@@ -123,7 +126,7 @@ export async function PUT(
 // DELETE - Eliminar usuario
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -132,8 +135,10 @@ export async function DELETE(
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
     }
 
+    const { id } = await params
+
     // No permitir eliminar tu propio usuario
-    if (session.user.id === params.id) {
+    if (session.user.id === id) {
       return NextResponse.json(
         { error: "No puedes eliminar tu propio usuario" },
         { status: 400 }
@@ -141,7 +146,7 @@ export async function DELETE(
     }
 
     await prisma.user.delete({
-      where: { id: params.id },
+      where: { id },
     })
 
     return NextResponse.json({ message: "Usuario eliminado exitosamente" })
