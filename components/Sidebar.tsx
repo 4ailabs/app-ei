@@ -145,9 +145,12 @@ export function Sidebar() {
                 )}
                 <Button
                   variant="ghost"
-                  onClick={() => {
+                  onClick={async () => {
                     setIsMobileMenuOpen(false)
-                    signOut({ callbackUrl: "/login" })
+                    await signOut({ 
+                      callbackUrl: window.location.origin + "/login",
+                      redirect: true 
+                    })
                   }}
                   className="w-full flex items-center space-x-4 px-6 py-3 rounded-full text-gray-500 hover:bg-gray-200 hover:text-black transition-colors justify-start"
                 >
@@ -201,7 +204,12 @@ export function Sidebar() {
               )}
               <Button
                 variant="ghost"
-                onClick={() => signOut({ callbackUrl: "/login" })}
+                onClick={async () => {
+                  await signOut({ 
+                    callbackUrl: window.location.origin + "/login",
+                    redirect: true 
+                  })
+                }}
                 className="w-full flex items-center space-x-4 px-6 py-3 rounded-full text-gray-500 hover:bg-gray-200 hover:text-black transition-colors justify-start"
               >
                 <LogOut className="w-6 h-6" />

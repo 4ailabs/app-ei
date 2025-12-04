@@ -48,7 +48,12 @@ export function Navbar() {
                 </div>
                 <Button
                   variant="ghost"
-                  onClick={() => signOut({ callbackUrl: "/login" })}
+                  onClick={async () => {
+                    await signOut({ 
+                      callbackUrl: window.location.origin + "/login",
+                      redirect: true 
+                    })
+                  }}
                   className="flex items-center gap-2 text-gray-500 hover:bg-gray-100 hover:text-black transition-colors rounded-full"
                 >
                   <LogOut className="h-4 w-4" />
