@@ -53,13 +53,18 @@ export default function RegisterPage() {
         throw new Error(data.error || "Error al registrar")
       }
 
-      setSuccess(true)
-      // Limpiar formulario
+      // Si llegamos aquí, el registro fue exitoso
+      // Limpiar formulario primero
       setName("")
       setEmail("")
       setPassword("")
       setConfirmPassword("")
+      setError("")
+      
+      // Establecer éxito después de limpiar
+      setSuccess(true)
     } catch (err: any) {
+      setSuccess(false)
       setError(err.message || "Error al registrar. Por favor, intenta de nuevo.")
     } finally {
       setLoading(false)
@@ -87,24 +92,27 @@ export default function RegisterPage() {
 
         <CardContent>
           {success ? (
-            <div className="space-y-4 text-center py-8">
+            <div className="space-y-6 text-center py-8 transition-all duration-500 ease-in-out">
               <div className="flex justify-center">
-                <div className="p-4 bg-green-100 rounded-full">
-                  <CheckCircle className="h-12 w-12 text-green-600" />
+                <div className="p-6 bg-green-100 rounded-full transition-transform duration-500 scale-100">
+                  <CheckCircle className="h-16 w-16 text-green-600" />
                 </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-black mb-2">
+              <div className="space-y-3">
+                <h3 className="text-2xl font-bold text-green-700 mb-2">
                   ¡Registro Exitoso!
                 </h3>
-                <p className="text-gray-600 mb-4">
-                  Tu cuenta ha sido creada y está pendiente de aprobación por un administrador.
-                </p>
-                <p className="text-sm text-gray-500 mb-6">
-                  Recibirás un email cuando tu cuenta sea aprobada.
-                </p>
+                <div className="p-4 bg-green-50 border-2 border-green-200 rounded-lg shadow-sm">
+                  <p className="text-gray-700 font-medium mb-2">
+                    Tu cuenta ha sido creada exitosamente
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Tu cuenta está pendiente de aprobación por un administrador. 
+                    Recibirás un email cuando tu cuenta sea aprobada.
+                  </p>
+                </div>
                 <Link href="/login">
-                  <Button className="w-full bg-black text-white hover:bg-gray-800">
+                  <Button className="w-full bg-black text-white hover:bg-gray-800 mt-4">
                     Ir a Iniciar Sesión
                   </Button>
                 </Link>
@@ -113,7 +121,7 @@ export default function RegisterPage() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2 transition-all duration-300">
                   <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-red-700">{error}</p>
                 </div>

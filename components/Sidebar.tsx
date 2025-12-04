@@ -132,39 +132,39 @@ export function Sidebar() {
               </div>
             </div>
 
-            <div className="mt-12 space-y-4">
-              <h3 className="px-6 text-sm font-semibold text-gray-400 uppercase tracking-wider">USUARIO</h3>
-              <div className="space-y-2">
-                {session && (
+            {session && (
+              <div className="mt-12 space-y-4">
+                <h3 className="px-6 text-sm font-semibold text-gray-400 uppercase tracking-wider">USUARIO</h3>
+                <div className="space-y-2">
                   <div className="flex items-center space-x-4 px-6 py-3 text-gray-500">
                     <div className="p-1 bg-black rounded-full">
                       <User className="h-4 w-4 text-white" />
                     </div>
                     <span className="text-sm">{session.user?.email?.split('@')[0]}</span>
                   </div>
-                )}
-                <Button
-                  variant="ghost"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false)
-                    signOut({ 
-                      callbackUrl: "/login",
-                      redirect: true 
-                    }).catch((error) => {
-                      console.error("Error al cerrar sesión:", error)
-                      // Fallback: redirigir manualmente si signOut falla
-                      if (typeof window !== "undefined") {
-                        window.location.href = "/login"
-                      }
-                    })
-                  }}
-                  className="w-full flex items-center space-x-4 px-6 py-3 rounded-full text-gray-500 hover:bg-gray-200 hover:text-black transition-colors justify-start"
-                >
-                  <LogOut className="w-6 h-6" />
-                  <span>Salir</span>
-                </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false)
+                      signOut({ 
+                        callbackUrl: "/login",
+                        redirect: true 
+                      }).catch((error) => {
+                        console.error("Error al cerrar sesión:", error)
+                        // Fallback: redirigir manualmente si signOut falla
+                        if (typeof window !== "undefined") {
+                          window.location.href = "/login"
+                        }
+                      })
+                    }}
+                    className="w-full flex items-center space-x-4 px-6 py-3 rounded-full text-gray-500 hover:bg-gray-200 hover:text-black transition-colors justify-start"
+                  >
+                    <LogOut className="w-6 h-6" />
+                    <span>Salir</span>
+                  </Button>
+                </div>
               </div>
-            </div>
+            )}
           </nav>
         </div>
       </aside>
@@ -197,38 +197,38 @@ export function Sidebar() {
             </div>
           </div>
 
-          <div className="mt-12 space-y-4">
-            <h3 className="px-6 text-sm font-semibold text-gray-400 uppercase tracking-wider">USUARIO</h3>
-            <div className="space-y-2">
-              {session && (
+          {session && (
+            <div className="mt-12 space-y-4">
+              <h3 className="px-6 text-sm font-semibold text-gray-400 uppercase tracking-wider">USUARIO</h3>
+              <div className="space-y-2">
                 <div className="flex items-center space-x-4 px-6 py-3 text-gray-500">
                   <div className="p-1 bg-black rounded-full">
                     <User className="h-4 w-4 text-white" />
                   </div>
                   <span className="text-sm">{session.user?.email?.split('@')[0]}</span>
                 </div>
-              )}
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  signOut({ 
-                    callbackUrl: "/login",
-                    redirect: true 
-                  }).catch((error) => {
-                    console.error("Error al cerrar sesión:", error)
-                    // Fallback: redirigir manualmente si signOut falla
-                    if (typeof window !== "undefined") {
-                      window.location.href = "/login"
-                    }
-                  })
-                }}
-                className="w-full flex items-center space-x-4 px-6 py-3 rounded-full text-gray-500 hover:bg-gray-200 hover:text-black transition-colors justify-start"
-              >
-                <LogOut className="w-6 h-6" />
-                <span>Salir</span>
-              </Button>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    signOut({ 
+                      callbackUrl: "/login",
+                      redirect: true 
+                    }).catch((error) => {
+                      console.error("Error al cerrar sesión:", error)
+                      // Fallback: redirigir manualmente si signOut falla
+                      if (typeof window !== "undefined") {
+                        window.location.href = "/login"
+                      }
+                    })
+                  }}
+                  className="w-full flex items-center space-x-4 px-6 py-3 rounded-full text-gray-500 hover:bg-gray-200 hover:text-black transition-colors justify-start"
+                >
+                  <LogOut className="w-6 h-6" />
+                  <span>Salir</span>
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
         </nav>
       </aside>
     </>
