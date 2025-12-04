@@ -145,11 +145,17 @@ export function Sidebar() {
                 )}
                 <Button
                   variant="ghost"
-                  onClick={async () => {
+                  onClick={() => {
                     setIsMobileMenuOpen(false)
-                    await signOut({ 
-                      callbackUrl: window.location.origin + "/login",
+                    signOut({ 
+                      callbackUrl: "/login",
                       redirect: true 
+                    }).catch((error) => {
+                      console.error("Error al cerrar sesión:", error)
+                      // Fallback: redirigir manualmente si signOut falla
+                      if (typeof window !== "undefined") {
+                        window.location.href = "/login"
+                      }
                     })
                   }}
                   className="w-full flex items-center space-x-4 px-6 py-3 rounded-full text-gray-500 hover:bg-gray-200 hover:text-black transition-colors justify-start"
@@ -204,10 +210,16 @@ export function Sidebar() {
               )}
               <Button
                 variant="ghost"
-                onClick={async () => {
-                  await signOut({ 
-                    callbackUrl: window.location.origin + "/login",
+                onClick={() => {
+                  signOut({ 
+                    callbackUrl: "/login",
                     redirect: true 
+                  }).catch((error) => {
+                    console.error("Error al cerrar sesión:", error)
+                    // Fallback: redirigir manualmente si signOut falla
+                    if (typeof window !== "undefined") {
+                      window.location.href = "/login"
+                    }
                   })
                 }}
                 className="w-full flex items-center space-x-4 px-6 py-3 rounded-full text-gray-500 hover:bg-gray-200 hover:text-black transition-colors justify-start"

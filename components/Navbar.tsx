@@ -48,10 +48,16 @@ export function Navbar() {
                 </div>
                 <Button
                   variant="ghost"
-                  onClick={async () => {
-                    await signOut({ 
-                      callbackUrl: window.location.origin + "/login",
+                  onClick={() => {
+                    signOut({ 
+                      callbackUrl: "/login",
                       redirect: true 
+                    }).catch((error) => {
+                      console.error("Error al cerrar sesión:", error)
+                      // Fallback: redirigir manualmente si signOut falla
+                      if (typeof window !== "undefined") {
+                        window.location.href = "/login"
+                      }
                     })
                   }}
                   className="flex items-center gap-2 text-gray-500 hover:bg-gray-100 hover:text-black transition-colors rounded-full"
