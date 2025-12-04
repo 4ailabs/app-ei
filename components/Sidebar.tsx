@@ -129,10 +129,10 @@ export function Sidebar() {
                 <NavItem
                   icon={<BookOpen className="w-6 h-6" />}
                   label="Sesiones"
-                  href="/sesiones/1"
+                  href="/#sesiones"
                   active={pathname.startsWith('/sesiones')}
                   mobile={true}
-                  onClick={() => handleMobileNavigation('/sesiones/1')}
+                  onClick={() => handleMobileNavigation('/#sesiones')}
                 />
                 {isAdmin && (
                   <NavItem
@@ -203,7 +203,7 @@ export function Sidebar() {
               <NavItem
                 icon={<BookOpen className="w-6 h-6" />}
                 label="Sesiones"
-                href="/sesiones/1"
+                href="/#sesiones"
                 active={pathname.startsWith('/sesiones')}
               />
               {isAdmin && (

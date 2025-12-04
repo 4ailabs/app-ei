@@ -204,7 +204,7 @@ export default async function HomePage() {
       </div>
 
       {/* Sessions Section or CTA */}
-      <div className="bg-white p-6 lg:p-8 rounded-3xl shadow-sm border border-gray-200">
+      <div id="sesiones" className="bg-white p-6 lg:p-8 rounded-3xl shadow-sm border border-gray-200 scroll-mt-24">
         <div className="mb-8">
           <h2 className="text-2xl lg:text-3xl font-bold text-black mb-2">Sesiones del Seminario</h2>
           <p className="text-gray-600">
