@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && bash scripts/fix-prisma.sh && prisma migrate deploy && next build",
+    "build": "prisma generate && bash scripts/fix-prisma.sh && prisma db push --skip-generate && next build",
     "start": "next start",
     "lint": "eslint",
     "db:migrate": "prisma migrate dev",

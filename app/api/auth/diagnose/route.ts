@@ -1,10 +1,27 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
+import { checkRateLimit, getClientIP } from "@/lib/rate-limit"
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: máximo 10 intentos por IP cada 5 minutos
+    const clientIP = getClientIP(request)
+    const rateLimit = checkRateLimit(`diagnose:${clientIP}`, {
+      maxRequests: 10,
+      windowMs: 5 * 60 * 1000, // 5 minutos
+    })
+
+    if (!rateLimit.success) {
+      return NextResponse.json(
+        {
+          error: `Demasiados intentos. Intenta de nuevo en ${rateLimit.resetIn} segundos.`
+        },
+        { status: 429 }
+      )
+    }
+
     const body = await request.json()
-    const { email, password } = body
+    const { email } = body
 
     if (!email) {
       return NextResponse.json(
@@ -48,9 +65,17 @@ export async function POST(request: NextRequest) {
       diagnosis.action = "Verifica que la contraseña sea correcta."
     }
 
+    // En producción, no exponer información sensible que permita enumerar usuarios
+    if (process.env.NODE_ENV === "production") {
+      return NextResponse.json({
+        message: diagnosis.message,
+        action: diagnosis.action,
+      })
+    }
+
+    // En desarrollo, incluir información adicional para debugging
     return NextResponse.json({
       ...diagnosis,
-      // No exponer información sensible en producción
       userEmail: user?.email,
       userName: user?.name,
     })

@@ -1,9 +1,26 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
+import { checkRateLimit, getClientIP } from "@/lib/rate-limit"
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: máximo 5 intentos de registro por IP cada 15 minutos
+    const clientIP = getClientIP(request)
+    const rateLimit = checkRateLimit(`register:${clientIP}`, {
+      maxRequests: 5,
+      windowMs: 15 * 60 * 1000, // 15 minutos
+    })
+
+    if (!rateLimit.success) {
+      return NextResponse.json(
+        {
+          error: `Demasiados intentos. Intenta de nuevo en ${rateLimit.resetIn} segundos.`
+        },
+        { status: 429 }
+      )
+    }
+
     const body = await request.json()
     const { email, password, name } = body
 
@@ -15,9 +32,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (password.length < 6) {
+    // Validar contraseña: mínimo 8 caracteres, al menos una mayúscula, una minúscula y un número
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+    if (!passwordRegex.test(password)) {
       return NextResponse.json(
-        { error: "La contraseña debe tener al menos 6 caracteres" },
+        {
+          error: "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas y números"
+        },
         { status: 400 }
       )
     }
