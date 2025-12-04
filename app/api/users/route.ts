@@ -136,12 +136,13 @@ export async function POST(request: NextRequest) {
     // Hashear contraseña
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    // Crear usuario
+    // Crear usuario (desde admin se crea aprobado automáticamente)
     const user = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
         name: name || null,
+        approved: true,
       },
       select: {
         id: true,

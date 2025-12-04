@@ -11,7 +11,8 @@ import {
   User,
   Zap,
   Menu,
-  X
+  X,
+  Settings
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -129,6 +130,14 @@ export function Sidebar() {
                   mobile={true}
                   onClick={() => handleMobileNavigation('/sesiones/1')}
                 />
+                <NavItem
+                  icon={<Settings className="w-6 h-6" />}
+                  label="Administración"
+                  href="/admin"
+                  active={pathname === '/admin'}
+                  mobile={true}
+                  onClick={() => handleMobileNavigation('/admin')}
+                />
               </div>
             </div>
 
@@ -190,6 +199,12 @@ export function Sidebar() {
                 label="Sesiones"
                 href="/sesiones/1"
                 active={pathname.startsWith('/sesiones')}
+              />
+              <NavItem
+                icon={<Settings className="w-6 h-6" />}
+                label="Administración"
+                href="/admin"
+                active={pathname === '/admin'}
               />
             </div>
           </div>
