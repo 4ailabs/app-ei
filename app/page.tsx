@@ -245,7 +245,7 @@ export default async function HomePage() {
                     <ArrowRight className="h-5 w-5" />
                   </button>
                 </Link>
-                <Link href="/login">
+                <Link href="/register">
                   <button className="w-full sm:w-auto px-8 py-4 bg-white text-black border-2 border-gray-200 rounded-xl font-semibold hover:border-black transition-all duration-300 flex items-center justify-center gap-2">
                     Registrarse
                   </button>

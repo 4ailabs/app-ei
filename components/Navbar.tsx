@@ -1,7 +1,7 @@
 "use client"
 
 import { signOut, useSession } from "next-auth/react"
-import { Zap, LogOut, User } from "lucide-react"
+import { Zap, LogOut, User, Settings } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -29,6 +29,15 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             {session && (
               <>
+                <Link href="/admin">
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2 text-gray-500 hover:bg-gray-100 hover:text-black transition-colors rounded-full"
+                  >
+                    <Settings className="h-4 w-4" />
+                    <span className="hidden sm:inline">Admin</span>
+                  </Button>
+                </Link>
                 <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full">
                   <div className="p-1 bg-black rounded-full">
                     <User className="h-3 w-3 text-white" />

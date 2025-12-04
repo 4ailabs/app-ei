@@ -220,3 +220,5 @@ La aplicación está correctamente configurada, no contiene información sensibl
 ---
 
 **Generado automáticamente** - Revisa este documento antes de hacer el commit inicial.
+
+
