@@ -16,11 +16,13 @@ async function main() {
       update: {
         password: hashedPassword,
         name,
+        approved: true, // Aprobar automáticamente al actualizar
       },
       create: {
         email,
         password: hashedPassword,
         name,
+        approved: true, // Aprobar automáticamente al crear
       },
     })
 
@@ -28,6 +30,7 @@ async function main() {
     console.log(`   Email: ${user.email}`)
     console.log(`   Nombre: ${user.name}`)
     console.log(`   ID: ${user.id}`)
+    console.log(`   Aprobado: ${user.approved ? '✅ Sí' : '❌ No'}`)
   } catch (error) {
     console.error('❌ Error al crear usuario:', error)
     process.exit(1)
