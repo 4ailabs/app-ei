@@ -49,7 +49,24 @@ export const authOptions: NextAuthConfig = {
     })
   ],
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
+    maxAge: 7 * 24 * 60 * 60, // 7 días en segundos (sesión expira después de 7 días)
+    updateAge: 24 * 60 * 60, // Actualizar sesión cada 24 horas
+  },
+  jwt: {
+    maxAge: 7 * 24 * 60 * 60, // 7 días en segundos
+  },
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production", // Solo HTTPS en producción
+        maxAge: 7 * 24 * 60 * 60, // 7 días
+      },
+    },
   },
   pages: {
     signIn: "/login",
