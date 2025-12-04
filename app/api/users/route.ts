@@ -3,13 +3,20 @@ import { auth } from "@/lib/auth-server"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
+const ADMIN_EMAIL = "admin@seminario.com"
+
 // GET - Listar todos los usuarios con estadísticas
 export async function GET(request: NextRequest) {
   try {
     const session = await auth()
-    
+
     if (!session) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
+    }
+
+    // Solo el admin puede acceder
+    if (session.user?.email !== ADMIN_EMAIL) {
+      return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 
     const searchParams = request.nextUrl.searchParams
@@ -106,9 +113,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const session = await auth()
-    
+
     if (!session) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
+    }
+
+    // Solo el admin puede crear usuarios
+    if (session.user?.email !== ADMIN_EMAIL) {
+      return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 
     const body = await request.json()

@@ -62,10 +62,14 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
   )
 }
 
+const ADMIN_EMAIL = "admin@seminario.com"
+
 export function Sidebar() {
   const pathname = usePathname()
   const { data: session } = useSession()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const isAdmin = session?.user?.email === ADMIN_EMAIL
 
   const handleMobileNavigation = (href: string) => {
     setIsMobileMenuOpen(false)
@@ -130,14 +134,16 @@ export function Sidebar() {
                   mobile={true}
                   onClick={() => handleMobileNavigation('/sesiones/1')}
                 />
-                <NavItem
-                  icon={<Settings className="w-6 h-6" />}
-                  label="Administración"
-                  href="/admin"
-                  active={pathname === '/admin'}
-                  mobile={true}
-                  onClick={() => handleMobileNavigation('/admin')}
-                />
+                {isAdmin && (
+                  <NavItem
+                    icon={<Settings className="w-6 h-6" />}
+                    label="Administración"
+                    href="/admin"
+                    active={pathname === '/admin'}
+                    mobile={true}
+                    onClick={() => handleMobileNavigation('/admin')}
+                  />
+                )}
               </div>
             </div>
 
@@ -200,12 +206,14 @@ export function Sidebar() {
                 href="/sesiones/1"
                 active={pathname.startsWith('/sesiones')}
               />
-              <NavItem
-                icon={<Settings className="w-6 h-6" />}
-                label="Administración"
-                href="/admin"
-                active={pathname === '/admin'}
-              />
+              {isAdmin && (
+                <NavItem
+                  icon={<Settings className="w-6 h-6" />}
+                  label="Administración"
+                  href="/admin"
+                  active={pathname === '/admin'}
+                />
+              )}
             </div>
           </div>
 

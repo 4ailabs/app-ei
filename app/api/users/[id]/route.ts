@@ -3,6 +3,8 @@ import { auth } from "@/lib/auth-server"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
+const ADMIN_EMAIL = "admin@seminario.com"
+
 // GET - Obtener un usuario específico
 export async function GET(
   request: NextRequest,
@@ -10,9 +12,14 @@ export async function GET(
 ) {
   try {
     const session = await auth()
-    
+
     if (!session) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
+    }
+
+    // Solo el admin puede acceder
+    if (session.user?.email !== ADMIN_EMAIL) {
+      return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 
     const { id } = await params
@@ -75,9 +82,14 @@ export async function PUT(
 ) {
   try {
     const session = await auth()
-    
+
     if (!session) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
+    }
+
+    // Solo el admin puede actualizar usuarios
+    if (session.user?.email !== ADMIN_EMAIL) {
+      return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 
     const { id } = await params
@@ -130,9 +142,14 @@ export async function DELETE(
 ) {
   try {
     const session = await auth()
-    
+
     if (!session) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
+    }
+
+    // Solo el admin puede eliminar usuarios
+    if (session.user?.email !== ADMIN_EMAIL) {
+      return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 
     const { id } = await params
