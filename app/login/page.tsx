@@ -21,36 +21,54 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      // Primero verificar si el usuario existe y está aprobado
-      const checkResponse = await fetch("/api/auth/check-user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      })
-
-      if (checkResponse.ok) {
-        const checkData = await checkResponse.json()
-        if (!checkData.approved) {
-          setError("Tu cuenta está pendiente de aprobación. Por favor, contacta al administrador.")
-          setLoading(false)
-          return
-        }
-      }
-
+      // Intentar login directamente con NextAuth
       const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
       })
 
-      if (result?.error) {
-        setError("Credenciales inválidas. Por favor, intenta de nuevo.")
-      } else {
+      // Si el login fue exitoso
+      if (result?.ok && !result?.error) {
         router.push("/")
         router.refresh()
+        return
+      }
+
+      // Si hay un error, diagnosticar qué salió mal
+      if (result?.error) {
+        try {
+          const diagnoseResponse = await fetch("/api/auth/diagnose", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          })
+
+          if (diagnoseResponse.ok) {
+            const diagnosis = await diagnoseResponse.json()
+            
+            // Mostrar mensaje específico según el diagnóstico
+            if (!diagnosis.userExists) {
+              setError(`${diagnosis.message} ${diagnosis.action}`)
+            } else if (!diagnosis.isApproved) {
+              setError(`${diagnosis.message} ${diagnosis.action}`)
+            } else if (!diagnosis.hasPassword) {
+              setError(`${diagnosis.message} ${diagnosis.action}`)
+            } else {
+              // Usuario existe, está aprobado, pero la contraseña es incorrecta
+              setError("La contraseña es incorrecta. Por favor, verifica e intenta de nuevo.")
+            }
+          } else {
+            // Si el diagnóstico falla, mostrar error genérico
+            setError("Credenciales inválidas. Por favor, verifica tu email y contraseña.")
+          }
+        } catch (diagnoseError) {
+          // Si hay error en el diagnóstico, mostrar error genérico
+          setError("Credenciales inválidas. Por favor, verifica tu email y contraseña.")
+        }
       }
     } catch (err) {
-      setError("Ocurrió un error. Por favor, intenta de nuevo.")
+      setError("Ocurrió un error. Por favor, intenta de nuevo más tarde.")
     } finally {
       setLoading(false)
     }
