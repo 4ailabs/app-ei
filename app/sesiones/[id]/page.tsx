@@ -85,9 +85,16 @@ export default async function SessionPage({ params }: SessionPageProps) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                 <div className="absolute bottom-8 left-8 right-8">
-                  <span className="text-sm font-bold uppercase tracking-wider px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white inline-block mb-4">
-                    Bloque {sessionData.day}
-                  </span>
+                  <div className="flex gap-2 mb-4">
+                    <span className="text-sm font-bold uppercase tracking-wider px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white inline-block">
+                      Día {sessionData.day}
+                    </span>
+                    {sessionData.moduleNumber && (
+                      <span className="text-sm font-bold uppercase tracking-wider px-4 py-2 rounded-full bg-black/40 backdrop-blur-sm text-white inline-block">
+                        Módulo {sessionData.moduleNumber}
+                      </span>
+                    )}
+                  </div>
                   <h1 className="text-3xl md:text-5xl font-bold text-white mb-3">
                     {sessionData.title}
                   </h1>
@@ -106,8 +113,13 @@ export default async function SessionPage({ params }: SessionPageProps) {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black text-white">
-                        Bloque {sessionData.day}
+                        Día {sessionData.day}
                       </span>
+                      {sessionData.moduleNumber && (
+                        <span className="text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-gray-200 text-gray-700">
+                          Módulo {sessionData.moduleNumber}
+                        </span>
+                      )}
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold text-black mb-3">
                       {sessionData.title}

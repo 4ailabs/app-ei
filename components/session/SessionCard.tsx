@@ -49,10 +49,15 @@ export function SessionCard({ session, progress, index = 0 }: SessionCardProps) 
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-            <div className="absolute bottom-4 left-4 right-4">
+            <div className="absolute bottom-4 left-4 right-4 flex gap-2">
               <span className="text-xs font-semibold text-white uppercase tracking-wide px-3 py-1.5 rounded-lg bg-white/20 backdrop-blur-sm inline-block">
-                Bloque {session.day}
+                Día {session.day}
               </span>
+              {session.moduleNumber && (
+                <span className="text-xs font-semibold text-white uppercase tracking-wide px-3 py-1.5 rounded-lg bg-black/40 backdrop-blur-sm inline-block">
+                  Módulo {session.moduleNumber}
+                </span>
+              )}
             </div>
           </div>
         )}
@@ -61,8 +66,13 @@ export function SessionCard({ session, progress, index = 0 }: SessionCardProps) 
           {!session.imageUrl && (
             <div className="flex items-center gap-3 mb-3">
               <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide px-2.5 py-1 rounded-md bg-gray-100">
-                Bloque {session.day}
+                Día {session.day}
               </span>
+              {session.moduleNumber && (
+                <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide px-2.5 py-1 rounded-md bg-gray-200">
+                  Módulo {session.moduleNumber}
+                </span>
+              )}
               {progress?.completed && (
                 <span className="text-xs text-green-700 font-medium bg-green-50 px-2.5 py-1 rounded-md">
                   Completado

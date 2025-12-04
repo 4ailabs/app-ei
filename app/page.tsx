@@ -74,7 +74,7 @@ export default async function HomePage() {
             Seminario Internacional de<br />Inteligencia Energética
           </h1>
           <p className="text-lg lg:text-xl text-gray-300 max-w-3xl mb-6">
-            Accede a 9 sesiones formativas exclusivas con material de alta calidad: videos, PDFs, audios, protocolos y herramientas prácticas.
+            Accede a {totalSessions} sesiones formativas exclusivas con material de alta calidad: videos, PDFs, audios, protocolos y herramientas prácticas.
           </p>
 
           {/* Stats */}
@@ -209,8 +209,8 @@ export default async function HomePage() {
           <h2 className="text-2xl lg:text-3xl font-bold text-black mb-2">Sesiones del Seminario</h2>
           <p className="text-gray-600">
             {isLoggedIn
-              ? "Explora las 9 sesiones formativas con contenido exclusivo y herramientas prácticas"
-              : "Regístrate para acceder a las 9 sesiones formativas exclusivas"
+              ? `Explora las ${totalSessions} sesiones formativas con contenido exclusivo y herramientas prácticas`
+              : `Regístrate para acceder a las ${totalSessions} sesiones formativas exclusivas`
             }
           </p>
         </div>
