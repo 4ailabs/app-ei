@@ -144,18 +144,15 @@ export function Sidebar() {
                   </div>
                   <Button
                     variant="ghost"
-                    onClick={() => {
+                    onClick={async () => {
                       setIsMobileMenuOpen(false)
-                      signOut({ 
-                        callbackUrl: "/login",
-                        redirect: true 
-                      }).catch((error) => {
+                      try {
+                        await signOut({ redirect: false })
+                        window.location.href = "/login"
+                      } catch (error) {
                         console.error("Error al cerrar sesión:", error)
-                        // Fallback: redirigir manualmente si signOut falla
-                        if (typeof window !== "undefined") {
-                          window.location.href = "/login"
-                        }
-                      })
+                        window.location.href = "/login"
+                      }
                     }}
                     className="w-full flex items-center space-x-4 px-6 py-3 rounded-full text-gray-500 hover:bg-gray-200 hover:text-black transition-colors justify-start"
                   >
@@ -209,17 +206,14 @@ export function Sidebar() {
                 </div>
                 <Button
                   variant="ghost"
-                  onClick={() => {
-                    signOut({ 
-                      callbackUrl: "/login",
-                      redirect: true 
-                    }).catch((error) => {
+                  onClick={async () => {
+                    try {
+                      await signOut({ redirect: false })
+                      window.location.href = "/login"
+                    } catch (error) {
                       console.error("Error al cerrar sesión:", error)
-                      // Fallback: redirigir manualmente si signOut falla
-                      if (typeof window !== "undefined") {
-                        window.location.href = "/login"
-                      }
-                    })
+                      window.location.href = "/login"
+                    }
                   }}
                   className="w-full flex items-center space-x-4 px-6 py-3 rounded-full text-gray-500 hover:bg-gray-200 hover:text-black transition-colors justify-start"
                 >
