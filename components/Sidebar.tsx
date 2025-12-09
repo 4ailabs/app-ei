@@ -127,14 +127,14 @@ export function Sidebar() {
                   mobile={true}
                   onClick={() => handleMobileNavigation('/')}
                 />
-                <NavItem
-                  icon={<BookOpen className="w-6 h-6" />}
-                  label="Sesiones"
-                  href="/#sesiones"
-                  active={pathname.startsWith('/sesiones')}
-                  mobile={true}
-                  onClick={() => handleMobileNavigation('/#sesiones')}
-                />
+            <NavItem
+              icon={<BookOpen className="w-6 h-6" />}
+              label="Sesiones"
+              href="/sesiones"
+              active={pathname.startsWith('/sesiones')}
+              mobile={true}
+              onClick={() => handleMobileNavigation('/sesiones')}
+            />
                 <NavItem
                   icon={<Video className="w-6 h-6" />}
                   label="Seminario On Line"
@@ -212,7 +212,7 @@ export function Sidebar() {
               <NavItem
                 icon={<BookOpen className="w-6 h-6" />}
                 label="Sesiones"
-                href="/#sesiones"
+                href="/sesiones"
                 active={pathname.startsWith('/sesiones')}
               />
               <NavItem

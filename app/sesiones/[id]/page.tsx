@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth-server"
 import { redirect, notFound } from "next/navigation"
 import { sessions } from "@/data/sessions"
-import { SessionContentAccordion } from "@/components/session/SessionContentAccordion"
+import { SessionContentTabs } from "@/components/session/SessionContentTabs"
 import {
   ArrowLeft,
   Lightbulb,
@@ -15,7 +15,10 @@ import {
   Headphones,
   BookOpen,
   ClipboardList,
-  Smartphone
+  Smartphone,
+  Calendar,
+  Clock,
+  CheckCircle2
 } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -127,50 +130,68 @@ export default async function SessionPage({ params }: SessionPageProps) {
             )}
 
             {/* Quick Stats Bar */}
-            <div className="px-8 py-4 bg-gray-50 border-t border-gray-100">
-              <div className="flex flex-wrap gap-4 text-sm">
-                {contentCounts.pdf > 0 && (
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <FileText className="h-4 w-4" />
-                    <span>1 PDF</span>
+            <div className="px-8 py-5 bg-gradient-to-r from-gray-50 to-gray-100 border-t border-gray-200">
+              <div className="flex flex-wrap items-center gap-6 text-sm">
+                <div className="flex items-center gap-2 text-gray-700">
+                  <Calendar className="h-4 w-4" />
+                  <span className="font-medium">Día {sessionData.day}</span>
+                </div>
+                {sessionData.moduleNumber && (
+                  <div className="flex items-center gap-2 text-gray-700">
+                    <CheckCircle2 className="h-4 w-4" />
+                    <span className="font-medium">Módulo {sessionData.moduleNumber}</span>
                   </div>
                 )}
-                {contentCounts.videos > 0 && (
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Video className="h-4 w-4" />
-                    <span>{contentCounts.videos} videos</span>
-                  </div>
-                )}
-                {contentCounts.audios > 0 && (
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Headphones className="h-4 w-4" />
-                    <span>{contentCounts.audios} audios</span>
-                  </div>
-                )}
-                {contentCounts.themes > 0 && (
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <BookOpen className="h-4 w-4" />
-                    <span>{contentCounts.themes} temas</span>
-                  </div>
-                )}
-                {contentCounts.protocols > 0 && (
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <ClipboardList className="h-4 w-4" />
-                    <span>{contentCounts.protocols} protocolos</span>
-                  </div>
-                )}
-                {contentCounts.apps > 0 && (
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Smartphone className="h-4 w-4" />
-                    <span>{contentCounts.apps} apps</span>
-                  </div>
-                )}
+                <div className="flex items-center gap-2 text-gray-700">
+                  <Clock className="h-4 w-4" />
+                  <span className="font-medium">
+                    {Object.values(contentCounts).reduce((a, b) => a + b, 0)} elementos
+                  </span>
+                </div>
+                <div className="ml-auto flex flex-wrap gap-4">
+                  {contentCounts.pdf > 0 && (
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 rounded-lg">
+                      <FileText className="h-4 w-4 text-blue-600" />
+                      <span className="text-blue-700 font-medium">{contentCounts.pdf}</span>
+                    </div>
+                  )}
+                  {contentCounts.videos > 0 && (
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 rounded-lg">
+                      <Video className="h-4 w-4 text-purple-600" />
+                      <span className="text-purple-700 font-medium">{contentCounts.videos}</span>
+                    </div>
+                  )}
+                  {contentCounts.audios > 0 && (
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-lg">
+                      <Headphones className="h-4 w-4 text-green-600" />
+                      <span className="text-green-700 font-medium">{contentCounts.audios}</span>
+                    </div>
+                  )}
+                  {contentCounts.themes > 0 && (
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-orange-50 rounded-lg">
+                      <BookOpen className="h-4 w-4 text-orange-600" />
+                      <span className="text-orange-700 font-medium">{contentCounts.themes}</span>
+                    </div>
+                  )}
+                  {contentCounts.protocols > 0 && (
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-red-50 rounded-lg">
+                      <ClipboardList className="h-4 w-4 text-red-600" />
+                      <span className="text-red-700 font-medium">{contentCounts.protocols}</span>
+                    </div>
+                  )}
+                  {contentCounts.apps > 0 && (
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-cyan-50 rounded-lg">
+                      <Smartphone className="h-4 w-4 text-cyan-600" />
+                      <span className="text-cyan-700 font-medium">{contentCounts.apps}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Unified Content with Collapsible Sections */}
-          <SessionContentAccordion
+          {/* Content Navigation - Tabs View */}
+          <SessionContentTabs
             sessionData={sessionData}
             contentCounts={contentCounts}
           />

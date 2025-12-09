@@ -60,3 +60,4 @@ Thumbs.db
 .DS_Store
 .AppleDouble
 .LSOverride
+prisma/prisma/dev.db

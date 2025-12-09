@@ -138,24 +138,29 @@ function AudioPlayer({ audio }: { audio: Audio }) {
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0
 
+  // Only render audio element if URL is valid
+  const hasValidUrl = audio.url && audio.url.trim() !== ""
+
   return (
     <div className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors">
-      <audio
-        ref={audioRef}
-        src={audio.url}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleTimeUpdate}
-        onEnded={() => setIsPlaying(false)}
-        className="hidden"
-      />
+      {hasValidUrl && (
+        <audio
+          ref={audioRef}
+          src={audio.url}
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleTimeUpdate}
+          onEnded={() => setIsPlaying(false)}
+          className="hidden"
+        />
+      )}
 
       <div className="flex items-center gap-4">
         {/* Play Button */}
         <button
           onClick={togglePlay}
-          disabled={!audio.url}
+          disabled={!hasValidUrl}
           className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
-            audio.url
+            hasValidUrl
               ? 'bg-green-600 text-white hover:bg-green-700 shadow-md hover:shadow-lg'
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}

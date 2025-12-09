@@ -1,8 +1,7 @@
 import { auth } from "@/lib/auth-server"
-import { SessionsAccordion } from "@/components/session/SessionsAccordion"
 import { sessions } from "@/data/sessions"
 import { prisma } from "@/lib/prisma"
-import { GraduationCap, Clock, Award, Bell, Play, Sparkles, Lock, ArrowRight } from "lucide-react"
+import { GraduationCap, Clock, Award, Bell, Play, Sparkles, Lock, ArrowRight, BookOpen } from "lucide-react"
 import Link from "next/link"
 
 type ProgressData = {
@@ -123,6 +122,19 @@ export default async function HomePage() {
               </div>
             </div>
           )}
+
+          {/* CTA Button - Access Sessions */}
+          {isLoggedIn && (
+            <div className="mt-8">
+              <Link href="/sesiones">
+                <button className="px-8 py-4 bg-white text-black rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 flex items-center gap-3 shadow-lg hover:shadow-xl group">
+                  <BookOpen className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                  <span>Acceder a las Sesiones</span>
+                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
@@ -203,30 +215,18 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Sessions Section or CTA */}
-      <div id="sesiones" className="bg-white p-6 lg:p-8 rounded-3xl shadow-sm border border-gray-200 scroll-mt-24">
-        <div className="mb-8">
-          <h2 className="text-2xl lg:text-3xl font-bold text-black mb-2">Sesiones del Seminario</h2>
-          <p className="text-gray-600">
-            {isLoggedIn
-              ? `Explora las ${totalSessions} sesiones formativas con contenido exclusivo y herramientas prácticas`
-              : `Regístrate para acceder a las ${totalSessions} sesiones formativas exclusivas`
-            }
-          </p>
-        </div>
-
-        {isLoggedIn ? (
-          <SessionsAccordion sessions={sessions} progressMap={progressMap} />
-        ) : (
-          <div className="text-center py-16 px-4">
+      {/* CTA Section for non-logged in users */}
+      {!isLoggedIn && (
+        <div className="bg-white p-6 lg:p-8 rounded-3xl shadow-sm border border-gray-200">
+          <div className="text-center py-12 px-4">
             <div className="max-w-md mx-auto">
               <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Lock className="h-10 w-10 text-gray-400" />
               </div>
-              <h3 className="text-2xl font-bold text-black mb-3">Contenido Exclusivo</h3>
+              <h3 className="text-2xl font-bold text-black mb-3">Accede a las Sesiones</h3>
               <p className="text-gray-600 mb-8">
-                Las sesiones de entrenamiento están disponibles solo para usuarios registrados.
-                Inicia sesión o regístrate para acceder a todo el contenido.
+                Explora las {totalSessions} sesiones formativas exclusivas con contenido de alta calidad.
+                Inicia sesión o regístrate para acceder a todo el material.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/login">
@@ -243,8 +243,8 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
