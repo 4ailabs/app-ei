@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Habilitar dark mode con selector de clase */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #FAF9F7;
   --foreground: #1A1915;
@@ -25,6 +28,30 @@
   /* Fuente Inter */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+/* Modo Oscuro estilo Claude - basado en la interfaz real */
+.dark {
+  --background: #1A1A1A;
+  --foreground: #E5E5E5;
+
+  /* Paleta oscura estilo Claude - tonos neutros y sutiles */
+  --primary: #E5E5E5;
+  --primary-dark: #CCCCCC;
+  --primary-light: #FFFFFF;
+  --secondary: #E5E5E5;
+  --secondary-dark: #CCCCCC;
+  --accent: #E5E5E5;
+  --accent-light: #FFFFFF;
+
+  /* Colores adicionales Claude Dark - colores auténticos */
+  --sidebar-bg: #1A1A1A;
+  --card-bg: #252525;
+  --border-color: #333333;
+  --text-secondary: #A0A0A0;
+  --text-muted: #808080;
+  --success: #5BB98C;
+  --success-dark: #4CA97C;
 }
 
 @theme inline {
@@ -145,11 +172,21 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+.dark .glass {
+  background: rgba(57, 57, 57, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 .glass-dark {
   background: rgba(255, 255, 255, 1);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass-dark {
+  background: rgba(47, 47, 47, 1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Gradientes de texto */
@@ -259,4 +296,16 @@ input:focus {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #D1D0CC;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #2F2F2F;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4A4A4A;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #5A5A5A;
 }

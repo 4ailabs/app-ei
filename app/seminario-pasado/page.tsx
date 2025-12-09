@@ -40,12 +40,12 @@ export default async function SeminarioPasadoPage() {
   }, 0)
 
   return (
-    <div className="min-h-screen bg-[#FAF9F7]">
+    <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A]">
       <div className="container mx-auto px-4 py-8 pb-24">
         {/* Back Button */}
         <div className="mb-6 animate-fade-in">
           <Link href="/">
-            <Button variant="ghost" className="group hover:bg-[#F5F4F0] transition-all text-[#706F6C]">
+            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all text-[#706F6C] dark:text-[#A0A0A0]">
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <Home className="mr-2 h-4 w-4" />
               Volver al Dashboard
@@ -55,39 +55,37 @@ export default async function SeminarioPasadoPage() {
 
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="bg-white rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0]">
-            <div className="p-8 lg:p-12 bg-gradient-to-br from-[#DA7756] via-[#C4684A] to-[#B85D45] text-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#E89A7F] opacity-10 rounded-full blur-3xl"></div>
+          <div className="bg-white dark:bg-[#252525] rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border-2 border-[#DA7756] dark:border-[#DA7756]">
+            <div className="p-8 lg:p-12 relative overflow-hidden">
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4">
-                  <Calendar className="h-8 w-8 text-white/90" />
-                  <span className="text-sm font-semibold uppercase tracking-wider text-white/90">
+                  <Calendar className="h-8 w-8 text-[#DA7756] dark:text-[#DA7756]" />
+                  <span className="text-sm font-semibold uppercase tracking-wider text-[#DA7756] dark:text-[#DA7756]">
                     Seminario On Line
                   </span>
                 </div>
-                <h1 className="text-3xl md:text-5xl font-bold mb-3">
+                <h1 className="text-3xl md:text-5xl font-bold mb-3 text-[#1A1915] dark:text-[#E5E5E5]">
                   Videos del Seminario
                 </h1>
-                <p className="text-lg text-white/80 mb-6">
+                <p className="text-lg text-[#706F6C] dark:text-[#A0A0A0] mb-6">
                   Accede a todos los videos del seminario online. Organizados por día para facilitar tu navegación.
                 </p>
                 <div className="flex flex-wrap items-center gap-6 text-sm">
-                  <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <VideoIcon className="h-5 w-5" />
-                    <span className="font-semibold">{videosWithStreamId} / {totalVideos} videos disponibles</span>
+                  <div className="flex items-center gap-2 bg-[#DA7756]/10 dark:bg-[#DA7756]/10 border border-[#DA7756]/20 dark:border-[#DA7756]/20 px-4 py-2 rounded-full">
+                    <VideoIcon className="h-5 w-5 text-[#DA7756] dark:text-[#DA7756]" />
+                    <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">{videosWithStreamId} / {totalVideos} videos disponibles</span>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <Calendar className="h-5 w-5" />
-                    <span className="font-semibold">{seminarioPasado.length} días</span>
+                  <div className="flex items-center gap-2 bg-[#DA7756]/10 dark:bg-[#DA7756]/10 border border-[#DA7756]/20 dark:border-[#DA7756]/20 px-4 py-2 rounded-full">
+                    <Calendar className="h-5 w-5 text-[#DA7756] dark:text-[#DA7756]" />
+                    <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">{seminarioPasado.length} días</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Lista de Días */}
-          <div className="flex flex-col gap-4 max-w-2xl mx-auto">
+          {/* Grid de Días - 2 columnas */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {seminarioPasado.map((dia, index) => {
               const colors = dayColors[index % dayColors.length]
               const videosConStreamId = dia.videos.filter(v => v.cloudflareStreamId)
@@ -99,7 +97,7 @@ export default async function SeminarioPasadoPage() {
                   href={`/seminario-pasado/${dia.day}`}
                   className="group block"
                 >
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-[#E5E4E0] hover:border-[#DA7756]/30 h-full flex flex-col">
+                  <div className="bg-white dark:bg-[#252525] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-[#E5E4E0] dark:border-[#333333] hover:border-[#DA7756]/30 dark:hover:border-[#E5E5E5]/30 h-full flex flex-col">
                     {/* Header con Gradiente */}
                     <div className={`bg-gradient-to-br ${colors.gradient} p-6 text-white relative overflow-hidden`}>
                       <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl -mr-16 -mt-16"></div>
@@ -136,27 +134,27 @@ export default async function SeminarioPasadoPage() {
                           <div
                             key={video.id}
                             className={`flex items-center gap-2 text-sm p-2 rounded-lg ${
-                              video.cloudflareStreamId ? colors.bg : 'bg-[#F5F4F0]'
+                              video.cloudflareStreamId ? colors.bg : 'bg-[#F5F4F0] dark:bg-[#333333]'
                             }`}
                           >
                             <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
-                              video.cloudflareStreamId ? colors.accent : 'bg-[#E5E4E0]'
+                              video.cloudflareStreamId ? colors.accent : 'bg-[#E5E4E0] dark:bg-[#4A4A4A]'
                             }`}>
                               {video.cloudflareStreamId ? (
                                 <CheckCircle2 className="h-4 w-4 text-white" />
                               ) : (
-                                <Clock className="h-3 w-3 text-[#9B9A97]" />
+                                <Clock className="h-3 w-3 text-[#9B9A97] dark:text-[#808080]" />
                               )}
                             </div>
                             <span className={`flex-1 truncate ${
-                              video.cloudflareStreamId ? 'text-[#1A1915] font-medium' : 'text-[#9B9A97]'
+                              video.cloudflareStreamId ? 'text-[#1A1915] dark:text-[#E5E5E5] font-medium' : 'text-[#9B9A97] dark:text-[#808080]'
                             }`}>
                               {video.title}
                             </span>
                           </div>
                         ))}
                         {dia.videos.length > 3 && (
-                          <p className="text-xs text-[#9B9A97] text-center">
+                          <p className="text-xs text-[#9B9A97] dark:text-[#808080] text-center">
                             +{dia.videos.length - 3} videos más
                           </p>
                         )}
@@ -167,7 +165,7 @@ export default async function SeminarioPasadoPage() {
                         className={`w-full py-3 px-4 rounded-full font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
                           hasVideos
                             ? `${colors.accent} text-white group-hover:shadow-md active:scale-[0.98]`
-                            : 'bg-[#F5F4F0] text-[#9B9A97]'
+                            : 'bg-[#F5F4F0] dark:bg-[#333333] text-[#9B9A97] dark:text-[#808080]'
                         }`}
                       >
                         <Play className="h-4 w-4" />

@@ -8,30 +8,38 @@ interface AudioSectionProps {
   audios: Audio[]
 }
 
-const categoryInfo: Record<string, { label: string; icon: React.ReactNode; color: string; bgColor: string }> = {
+const categoryInfo: Record<string, { label: string; icon: React.ReactNode; color: string; bgColor: string; darkBgColor: string; darkColor: string }> = {
   regulacion: {
     label: "Regulación",
     icon: <Heart className="h-4 w-4" />,
     color: "text-red-600",
-    bgColor: "bg-red-50"
+    bgColor: "bg-red-50",
+    darkBgColor: "dark:bg-red-900/20",
+    darkColor: "dark:text-red-400"
   },
   ritual_matutino: {
     label: "Ritual Matutino",
     icon: <Sun className="h-4 w-4" />,
     color: "text-amber-600",
-    bgColor: "bg-amber-50"
+    bgColor: "bg-amber-50",
+    darkBgColor: "dark:bg-amber-900/20",
+    darkColor: "dark:text-amber-400"
   },
   ritual_nocturno: {
     label: "Ritual Nocturno",
     icon: <Moon className="h-4 w-4" />,
     color: "text-indigo-600",
-    bgColor: "bg-indigo-50"
+    bgColor: "bg-indigo-50",
+    darkBgColor: "dark:bg-indigo-900/20",
+    darkColor: "dark:text-indigo-400"
   },
   meditacion: {
     label: "Meditación",
     icon: <Sparkles className="h-4 w-4" />,
     color: "text-purple-600",
-    bgColor: "bg-purple-50"
+    bgColor: "bg-purple-50",
+    darkBgColor: "dark:bg-purple-900/20",
+    darkColor: "dark:text-purple-400"
   }
 }
 
@@ -39,9 +47,9 @@ export function AudioSection({ audios }: AudioSectionProps) {
   if (audios.length === 0) {
     return (
       <div className="text-center py-8">
-        <Headphones className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-        <h3 className="text-lg font-medium text-gray-900 mb-1">No hay audios disponibles</h3>
-        <p className="text-gray-500 text-sm">Los audios estarán disponibles próximamente</p>
+        <Headphones className="h-12 w-12 text-[#9B9A97] dark:text-[#8C8C8C] mx-auto mb-3" />
+        <h3 className="text-lg font-medium text-[#1A1915] dark:text-[#ECECEC] mb-1">No hay audios disponibles</h3>
+        <p className="text-[#706F6C] dark:text-[#B4B4B4] text-sm">Los audios estarán disponibles próximamente</p>
       </div>
     )
   }
@@ -67,12 +75,14 @@ export function AudioSection({ audios }: AudioSectionProps) {
           const info = categoryInfo[category] || {
             label: "General",
             icon: <Headphones className="h-4 w-4" />,
-            color: "text-gray-600",
-            bgColor: "bg-gray-50"
+            color: "text-[#706F6C]",
+            bgColor: "bg-[#F5F4F0]",
+            darkBgColor: "dark:bg-[#4A4A4A]",
+            darkColor: "dark:text-[#B4B4B4]"
           }
           return (
             <div key={category} className="space-y-3">
-              <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${info.bgColor} ${info.color} w-fit`}>
+              <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${info.bgColor} ${info.darkBgColor} ${info.color} ${info.darkColor} w-fit`}>
                 {info.icon}
                 <span className="text-sm font-medium">{info.label}</span>
                 <span className="text-xs opacity-70">({groupedAudios[category].length})</span>
@@ -142,7 +152,7 @@ function AudioPlayer({ audio }: { audio: Audio }) {
   const hasValidUrl = audio.url && audio.url.trim() !== ""
 
   return (
-    <div className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors">
+    <div className="bg-[#F5F4F0] dark:bg-[#2F2F2F] rounded-xl p-4 hover:bg-[#ECEAE5] dark:hover:bg-[#393939] transition-colors border border-[#E5E4E0] dark:border-[#4A4A4A]">
       {hasValidUrl && (
         <audio
           ref={audioRef}
@@ -161,8 +171,8 @@ function AudioPlayer({ audio }: { audio: Audio }) {
           disabled={!hasValidUrl}
           className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
             hasValidUrl
-              ? 'bg-green-600 text-white hover:bg-green-700 shadow-md hover:shadow-lg'
-              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              ? 'bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600 shadow-md hover:shadow-lg'
+              : 'bg-[#E5E4E0] dark:bg-[#4A4A4A] text-[#9B9A97] dark:text-[#8C8C8C] cursor-not-allowed'
           }`}
         >
           {isPlaying ? (
@@ -175,9 +185,9 @@ function AudioPlayer({ audio }: { audio: Audio }) {
         {/* Info and Progress */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-1">
-            <h4 className="font-medium text-gray-900 truncate pr-2">{audio.title}</h4>
+            <h4 className="font-medium text-[#1A1915] dark:text-[#ECECEC] truncate pr-2">{audio.title}</h4>
             {audio.duration && (
-              <div className="flex items-center gap-1 text-xs text-gray-500 flex-shrink-0">
+              <div className="flex items-center gap-1 text-xs text-[#706F6C] dark:text-[#B4B4B4] flex-shrink-0">
                 <Clock className="h-3 w-3" />
                 <span>{audio.duration}</span>
               </div>
@@ -185,15 +195,15 @@ function AudioPlayer({ audio }: { audio: Audio }) {
           </div>
 
           {audio.description && (
-            <p className="text-sm text-gray-500 truncate mb-2">{audio.description}</p>
+            <p className="text-sm text-[#706F6C] dark:text-[#B4B4B4] truncate mb-2">{audio.description}</p>
           )}
 
           {/* Progress Bar */}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-400 w-10">{formatTime(currentTime)}</span>
-            <div className="flex-1 relative h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <span className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] w-10">{formatTime(currentTime)}</span>
+            <div className="flex-1 relative h-1.5 bg-[#E5E4E0] dark:bg-[#4A4A4A] rounded-full overflow-hidden">
               <div
-                className="absolute inset-y-0 left-0 bg-green-600 rounded-full transition-all"
+                className="absolute inset-y-0 left-0 bg-green-600 dark:bg-green-500 rounded-full transition-all"
                 style={{ width: `${progress}%` }}
               />
               <input
@@ -205,7 +215,7 @@ function AudioPlayer({ audio }: { audio: Audio }) {
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
             </div>
-            <span className="text-xs text-gray-400 w-10 text-right">{formatTime(duration)}</span>
+            <span className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] w-10 text-right">{formatTime(duration)}</span>
           </div>
         </div>
       </div>

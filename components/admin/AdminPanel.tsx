@@ -139,20 +139,20 @@ export function AdminPanel() {
   }
 
   return (
-    <div className="bg-gray-50 p-4 lg:p-8">
+    <div className="bg-[#FAF9F7] dark:bg-[#1A1A1A] p-4 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-black">Panel de Administración</h1>
-            <p className="text-gray-600 mt-1">
+            <h1 className="text-3xl font-bold text-[#1A1915] dark:text-[#E5E5E5]">Panel de Administración</h1>
+            <p className="text-[#706F6C] dark:text-[#A0A0A0] mt-1">
               Gestiona usuarios, videos y visualiza estadísticas del seminario
             </p>
           </div>
           <Button
             onClick={handleRefresh}
             variant="outline"
-            className="border-gray-300 flex items-center gap-2"
+            className="border-[#E5E4E0] dark:border-[#333333] flex items-center gap-2"
             disabled={loading}
           >
             <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />

@@ -41,9 +41,9 @@ export function PDFSection({ pdfUrl, title = "Manual de la Sesión", sessionId }
   if (!pdfUrl) {
     return (
       <div className="text-center py-8">
-        <FileText className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-        <h3 className="text-lg font-medium text-gray-900 mb-1">PDF no disponible</h3>
-        <p className="text-gray-500 text-sm">El material PDF estará disponible próximamente</p>
+        <FileText className="h-12 w-12 text-[#9B9A97] dark:text-[#8C8C8C] mx-auto mb-3" />
+        <h3 className="text-lg font-medium text-[#1A1915] dark:text-[#ECECEC] mb-1">PDF no disponible</h3>
+        <p className="text-[#706F6C] dark:text-[#B4B4B4] text-sm">El material PDF estará disponible próximamente</p>
       </div>
     )
   }
@@ -56,26 +56,26 @@ export function PDFSection({ pdfUrl, title = "Manual de la Sesión", sessionId }
   }
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
-      <div className="p-4 bg-white rounded-xl shadow-sm">
-        <FileText className="h-10 w-10 text-blue-600" />
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-100 dark:border-blue-800/30">
+      <div className="p-4 bg-white dark:bg-[#393939] rounded-xl shadow-sm">
+        <FileText className="h-10 w-10 text-blue-600 dark:text-blue-400" />
       </div>
 
       <div className="flex-1">
         <div className="flex items-center gap-2 mb-1">
-          <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+          <h3 className="text-lg font-bold text-[#1A1915] dark:text-[#ECECEC]">{title}</h3>
           {viewed && (
-            <CheckCircle2 className="h-5 w-5 text-green-600" />
+            <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
           )}
         </div>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-[#706F6C] dark:text-[#B4B4B4]">
           Descarga el manual completo de esta sesión en formato PDF
         </p>
       </div>
 
       <Button
         onClick={handleDownload}
-        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6 py-3 h-auto shadow-md hover:shadow-lg transition-all"
+        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-xl px-6 py-3 h-auto shadow-md hover:shadow-lg transition-all"
       >
         <Download className="mr-2 h-4 w-4" />
         Descargar PDF

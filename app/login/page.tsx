@@ -76,40 +76,40 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-[#FAF9F7]">
-      <Card className="w-full max-w-md border border-[#E5E4E0] shadow-lg bg-white rounded-3xl">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[#FAF9F7] dark:bg-[#2F2F2F]">
+      <Card className="w-full max-w-md border border-[#E5E4E0] dark:border-[#4A4A4A] shadow-lg bg-white dark:bg-[#393939] rounded-3xl">
         <CardHeader className="text-center pb-2">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-[#DA7756] rounded-2xl">
-              <Zap className="h-10 w-10 text-white" />
+            <div className="p-4 bg-[#DA7756] dark:bg-[#ECECEC] rounded-2xl">
+              <Zap className="h-10 w-10 text-white dark:text-[#2F2F2F]" />
             </div>
           </div>
-          <CardTitle className="text-3xl font-bold text-[#1A1915]">
+          <CardTitle className="text-3xl font-bold text-[#1A1915] dark:text-[#ECECEC]">
             Bienvenido
           </CardTitle>
           <CardDescription className="text-base mt-2">
-            <span className="font-semibold text-[#1A1915]">Seminario Internacional</span>
+            <span className="font-semibold text-[#1A1915] dark:text-[#ECECEC]">Seminario Internacional</span>
             <br />
-            <span className="text-[#706F6C]">Inteligencia Energética</span>
+            <span className="text-[#706F6C] dark:text-[#B4B4B4]">Inteligencia Energética</span>
           </CardDescription>
         </CardHeader>
 
         <CardContent className="pt-4">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="flex items-start gap-2 p-4 bg-red-50 border border-red-100 rounded-xl text-red-700 text-sm">
+              <div className="flex items-start gap-2 p-4 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800/30 rounded-xl text-red-700 dark:text-red-400 text-sm">
                 <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
                 <span>{error}</span>
               </div>
             )}
 
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-semibold text-[#1A1915]">
+              <label htmlFor="email" className="block text-sm font-semibold text-[#1A1915] dark:text-[#ECECEC]">
                 Correo electrónico
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-[#9B9A97]" />
+                  <Mail className="h-5 w-5 text-[#9B9A97] dark:text-[#8C8C8C]" />
                 </div>
                 <input
                   id="email"
@@ -119,19 +119,19 @@ export default function LoginPage() {
                   required
                   autoFocus
                   autoComplete="email"
-                  className="w-full pl-10 pr-4 py-3 border border-[#E5E4E0] rounded-xl shadow-sm bg-[#F5F4F0]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#DA7756]/50 focus:border-[#DA7756] transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 border border-[#E5E4E0] dark:border-[#4A4A4A] rounded-xl shadow-sm bg-[#F5F4F0]/50 dark:bg-[#393939] focus:bg-white dark:focus:bg-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#DA7756]/50 dark:focus:ring-[#ECECEC]/50 focus:border-[#DA7756] dark:focus:border-[#ECECEC] transition-all duration-200 text-[#1A1915] dark:text-[#ECECEC] placeholder-[#9B9A97] dark:placeholder-[#8C8C8C]"
                   placeholder="tu@email.com"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-semibold text-[#1A1915]">
+              <label htmlFor="password" className="block text-sm font-semibold text-[#1A1915] dark:text-[#ECECEC]">
                 Contraseña
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-[#9B9A97]" />
+                  <Lock className="h-5 w-5 text-[#9B9A97] dark:text-[#8C8C8C]" />
                 </div>
                 <input
                   id="password"
@@ -140,13 +140,13 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
-                  className="w-full pl-10 pr-12 py-3 border border-[#E5E4E0] rounded-xl shadow-sm bg-[#F5F4F0]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#DA7756]/50 focus:border-[#DA7756] transition-all duration-200"
+                  className="w-full pl-10 pr-12 py-3 border border-[#E5E4E0] dark:border-[#4A4A4A] rounded-xl shadow-sm bg-[#F5F4F0]/50 dark:bg-[#393939] focus:bg-white dark:focus:bg-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#DA7756]/50 dark:focus:ring-[#ECECEC]/50 focus:border-[#DA7756] dark:focus:border-[#ECECEC] transition-all duration-200 text-[#1A1915] dark:text-[#ECECEC] placeholder-[#9B9A97] dark:placeholder-[#8C8C8C]"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#9B9A97] hover:text-[#706F6C] transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#9B9A97] dark:text-[#8C8C8C] hover:text-[#706F6C] dark:hover:text-[#B4B4B4] transition-colors"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -177,13 +177,13 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-[#E5E4E0] text-center space-y-3">
-            <p className="text-sm text-[#9B9A97]">
+          <div className="mt-6 pt-6 border-t border-[#E5E4E0] dark:border-[#4A4A4A] text-center space-y-3">
+            <p className="text-sm text-[#9B9A97] dark:text-[#8C8C8C]">
               Acceso exclusivo para participantes del seminario
             </p>
-            <p className="text-sm text-[#706F6C]">
+            <p className="text-sm text-[#706F6C] dark:text-[#B4B4B4]">
               ¿No tienes cuenta?{" "}
-              <Link href="/register" className="text-[#DA7756] font-semibold hover:underline">
+              <Link href="/register" className="text-[#DA7756] dark:text-[#ECECEC] font-semibold hover:underline">
                 Regístrate aquí
               </Link>
             </p>

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { SessionProvider } from "@/components/providers/SessionProvider"
+import { ThemeProvider } from "@/components/ThemeProvider"
 import { Sidebar } from "@/components/Sidebar"
 import { Footer } from "@/components/Footer"
 
@@ -23,19 +24,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased min-h-screen font-sans text-gray-900 flex flex-col bg-[#F7F8FA]`}>
-        <SessionProvider>
-          <div className="flex flex-1">
-            {/* Sidebar (Desktop and Mobile) */}
-            <Sidebar />
+      <body className={`${inter.variable} antialiased min-h-screen font-sans text-[#1A1915] dark:text-[#E5E5E5] flex flex-col bg-[#FAF9F7] dark:bg-[#1A1A1A]`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SessionProvider>
+            <div className="flex flex-1 min-h-screen">
+              {/* Sidebar (Desktop and Mobile) */}
+              <Sidebar />
 
-            {/* Main Content */}
-            <main className="flex-1 lg:ml-0 p-2 lg:p-8 lg:mt-0 mt-16">
-              {children}
-            </main>
-          </div>
-          <Footer />
-        </SessionProvider>
+              {/* Main Content */}
+              <main className="flex-1 lg:ml-80 p-2 lg:p-8 lg:mt-0 mt-16">
+                {children}
+              </main>
+            </div>
+            <Footer />
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

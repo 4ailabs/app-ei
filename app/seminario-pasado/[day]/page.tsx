@@ -49,10 +49,10 @@ export default function DayPage() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-[#FAF9F7] flex items-center justify-center">
+      <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#DA7756] mx-auto mb-4"></div>
-          <p className="text-[#706F6C]">Cargando...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#DA7756] dark:border-[#DA7756] mx-auto mb-4"></div>
+          <p className="text-[#706F6C] dark:text-[#A0A0A0]">Cargando...</p>
         </div>
       </div>
     )
@@ -78,12 +78,12 @@ export default function DayPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF9F7]">
+    <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A]">
       <div className="container mx-auto px-4 py-8 pb-24">
         {/* Back Button */}
         <div className="mb-6 animate-fade-in">
           <Link href="/seminario-pasado">
-            <Button variant="ghost" className="group hover:bg-[#F5F4F0] transition-all text-[#706F6C]">
+            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all text-[#706F6C] dark:text-[#A0A0A0]">
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <Home className="mr-2 h-4 w-4" />
               Volver a Seminario On Line
@@ -93,7 +93,7 @@ export default function DayPage() {
 
         <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className="bg-white rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0]">
+          <div className="bg-white dark:bg-[#252525] rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
             <div className={`p-8 lg:p-12 bg-gradient-to-br ${colors.gradient} text-white relative overflow-hidden`}>
               {/* Background Pattern */}
               <div className="absolute inset-0 opacity-10">
@@ -141,8 +141,8 @@ export default function DayPage() {
             </div>
           </div>
 
-          {/* Grid de Videos - 4 tarjetas (2x2 en desktop) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Grid de Videos - 2 columnas */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {dia.videos.map((video, index) => (
               <VideoCard
                 key={video.id}
@@ -163,11 +163,11 @@ export default function DayPage() {
 
           {/* Video Player Modal */}
           {selectedVideo && (
-            <div className="fixed inset-0 bg-[#1A1915]/80 z-50 flex items-center justify-center p-4 animate-fade-in">
-              <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="fixed inset-0 bg-[#1A1915]/80 dark:bg-[#000000]/80 z-50 flex items-center justify-center p-4 animate-fade-in">
+              <div className="bg-white dark:bg-[#252525] rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="sticky top-0 bg-white border-b border-[#E5E4E0] p-4 flex items-center justify-between z-10">
-                  <h2 className="text-xl font-bold text-[#1A1915]">{selectedVideo.title}</h2>
+                <div className="sticky top-0 bg-white dark:bg-[#252525] border-b border-[#E5E4E0] dark:border-[#333333] p-4 flex items-center justify-between z-10">
+                  <h2 className="text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5]">{selectedVideo.title}</h2>
                   <Button
                     variant="ghost"
                     onClick={() => setSelectedVideo(null)}
