@@ -76,21 +76,21 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-[#F7F8FA]">
-      <Card className="w-full max-w-md border border-gray-200 shadow-lg bg-white rounded-3xl">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[#FAF9F7]">
+      <Card className="w-full max-w-md border border-[#E5E4E0] shadow-lg bg-white rounded-3xl">
         <CardHeader className="text-center pb-2">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-black rounded-2xl">
+            <div className="p-4 bg-[#DA7756] rounded-2xl">
               <Zap className="h-10 w-10 text-white" />
             </div>
           </div>
-          <CardTitle className="text-3xl font-bold text-black">
+          <CardTitle className="text-3xl font-bold text-[#1A1915]">
             Bienvenido
           </CardTitle>
           <CardDescription className="text-base mt-2">
-            <span className="font-semibold text-gray-700">Seminario Internacional</span>
+            <span className="font-semibold text-[#1A1915]">Seminario Internacional</span>
             <br />
-            <span className="text-gray-500">Inteligencia Energética</span>
+            <span className="text-[#706F6C]">Inteligencia Energética</span>
           </CardDescription>
         </CardHeader>
 
@@ -104,12 +104,12 @@ export default function LoginPage() {
             )}
 
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
+              <label htmlFor="email" className="block text-sm font-semibold text-[#1A1915]">
                 Correo electrónico
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
+                  <Mail className="h-5 w-5 text-[#9B9A97]" />
                 </div>
                 <input
                   id="email"
@@ -119,19 +119,19 @@ export default function LoginPage() {
                   required
                   autoFocus
                   autoComplete="email"
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl shadow-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 border border-[#E5E4E0] rounded-xl shadow-sm bg-[#F5F4F0]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#DA7756]/50 focus:border-[#DA7756] transition-all duration-200"
                   placeholder="tu@email.com"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
+              <label htmlFor="password" className="block text-sm font-semibold text-[#1A1915]">
                 Contraseña
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-5 w-5 text-[#9B9A97]" />
                 </div>
                 <input
                   id="password"
@@ -140,13 +140,13 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
-                  className="w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl shadow-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200"
+                  className="w-full pl-10 pr-12 py-3 border border-[#E5E4E0] rounded-xl shadow-sm bg-[#F5F4F0]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#DA7756]/50 focus:border-[#DA7756] transition-all duration-200"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#9B9A97] hover:text-[#706F6C] transition-colors"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -157,7 +157,8 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full py-6 text-base font-semibold bg-black hover:bg-gray-800 text-white border-0 shadow-lg transition-all duration-300 rounded-full group"
+              size="lg"
+              className="w-full py-6 font-semibold shadow-md hover:shadow-lg group"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
@@ -176,13 +177,13 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-gray-100 text-center space-y-3">
-            <p className="text-sm text-gray-500">
+          <div className="mt-6 pt-6 border-t border-[#E5E4E0] text-center space-y-3">
+            <p className="text-sm text-[#9B9A97]">
               Acceso exclusivo para participantes del seminario
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-[#706F6C]">
               ¿No tienes cuenta?{" "}
-              <Link href="/register" className="text-black font-semibold hover:underline">
+              <Link href="/register" className="text-[#DA7756] font-semibold hover:underline">
                 Regístrate aquí
               </Link>
             </p>

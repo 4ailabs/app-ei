@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Zap, Mail, Lock, User, ArrowRight, AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react"
@@ -17,7 +16,6 @@ export default function RegisterPage() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -75,19 +73,19 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-[#F7F8FA]">
-      <Card className="w-full max-w-md shadow-xl border-gray-200">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[#FAF9F7]">
+      <Card className="w-full max-w-md shadow-xl border-[#E5E4E0]">
         <CardHeader className="text-center space-y-4 pb-8">
           <div className="flex justify-center">
-            <div className="p-4 bg-black rounded-2xl">
+            <div className="p-4 bg-[#DA7756] rounded-2xl">
               <Zap className="h-8 w-8 text-white" />
             </div>
           </div>
           <div>
-            <CardTitle className="text-3xl font-bold text-black">
+            <CardTitle className="text-3xl font-bold text-[#1A1915]">
               Crear Cuenta
             </CardTitle>
-            <CardDescription className="text-gray-600 mt-2">
+            <CardDescription className="text-[#706F6C] mt-2">
               Regístrate para acceder al seminario
             </CardDescription>
           </div>
@@ -97,25 +95,25 @@ export default function RegisterPage() {
           {success ? (
             <div className="space-y-6 text-center py-8 transition-all duration-500 ease-in-out">
               <div className="flex justify-center">
-                <div className="p-6 bg-green-100 rounded-full transition-transform duration-500 scale-100">
-                  <CheckCircle className="h-16 w-16 text-green-600" />
+                <div className="p-6 bg-[#2ca58d]/20 rounded-full transition-transform duration-500 scale-100">
+                  <CheckCircle className="h-16 w-16 text-[#2ca58d]" />
                 </div>
               </div>
               <div className="space-y-3">
-                <h3 className="text-2xl font-bold text-green-700 mb-2">
+                <h3 className="text-2xl font-bold text-[#2ca58d] mb-2">
                   ¡Registro Exitoso!
                 </h3>
-                <div className="p-4 bg-green-50 border-2 border-green-200 rounded-lg shadow-sm">
-                  <p className="text-gray-700 font-medium mb-2">
+                <div className="p-4 bg-[#2ca58d]/10 border-2 border-[#2ca58d]/30 rounded-lg shadow-sm">
+                  <p className="text-[#1A1915] font-medium mb-2">
                     Tu cuenta ha sido creada exitosamente
                   </p>
-                  <p className="text-sm text-gray-600">
-                    Tu cuenta está pendiente de aprobación por un administrador. 
+                  <p className="text-sm text-[#706F6C]">
+                    Tu cuenta está pendiente de aprobación por un administrador.
                     Recibirás un email cuando tu cuenta sea aprobada.
                   </p>
                 </div>
                 <Link href="/login">
-                  <Button className="w-full bg-black text-white hover:bg-gray-800 mt-4">
+                  <Button size="lg" className="w-full mt-4 shadow-md hover:shadow-lg">
                     Ir a Iniciar Sesión
                   </Button>
                 </Link>
@@ -131,16 +129,16 @@ export default function RegisterPage() {
               )}
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-sm font-medium text-[#1A1915]">
                   Nombre Completo
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#9B9A97]" />
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                    className="w-full pl-10 pr-4 py-3 border border-[#E5E4E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DA7756]/50 focus:border-[#DA7756]"
                     placeholder="Tu nombre completo"
                     required
                   />
@@ -148,16 +146,16 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-sm font-medium text-[#1A1915]">
                   Email
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#9B9A97]" />
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                    className="w-full pl-10 pr-4 py-3 border border-[#E5E4E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DA7756]/50 focus:border-[#DA7756]"
                     placeholder="tu@email.com"
                     required
                   />
@@ -165,16 +163,16 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-sm font-medium text-[#1A1915]">
                   Contraseña
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#9B9A97]" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                    className="w-full pl-10 pr-12 py-3 border border-[#E5E4E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DA7756]/50 focus:border-[#DA7756]"
                     placeholder="••••••••"
                     required
                     minLength={8}
@@ -182,27 +180,27 @@ export default function RegisterPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#9B9A97] hover:text-[#706F6C]"
                   >
                     {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
                 </div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-[#9B9A97]">
                   Mínimo 8 caracteres, incluir mayúsculas, minúsculas y números
                 </p>
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-sm font-medium text-[#1A1915]">
                   Confirmar Contraseña
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#9B9A97]" />
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                    className="w-full pl-10 pr-12 py-3 border border-[#E5E4E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DA7756]/50 focus:border-[#DA7756]"
                     placeholder="••••••••"
                     required
                     minLength={8}
@@ -210,7 +208,7 @@ export default function RegisterPage() {
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#9B9A97] hover:text-[#706F6C]"
                   >
                     {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
@@ -219,7 +217,8 @@ export default function RegisterPage() {
 
               <Button
                 type="submit"
-                className="w-full bg-black text-white hover:bg-gray-800 py-3 text-base font-semibold"
+                size="lg"
+                className="w-full py-6 font-semibold shadow-md hover:shadow-lg"
                 disabled={loading}
               >
                 {loading ? "Registrando..." : "Crear Cuenta"}
@@ -227,16 +226,16 @@ export default function RegisterPage() {
               </Button>
 
               <div className="text-center pt-4">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-[#706F6C]">
                   ¿Ya tienes cuenta?{" "}
-                  <Link href="/login" className="text-black font-semibold hover:underline">
+                  <Link href="/login" className="text-[#DA7756] font-semibold hover:underline">
                     Inicia Sesión
                   </Link>
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-gray-200">
-                <p className="text-xs text-gray-500 text-center">
+              <div className="pt-4 border-t border-[#E5E4E0]">
+                <p className="text-xs text-[#9B9A97] text-center">
                   Al registrarte, tu cuenta estará pendiente de aprobación por un administrador.
                 </p>
               </div>

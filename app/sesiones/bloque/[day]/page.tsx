@@ -136,22 +136,22 @@ export default async function BloquePage({ params }: BloquePageProps) {
   const completedSessions = bloqueSessions.filter(s => progressMap[s.id]?.completed).length
   const progressPercentage = Math.round((completedSessions / bloqueSessions.length) * 100)
 
-  // Colores neutros para todos los bloques
+  // Paleta de colores estilo Claude
   const bloqueColors = [
-    { gradient: "from-gray-800 to-gray-900", accent: "bg-gray-700" },
-    { gradient: "from-gray-700 to-gray-800", accent: "bg-gray-600" },
-    { gradient: "from-gray-900 to-black", accent: "bg-gray-800" },
+    { gradient: "from-[#264653] to-[#2a5563]", accent: "bg-[#264653]", hover: "hover:bg-[#2a5563]" },
+    { gradient: "from-[#2ca58d] to-[#2fb59d]", accent: "bg-[#2ca58d]", hover: "hover:bg-[#2fb59d]" },
+    { gradient: "from-[#a682ff] to-[#b592ff]", accent: "bg-[#a682ff]", hover: "hover:bg-[#b592ff]" },
   ]
 
   const colors = bloqueColors[(dayNumber - 1) % bloqueColors.length]
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA]">
+    <div className="min-h-screen bg-[#f9f9f9]">
       <div className="container mx-auto px-4 py-8 pb-24">
         {/* Back Button */}
         <div className="mb-6 animate-fade-in">
           <Link href="/sesiones">
-            <Button variant="ghost" className="group hover:bg-gray-100 transition-all rounded-full">
+            <Button variant="ghost" className="group hover:bg-[#f9f9f9] transition-all rounded-full text-[#264653]">
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <BookOpen className="mr-2 h-4 w-4" />
               Volver a Sesiones
@@ -161,9 +161,9 @@ export default async function BloquePage({ params }: BloquePageProps) {
 
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="bg-white rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-gray-200">
+          <div className="bg-white rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E5E5]">
             <div className={`p-8 lg:p-12 bg-gradient-to-br ${colors.gradient} text-white relative overflow-hidden`}>
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -mr-32 -mt-32"></div>
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4">
                   <Calendar className="h-8 w-8 text-white/90" />
@@ -172,7 +172,7 @@ export default async function BloquePage({ params }: BloquePageProps) {
                   </span>
                 </div>
                 <div className="flex items-center gap-4 mb-4">
-                  <div className={`w-20 h-20 rounded-xl ${colors.accent} bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-3xl shadow-lg`}>
+                  <div className={`w-20 h-20 rounded-xl ${colors.accent} bg-white/10 backdrop-blur-sm flex items-center justify-center font-bold text-3xl shadow-sm`}>
                     {dayNumber}
                   </div>
                   <div>
@@ -200,17 +200,17 @@ export default async function BloquePage({ params }: BloquePageProps) {
             </div>
 
             {/* Progress Bar */}
-            <div className="px-8 py-4 bg-gray-50 border-t border-gray-200">
+            <div className="px-8 py-4 bg-[#f9f9f9] border-t border-[#E5E5E5]">
               <div className="flex items-center justify-between text-sm mb-2">
-                <span className="text-gray-600">Progreso del Bloque</span>
-                <span className={`font-bold ${progressPercentage === 100 ? 'text-green-600' : 'text-gray-900'}`}>
+                <span className="text-[#264653]/70">Progreso del Bloque</span>
+                <span className={`font-bold ${progressPercentage === 100 ? 'text-[#2ca58d]' : 'text-[#264653]'}`}>
                   {progressPercentage}%
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+              <div className="w-full bg-[#E5E5E5] rounded-full h-2 overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
-                    progressPercentage === 100 ? 'bg-green-600' : 'bg-black'
+                    progressPercentage === 100 ? 'bg-[#2ca58d]' : colors.accent
                   }`}
                   style={{ width: `${progressPercentage}%` }}
                 />

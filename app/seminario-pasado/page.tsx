@@ -5,24 +5,25 @@ import { Calendar, Video as VideoIcon, ArrowLeft, Home, Play, CheckCircle2, Cloc
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
+// Paleta de colores estilo Claude de Anthropic
 const dayColors = [
   {
-    gradient: "from-gray-800 via-gray-700 to-gray-800",
-    accent: "bg-gray-700",
-    text: "text-gray-700",
-    bg: "bg-gray-50"
+    gradient: "from-[#DA7756] to-[#C4684A]",
+    accent: "bg-[#DA7756]",
+    text: "text-[#DA7756]",
+    bg: "bg-[#DA7756]/10"
   },
   {
-    gradient: "from-gray-900 via-gray-800 to-gray-900",
-    accent: "bg-gray-800",
-    text: "text-gray-700",
-    bg: "bg-gray-50"
+    gradient: "from-[#2ca58d] to-[#259078]",
+    accent: "bg-[#2ca58d]",
+    text: "text-[#2ca58d]",
+    bg: "bg-[#2ca58d]/10"
   },
   {
-    gradient: "from-black via-gray-900 to-black",
-    accent: "bg-black",
-    text: "text-gray-700",
-    bg: "bg-gray-50"
+    gradient: "from-[#706F6C] to-[#1A1915]",
+    accent: "bg-[#706F6C]",
+    text: "text-[#706F6C]",
+    bg: "bg-[#F5F4F0]"
   }
 ]
 
@@ -39,12 +40,12 @@ export default async function SeminarioPasadoPage() {
   }, 0)
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA]">
+    <div className="min-h-screen bg-[#FAF9F7]">
       <div className="container mx-auto px-4 py-8 pb-24">
         {/* Back Button */}
         <div className="mb-6 animate-fade-in">
           <Link href="/">
-            <Button variant="ghost" className="group hover:bg-gray-100 transition-all rounded-full">
+            <Button variant="ghost" className="group hover:bg-[#F5F4F0] transition-all text-[#706F6C]">
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <Home className="mr-2 h-4 w-4" />
               Volver al Dashboard
@@ -54,27 +55,29 @@ export default async function SeminarioPasadoPage() {
 
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="bg-white rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-gray-200">
-            <div className="p-8 lg:p-12 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
-              <div>
+          <div className="bg-white rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0]">
+            <div className="p-8 lg:p-12 bg-gradient-to-br from-[#DA7756] via-[#C4684A] to-[#1A1915] text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#E89A7F] opacity-10 rounded-full blur-3xl"></div>
+              <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4">
-                  <Calendar className="h-8 w-8 text-yellow-400" />
-                  <span className="text-sm font-semibold uppercase tracking-wider text-yellow-400">
+                  <Calendar className="h-8 w-8 text-white/90" />
+                  <span className="text-sm font-semibold uppercase tracking-wider text-white/90">
                     Seminario On Line
                   </span>
                 </div>
                 <h1 className="text-3xl md:text-5xl font-bold mb-3">
                   Videos del Seminario
                 </h1>
-                <p className="text-lg text-gray-300 mb-6">
+                <p className="text-lg text-white/80 mb-6">
                   Accede a todos los videos del seminario online. Organizados por día para facilitar tu navegación.
                 </p>
-                <div className="flex flex-wrap items-center gap-6 text-sm text-gray-300">
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+                <div className="flex flex-wrap items-center gap-6 text-sm">
+                  <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full">
                     <VideoIcon className="h-5 w-5" />
                     <span className="font-semibold">{videosWithStreamId} / {totalVideos} videos disponibles</span>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+                  <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full">
                     <Calendar className="h-5 w-5" />
                     <span className="font-semibold">{seminarioPasado.length} días</span>
                   </div>
@@ -83,8 +86,8 @@ export default async function SeminarioPasadoPage() {
             </div>
           </div>
 
-          {/* Grid de Días */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Lista de Días */}
+          <div className="flex flex-col gap-4 max-w-2xl mx-auto">
             {seminarioPasado.map((dia, index) => {
               const colors = dayColors[index % dayColors.length]
               const videosConStreamId = dia.videos.filter(v => v.cloudflareStreamId)
@@ -96,12 +99,13 @@ export default async function SeminarioPasadoPage() {
                   href={`/seminario-pasado/${dia.day}`}
                   className="group block"
                 >
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-gray-300 h-full flex flex-col">
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-[#E5E4E0] hover:border-[#DA7756]/30 h-full flex flex-col">
                     {/* Header con Gradiente */}
-                    <div className={`bg-gradient-to-br ${colors.gradient} p-6 text-white`}>
-                      <div>
+                    <div className={`bg-gradient-to-br ${colors.gradient} p-6 text-white relative overflow-hidden`}>
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl -mr-16 -mt-16"></div>
+                      <div className="relative z-10">
                         <div className="flex items-center justify-between mb-4">
-                          <div className={`w-16 h-16 rounded-xl ${colors.accent} bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-2xl shadow-lg`}>
+                          <div className={`w-16 h-16 rounded-xl ${colors.accent} bg-white/10 backdrop-blur-sm flex items-center justify-center font-bold text-2xl shadow-sm`}>
                             {dia.day}
                           </div>
                           {hasVideos && (
@@ -132,27 +136,27 @@ export default async function SeminarioPasadoPage() {
                           <div
                             key={video.id}
                             className={`flex items-center gap-2 text-sm p-2 rounded-lg ${
-                              video.cloudflareStreamId ? colors.bg : 'bg-gray-50'
+                              video.cloudflareStreamId ? colors.bg : 'bg-[#F5F4F0]'
                             }`}
                           >
                             <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
-                              video.cloudflareStreamId ? colors.accent : 'bg-gray-300'
+                              video.cloudflareStreamId ? colors.accent : 'bg-[#E5E4E0]'
                             }`}>
                               {video.cloudflareStreamId ? (
                                 <CheckCircle2 className="h-4 w-4 text-white" />
                               ) : (
-                                <Clock className="h-3 w-3 text-white" />
+                                <Clock className="h-3 w-3 text-[#9B9A97]" />
                               )}
                             </div>
                             <span className={`flex-1 truncate ${
-                              video.cloudflareStreamId ? 'text-gray-900 font-medium' : 'text-gray-400'
+                              video.cloudflareStreamId ? 'text-[#1A1915] font-medium' : 'text-[#9B9A97]'
                             }`}>
                               {video.title}
                             </span>
                           </div>
                         ))}
                         {dia.videos.length > 3 && (
-                          <p className="text-xs text-gray-400 text-center">
+                          <p className="text-xs text-[#9B9A97] text-center">
                             +{dia.videos.length - 3} videos más
                           </p>
                         )}
@@ -160,10 +164,10 @@ export default async function SeminarioPasadoPage() {
 
                       {/* Action Button */}
                       <div
-                        className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
+                        className={`w-full py-3 px-4 rounded-full font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
                           hasVideos
-                            ? `${colors.accent} text-white group-hover:opacity-90 group-hover:scale-105`
-                            : 'bg-gray-100 text-gray-400'
+                            ? `${colors.accent} text-white group-hover:shadow-md active:scale-[0.98]`
+                            : 'bg-[#F5F4F0] text-[#9B9A97]'
                         }`}
                       >
                         <Play className="h-4 w-4" />

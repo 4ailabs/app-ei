@@ -11,24 +11,25 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Video } from "@/data/sessions"
 
+// Paleta de colores estilo Claude de Anthropic
 const dayColors = [
   {
-    gradient: "from-gray-800 via-gray-700 to-gray-800",
-    accent: "bg-gray-700",
-    text: "text-gray-700",
-    bg: "bg-gray-50"
+    gradient: "from-[#DA7756] to-[#C4684A]",
+    accent: "bg-[#DA7756]",
+    text: "text-[#DA7756]",
+    bg: "bg-[#DA7756]/10"
   },
   {
-    gradient: "from-gray-900 via-gray-800 to-gray-900",
-    accent: "bg-gray-800",
-    text: "text-gray-700",
-    bg: "bg-gray-50"
+    gradient: "from-[#2ca58d] to-[#259078]",
+    accent: "bg-[#2ca58d]",
+    text: "text-[#2ca58d]",
+    bg: "bg-[#2ca58d]/10"
   },
   {
-    gradient: "from-black via-gray-900 to-black",
-    accent: "bg-black",
-    text: "text-gray-700",
-    bg: "bg-gray-50"
+    gradient: "from-[#706F6C] to-[#1A1915]",
+    accent: "bg-[#706F6C]",
+    text: "text-[#706F6C]",
+    bg: "bg-[#F5F4F0]"
   }
 ]
 
@@ -48,10 +49,10 @@ export default function DayPage() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-[#F7F8FA] flex items-center justify-center">
+      <div className="min-h-screen bg-[#FAF9F7] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#DA7756] mx-auto mb-4"></div>
+          <p className="text-[#706F6C]">Cargando...</p>
         </div>
       </div>
     )
@@ -77,12 +78,12 @@ export default function DayPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA]">
+    <div className="min-h-screen bg-[#FAF9F7]">
       <div className="container mx-auto px-4 py-8 pb-24">
         {/* Back Button */}
         <div className="mb-6 animate-fade-in">
           <Link href="/seminario-pasado">
-            <Button variant="ghost" className="group hover:bg-gray-100 transition-all rounded-full">
+            <Button variant="ghost" className="group hover:bg-[#F5F4F0] transition-all text-[#706F6C]">
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <Home className="mr-2 h-4 w-4" />
               Volver a Seminario On Line
@@ -92,7 +93,7 @@ export default function DayPage() {
 
         <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className="bg-white rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-gray-200">
+          <div className="bg-white rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0]">
             <div className={`p-8 lg:p-12 bg-gradient-to-br ${colors.gradient} text-white relative overflow-hidden`}>
               {/* Background Pattern */}
               <div className="absolute inset-0 opacity-10">
@@ -162,20 +163,19 @@ export default function DayPage() {
 
           {/* Video Player Modal */}
           {selectedVideo && (
-            <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 animate-fade-in">
+            <div className="fixed inset-0 bg-[#1A1915]/80 z-50 flex items-center justify-center p-4 animate-fade-in">
               <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between z-10">
-                  <h2 className="text-xl font-bold text-gray-900">{selectedVideo.title}</h2>
+                <div className="sticky top-0 bg-white border-b border-[#E5E4E0] p-4 flex items-center justify-between z-10">
+                  <h2 className="text-xl font-bold text-[#1A1915]">{selectedVideo.title}</h2>
                   <Button
                     variant="ghost"
                     onClick={() => setSelectedVideo(null)}
-                    className="rounded-full"
                   >
                     <X className="h-5 w-5" />
                   </Button>
                 </div>
-                
+
                 {/* Video Player */}
                 <div className="p-6">
                   <VideoSection videos={[selectedVideo]} />

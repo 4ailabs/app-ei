@@ -9,18 +9,18 @@ export function Navbar() {
   const { data: session } = useSession()
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <nav className="sticky top-0 z-50 bg-[#FAF9F7] border-b border-[#E5E4E0]">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="p-2 bg-black rounded-lg">
+            <div className="p-2 bg-[#DA7756] rounded-lg">
               <Zap className="h-5 w-5 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-lg text-black">
+              <span className="font-bold text-lg text-[#1A1915]">
                 Inteligencia Energética
               </span>
-              <span className="text-[10px] text-gray-500 -mt-1 hidden sm:block">
+              <span className="text-[10px] text-[#9B9A97] -mt-1 hidden sm:block">
                 Seminario Internacional
               </span>
             </div>
@@ -32,26 +32,26 @@ export function Navbar() {
                 <Link href="/admin">
                   <Button
                     variant="ghost"
-                    className="flex items-center gap-2 text-gray-500 hover:bg-gray-100 hover:text-black transition-colors rounded-full"
+                    className="flex items-center gap-2 text-[#706F6C] hover:bg-[#F5F4F0] hover:text-[#1A1915] transition-colors rounded-full"
                   >
                     <Settings className="h-4 w-4" />
                     <span className="hidden sm:inline">Admin</span>
                   </Button>
                 </Link>
-                <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full">
-                  <div className="p-1 bg-black rounded-full">
+                <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-[#F5F4F0] rounded-full">
+                  <div className="p-1 bg-[#DA7756] rounded-full">
                     <User className="h-3 w-3 text-white" />
                   </div>
-                  <span className="text-sm text-gray-700 font-medium">
+                  <span className="text-sm text-[#1A1915] font-medium">
                     {session.user?.email?.split('@')[0]}
                   </span>
                 </div>
                 <Button
                   variant="ghost"
                   onClick={() => {
-                    signOut({ 
+                    signOut({
                       callbackUrl: "/login",
-                      redirect: true 
+                      redirect: true
                     }).catch((error) => {
                       console.error("Error al cerrar sesión:", error)
                       // Fallback: redirigir manualmente si signOut falla
@@ -60,7 +60,7 @@ export function Navbar() {
                       }
                     })
                   }}
-                  className="flex items-center gap-2 text-gray-500 hover:bg-gray-100 hover:text-black transition-colors rounded-full"
+                  className="flex items-center gap-2 text-[#706F6C] hover:bg-[#F5F4F0] hover:text-[#1A1915] transition-colors rounded-full"
                 >
                   <LogOut className="h-4 w-4" />
                   <span className="hidden sm:inline">Salir</span>

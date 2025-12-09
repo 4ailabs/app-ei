@@ -113,20 +113,20 @@ export default async function SesionesPage() {
     }
   }
 
-  // Colores neutros para todos los bloques
+  // Paleta de colores estilo Claude de Anthropic
   const bloqueColors = [
-    { gradient: "from-gray-800 to-gray-900", accent: "bg-gray-700", text: "text-gray-700", bg: "bg-gray-50" },
-    { gradient: "from-gray-700 to-gray-800", accent: "bg-gray-600", text: "text-gray-700", bg: "bg-gray-50" },
-    { gradient: "from-gray-900 to-black", accent: "bg-gray-800", text: "text-gray-700", bg: "bg-gray-50" },
+    { gradient: "from-[#DA7756] to-[#C4684A]", accent: "bg-[#DA7756]", text: "text-[#DA7756]", bg: "bg-[#FAF9F7]", hover: "hover:bg-[#C4684A]" },
+    { gradient: "from-[#2ca58d] to-[#259078]", accent: "bg-[#2ca58d]", text: "text-[#2ca58d]", bg: "bg-[#FAF9F7]", hover: "hover:bg-[#259078]" },
+    { gradient: "from-[#706F6C] to-[#1A1915]", accent: "bg-[#706F6C]", text: "text-[#706F6C]", bg: "bg-[#FAF9F7]", hover: "hover:bg-[#1A1915]" },
   ]
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA]">
+    <div className="min-h-screen bg-[#FAF9F7]">
       <div className="container mx-auto px-4 py-8 pb-24">
         {/* Back Button */}
         <div className="mb-6 animate-fade-in">
           <Link href="/">
-            <Button variant="ghost" className="group hover:bg-gray-100 transition-all rounded-full">
+            <Button variant="ghost" className="group hover:bg-[#F5F4F0] transition-all rounded-full text-[#706F6C]">
               <Home className="mr-2 h-4 w-4" />
               Volver al Dashboard
             </Button>
@@ -137,20 +137,20 @@ export default async function SesionesPage() {
           {/* Header */}
           <div className="mb-8 animate-fade-in-up">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-black rounded-xl">
+              <div className="p-3 bg-[#DA7756] rounded-xl">
                 <BookOpen className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl lg:text-4xl font-bold text-black">Sesiones del Seminario</h1>
-                <p className="text-gray-600 mt-1">
+                <h1 className="text-3xl lg:text-4xl font-bold text-[#1A1915]">Sesiones del Seminario</h1>
+                <p className="text-[#706F6C] mt-1">
                   {sessions.length} sesiones organizadas en {bloqueNumbers.length} bloques
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Bloques Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Bloques Lista */}
+          <div className="flex flex-col gap-4 max-w-2xl mx-auto">
             {bloqueNumbers.map((bloqueNum, index) => {
               const bloqueSessions = sessionsByBloque[bloqueNum]
               const info = bloqueInfo[bloqueNum] || {
@@ -168,13 +168,13 @@ export default async function SesionesPage() {
                   className="group block animate-fade-in-up"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-gray-300 h-full flex flex-col">
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-[#E5E4E0] hover:border-[#DA7756]/30 h-full flex flex-col">
                     {/* Header con Gradiente */}
                     <div className={`p-6 text-white bg-gradient-to-br ${colors.gradient} relative overflow-hidden`}>
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl -mr-16 -mt-16"></div>
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl -mr-16 -mt-16"></div>
                       <div className="relative z-10">
                         <div className="flex items-center justify-between mb-4">
-                          <div className={`w-16 h-16 ${colors.accent} rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-2xl shadow-lg`}>
+                          <div className={`w-16 h-16 ${colors.accent} rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center font-bold text-2xl shadow-sm`}>
                             {bloqueNum}
                           </div>
                           <div className="flex items-center gap-2">
@@ -194,15 +194,15 @@ export default async function SesionesPage() {
                       {/* Progress Section */}
                       <div className="mb-4">
                         <div className="flex items-center justify-between text-sm mb-2">
-                          <span className="text-gray-600">Progreso</span>
-                          <span className={`font-bold ${progress.percentage === 100 ? 'text-green-600' : 'text-gray-900'}`}>
+                          <span className="text-[#706F6C]">Progreso</span>
+                          <span className={`font-bold ${progress.percentage === 100 ? 'text-[#2ca58d]' : 'text-[#1A1915]'}`}>
                             {progress.completed}/{progress.total} completadas
                           </span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-[#E5E4E0] rounded-full h-2 overflow-hidden">
                           <div
                             className={`h-full rounded-full transition-all duration-500 ${
-                              progress.percentage === 100 ? 'bg-green-600' : 'bg-black'
+                              progress.percentage === 100 ? 'bg-[#2ca58d]' : colors.accent
                             }`}
                             style={{ width: `${progress.percentage}%` }}
                           />
@@ -215,22 +215,22 @@ export default async function SesionesPage() {
                           <div
                             key={session.id}
                             className={`flex items-center gap-2 text-sm p-2 rounded-lg ${
-                              progressMap[session.id]?.completed ? 'bg-green-50' : 'bg-gray-50'
+                              progressMap[session.id]?.completed ? 'bg-[#2ca58d]/10' : 'bg-[#F5F4F0]'
                             }`}
                           >
                             {progressMap[session.id]?.completed ? (
-                              <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                              <CheckCircle2 className="h-4 w-4 text-[#2ca58d] flex-shrink-0" />
                             ) : (
-                              <div className="w-4 h-4 rounded-full border-2 border-gray-400 flex-shrink-0"></div>
+                              <div className="w-4 h-4 rounded-full border-2 border-[#DA7756]/40 flex-shrink-0"></div>
                             )}
-                            <span className={`text-sm ${progressMap[session.id]?.completed ? 'text-green-700 font-medium' : 'text-gray-700'} line-clamp-1`}>
+                            <span className={`text-sm ${progressMap[session.id]?.completed ? 'text-[#1A1915] font-medium' : 'text-[#706F6C]'} line-clamp-1`}>
                               {session.moduleNumber && `Módulo ${session.moduleNumber}: `}
                               {session.title}
                             </span>
                           </div>
                         ))}
                         {bloqueSessions.length > 3 && (
-                          <p className="text-xs text-gray-400 text-center">
+                          <p className="text-xs text-[#9B9A97] text-center">
                             +{bloqueSessions.length - 3} sesiones más
                           </p>
                         )}
@@ -240,8 +240,8 @@ export default async function SesionesPage() {
                       <div
                         className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
                           progress.percentage === 100
-                            ? 'bg-green-600 text-white hover:bg-green-700'
-                            : 'bg-black text-white group-hover:bg-gray-800 group-hover:scale-105'
+                            ? 'bg-[#2ca58d] text-white hover:bg-[#259078]'
+                            : `${colors.accent} text-white ${colors.hover} group-hover:scale-[1.02]`
                         }`}
                       >
                         <span>Ver Bloque</span>
