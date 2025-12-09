@@ -4,6 +4,14 @@ import { Video } from "@/data/sessions"
 import { Play, Clock } from "lucide-react"
 import { useState } from "react"
 
+// Helper function to get Cloudflare Stream embed URL
+function getCloudflareStreamUrl(streamId: string): string {
+  // Formato correcto para iframe embed de Cloudflare Stream
+  // Parámetros adicionales para mejor rendimiento y reducir errores
+  const url = `https://iframe.videodelivery.net/${streamId}?preload=metadata&autoplay=false`
+  return url
+}
+
 interface VideoSectionProps {
   videos: Video[]
 }
@@ -27,7 +35,17 @@ export function VideoSection({ videos }: VideoSectionProps) {
       {selectedVideo && (
         <div className="space-y-3">
           <div className="aspect-video w-full rounded-xl overflow-hidden bg-gray-900 shadow-lg">
-            {selectedVideo.vimeoId ? (
+            {selectedVideo.cloudflareStreamId ? (
+              <iframe
+                src={getCloudflareStreamUrl(selectedVideo.cloudflareStreamId)}
+                className="w-full h-full"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                allowFullScreen
+                style={{ border: "none" }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            ) : selectedVideo.vimeoId ? (
               <iframe
                 src={`https://player.vimeo.com/video/${selectedVideo.vimeoId}?title=0&byline=0&portrait=0`}
                 className="w-full h-full"

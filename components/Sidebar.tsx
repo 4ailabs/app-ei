@@ -12,7 +12,8 @@ import {
   Zap,
   Menu,
   X,
-  Settings
+  Settings,
+  Video
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -134,6 +135,14 @@ export function Sidebar() {
                   mobile={true}
                   onClick={() => handleMobileNavigation('/#sesiones')}
                 />
+                <NavItem
+                  icon={<Video className="w-6 h-6" />}
+                  label="Seminario On Line"
+                  href="/seminario-pasado"
+                  active={pathname === '/seminario-pasado'}
+                  mobile={true}
+                  onClick={() => handleMobileNavigation('/seminario-pasado')}
+                />
                 {isAdmin && (
                   <NavItem
                     icon={<Settings className="w-6 h-6" />}
@@ -205,6 +214,12 @@ export function Sidebar() {
                 label="Sesiones"
                 href="/#sesiones"
                 active={pathname.startsWith('/sesiones')}
+              />
+              <NavItem
+                icon={<Video className="w-6 h-6" />}
+                label="Seminario On Line"
+                href="/seminario-pasado"
+                active={pathname === '/seminario-pasado'}
               />
               {isAdmin && (
                 <NavItem

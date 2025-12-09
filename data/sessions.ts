@@ -16,7 +16,8 @@ export interface Session {
 export interface Video {
   id: string
   title: string
-  vimeoId: string
+  vimeoId?: string
+  cloudflareStreamId?: string
   duration?: string
   description?: string
 }
@@ -83,7 +84,7 @@ export const sessions: Session[] = [
       {
         id: "v1-1",
         title: "Los 3 Estados del Sistema Nervioso",
-        vimeoId: "", // TODO: Agregar ID de Vimeo
+        cloudflareStreamId: "5d21d898f778e84d5b552556e4f6e8a4",
         duration: "8-10 min",
         description: "Explicación visual de Ventral Vagal, Simpático y Dorsal Vagal con animaciones"
       },

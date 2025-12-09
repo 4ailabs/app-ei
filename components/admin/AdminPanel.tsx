@@ -4,8 +4,10 @@ import { useState, useEffect } from "react"
 import { UserTable } from "./UserTable"
 import { UserForm } from "./UserForm"
 import { StatsPanel } from "./StatsPanel"
+import { VideoManager } from "./VideoManager"
 import { Button } from "@/components/ui/button"
 import { RefreshCw } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface User {
   id: string
@@ -144,7 +146,7 @@ export function AdminPanel() {
           <div>
             <h1 className="text-3xl font-bold text-black">Panel de Administración</h1>
             <p className="text-gray-600 mt-1">
-              Gestiona usuarios y visualiza estadísticas del seminario
+              Gestiona usuarios, videos y visualiza estadísticas del seminario
             </p>
           </div>
           <Button
@@ -161,28 +163,42 @@ export function AdminPanel() {
         {/* Stats */}
         <StatsPanel stats={stats} loading={loading} />
 
-        {/* Users Table */}
-        <UserTable
-          users={users}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onCreate={handleCreate}
-          onSearch={setSearch}
-          pagination={pagination}
-          onPageChange={setPage}
-        />
+        {/* Tabs */}
+        <Tabs defaultValue="users" className="w-full">
+          <TabsList className="grid w-full max-w-md grid-cols-2">
+            <TabsTrigger value="users">Usuarios</TabsTrigger>
+            <TabsTrigger value="videos">Videos</TabsTrigger>
+          </TabsList>
 
-        {/* Form Modal */}
-        {showForm && (
-          <UserForm
-            user={editingUser}
-            onClose={() => {
-              setShowForm(false)
-              setEditingUser(null)
-            }}
-            onSave={handleSave}
-          />
-        )}
+          <TabsContent value="users" className="mt-6">
+            {/* Users Table */}
+            <UserTable
+              users={users}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onCreate={handleCreate}
+              onSearch={setSearch}
+              pagination={pagination}
+              onPageChange={setPage}
+            />
+
+            {/* Form Modal */}
+            {showForm && (
+              <UserForm
+                user={editingUser}
+                onClose={() => {
+                  setShowForm(false)
+                  setEditingUser(null)
+                }}
+                onSave={handleSave}
+              />
+            )}
+          </TabsContent>
+
+          <TabsContent value="videos" className="mt-6">
+            <VideoManager />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   )
