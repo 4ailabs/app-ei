@@ -113,16 +113,11 @@ export default async function SesionesPage() {
     }
   }
 
+  // Colores neutros para todos los bloques
   const bloqueColors = [
-    { gradient: "from-blue-600 to-blue-800", accent: "bg-blue-500", text: "text-blue-600", bg: "bg-blue-50" },
-    { gradient: "from-purple-600 to-purple-800", accent: "bg-purple-500", text: "text-purple-600", bg: "bg-purple-50" },
-    { gradient: "from-green-600 to-green-800", accent: "bg-green-500", text: "text-green-600", bg: "bg-green-50" },
-    { gradient: "from-orange-600 to-orange-800", accent: "bg-orange-500", text: "text-orange-600", bg: "bg-orange-50" },
-    { gradient: "from-red-600 to-red-800", accent: "bg-red-500", text: "text-red-600", bg: "bg-red-50" },
-    { gradient: "from-cyan-600 to-cyan-800", accent: "bg-cyan-500", text: "text-cyan-600", bg: "bg-cyan-50" },
-    { gradient: "from-indigo-600 to-indigo-800", accent: "bg-indigo-500", text: "text-indigo-600", bg: "bg-indigo-50" },
-    { gradient: "from-pink-600 to-pink-800", accent: "bg-pink-500", text: "text-pink-600", bg: "bg-pink-50" },
-    { gradient: "from-teal-600 to-teal-800", accent: "bg-teal-500", text: "text-teal-600", bg: "bg-teal-50" },
+    { gradient: "from-gray-800 to-gray-900", accent: "bg-gray-700", text: "text-gray-700", bg: "bg-gray-50" },
+    { gradient: "from-gray-700 to-gray-800", accent: "bg-gray-600", text: "text-gray-700", bg: "bg-gray-50" },
+    { gradient: "from-gray-900 to-black", accent: "bg-gray-800", text: "text-gray-700", bg: "bg-gray-50" },
   ]
 
   return (
@@ -207,7 +202,7 @@ export default async function SesionesPage() {
                         <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                           <div
                             className={`h-full rounded-full transition-all duration-500 ${
-                              progress.percentage === 100 ? 'bg-green-500' : colors.accent
+                              progress.percentage === 100 ? 'bg-green-600' : 'bg-black'
                             }`}
                             style={{ width: `${progress.percentage}%` }}
                           />
@@ -220,13 +215,13 @@ export default async function SesionesPage() {
                           <div
                             key={session.id}
                             className={`flex items-center gap-2 text-sm p-2 rounded-lg ${
-                              progressMap[session.id]?.completed ? 'bg-green-50' : colors.bg
+                              progressMap[session.id]?.completed ? 'bg-green-50' : 'bg-gray-50'
                             }`}
                           >
                             {progressMap[session.id]?.completed ? (
-                              <CheckCircle2 className={`h-4 w-4 ${colors.text} flex-shrink-0`} />
+                              <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                             ) : (
-                              <div className={`w-4 h-4 rounded-full border-2 ${colors.text} border-current flex-shrink-0`}></div>
+                              <div className="w-4 h-4 rounded-full border-2 border-gray-400 flex-shrink-0"></div>
                             )}
                             <span className={`text-sm ${progressMap[session.id]?.completed ? 'text-green-700 font-medium' : 'text-gray-700'} line-clamp-1`}>
                               {session.moduleNumber && `Módulo ${session.moduleNumber}: `}
@@ -245,8 +240,8 @@ export default async function SesionesPage() {
                       <div
                         className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
                           progress.percentage === 100
-                            ? 'bg-green-500 text-white hover:bg-green-600'
-                            : `${colors.accent} text-white group-hover:opacity-90 group-hover:scale-105`
+                            ? 'bg-green-600 text-white hover:bg-green-700'
+                            : 'bg-black text-white group-hover:bg-gray-800 group-hover:scale-105'
                         }`}
                       >
                         <span>Ver Bloque</span>

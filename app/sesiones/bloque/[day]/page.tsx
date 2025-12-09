@@ -136,16 +136,11 @@ export default async function BloquePage({ params }: BloquePageProps) {
   const completedSessions = bloqueSessions.filter(s => progressMap[s.id]?.completed).length
   const progressPercentage = Math.round((completedSessions / bloqueSessions.length) * 100)
 
+  // Colores neutros para todos los bloques
   const bloqueColors = [
-    { gradient: "from-blue-600 to-blue-800", accent: "bg-blue-500" },
-    { gradient: "from-purple-600 to-purple-800", accent: "bg-purple-500" },
-    { gradient: "from-green-600 to-green-800", accent: "bg-green-500" },
-    { gradient: "from-orange-600 to-orange-800", accent: "bg-orange-500" },
-    { gradient: "from-red-600 to-red-800", accent: "bg-red-500" },
-    { gradient: "from-cyan-600 to-cyan-800", accent: "bg-cyan-500" },
-    { gradient: "from-indigo-600 to-indigo-800", accent: "bg-indigo-500" },
-    { gradient: "from-pink-600 to-pink-800", accent: "bg-pink-500" },
-    { gradient: "from-teal-600 to-teal-800", accent: "bg-teal-500" },
+    { gradient: "from-gray-800 to-gray-900", accent: "bg-gray-700" },
+    { gradient: "from-gray-700 to-gray-800", accent: "bg-gray-600" },
+    { gradient: "from-gray-900 to-black", accent: "bg-gray-800" },
   ]
 
   const colors = bloqueColors[(dayNumber - 1) % bloqueColors.length]
@@ -215,7 +210,7 @@ export default async function BloquePage({ params }: BloquePageProps) {
               <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
-                    progressPercentage === 100 ? 'bg-green-500' : colors.accent
+                    progressPercentage === 100 ? 'bg-green-600' : 'bg-black'
                   }`}
                   style={{ width: `${progressPercentage}%` }}
                 />
