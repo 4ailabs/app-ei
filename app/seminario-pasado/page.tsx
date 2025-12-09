@@ -56,7 +56,7 @@ export default async function SeminarioPasadoPage() {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="bg-white rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0]">
-            <div className="p-8 lg:p-12 bg-gradient-to-br from-[#DA7756] via-[#C4684A] to-[#1A1915] text-white relative overflow-hidden">
+            <div className="p-8 lg:p-12 bg-gradient-to-br from-[#DA7756] via-[#C4684A] to-[#B85D45] text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
               <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#E89A7F] opacity-10 rounded-full blur-3xl"></div>
               <div className="relative z-10">
