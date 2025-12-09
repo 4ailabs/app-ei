@@ -88,7 +88,7 @@ export async function uploadVideoToStream(
   
   // If file is a Buffer, convert to Blob
   if (Buffer.isBuffer(file)) {
-    const blob = new Blob([file])
+    const blob = new Blob([new Uint8Array(file)])
     formData.append("file", blob, filename)
   } else {
     formData.append("file", file)
