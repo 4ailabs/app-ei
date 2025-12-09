@@ -139,7 +139,7 @@ export function Sidebar() {
                   icon={<Video className="w-6 h-6" />}
                   label="Seminario On Line"
                   href="/seminario-pasado"
-                  active={pathname === '/seminario-pasado'}
+                  active={pathname === '/seminario-pasado' || pathname?.startsWith('/seminario-pasado/')}
                   mobile={true}
                   onClick={() => handleMobileNavigation('/seminario-pasado')}
                 />
@@ -219,7 +219,7 @@ export function Sidebar() {
                 icon={<Video className="w-6 h-6" />}
                 label="Seminario On Line"
                 href="/seminario-pasado"
-                active={pathname === '/seminario-pasado'}
+                active={pathname === '/seminario-pasado' || pathname?.startsWith('/seminario-pasado/')}
               />
               {isAdmin && (
                 <NavItem
