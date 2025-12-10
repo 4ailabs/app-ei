@@ -3,6 +3,7 @@ import { sessions } from "@/data/sessions"
 import { GraduationCap, Bell, Play, Sparkles, Lock, ArrowRight, BookOpen } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { PromoVideo } from "@/components/PromoVideo"
 
 export default async function HomePage() {
   const session = await auth()
@@ -69,24 +70,7 @@ export default async function HomePage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Video Promocional */}
-        <div className="lg:col-span-2 bg-white dark:bg-[#252525] p-6 lg:p-8 rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#DA7756]/30">
-          <div className="flex items-center gap-2 mb-4">
-            <Play className="h-5 w-5 text-[#DA7756] dark:text-[#ECECEC]" />
-            <h2 className="text-xl lg:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Video Promocional</h2>
-          </div>
-          <div className="aspect-video bg-gradient-to-br from-[#DA7756]/20 to-[#C4684A]/30 dark:from-[#333333]/30 dark:to-[#252525]/40 rounded-2xl flex items-center justify-center relative overflow-hidden group border border-[#E5E4E0] dark:border-[#DA7756]/30">
-            <div className="relative z-10 text-center">
-              <div className="w-16 h-16 bg-white dark:bg-[#252525] dark:border dark:border-[#DA7756]/30 rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform cursor-pointer shadow-lg">
-                <Play className="h-8 w-8 text-[#DA7756] dark:text-[#ECECEC] ml-1" />
-              </div>
-              <p className="text-[#1A1915] dark:text-[#ECECEC] font-semibold">Ver Video de Introducción</p>
-              <p className="text-[#706F6C] dark:text-[#B4B4B4] text-sm mt-1">Conoce más sobre el seminario</p>
-            </div>
-          </div>
-              <p className="text-[#706F6C] dark:text-[#A0A0A0] mt-4 text-sm">
-            Descubre los fundamentos de la Inteligencia Energética y cómo este seminario transformará tu práctica profesional.
-          </p>
-        </div>
+        <PromoVideo />
 
         {/* Noticias */}
         <div className="bg-white dark:bg-[#2A2A2A] p-6 lg:p-8 rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#2ca58d]/30">
