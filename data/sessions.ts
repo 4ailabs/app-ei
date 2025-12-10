@@ -313,35 +313,35 @@ export const sessions: Session[] = [
       {
         id: "v2-1",
         title: "¿Qué es un Recurso?",
-        vimeoId: "",
+        cloudflareStreamId: "9f1d411a40f52d0830e8209354c7acb1",
         duration: "6-8 min",
         description: "Definición, tipos (externos/internos), por qué son esenciales"
       },
       {
         id: "v2-2",
         title: "El Poder de la Pendulación",
-        vimeoId: "",
+        cloudflareStreamId: "bf052866998835c00cbe73c675074606",
         duration: "5-7 min",
         description: "Concepto de Levine, oscilación entre trauma y recurso"
       },
       {
         id: "v2-3",
         title: "Neuroplasticidad: Tu Cerebro Puede Cambiar",
-        vimeoId: "",
+        cloudflareStreamId: "414ee803dc2be95cf69578295a8a62d2",
         duration: "8-10 min",
         description: "Evidencia científica (taxistas, meditadores), esperanza fundamentada"
       },
       {
         id: "v2-4",
         title: "Los 3 Componentes del Cambio",
-        vimeoId: "",
+        cloudflareStreamId: "626fc389f087e61f95b4c7211bd9d83c",
         duration: "5-6 min",
         description: "Cesar patrón antiguo + Practicar nuevo + Repetir consistentemente"
       },
       {
         id: "v2-5",
         title: "¿Cuánto Tiempo Toma Cambiar?",
-        vimeoId: "",
+        cloudflareStreamId: "c8c8d9ea11e009a08491c7e64e988a6e",
         duration: "4-5 min",
         description: "66 días mínimo, 100-150 días para patrones arraigados"
       }
@@ -454,42 +454,42 @@ export const sessions: Session[] = [
       {
         id: "v3-1",
         title: "Estados vs Rasgos",
-        vimeoId: "",
+        cloudflareStreamId: "558c0d3a0484083dcff827fa61fcec38",
         duration: "5-6 min",
         description: "Estados cambian en minutos, rasgos en meses — diferencia crítica"
       },
       {
         id: "v3-2",
         title: "Palanca 1: Fisiología",
-        vimeoId: "",
+        cloudflareStreamId: "ec409f149cc0045ad10ae321edde698d",
         duration: "8-10 min",
         description: "Respiración, postura, movimiento, temperatura con demos"
       },
       {
         id: "v3-3",
         title: "Palanca 2: Enfoque (El SRA)",
-        vimeoId: "",
+        cloudflareStreamId: "dd39ec616742bc6abecb4be733e1b140",
         duration: "6-8 min",
         description: "Sistema Reticular Activador, cómo programar tu filtro"
       },
       {
         id: "v3-4",
         title: "Palanca 3: Lenguaje",
-        vimeoId: "",
+        cloudflareStreamId: "e27493f845e2f8f09fa5afdcea4c5e4f",
         duration: "6-8 min",
         description: "Re-etiquetado, estudio de Jamieson, ejemplos prácticos"
       },
       {
         id: "v3-5",
         title: "Palanca 4: Imaginación",
-        vimeoId: "",
+        cloudflareStreamId: "7d349e93eeb97190cfe5fb06bc106847",
         duration: "6-8 min",
         description: "Ensayo mental, protocolo de visualización efectiva"
       },
       {
         id: "v3-6",
         title: "Combinando las 4 Palancas",
-        vimeoId: "",
+        cloudflareStreamId: "c957c1ef212ea3bd6d1a98788ba0a76f",
         duration: "5-6 min",
         description: "Ejemplos de combinaciones para situaciones específicas"
       }
@@ -637,28 +637,28 @@ export const sessions: Session[] = [
       {
         id: "v4-1",
         title: "Tus Patrones Tuvieron Sentido",
-        vimeoId: "",
+        cloudflareStreamId: "4467f5d9d8825d962c1366f56b56a19b",
         duration: "8-10 min",
         description: "Validación compasiva, función original de patrones defensivos"
       },
       {
         id: "v4-2",
         title: "Del Juicio a la Compasión",
-        vimeoId: "",
+        cloudflareStreamId: "8b7d9f747c2f6b5cd78e8ce1a5f97227",
         duration: "5-7 min",
         description: "Por qué juzgarte no funciona, neurobiología de la autocompasión"
       },
       {
         id: "v4-3",
         title: "Reescribiendo Tu Historia",
-        vimeoId: "",
+        cloudflareStreamId: "82f0207e965a695eae5203fe8d35bf81",
         duration: "8-10 min",
         description: "De víctima a héroe, ejercicio guiado"
       },
       {
         id: "v4-4",
         title: "El Compromiso de 90 Días",
-        vimeoId: "",
+        cloudflareStreamId: "72656f961b831b021b161b6cd4fea1ef",
         duration: "5-6 min",
         description: "Cómo estructurar tu práctica post-seminario"
       }

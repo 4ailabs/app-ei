@@ -60,10 +60,10 @@ export function SessionContentTabs({ sessionData, contentCounts }: SessionConten
   }
 
   return (
-    <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl p-3 sm:p-5 lg:p-8 shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
+    <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-10 shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
       <Tabs defaultValue={defaultTab} className="w-full">
         {/* Orden pedagógico: Material → Videos → Protocolos → Temas → Audios → Apps */}
-        <TabsList className="grid w-full grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 h-auto bg-[#F5F4F0] dark:bg-[#333333] p-1 sm:p-1.5 gap-1 sm:gap-1.5 mb-4 sm:mb-6 lg:mb-8 rounded-xl sm:rounded-2xl">
+        <TabsList className="grid w-full grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 h-auto bg-[#F5F4F0] dark:bg-[#333333] p-1 sm:p-1.5 gap-1 sm:gap-1.5 mb-6 sm:mb-8 lg:mb-10 rounded-xl sm:rounded-2xl">
           {contentCounts.pdf > 0 && (
             <TabsTrigger value="pdf" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
               <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -110,8 +110,8 @@ export function SessionContentTabs({ sessionData, contentCounts }: SessionConten
 
         {contentCounts.pdf > 0 && (
           <TabsContent value="pdf" className="mt-0">
-            <div className="space-y-3 sm:space-y-5">
-              <div className="flex items-center gap-2.5 sm:gap-4 mb-2 sm:mb-4 pb-2 sm:pb-4 border-b border-[#E5E4E0] dark:border-[#333333]">
+            <div className="space-y-5 sm:space-y-7 lg:space-y-8">
+              <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg sm:rounded-xl">
                   <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400" />
                 </div>
@@ -127,8 +127,8 @@ export function SessionContentTabs({ sessionData, contentCounts }: SessionConten
 
         {contentCounts.videos > 0 && (
           <TabsContent value="videos" className="mt-0">
-            <div className="space-y-3 sm:space-y-5">
-              <div className="flex items-center gap-2.5 sm:gap-4 mb-2 sm:mb-4 pb-2 sm:pb-4 border-b border-[#E5E4E0] dark:border-[#333333]">
+            <div className="space-y-5 sm:space-y-7 lg:space-y-8">
+              <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg sm:rounded-xl">
                   <Video className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400" />
                 </div>
@@ -144,8 +144,8 @@ export function SessionContentTabs({ sessionData, contentCounts }: SessionConten
 
         {contentCounts.protocols > 0 && (
           <TabsContent value="protocols" className="mt-0">
-            <div className="space-y-3 sm:space-y-5">
-              <div className="flex items-center gap-2.5 sm:gap-4 mb-2 sm:mb-4 pb-2 sm:pb-4 border-b border-[#E5E4E0] dark:border-[#333333]">
+            <div className="space-y-5 sm:space-y-7 lg:space-y-8">
+              <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-red-50 dark:bg-red-900/20 rounded-lg sm:rounded-xl">
                   <ClipboardList className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 dark:text-red-400" />
                 </div>
@@ -161,8 +161,8 @@ export function SessionContentTabs({ sessionData, contentCounts }: SessionConten
 
         {contentCounts.themes > 0 && (
           <TabsContent value="themes" className="mt-0">
-            <div className="space-y-3 sm:space-y-5">
-              <div className="flex items-center gap-2.5 sm:gap-4 mb-2 sm:mb-4 pb-2 sm:pb-4 border-b border-[#E5E4E0] dark:border-[#333333]">
+            <div className="space-y-5 sm:space-y-7 lg:space-y-8">
+              <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg sm:rounded-xl">
                   <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-orange-600 dark:text-orange-400" />
                 </div>
@@ -178,8 +178,8 @@ export function SessionContentTabs({ sessionData, contentCounts }: SessionConten
 
         {contentCounts.audios > 0 && (
           <TabsContent value="audios" className="mt-0">
-            <div className="space-y-3 sm:space-y-5">
-              <div className="flex items-center gap-2.5 sm:gap-4 mb-2 sm:mb-4 pb-2 sm:pb-4 border-b border-[#E5E4E0] dark:border-[#333333]">
+            <div className="space-y-5 sm:space-y-7 lg:space-y-8">
+              <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg sm:rounded-xl">
                   <Headphones className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 dark:text-green-400" />
                 </div>
@@ -195,8 +195,8 @@ export function SessionContentTabs({ sessionData, contentCounts }: SessionConten
 
         {contentCounts.apps > 0 && (
           <TabsContent value="apps" className="mt-0">
-            <div className="space-y-3 sm:space-y-5">
-              <div className="flex items-center gap-2.5 sm:gap-4 mb-2 sm:mb-4 pb-2 sm:pb-4 border-b border-[#E5E4E0] dark:border-[#333333]">
+            <div className="space-y-5 sm:space-y-7 lg:space-y-8">
+              <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg sm:rounded-xl">
                   <Smartphone className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-600 dark:text-cyan-400" />
                 </div>

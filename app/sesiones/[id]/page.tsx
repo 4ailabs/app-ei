@@ -72,7 +72,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
           </Link>
         </div>
 
-        <div className="max-w-5xl mx-auto space-y-4 sm:space-y-6 lg:space-y-10">
+        <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8 lg:space-y-12">
           {/* Session Header with Image */}
           <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
             {/* Session Image Banner */}
