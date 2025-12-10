@@ -5,17 +5,9 @@ import { getStreamEmbedUrl } from "@/lib/cloudflare-stream"
 
 // Helper function to get Cloudflare Stream embed URL
 function getCloudflareStreamUrl(streamId: string): string {
-  try {
-    return getStreamEmbedUrl(streamId, undefined, {
-      autoplay: false,
-      controls: true,
-      preload: "none",
-      muted: false
-    })
-  } catch (error) {
-    // Fallback: usar iframe.videodelivery.net que no requiere Account ID
-    return `https://iframe.videodelivery.net/${streamId}?preload=none&autoplay=false&controls=true&muted=false`
-  }
+  // Usar directamente iframe.videodelivery.net que es el formato estándar
+  // Este formato no requiere Account ID y funciona con cualquier video de Cloudflare Stream
+  return `https://iframe.videodelivery.net/${streamId}`
 }
 
 const PROMO_VIDEO_ID = "39f53dd7e006eb1ea5de4f0493d35ee3"
