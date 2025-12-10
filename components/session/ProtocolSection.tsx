@@ -173,9 +173,10 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
                                                         window.open(protocol.pdfUrl, '_blank')
                                                     }
                                                 }}
-                                                className="w-full md:w-auto bg-[#DA7756] hover:bg-[#C4684A] dark:bg-[#DA7756] dark:hover:bg-[#C4684A] text-white dark:text-white rounded-xl px-6 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                                variant="outline"
+                                                className="w-full md:w-auto border-2 border-[#DA7756] dark:border-[#DA7756] bg-white dark:bg-[#252525] hover:bg-[#DA7756]/10 dark:hover:bg-[#DA7756]/10 text-[#DA7756] dark:text-[#DA7756] hover:text-[#DA7756] dark:hover:text-[#DA7756] rounded-full px-5 py-2.5 h-auto text-sm font-medium transition-all duration-200"
                                             >
-                                                <ExternalLink className="mr-2 h-5 w-5" />
+                                                <ExternalLink className="mr-2 h-4 w-4" />
                                                 {protocol.pdfUrl?.endsWith('.html') ? 'Ver Protocolo' : 'Descargar Protocolo'}
                                             </Button>
                                         )}
