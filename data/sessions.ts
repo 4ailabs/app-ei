@@ -91,35 +91,35 @@ export const sessions: Session[] = [
       {
         id: "v1-2",
         title: "La Ventana de Tolerancia",
-        vimeoId: "",
+        cloudflareStreamId: "73d9614ce90c487e197cc102ed8a2349",
         duration: "6-8 min",
         description: "Concepto de Siegel, metáfora de la ducha, qué la expande y qué la estrecha"
       },
       {
         id: "v1-3",
         title: "Neurocepción: Tu Detector de Amenazas",
-        vimeoId: "",
+        cloudflareStreamId: "db032792094ecf9a419471c2a3a6862d",
         duration: "5-7 min",
         description: "Cómo el cuerpo detecta peligro antes que la mente consciente"
       },
       {
         id: "v1-4",
         title: "Demo: Respiración 4-7-8",
-        vimeoId: "",
+        cloudflareStreamId: "648221a175d90d561c2b79f5580985ae",
         duration: "4 min",
         description: "Demostración práctica con guía visual de tiempos"
       },
       {
         id: "v1-5",
         title: "Demo: Abrazo de Mariposa",
-        vimeoId: "",
+        cloudflareStreamId: "10253381886f7cd3058820aa31dec182",
         duration: "3 min",
         description: "Demostración de la técnica bilateral"
       },
       {
         id: "v1-6",
         title: "Demo: Orientación 5-4-3-2-1",
-        vimeoId: "",
+        cloudflareStreamId: "98a16e5c61298a25d712da965eb8e847",
         duration: "4 min",
         description: "Ejercicio de anclaje sensorial"
       }
