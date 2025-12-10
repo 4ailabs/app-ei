@@ -7,13 +7,18 @@ import { getStreamEmbedUrl } from "@/lib/cloudflare-stream"
 
 // Helper function to get Cloudflare Stream embed URL
 function getCloudflareStreamUrl(streamId: string): string {
-  // Usar la función de la librería con parámetros explícitos para prevenir autoplay
-  return getStreamEmbedUrl(streamId, undefined, {
-    autoplay: false,
-    controls: true,
-    preload: "none",
-    muted: false
-  })
+  // Usar la función de la librería que maneja el fallback automáticamente
+  try {
+    return getStreamEmbedUrl(streamId, undefined, {
+      autoplay: false,
+      controls: true,
+      preload: "none",
+      muted: false
+    })
+  } catch (error) {
+    // Fallback final: usar iframe.videodelivery.net que no requiere Account ID
+    return `https://iframe.videodelivery.net/${streamId}?preload=none&autoplay=false&controls=true&muted=false`
+  }
 }
 
 interface VideoSectionProps {

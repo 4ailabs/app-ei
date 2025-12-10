@@ -14,10 +14,12 @@ interface VideoCardProps {
 // Helper function to get Cloudflare Stream thumbnail URL
 function getThumbnailUrl(streamId: string): string {
   const accountId = process.env.NEXT_PUBLIC_CLOUDFLARE_ACCOUNT_ID
-  if (!accountId) {
-    return ""
+  if (accountId) {
+    // Si tenemos Account ID, usar la URL del customer
+    return `https://customer-${accountId}.cloudflarestream.com/${streamId}/thumbnails/thumbnail.jpg?time=1s`
   }
-  return `https://customer-${accountId}.cloudflarestream.com/${streamId}/thumbnails/thumbnail.jpg?time=1s`
+  // Fallback: usar iframe.videodelivery.net para thumbnails
+  return `https://videodelivery.net/${streamId}/thumbnails/thumbnail.jpg?time=1s`
 }
 
 export function VideoCard({ video, index, onPlay, accentColor = "bg-blue-500" }: VideoCardProps) {

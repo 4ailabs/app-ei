@@ -242,8 +242,25 @@ export function getStreamEmbedUrl(uid: string, accountId?: string, options?: {
   preload?: "auto" | "metadata" | "none"
   poster?: string
 }): string {
-  const account = accountId || CLOUDFLARE_ACCOUNT_ID || process.env.NEXT_PUBLIC_CLOUDFLARE_ACCOUNT_ID
+  // En el cliente, solo usar NEXT_PUBLIC_CLOUDFLARE_ACCOUNT_ID
+  // En el servidor, usar CLOUDFLARE_ACCOUNT_ID o el accountId pasado como parámetro
+  const isClient = typeof window !== 'undefined'
+  const account = accountId || (isClient ? process.env.NEXT_PUBLIC_CLOUDFLARE_ACCOUNT_ID : CLOUDFLARE_ACCOUNT_ID) || process.env.NEXT_PUBLIC_CLOUDFLARE_ACCOUNT_ID
+  
   if (!account) {
+    // No lanzar error en el cliente si no hay Account ID - el componente manejará el fallback
+    if (isClient) {
+      console.warn("Cloudflare Account ID not configured. Using fallback URL format.")
+      // Devolver URL alternativa que no requiere Account ID
+      const params = new URLSearchParams()
+      if (options?.autoplay) params.append("autoplay", "true")
+      if (options?.controls !== undefined) params.append("controls", options.controls.toString())
+      if (options?.loop) params.append("loop", "true")
+      if (options?.muted) params.append("muted", "true")
+      if (options?.preload) params.append("preload", options.preload)
+      const queryString = params.toString()
+      return `https://iframe.videodelivery.net/${uid}${queryString ? `?${queryString}` : ""}`
+    }
     throw new Error("Cloudflare Account ID is required")
   }
 
