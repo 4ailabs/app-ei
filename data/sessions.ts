@@ -129,7 +129,7 @@ export const sessions: Session[] = [
       {
         id: "a1-1",
         title: "Respiración 4-7-8 (versión corta)",
-        url: "",
+        url: "https://framerusercontent.com/assets/QisPBLZPi7Hekh1gfdiq74WQ.wav",
         duration: "3 min",
         description: "3 ciclos con guía de voz",
         category: "regulacion"
@@ -137,7 +137,7 @@ export const sessions: Session[] = [
       {
         id: "a1-2",
         title: "Respiración 4-7-8 (versión extendida)",
-        url: "",
+        url: "https://framerusercontent.com/assets/zCb6RHBb1PG1oW6htd84B1L30.wav",
         duration: "8 min",
         description: "10 ciclos con música suave",
         category: "regulacion"
@@ -145,7 +145,7 @@ export const sessions: Session[] = [
       {
         id: "a1-3",
         title: "Abrazo de Mariposa Guiado",
-        url: "",
+        url: "https://framerusercontent.com/assets/VDjT3EQMsubrxzpIWVBBoPtiwWQ.wav",
         duration: "5 min",
         description: "Estimulación bilateral con visualización",
         category: "regulacion"
@@ -153,7 +153,7 @@ export const sessions: Session[] = [
       {
         id: "a1-4",
         title: "Orientación 5-4-3-2-1",
-        url: "",
+        url: "https://framerusercontent.com/assets/HEzZIU7OtII2mhAlVwuxWJH0Cao.wav",
         duration: "6 min",
         description: "Anclaje sensorial completo",
         category: "regulacion"
@@ -161,7 +161,7 @@ export const sessions: Session[] = [
       {
         id: "a1-5",
         title: "Regulación de Emergencia",
-        url: "",
+        url: "https://framerusercontent.com/assets/wCpUNN9S5ZMgIE0q7CbC3Iejt1A.wav",
         duration: "2 min",
         description: "Para momentos de crisis, muy directivo",
         category: "regulacion"
