@@ -6,7 +6,8 @@ import {
   ArrowLeft,
   BookOpen,
   Calendar,
-  GraduationCap
+  GraduationCap,
+  FolderPlus
 } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -161,6 +162,41 @@ export default async function BloquePage({ params }: BloquePageProps) {
                 />
               </div>
             ))}
+            
+            {/* Tarjeta de Material Extra - Solo para Bloque 1 */}
+            {dayNumber === 1 && (
+              <div
+                className="animate-fade-in-up h-full"
+                style={{ animationDelay: `${bloqueSessions.length * 50}ms` }}
+              >
+                <Link href={`/sesiones/bloque/${dayNumber}/recursos-adicionales`} className="block h-full">
+                  <div className="bg-white dark:bg-[#252525] hover:bg-[#FAF9F7] dark:hover:bg-[#2A2A2A] rounded-2xl lg:rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group border border-[#E5E4E0] dark:border-[#333333] h-full">
+                    <div className="p-4 lg:p-6 flex flex-col flex-grow min-h-0">
+                      <div className="flex items-center gap-3 mb-3 flex-shrink-0">
+                        <span className="text-xs font-semibold text-[#706F6C] dark:text-[#A0A0A0] uppercase tracking-wide px-2.5 py-1 rounded-md bg-[#F5F4F0] dark:bg-[#333333]">
+                          Material Extra
+                        </span>
+                      </div>
+
+                      <h3 className="text-base lg:text-xl font-bold mb-2 lg:mb-3 text-[#1A1915] dark:text-[#E5E5E5] group-hover:text-[#DA7756] dark:group-hover:text-[#DA7756] transition-colors flex-shrink-0">
+                        Recursos Adicionales
+                      </h3>
+                      <p className="text-[#706F6C] dark:text-[#A0A0A0] text-xs lg:text-sm mb-4 lg:mb-6 flex-grow line-clamp-3 min-h-0">
+                        Material complementario: videos, PDFs, audios, diagramas, slides e imágenes.
+                      </p>
+
+                      <div className="border-t border-[#E5E4E0] dark:border-[#333333] pt-4 lg:pt-6 flex justify-end items-center flex-shrink-0 mt-auto">
+                        <div className="text-[#1A1915] dark:text-[#E5E5E5] hover:text-[#DA7756] dark:hover:text-[#DA7756] transition-all duration-300 group-hover:translate-x-1">
+                          <svg className="w-4 h-4 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

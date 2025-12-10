@@ -25,11 +25,12 @@ import { Button } from "@/components/ui/button"
 
 interface SessionPageProps {
   params: Promise<{ id: string }>
+  searchParams: Promise<{ tab?: string }>
 }
 
 const sessionIcons = [Lightbulb, Settings, Rocket, Cpu, Leaf]
 
-export default async function SessionPage({ params }: SessionPageProps) {
+export default async function SessionPage({ params, searchParams }: SessionPageProps) {
   const session = await auth()
 
   if (!session) {
@@ -37,6 +38,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
   }
 
   const { id } = await params
+  const { tab } = await searchParams
   const sessionId = parseInt(id)
   const sessionData = sessions.find((s) => s.id === sessionId)
 
@@ -54,7 +56,8 @@ export default async function SessionPage({ params }: SessionPageProps) {
     audios: sessionData.audios.length,
     themes: sessionData.themes.length,
     protocols: sessionData.protocols?.length || 0,
-    apps: sessionData.apps?.length || 0
+    apps: sessionData.apps?.length || 0,
+    additionalResources: sessionData.additionalResources?.length || 0
   }
 
   return (
@@ -62,11 +65,11 @@ export default async function SessionPage({ params }: SessionPageProps) {
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-8 lg:py-12 pb-20 sm:pb-28 lg:pb-32">
         {/* Back Button */}
         <div className="mb-4 sm:mb-6 lg:mb-10 animate-fade-in">
-          <Link href="/">
+          <Link href={`/sesiones/bloque/${sessionData.day}`}>
             <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all rounded-full text-[#706F6C] dark:text-[#A0A0A0] px-3 sm:px-5 py-2 sm:py-3 h-auto text-sm sm:text-base">
               <ArrowLeft className="mr-1.5 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:-translate-x-1" />
-              <Home className="mr-1.5 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              <span className="hidden sm:inline">Volver al Dashboard</span>
+              <BookOpen className="mr-1.5 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="hidden sm:inline">Volver al Bloque {sessionData.day}</span>
               <span className="sm:hidden">Volver</span>
             </Button>
           </Link>
@@ -195,6 +198,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
           <SessionContentTabs
             sessionData={sessionData}
             contentCounts={contentCounts}
+            defaultTab={tab}
           />
         </div>
       </div>

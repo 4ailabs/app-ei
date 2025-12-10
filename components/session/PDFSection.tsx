@@ -42,22 +42,37 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
 
   // Si hay múltiples PDFs, mostrar lista
   if (pdfs && pdfs.length > 0) {
+    // Determinar si son recursos adicionales basado en la categoría del primer PDF
+    const isAdditionalResources = pdfs.some(pdf => pdf.category === "recursos_adicionales")
+    const bgGradient = isAdditionalResources 
+      ? "from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20"
+      : "from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20"
+    const borderColor = isAdditionalResources
+      ? "border-amber-100 dark:border-amber-800/30"
+      : "border-blue-100 dark:border-blue-800/30"
+    const iconBg = isAdditionalResources
+      ? "bg-amber-100 dark:bg-amber-900/30"
+      : "bg-blue-100 dark:bg-blue-900/30"
+    const iconColor = isAdditionalResources
+      ? "text-amber-600 dark:text-amber-400"
+      : "text-blue-600 dark:text-blue-400"
+
     return (
       <div className="space-y-4">
         {pdfs.map((pdf) => (
           <div
             key={pdf.id}
-            className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-100 dark:border-blue-800/30 hover:shadow-md transition-shadow"
+            className={`flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 bg-gradient-to-r ${bgGradient} rounded-xl border ${borderColor} hover:shadow-md transition-shadow`}
           >
-            <div className="flex-shrink-0 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-              <FileText className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+            <div className={`flex-shrink-0 p-3 ${iconBg} rounded-xl`}>
+              <FileText className={`h-8 w-8 ${iconColor}`} />
             </div>
             <div className="flex-grow min-w-0">
               <h4 className="font-bold text-lg text-[#1A1915] dark:text-[#ECECEC] mb-1">{pdf.title}</h4>
               <p className="text-sm text-[#706F6C] dark:text-[#B4B4B4] mb-2">{pdf.description}</p>
               {pdf.category && (
                 <span className="inline-block px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
-                  {pdf.category === "referencia" ? "Referencia" : pdf.category === "ejercicio" ? "Ejercicio" : "Contenido Profundo"}
+                  {pdf.category === "referencia" ? "Referencia" : pdf.category === "ejercicio" ? "Ejercicio" : pdf.category === "contenido_profundo" ? "Contenido Profundo" : "Recurso Adicional"}
                 </span>
               )}
             </div>

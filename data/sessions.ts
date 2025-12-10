@@ -1,3 +1,35 @@
+export interface AdditionalImage {
+  id: string
+  title: string
+  url: string
+  description?: string
+  type: 'image'
+}
+
+export interface AdditionalDiagram {
+  id: string
+  title: string
+  url: string
+  description?: string
+  type: 'diagram'
+}
+
+export interface AdditionalSlide {
+  id: string
+  title: string
+  url: string
+  description?: string
+  type: 'slide'
+}
+
+export type AdditionalResource = 
+  | PDF 
+  | (Audio & { type: 'audio' })
+  | (Video & { type: 'video' })
+  | AdditionalImage
+  | AdditionalDiagram
+  | AdditionalSlide
+
 export interface Session {
   id: number
   title: string
@@ -7,6 +39,7 @@ export interface Session {
   imageUrl?: string
   pdfUrl?: string
   pdfs?: PDF[]
+  additionalResources?: AdditionalResource[]
   videos: Video[]
   audios: Audio[]
   themes: Theme[]
@@ -66,7 +99,7 @@ export interface PDF {
   pages: number
   description: string
   url?: string
-  category?: "referencia" | "ejercicio" | "contenido_profundo"
+  category?: "referencia" | "ejercicio" | "contenido_profundo" | "recursos_adicionales"
 }
 
 export const sessions: Session[] = [
@@ -211,66 +244,98 @@ export const sessions: Session[] = [
           {
             id: "t1-1-1",
             title: "Ventral Vagal (Seguridad)",
-            content: "Estado de conexión social, calma y presencia. Aquí es donde ocurre el aprendizaje, la creatividad y la conexión genuina."
+            content: "Estado de conexión social, calma y presencia. Aquí es donde ocurre el aprendizaje, la creatividad y la conexión genuina. Respiración profunda, ritmo cardíaco flexible, rostro expresivo, voz con variación de tono."
           },
           {
             id: "t1-1-2",
             title: "Simpático (Lucha o Huida)",
-            content: "Estado de activación ante amenazas percibidas. Aumento del ritmo cardíaco, respiración acelerada, tensión muscular."
+            content: "Estado de activación ante amenazas percibidas. Aumento del ritmo cardíaco, respiración acelerada, tensión muscular, pensamientos rápidos, irritabilidad, sensación de urgencia."
           },
           {
             id: "t1-1-3",
             title: "Dorsal Vagal (Colapso)",
-            content: "Estado de inmovilización o apagado. Desconexión, entumecimiento, sensación de estar 'fuera del cuerpo'."
+            content: "Estado de inmovilización o apagado. Desconexión, entumecimiento, sensación de estar 'fuera del cuerpo', fatiga extrema, desesperanza, dificultad para actuar aunque se quiera."
           }
         ]
       },
       {
         id: "t1-2",
         title: "La Ventana de Tolerancia",
-        content: "Concepto desarrollado por Dan Siegel que describe el rango óptimo de activación donde podemos funcionar efectivamente.",
+        content: "La ventana de tolerancia es el rango óptimo de activación donde podemos funcionar efectivamente, manejar el estrés y mantener la conexión con nosotros mismos y con otros.",
         subtopics: [
           {
             id: "t1-2-1",
-            title: "Zona Óptima",
-            content: "Dentro de la ventana: claridad mental, capacidad de respuesta, conexión con otros."
+            title: "Zona de Hiperactivación (Arriba)",
+            content: "Cuando salimos por arriba de la ventana: ansiedad, pánico, pensamientos acelerados, irritabilidad. El sistema simpático está sobreactivado. Nos sentimos \"demasiado encendidos\"."
           },
           {
             id: "t1-2-2",
-            title: "Hiperactivación",
-            content: "Por encima de la ventana: ansiedad, pánico, reactividad excesiva."
+            title: "Zona Óptima (Dentro de la Ventana)",
+            content: "Capacidad de pensar, sentir y actuar con flexibilidad. Podemos manejar el estrés sin perder la regulación. Aquí ocurre el aprendizaje, la toma de decisiones sabias y la transformación."
           },
           {
             id: "t1-2-3",
-            title: "Hipoactivación",
-            content: "Por debajo de la ventana: depresión, desconexión, entumecimiento."
+            title: "Zona de Hipoactivación (Abajo)",
+            content: "Cuando salimos por abajo de la ventana: entumecimiento, desconexión, fatiga extrema, sensación de vacío. El sistema dorsal vagal domina. Nos sentimos \"demasiado apagados\"."
+          },
+          {
+            id: "t1-2-4",
+            title: "Expansión de la Ventana",
+            content: "La ventana es ampliable con práctica. El sueño, ejercicio, conexión social y técnicas de regulación la expanden. El estrés crónico, el aislamiento y el trauma no procesado la estrechan."
           }
         ]
       },
       {
         id: "t1-3",
         title: "Neurocepción",
-        content: "El proceso inconsciente por el cual nuestro sistema nervioso evalúa constantemente el entorno en busca de señales de seguridad o peligro."
+        content: "Término acuñado por Stephen Porges para describir cómo nuestro sistema nervioso evalúa constantemente el nivel de seguridad o amenaza, sin que seamos conscientes de ello.",
+        subtopics: [
+          {
+            id: "t1-3-1",
+            title: "Detección Automática",
+            content: "La neurocepción ocurre por debajo del nivel consciente, en milisegundos. Tu sistema nervioso escanea continuamente señales de seguridad y peligro en el ambiente, en otras personas y en tu propio cuerpo."
+          },
+          {
+            id: "t1-3-2",
+            title: "Señales que Evalúa",
+            content: "Tono de voz, expresiones faciales, posturas corporales, proximidad física, sonidos del ambiente, iluminación, predictibilidad del entorno y cualquier elemento que pueda indicar seguridad o amenaza."
+          },
+          {
+            id: "t1-3-3",
+            title: "Neurocepción Desajustada",
+            content: "Experiencias traumáticas pueden \"descalibrar\" la neurocepción: detectar peligro donde no existe (hipervigilancia) o no detectar amenazas reales (disociación crónica)."
+          },
+          {
+            id: "t1-3-4",
+            title: "Recalibración",
+            content: "La neurocepción puede recalibrarse mediante experiencias repetidas de seguridad, co-regulación con personas seguras, y prácticas que envían señales de seguridad al sistema nervioso."
+          }
+        ]
       },
       {
         id: "t1-4",
         title: "Técnicas de Regulación",
-        content: "Herramientas prácticas para volver a la ventana de tolerancia.",
+        content: "Herramientas prácticas para regresar a la ventana de tolerancia cuando nos desregulamos, o para mantenernos en estado ventral vagal.",
         subtopics: [
           {
             id: "t1-4-1",
             title: "Respiración 4-7-8",
-            content: "Inhala por 4 segundos, retén por 7, exhala por 8. Activa el sistema parasimpático."
+            content: "Inhala contando 4, retén contando 7, exhala contando 8. La exhalación prolongada activa el nervio vago y el sistema parasimpático. Usar ante ansiedad o antes de situaciones estresantes. Repetir 3-4 ciclos."
           },
           {
             id: "t1-4-2",
-            title: "Abrazo de Mariposa",
-            content: "Cruzar los brazos sobre el pecho y alternar golpecitos. Estimulación bilateral para calmar."
+            title: "Orientación 5-4-3-2-1",
+            content: "Nombra 5 cosas que ves, 4 que oyes, 3 que tocas, 2 que hueles, 1 que saboreas. Ancla la atención al presente e interrumpe la rumiación mental, la ansiedad anticipatoria o los estados disociativos."
           },
           {
             id: "t1-4-3",
-            title: "Orientación 5-4-3-2-1",
-            content: "5 cosas que ves, 4 que oyes, 3 que tocas, 2 que hueles, 1 que saboreas. Anclaje al presente."
+            title: "Abrazo de Mariposa",
+            content: "Cruza los brazos sobre el pecho con las manos en las clavículas. Alterna golpecitos suaves derecha-izquierda a ritmo lento (1 por segundo). La estimulación bilateral facilita el procesamiento emocional y la auto-contención."
+          },
+          {
+            id: "t1-4-4",
+            title: "Contacto Tranquilizador",
+            content: "Mano en el corazón, mano en el abdomen, o auto-abrazo. El contacto afectivo libera oxitocina y envía señales de seguridad al sistema límbico. Útil para momentos de angustia, al despertar de pesadillas o antes de dormir."
           }
         ]
       }
@@ -293,6 +358,71 @@ export const sessions: Session[] = [
         title: "Herramientas de Regulación — Guía Rápida",
         description: "Las 4 técnicas con instrucciones paso a paso",
         pdfUrl: ""
+      }
+    ],
+    additionalResources: [
+      {
+        id: "ar1-1",
+        title: "Diálogo 1: Identificando el Estado del Sistema Nervioso",
+        url: "",
+        duration: "",
+        description: "Diálogo guiado para identificar el estado actual del sistema nervioso",
+        category: "meditacion",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-2",
+        title: "Diálogo 3: Pendulación en Práctica",
+        url: "",
+        duration: "",
+        description: "Práctica guiada de pendulación entre estados",
+        category: "meditacion",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-3",
+        title: "Diálogo 4: Re-etiquetando el Lenguaje",
+        url: "",
+        duration: "",
+        description: "Guía para transformar el lenguaje interno",
+        category: "meditacion",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-4",
+        title: "Diálogo 5: Validando Patrones Defensivos",
+        url: "",
+        duration: "",
+        description: "Exploración compasiva de los patrones defensivos",
+        category: "meditacion",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-5",
+        title: "Diálogo 6: Aplicando las 4 Palancas",
+        url: "",
+        duration: "",
+        description: "Práctica guiada de las 4 palancas del estado",
+        category: "meditacion",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-6",
+        title: "Diálogo 7: Reescribiendo la Historia Personal",
+        url: "",
+        duration: "",
+        description: "Guía para transformar la narrativa personal",
+        category: "meditacion",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-7",
+        title: "Diálogo 8: Cierre de Sesión con Integración",
+        url: "",
+        duration: "",
+        description: "Cierre guiado e integración de la sesión",
+        category: "meditacion",
+        type: "audio" as const
       }
     ],
     apps: []
@@ -369,51 +499,137 @@ export const sessions: Session[] = [
       {
         id: "t2-1",
         title: "¿Qué es un Recurso?",
-        content: "Un recurso es cualquier cosa que te ayuda a sentirte más seguro, conectado o capaz de manejar el estrés.",
+        content: "Un recurso es cualquier cosa que te ayuda a regresar a un estado de regulación, seguridad y presencia. Los recursos son el fundamento del trabajo terapéutico seguro.",
         subtopics: [
           {
             id: "t2-1-1",
-            title: "Recursos Externos",
-            content: "Personas de confianza, lugares seguros, objetos significativos, mascotas."
+            title: "Tipos de Recursos",
+            content: "Recursos externos: personas seguras, lugares de calma, objetos significativos, música, naturaleza. Recursos internos: cualidades propias, memorias positivas, sensaciones de bienestar, habilidades desarrolladas."
           },
           {
             id: "t2-1-2",
-            title: "Recursos Internos",
-            content: "Cualidades personales, memorias positivas, habilidades, logros."
+            title: "Características de un Buen Recurso",
+            content: "Debe generar sensaciones de calma, seguridad o fortaleza en el cuerpo. No debe tener \"contaminación\" emocional (asociaciones negativas mezcladas). Debe ser accesible mentalmente cuando lo necesites."
+          },
+          {
+            id: "t2-1-3",
+            title: "Construcción de Recursos",
+            content: "Antes de trabajar con material difícil, siempre construimos recursos. Esto crea una \"base segura\" a la cual regresar. Sin recursos suficientes, el trabajo profundo puede ser retraumatizante en lugar de sanador."
+          },
+          {
+            id: "t2-1-4",
+            title: "Tu Ancla de Recurso",
+            content: "Identifica: 1 persona segura, 1 lugar de calma, 1 cualidad propia que te sostiene. Práctica acceder a ellos cuando estés tranquilo para que estén disponibles cuando los necesites."
           }
         ]
       },
       {
         id: "t2-2",
         title: "Pendulación",
-        content: "Técnica de Peter Levine que consiste en oscilar la atención entre sensaciones de malestar y sensaciones de recurso/bienestar."
+        content: "La pendulación es el movimiento natural entre estados de activación y calma. Es el ritmo fundamental de un sistema nervioso saludable.",
+        subtopics: [
+          {
+            id: "t2-2-1",
+            title: "El Concepto",
+            content: "Así como un péndulo oscila entre dos puntos, tu sistema nervioso está diseñado para moverse entre activación y descanso. El problema no es activarse, sino quedarse \"atorado\" en un estado."
+          },
+          {
+            id: "t2-2-2",
+            title: "Pendulación Natural",
+            content: "Un sistema nervioso regulado puede activarse ante un estresor y luego regresar a la calma. La activación tiene un pico y luego desciende. Este ciclo completo es salud."
+          },
+          {
+            id: "t2-2-3",
+            title: "Pendulación Interrumpida",
+            content: "El trauma interrumpe la pendulación. El sistema se queda en activación crónica (ansiedad constante) o en desactivación crónica (depresión, desconexión). No completa el ciclo."
+          },
+          {
+            id: "t2-2-4",
+            title: "Restaurar la Pendulación",
+            content: "El trabajo terapéutico busca restaurar la capacidad de pendular: tocar brevemente la activación, regresar a recurso, tocar de nuevo, regresar. Gradualmente, el sistema reaprende que puede activarse y volver a la calma."
+          }
+        ]
       },
       {
         id: "t2-3",
         title: "Neuroplasticidad",
-        content: "La capacidad del cerebro para reorganizarse formando nuevas conexiones neuronales a lo largo de la vida.",
+        content: "La capacidad del cerebro para cambiar su estructura y función en respuesta a la experiencia, el aprendizaje y el entorno. Tu cerebro puede cambiar a cualquier edad.",
         subtopics: [
           {
             id: "t2-3-1",
-            title: "Evidencia Científica",
-            content: "Estudios con taxistas de Londres (hipocampo más grande), meditadores (cambios en la amígdala)."
+            title: "El Descubrimiento",
+            content: "Durante décadas se creyó que el cerebro adulto era fijo. La neurociencia moderna demostró lo contrario: el cerebro cambia constantemente en respuesta a lo que hacemos, pensamos y experimentamos."
           },
           {
             id: "t2-3-2",
-            title: "Lo que practicas se fortalece",
-            content: "Las neuronas que se disparan juntas, se conectan juntas (Ley de Hebb)."
+            title: "El Principio Fundamental",
+            content: "\"Las neuronas que disparan juntas, se conectan juntas\" (Regla de Hebb). Cada vez que activas un patrón, fortaleces esa conexión. Lo que practicas se vuelve más automático."
+          },
+          {
+            id: "t2-3-3",
+            title: "La Otra Cara",
+            content: "\"Las neuronas que dejan de disparar juntas, se desconectan.\" Lo que no practicas se debilita. Esto significa que los patrones antiguos pueden desvanecerse si dejas de activarlos."
+          },
+          {
+            id: "t2-3-4",
+            title: "Implicación Práctica",
+            content: "Tus patrones actuales no son tu destino. Son simplemente los circuitos más practicados. Puedes construir nuevos circuitos con práctica intencional y consistente."
           }
         ]
       },
       {
         id: "t2-4",
         title: "Los 3 Componentes del Cambio",
-        content: "Para cambiar un patrón necesitas: 1) Cesar el patrón antiguo, 2) Practicar el nuevo patrón, 3) Repetir consistentemente."
+        content: "Para cambiar un patrón neurológicamente, necesitas tres elementos trabajando juntos. Omitir cualquiera reduce significativamente la efectividad.",
+        subtopics: [
+          {
+            id: "t2-4-1",
+            title: "Componente 1: Cesar el Patrón Antiguo",
+            content: "Cada vez que activas el patrón antiguo, lo refuerzas. Cada vez que lo interrumpes conscientemente, lo debilitas. La clave es \"atrapar\" el patrón en el momento y elegir no completarlo."
+          },
+          {
+            id: "t2-4-2",
+            title: "Componente 2: Practicar el Patrón Nuevo",
+            content: "No basta con dejar de hacer lo viejo. Necesitas practicar activamente lo nuevo. Define claramente qué harás diferente. Practica primero en situaciones de baja intensidad."
+          },
+          {
+            id: "t2-4-3",
+            title: "Componente 3: Repetir Consistentemente",
+            content: "El cambio neuroplástico requiere repetición sostenida. Las conexiones nuevas son frágiles al principio. Se fortalecen con cada repetición. La consistencia importa más que la intensidad."
+          },
+          {
+            id: "t2-4-4",
+            title: "La Fórmula",
+            content: "Cesar + Practicar + Repetir = Cambio Neuroplástico. Los tres componentes son necesarios. Dos de tres no es suficiente."
+          }
+        ]
       },
       {
         id: "t2-5",
         title: "Tiempo para el Cambio",
-        content: "La investigación muestra que se necesitan mínimo 66 días para formar un nuevo hábito, y 100-150 días para patrones más arraigados."
+        content: "¿Cuánto tiempo toma realmente cambiar un patrón? La ciencia tiene respuestas más precisas de lo que pensamos.",
+        subtopics: [
+          {
+            id: "t2-5-1",
+            title: "El Mito de los 21 Días",
+            content: "La creencia popular de que toma 21 días formar un hábito no tiene base científica sólida. Proviene de una observación anecdótica mal interpretada."
+          },
+          {
+            id: "t2-5-2",
+            title: "Lo que Dice la Investigación",
+            content: "El estudio de Phillippa Lally (University College London) encontró que el tiempo promedio para automatizar un nuevo comportamiento es de 66 días, con un rango de 18 a 254 días según la complejidad."
+          },
+          {
+            id: "t2-5-3",
+            title: "Factores que Influyen",
+            content: "Patrones simples cambian más rápido. Patrones con carga emocional o trauma toman más tiempo. La consistencia acelera el proceso. Las recaídas son normales y no reinician el contador."
+          },
+          {
+            id: "t2-5-4",
+            title: "Expectativa Realista",
+            content: "Para patrones emocionales arraigados: mínimo 90 días de práctica consistente. Óptimo: 6 meses para consolidación sólida. Después: mantenimiento con práctica regular pero menos frecuente."
+          }
+        ]
       }
     ],
     protocols: [
@@ -533,68 +749,135 @@ export const sessions: Session[] = [
       {
         id: "t3-1",
         title: "Estados vs Rasgos",
-        content: "Los estados son temporales y pueden cambiar en minutos. Los rasgos son patrones estables que toman meses en modificarse. Trabajamos primero con estados para eventualmente cambiar rasgos."
+        content: "Distinción fundamental: los estados son temporales y modificables; los rasgos parecen fijos pero son estados que se han vuelto habituales.",
+        subtopics: [
+          {
+            id: "t3-1-1",
+            title: "¿Qué es un Estado?",
+            content: "Un estado es una configuración temporal de tu sistema nervioso, mente y cuerpo. Incluye tu nivel de energía, emociones, pensamientos y sensaciones físicas en un momento dado. Los estados cambian constantemente."
+          },
+          {
+            id: "t3-1-2",
+            title: "¿Qué es un Rasgo?",
+            content: "Un rasgo es un patrón de estados que se ha repetido tanto que parece parte de tu personalidad. \"Soy ansioso\" es en realidad \"paso mucho tiempo en estados de ansiedad\"."
+          },
+          {
+            id: "t3-1-3",
+            title: "La Buena Noticia",
+            content: "Si los rasgos son estados habituados, entonces son modificables. No estás condenado a \"ser\" de cierta manera. Puedes cambiar los estados que practicas y, con el tiempo, cambiar lo que parece ser tu personalidad."
+          },
+          {
+            id: "t3-1-4",
+            title: "Implicación Práctica",
+            content: "En lugar de intentar cambiar \"quién eres\", enfócate en cambiar los estados que habitas momento a momento. Con suficiente repetición, los nuevos estados se convertirán en nuevos rasgos."
+          }
+        ]
       },
       {
         id: "t3-2",
         title: "Palanca 1: Fisiología",
-        content: "Tu cuerpo influye directamente en tu estado emocional y mental.",
+        content: "Tu cuerpo afecta tu mente. Cambiar tu fisiología es la forma más rápida y directa de cambiar tu estado interno.",
         subtopics: [
           {
             id: "t3-2-1",
-            title: "Respiración",
-            content: "La única función autónoma que podemos controlar voluntariamente. Exhalar largo activa el parasimpático."
+            title: "El Principio",
+            content: "El estado de tu cuerpo envía señales constantes a tu cerebro. Respiración agitada = señal de peligro. Respiración lenta = señal de seguridad. Tu cerebro responde a estas señales ajustando tu estado emocional."
           },
           {
             id: "t3-2-2",
-            title: "Postura",
-            content: "Postura expansiva aumenta testosterona y reduce cortisol. Postura cerrada hace lo opuesto."
+            title: "Herramientas Fisiológicas",
+            content: "Respiración: 4-7-8 para calmar, respiración rápida para energizar. Postura: erguida para confianza, relajada para calma. Movimiento: sacudir para liberar tensión, caminar para procesar. Temperatura: frío para activar, calor para calmar."
           },
           {
             id: "t3-2-3",
-            title: "Movimiento",
-            content: "El movimiento cambia la química del cerebro. Sacudir, saltar, bailar liberan tensión."
+            title: "Por Qué Funciona",
+            content: "La conexión cuerpo-mente es bidireccional. No solo las emociones afectan al cuerpo; el cuerpo afecta las emociones. Puedes \"hackear\" tu estado emocional a través de tu fisiología."
           },
           {
             id: "t3-2-4",
-            title: "Temperatura",
-            content: "Agua fría activa el sistema nervioso simpático de forma controlada, aumentando resiliencia."
+            title: "Aplicación",
+            content: "Antes de una situación estresante: postura erguida + respiración lenta. Cuando sientes ansiedad subiendo: 3 ciclos de 4-7-8. Cuando te sientes \"atorado\": movimiento físico, aunque sea una caminata corta."
           }
         ]
       },
       {
         id: "t3-3",
         title: "Palanca 2: Enfoque (SRA)",
-        content: "El Sistema Reticular Activador filtra la información que llega a tu consciencia. Aquello en lo que te enfocas, se expande.",
+        content: "Aquello en lo que te enfocas se expande. Tu Sistema de Activación Reticular determina qué notas y qué ignoras de la realidad.",
         subtopics: [
           {
             id: "t3-3-1",
-            title: "Pregunta del Enfoque",
-            content: "'¿Qué quiero NOTAR hoy?' - Esta pregunta programa tu SRA para buscar lo que deseas."
+            title: "¿Qué es el SRA?",
+            content: "El Sistema de Activación Reticular es una estructura en el tronco cerebral que actúa como filtro. De los millones de bits de información disponibles, selecciona qué llega a tu consciencia basándose en tus \"instrucciones\"."
+          },
+          {
+            id: "t3-3-2",
+            title: "Cómo Funciona",
+            content: "Si compras un auto rojo, de pronto ves autos rojos por todas partes. No es que haya más; es que tu SRA los está filtrando hacia tu consciencia. Lo mismo ocurre con problemas, oportunidades, o lo que sea que busques."
+          },
+          {
+            id: "t3-3-3",
+            title: "La Pregunta del Enfoque",
+            content: "\"¿Qué quiero NOTAR hoy?\" es una instrucción directa a tu SRA. Si le dices que busque evidencia de que eres capaz, la encontrará. Si le dices que busque amenazas, también las encontrará."
+          },
+          {
+            id: "t3-3-4",
+            title: "Aplicación",
+            content: "Cada mañana, establece una intención de enfoque. \"Hoy noto momentos de conexión.\" \"Hoy noto mis pequeños logros.\" \"Hoy noto señales de que estoy progresando.\" Tu realidad experimentada cambiará."
           }
         ]
       },
       {
         id: "t3-4",
         title: "Palanca 3: Lenguaje",
-        content: "Las palabras que usas moldean tu experiencia. El re-etiquetado cambia cómo procesas las emociones.",
+        content: "Las palabras que usas moldean tu experiencia interna. El lenguaje no solo describe la realidad; la crea.",
         subtopics: [
           {
             id: "t3-4-1",
-            title: "Re-etiquetado",
-            content: "Cambiar 'estoy ansioso' por 'estoy emocionado' (estudio de Jamieson) mejora el rendimiento."
+            title: "El Principio",
+            content: "Tu diálogo interno es una narración constante que interpreta tu experiencia. Las palabras que eliges activan diferentes redes neuronales y producen diferentes estados emocionales."
+          },
+          {
+            id: "t3-4-2",
+            title: "Lenguaje que Desempodera",
+            content: "\"Tengo que...\" (obligación, presión). \"No puedo...\" (impotencia). \"Siempre me pasa...\" (fatalismo). \"Soy un/una...\" (identidad fija). \"Es terrible...\" (catastrofización)."
+          },
+          {
+            id: "t3-4-3",
+            title: "Lenguaje que Empodera",
+            content: "\"Elijo...\" (agencia). \"Estoy aprendiendo a...\" (proceso). \"En este momento...\" (temporalidad). \"Estoy experimentando...\" (distancia saludable). \"Es un desafío que puedo manejar...\" (capacidad)."
+          },
+          {
+            id: "t3-4-4",
+            title: "Aplicación",
+            content: "Detecta tu lenguaje habitual. Cuando te escuches usando lenguaje desempoderador, reformula conscientemente. \"Tengo que ir\" → \"Elijo ir porque valoro...\". Con práctica, el nuevo lenguaje se vuelve automático."
           }
         ]
       },
       {
         id: "t3-5",
         title: "Palanca 4: Imaginación",
-        content: "El cerebro no distingue claramente entre experiencia real e imaginada. La visualización crea circuitos neuronales.",
+        content: "Tu cerebro no diferencia completamente entre experiencia real y experiencia vividamente imaginada. La visualización activa las mismas redes neuronales que la experiencia.",
         subtopics: [
           {
             id: "t3-5-1",
-            title: "Ensayo Mental",
-            content: "Visualizar una acción activa las mismas áreas cerebrales que realizarla físicamente."
+            title: "La Ciencia",
+            content: "Estudios con atletas muestran que la práctica mental activa las mismas áreas cerebrales que la práctica física. Imaginar un movimiento fortalece los circuitos neuronales de ese movimiento."
+          },
+          {
+            id: "t3-5-2",
+            title: "Implicación",
+            content: "Si imaginas repetidamente escenarios negativos (preocupación), estás \"practicando\" esos circuitos. Si imaginas escenarios positivos (visualización), estás fortaleciendo circuitos de éxito y bienestar."
+          },
+          {
+            id: "t3-5-3",
+            title: "Visualización Efectiva",
+            content: "Debe ser vívida y multisensorial: qué ves, oyes, sientes en el cuerpo. Debe incluir emoción: cómo te sientes en ese escenario. Debe ser en primera persona: vivirlo, no observarlo desde afuera."
+          },
+          {
+            id: "t3-5-4",
+            title: "Aplicación",
+            content: "Visualiza tu día saliendo bien cada mañana. Antes de situaciones desafiantes, visualízate manejándolas con calma y competencia. Imagina tu \"yo del futuro\" que ya tiene los patrones que quieres desarrollar."
           }
         ]
       }
@@ -702,46 +985,108 @@ export const sessions: Session[] = [
       {
         id: "t4-1",
         title: "Tus Patrones Tuvieron Sentido",
-        content: "Cada patrón que desarrollaste fue una respuesta inteligente a las circunstancias que enfrentaste. No estás roto, tu sistema nervioso te protegió de la mejor manera que pudo."
+        content: "Cada patrón que desarrollaste, incluso los que hoy te limitan, tuvo una función protectora o adaptativa en algún momento de tu historia.",
+        subtopics: [
+          {
+            id: "t4-1-1",
+            title: "El Principio",
+            content: "Tu sistema nervioso es increíblemente inteligente. Nunca desarrolla patrones al azar. Cada respuesta automática, cada defensa, cada \"problema\" fue una solución a algo en algún momento."
+          },
+          {
+            id: "t4-1-2",
+            title: "Ejemplos",
+            content: "La hipervigilancia que hoy te agota fue la forma en que un niño sobrevivió en un ambiente impredecible. La desconexión emocional que hoy te aísla fue la forma de sobrevivir dolor que era demasiado grande. El perfeccionismo que hoy te paraliza fue la forma de obtener aprobación que necesitabas."
+          },
+          {
+            id: "t4-1-3",
+            title: "Por Qué Importa",
+            content: "Cuando entiendes que tus patrones tuvieron sentido, puedes dejar de juzgarte por ellos. El juicio mantiene los patrones en su lugar. La comprensión compasiva permite que evolucionen."
+          },
+          {
+            id: "t4-1-4",
+            title: "El Siguiente Paso",
+            content: "Una vez que honras la función original del patrón, puedes preguntarte: \"¿Sigue siendo necesario hoy? ¿Hay una forma más actualizada de cuidarme?\" Desde ahí, el cambio es posible."
+          }
+        ]
       },
       {
         id: "t4-2",
         title: "Del Juicio a la Compasión",
-        content: "La autocrítica activa el sistema de amenaza, haciendo más difícil el cambio. La autocompasión activa el sistema de cuidado, facilitando la regulación y el cambio.",
+        content: "El juicio hacia ti mismo mantiene los patrones en su lugar. La compasión crea el espacio seguro necesario para que el cambio ocurra.",
         subtopics: [
           {
             id: "t4-2-1",
-            title: "Neurobiología de la Autocompasión",
-            content: "La autocompasión reduce el cortisol y activa la oxitocina, creando un estado óptimo para el cambio."
+            title: "El Ciclo del Juicio",
+            content: "Noto un patrón que no me gusta → Me juzgo por tenerlo → El juicio activa estrés → El estrés estrecha mi ventana de tolerancia → Tengo menos recursos para cambiar → El patrón se mantiene → Me juzgo más. Es un ciclo que se perpetúa."
+          },
+          {
+            id: "t4-2-2",
+            title: "El Ciclo de la Compasión",
+            content: "Noto un patrón que no me gusta → Reconozco que tuvo sentido → Me trato con amabilidad → La amabilidad activa seguridad → Mi ventana se expande → Tengo más recursos para elegir diferente → El cambio es posible."
+          },
+          {
+            id: "t4-2-3",
+            title: "Auto-Compasión no es Autoindulgencia",
+            content: "Ser compasivo contigo mismo no significa justificar todo ni evitar la responsabilidad. Significa tratarte como tratarías a alguien que amas: con firmeza amable, no con crueldad."
+          },
+          {
+            id: "t4-2-4",
+            title: "Práctica",
+            content: "Cuando notes autocrítica, pregunta: \"¿Cómo le hablaría a un amigo querido en esta situación?\" Luego háblate a ti mismo de esa manera. La neuroplasticidad funciona en ambas direcciones: también puedes fortalecer circuitos de autocompasión."
           }
         ]
       },
       {
         id: "t4-3",
         title: "Reescribiendo Tu Historia",
-        content: "Puedes cambiar la narrativa de tu vida: de víctima de las circunstancias a héroe de tu propio viaje de transformación.",
+        content: "Tu pasado no cambia, pero la historia que cuentas sobre él sí puede cambiar. Y la historia que cuentas moldea tu presente y tu futuro.",
         subtopics: [
           {
             id: "t4-3-1",
-            title: "El Viaje del Héroe",
-            content: "Tu historia incluye desafíos, mentores, pruebas y transformación. Tú eres el protagonista."
+            title: "Narrativa e Identidad",
+            content: "Todos tenemos una \"historia de vida\" que nos contamos. Esta narrativa define quiénes creemos ser, qué creemos merecer, y qué creemos posible. Pero la historia no es el pasado; es una interpretación del pasado."
           },
           {
             id: "t4-3-2",
-            title: "Mi pasado no es mi destino",
-            content: "Lo que te pasó no define quién puedes llegar a ser. Tú escribes los próximos capítulos."
+            title: "Historias Limitantes",
+            content: "\"Vengo de una familia disfuncional, por eso soy así.\" \"Me traumatizaron, nunca podré superarlo.\" \"Siempre he sido ansioso, es parte de quien soy.\" Estas historias pueden ser \"verdaderas\" y aun así ser prisiones."
+          },
+          {
+            id: "t4-3-3",
+            title: "Reescritura",
+            content: "No se trata de negar lo que pasó, sino de encontrar una narrativa que incluya los hechos pero también incluya tu capacidad de crecer, aprender y transformarte. \"Viví cosas difíciles Y estoy desarrollando nuevas capacidades.\""
+          },
+          {
+            id: "t4-3-4",
+            title: "Tu Nueva Historia",
+            content: "¿Qué historia quieres contar sobre tu vida? ¿Una donde eres víctima permanente de tus circunstancias, o una donde eres el protagonista de una transformación? Tú eliges qué historia practicar."
           }
         ]
       },
       {
         id: "t4-4",
         title: "El Compromiso de 90 Días",
-        content: "Para consolidar los cambios del seminario, se recomienda un compromiso de práctica diaria durante 90 días.",
+        content: "90 días es el período óptimo para consolidar cambios neuroplásticos significativos. Es el marco temporal del seminario para crear transformación real y medible.",
         subtopics: [
           {
             id: "t4-4-1",
-            title: "Estructura del Compromiso",
-            content: "Ritual matutino + práctica de regulación durante el día + ritual nocturno."
+            title: "¿Por Qué 90 Días?",
+            content: "La investigación sugiere 66 días promedio para automatizar un patrón. 90 días da margen para consolidación adicional y variabilidad individual. Es suficiente para crear cambios estructurales medibles en el cerebro."
+          },
+          {
+            id: "t4-4-2",
+            title: "La Estructura",
+            content: "Semanas 1-3: Establecer los rituales básicos (matutino, pausas, nocturno). Semanas 4-9: Profundizar la práctica, aplicar en situaciones reales. Semanas 10-13: Consolidar, ajustar, preparar para mantenimiento autónomo."
+          },
+          {
+            id: "t4-4-3",
+            title: "El Compromiso",
+            content: "No es un compromiso de perfección, sino de consistencia. Habrá días difíciles. Habrá \"fallas\". El compromiso es retomar siempre, sin juicio. 5 minutos todos los días supera 1 hora una vez a la semana."
+          },
+          {
+            id: "t4-4-4",
+            title: "Lo que es Posible",
+            content: "En 90 días de práctica consistente puedes: expandir significativamente tu ventana de tolerancia, instalar nuevos patrones de respuesta, cambiar tu relación con pensamientos y emociones difíciles, crear una base sólida para bienestar sostenido."
           }
         ]
       }
