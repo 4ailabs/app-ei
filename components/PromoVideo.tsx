@@ -24,6 +24,7 @@ const PROMO_VIDEO_ID = "39f53dd7e006eb1ea5de4f0493d35ee3"
 
 export function PromoVideo() {
   const [showVideo, setShowVideo] = useState(false)
+  const videoUrl = getCloudflareStreamUrl(PROMO_VIDEO_ID)
 
   return (
     <>
@@ -51,8 +52,16 @@ export function PromoVideo() {
 
       {/* Video Modal */}
       {showVideo && (
-        <div className="fixed inset-0 bg-[#1A1915]/80 dark:bg-[#000000]/80 z-50 flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white dark:bg-[#252525] rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+        <div 
+          className="fixed inset-0 bg-[#1A1915]/80 dark:bg-[#000000]/80 z-[9999] flex items-center justify-center p-4 animate-fade-in"
+          onClick={(e) => {
+            // Cerrar al hacer clic en el overlay
+            if (e.target === e.currentTarget) {
+              setShowVideo(false)
+            }
+          }}
+        >
+          <div className="bg-white dark:bg-[#252525] rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto relative z-[10000]">
             {/* Header */}
             <div className="sticky top-0 bg-white dark:bg-[#252525] border-b border-[#E5E4E0] dark:border-[#333333] p-4 flex items-center justify-between z-10">
               <h2 className="text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5]">Video de Introducción</h2>
@@ -68,16 +77,23 @@ export function PromoVideo() {
             {/* Video Player */}
             <div className="p-6">
               <div className="aspect-video w-full rounded-xl overflow-hidden bg-[#1A1915] dark:bg-black shadow-lg">
-                <iframe
-                  key={`promo-${PROMO_VIDEO_ID}`}
-                  src={getCloudflareStreamUrl(PROMO_VIDEO_ID)}
-                  className="w-full h-full"
-                  allow="accelerometer; gyroscope; encrypted-media; picture-in-picture; fullscreen"
-                  allowFullScreen
-                  style={{ border: "none" }}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+                {videoUrl ? (
+                  <iframe
+                    key={`promo-${PROMO_VIDEO_ID}`}
+                    src={videoUrl}
+                    className="w-full h-full"
+                    allow="accelerometer; gyroscope; encrypted-media; picture-in-picture; fullscreen"
+                    allowFullScreen
+                    style={{ border: "none" }}
+                    loading="eager"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Video Promocional"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <p className="text-white">Error al cargar el video</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
