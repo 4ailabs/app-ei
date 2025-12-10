@@ -1,13 +1,80 @@
 "use client"
 
-import { useState } from "react"
-import { ChevronDown, ChevronUp } from "lucide-react"
+import { useState, useRef } from "react"
+import { ChevronDown, ChevronUp, Download } from "lucide-react"
+import html2canvas from "html2canvas"
 
 export function ThreeStatesCard() {
   const [isExpanded, setIsExpanded] = useState(true)
+  const [isDownloading, setIsDownloading] = useState(false)
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  const handleDownload = async () => {
+    if (!cardRef.current) {
+      alert('Error: No se puede acceder al elemento de la tarjeta')
+      return
+    }
+
+    setIsDownloading(true)
+    try {
+      // Asegurar que la tarjeta esté expandida antes de capturar
+      if (!isExpanded) {
+        setIsExpanded(true)
+        // Esperar un momento para que se renderice completamente
+        await new Promise(resolve => setTimeout(resolve, 500))
+      }
+
+      // Scroll al elemento para asegurar que esté visible
+      cardRef.current.scrollIntoView({ behavior: 'instant', block: 'nearest' })
+      await new Promise(resolve => setTimeout(resolve, 100))
+
+      console.log('Iniciando captura de imagen...')
+
+      const canvas = await html2canvas(cardRef.current, {
+        backgroundColor: '#ffffff',
+        scale: 2,
+        logging: true, // Habilitar logging para debug
+        useCORS: true,
+        allowTaint: true,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: cardRef.current.scrollWidth,
+        windowHeight: cardRef.current.scrollHeight,
+      })
+
+      console.log('Canvas creado:', canvas.width, 'x', canvas.height)
+
+      // Crear un enlace para descargar
+      const link = document.createElement('a')
+      const dataUrl = canvas.toDataURL('image/png', 1.0)
+      
+      if (!dataUrl || dataUrl === 'data:,') {
+        throw new Error('No se pudo generar la imagen')
+      }
+
+      link.download = 'los-3-estados-sistema-nervioso.png'
+      link.href = dataUrl
+      
+      // Agregar al DOM temporalmente para algunos navegadores
+      document.body.appendChild(link)
+      link.click()
+      
+      // Limpiar después de un momento
+      setTimeout(() => {
+        document.body.removeChild(link)
+      }, 100)
+
+      console.log('Descarga iniciada')
+    } catch (error) {
+      console.error('Error al descargar la imagen:', error)
+      alert(`Error al descargar la imagen: ${error instanceof Error ? error.message : 'Error desconocido'}`)
+    } finally {
+      setIsDownloading(false)
+    }
+  }
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white dark:bg-[#252525] overflow-hidden border border-[#E2E8F0] dark:border-[#333333] rounded-lg">
+    <div ref={cardRef} className="w-full max-w-4xl mx-auto bg-white dark:bg-[#252525] overflow-hidden border border-[#E2E8F0] dark:border-[#333333] rounded-lg">
       {/* Header */}
       <div 
         className="relative bg-[#1a1a2e] dark:bg-[#1a1a2e] px-10 py-8 cursor-pointer hover:opacity-95 transition-opacity"
@@ -20,9 +87,27 @@ export function ThreeStatesCard() {
             </h1>
             <p className="text-xs text-white/70 uppercase tracking-widest">Teoría Polivagal Aplicada</p>
           </div>
-          <div className="text-right">
-            <p className="text-xs text-white/50 uppercase tracking-wide">Material de Referencia</p>
-            <button className="ml-4 p-2 rounded-full hover:bg-white/10 transition-colors">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                handleDownload()
+              }}
+              disabled={isDownloading}
+              className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-medium transition-colors flex items-center gap-2 disabled:opacity-50"
+              title="Descargar como imagen"
+            >
+              <Download className="h-4 w-4" />
+              {isDownloading ? 'Descargando...' : 'Descargar'}
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsExpanded(!isExpanded)
+              }}
+              className="p-2 rounded-full hover:bg-white/10 transition-colors"
+              title={isExpanded ? "Colapsar" : "Expandir"}
+            >
               {isExpanded ? (
                 <ChevronUp className="h-5 w-5 text-white" />
               ) : (

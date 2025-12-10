@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button"
 import { FileText, Download, ExternalLink } from "lucide-react"
 import { ThreeStatesCard } from "./ThreeStatesCard"
+import { WindowOfToleranceCard } from "./WindowOfToleranceCard"
+import { RegulationToolsCard } from "./RegulationToolsCard"
 
 interface ProtocolSectionProps {
     protocols: Protocol[]
@@ -27,6 +29,24 @@ export function ProtocolSection({ protocols }: ProtocolSectionProps) {
                     return (
                         <div key={protocol.id} className="w-full">
                             <ThreeStatesCard />
+                        </div>
+                    )
+                }
+
+                // Si es la tarjeta de "Mi Ventana de Tolerancia", mostrar el componente especial
+                if (protocol.id === "p1-2") {
+                    return (
+                        <div key={protocol.id} className="w-full">
+                            <WindowOfToleranceCard />
+                        </div>
+                    )
+                }
+
+                // Si es la tarjeta de "Herramientas de Regulación", mostrar el componente especial
+                if (protocol.id === "p1-3") {
+                    return (
+                        <div key={protocol.id} className="w-full">
+                            <RegulationToolsCard />
                         </div>
                     )
                 }
