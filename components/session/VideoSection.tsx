@@ -3,13 +3,17 @@
 import { Video } from "@/data/sessions"
 import { Play, Clock } from "lucide-react"
 import { useState } from "react"
+import { getStreamEmbedUrl } from "@/lib/cloudflare-stream"
 
 // Helper function to get Cloudflare Stream embed URL
 function getCloudflareStreamUrl(streamId: string): string {
-  // Formato correcto para iframe embed de Cloudflare Stream
-  // Sin autoplay y sin preload - el usuario debe iniciar la reproducción manualmente
-  const url = `https://iframe.videodelivery.net/${streamId}?preload=none&autoplay=false&controls=true`
-  return url
+  // Usar la función de la librería con parámetros explícitos para prevenir autoplay
+  return getStreamEmbedUrl(streamId, undefined, {
+    autoplay: false,
+    controls: true,
+    preload: "none",
+    muted: false
+  })
 }
 
 interface VideoSectionProps {
@@ -37,6 +41,7 @@ export function VideoSection({ videos }: VideoSectionProps) {
           <div className="aspect-video w-full rounded-xl overflow-hidden bg-[#1A1915] dark:bg-black shadow-lg">
             {selectedVideo.cloudflareStreamId ? (
               <iframe
+                key={`cloudflare-${selectedVideo.cloudflareStreamId}`}
                 src={getCloudflareStreamUrl(selectedVideo.cloudflareStreamId)}
                 className="w-full h-full"
                 allow="accelerometer; gyroscope; encrypted-media; picture-in-picture; fullscreen"
@@ -47,6 +52,7 @@ export function VideoSection({ videos }: VideoSectionProps) {
               />
             ) : selectedVideo.vimeoId ? (
               <iframe
+                key={`vimeo-${selectedVideo.vimeoId}`}
                 src={`https://player.vimeo.com/video/${selectedVideo.vimeoId}?title=0&byline=0&portrait=0&autoplay=0&muted=0`}
                 className="w-full h-full"
                 allow="fullscreen; picture-in-picture"
