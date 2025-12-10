@@ -1,8 +1,7 @@
 import { auth } from "@/lib/auth-server"
 import { redirect } from "next/navigation"
 import { sessions } from "@/data/sessions"
-import { prisma } from "@/lib/prisma"
-import { BookOpen, ArrowRight, Calendar, CheckCircle2, Clock, Home, GraduationCap } from "lucide-react"
+import { BookOpen, ArrowRight, Home, GraduationCap } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -60,15 +59,6 @@ const bloqueInfo: Record<number, BloqueInfo> = {
   }
 }
 
-type ProgressRecord = {
-  sessionId: number
-  completed: boolean
-  pdfViewed: boolean
-  videosViewed: boolean
-  audiosViewed: boolean
-  themesViewed: boolean
-}
-
 export default async function SesionesPage() {
   const session = await auth()
 
@@ -88,36 +78,11 @@ export default async function SesionesPage() {
 
   const bloqueNumbers = Object.keys(sessionsByBloque).map(Number).sort((a, b) => a - b)
 
-  // Get progress data
-  let progressMap: Record<number, { completed: boolean }> = {}
-  try {
-    const progressRecords = await prisma.progress.findMany({
-      where: { userId: session.user.id },
-    })
-
-    progressMap = progressRecords.reduce((acc: Record<number, { completed: boolean }>, p: ProgressRecord) => {
-      acc[p.sessionId] = { completed: p.completed }
-      return acc
-    }, {} as Record<number, { completed: boolean }>)
-  } catch (error) {
-    console.error("Error fetching progress:", error)
-  }
-
-  // Calculate progress per bloque
-  const getBloqueProgress = (bloqueSessions: typeof sessions) => {
-    const completed = bloqueSessions.filter(s => progressMap[s.id]?.completed).length
-    return {
-      completed,
-      total: bloqueSessions.length,
-      percentage: Math.round((completed / bloqueSessions.length) * 100)
-    }
-  }
-
   // Paleta de colores estilo Claude de Anthropic
   const bloqueColors = [
-    { gradient: "from-[#DA7756] to-[#C4684A]", accent: "bg-[#DA7756]", text: "text-[#DA7756]", bg: "bg-[#FAF9F7]", hover: "hover:bg-[#C4684A]" },
-    { gradient: "from-[#2ca58d] to-[#259078]", accent: "bg-[#2ca58d]", text: "text-[#2ca58d]", bg: "bg-[#FAF9F7]", hover: "hover:bg-[#259078]" },
-    { gradient: "from-[#706F6C] to-[#1A1915]", accent: "bg-[#706F6C]", text: "text-[#706F6C]", bg: "bg-[#FAF9F7]", hover: "hover:bg-[#1A1915]" },
+    { border: "border-[#DA7756]", accent: "bg-[#DA7756]", text: "text-[#DA7756]", hover: "hover:bg-[#C4684A]" },
+    { border: "border-[#2ca58d]", accent: "bg-[#2ca58d]", text: "text-[#2ca58d]", hover: "hover:bg-[#259078]" },
+    { border: "border-[#706F6C]", accent: "bg-[#706F6C]", text: "text-[#706F6C]", hover: "hover:bg-[#1A1915]" },
   ]
 
   return (
@@ -158,7 +123,6 @@ export default async function SesionesPage() {
                 title: `Bloque ${bloqueNum}`,
                 description: ""
               }
-              const progress = getBloqueProgress(bloqueSessions)
               const colors = bloqueColors[index % bloqueColors.length]
 
               return (
@@ -168,62 +132,36 @@ export default async function SesionesPage() {
                   className="group block animate-fade-in-up"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="bg-white dark:bg-[#252525] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-[#E5E4E0] dark:border-[#333333] hover:border-[#DA7756]/30 dark:hover:border-[#E5E5E5]/30 h-full flex flex-col">
-                    {/* Header con Gradiente */}
-                    <div className={`p-6 text-white bg-gradient-to-br ${colors.gradient} relative overflow-hidden`}>
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl -mr-16 -mt-16"></div>
+                  <div className={`bg-white dark:bg-[#252525] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border-2 ${colors.border} h-full flex flex-col`}>
+                    {/* Header */}
+                    <div className="p-6 text-[#1A1915] dark:text-[#E5E5E5] relative overflow-hidden">
                       <div className="relative z-10">
                         <div className="flex items-center justify-between mb-4">
-                          <div className={`w-16 h-16 ${colors.accent} rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center font-bold text-2xl shadow-sm`}>
+                          <div className={`w-16 h-16 ${colors.accent} rounded-xl flex items-center justify-center font-bold text-2xl shadow-sm text-white`}>
                             {bloqueNum}
                           </div>
                           <div className="flex items-center gap-2">
-                            <GraduationCap className="h-5 w-5 text-white/90" />
-                            <span className="text-sm font-semibold text-white/90">
+                            <GraduationCap className={`h-5 w-5 ${colors.text}`} />
+                            <span className={`text-sm font-semibold ${colors.text}`}>
                               {bloqueSessions.length} {bloqueSessions.length === 1 ? 'sesión' : 'sesiones'}
                             </span>
                           </div>
                         </div>
-                        <h3 className="text-xl font-bold mb-2">{info.title}</h3>
-                        <p className="text-sm text-white/80 line-clamp-2">{info.description}</p>
+                        <h3 className="text-xl font-bold mb-2 text-[#1A1915] dark:text-[#E5E5E5]">{info.title}</h3>
+                        <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] line-clamp-2">{info.description}</p>
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="p-6 flex-1 flex flex-col">
-                      {/* Progress Section */}
-                      <div className="mb-4">
-                        <div className="flex items-center justify-between text-sm mb-2">
-                          <span className="text-[#706F6C] dark:text-[#A0A0A0]">Progreso</span>
-                          <span className={`font-bold ${progress.percentage === 100 ? 'text-[#2ca58d] dark:text-[#3FBE9F]' : 'text-[#1A1915] dark:text-[#E5E5E5]'}`}>
-                            {progress.completed}/{progress.total} completadas
-                          </span>
-                        </div>
-                        <div className="w-full bg-[#E5E4E0] dark:bg-[#333333] rounded-full h-2 overflow-hidden">
-                          <div
-                            className={`h-full rounded-full transition-all duration-500 ${
-                              progress.percentage === 100 ? 'bg-[#2ca58d] dark:bg-[#3FBE9F]' : colors.accent
-                            }`}
-                            style={{ width: `${progress.percentage}%` }}
-                          />
-                        </div>
-                      </div>
-
                       {/* Sessions Preview */}
                       <div className="space-y-2 mb-4 flex-1">
                         {bloqueSessions.slice(0, 3).map((session) => (
                           <div
                             key={session.id}
-                            className={`flex items-center gap-2 text-sm p-2 rounded-lg ${
-                              progressMap[session.id]?.completed ? 'bg-[#2ca58d]/10 dark:bg-[#3FBE9F]/10' : 'bg-[#F5F4F0] dark:bg-[#333333]'
-                            }`}
+                            className="flex items-center gap-2 text-sm p-2 rounded-lg bg-[#F5F4F0] dark:bg-[#333333]"
                           >
-                            {progressMap[session.id]?.completed ? (
-                              <CheckCircle2 className="h-4 w-4 text-[#2ca58d] dark:text-[#3FBE9F] flex-shrink-0" />
-                            ) : (
-                              <div className="w-4 h-4 rounded-full border-2 border-[#DA7756]/40 dark:border-[#E5E5E5]/40 flex-shrink-0"></div>
-                            )}
-                            <span className={`text-sm ${progressMap[session.id]?.completed ? 'text-[#1A1915] dark:text-[#E5E5E5] font-medium' : 'text-[#706F6C] dark:text-[#A0A0A0]'} line-clamp-1`}>
+                            <span className="text-sm text-[#706F6C] dark:text-[#A0A0A0] line-clamp-1">
                               {session.moduleNumber && `Módulo ${session.moduleNumber}: `}
                               {session.title}
                             </span>
@@ -238,11 +176,7 @@ export default async function SesionesPage() {
 
                       {/* Action Button */}
                       <div
-                        className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
-                          progress.percentage === 100
-                            ? 'bg-[#2ca58d] dark:bg-[#3FBE9F] text-white dark:text-white hover:bg-[#259078] dark:hover:bg-[#2ca58d]'
-                            : `${colors.accent} text-white ${colors.hover} group-hover:scale-[1.02]`
-                        }`}
+                        className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${colors.accent} text-white ${colors.hover} group-hover:scale-[1.02]`}
                       >
                         <span>Ver Bloque</span>
                         <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
