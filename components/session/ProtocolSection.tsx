@@ -173,8 +173,8 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
                                                         window.open(protocol.pdfUrl, '_blank')
                                                     }
                                                 }}
-                                                variant="outline"
-                                                className="w-full md:w-auto border-2 border-[#DA7756] dark:border-[#DA7756] bg-white dark:bg-[#252525] hover:bg-[#DA7756]/10 dark:hover:bg-[#DA7756]/10 text-[#DA7756] dark:text-[#DA7756] hover:text-[#DA7756] dark:hover:text-[#DA7756] rounded-full px-5 py-2.5 h-auto text-sm font-medium transition-all duration-200"
+                                                variant="ghost"
+                                                className="w-full md:w-auto border border-[#E5E4E0] dark:border-[#4A4A4A] bg-white dark:bg-[#252525] hover:bg-[#F5F4F0] dark:hover:bg-[#2A2A2A] hover:border-[#DA7756]/40 dark:hover:border-[#DA7756]/40 text-[#706F6C] dark:text-[#A0A0A0] hover:text-[#DA7756] dark:hover:text-[#DA7756] rounded-full px-4 py-2 h-auto text-sm font-normal transition-all duration-200"
                                             >
                                                 <ExternalLink className="mr-2 h-4 w-4" />
                                                 {protocol.pdfUrl?.endsWith('.html') ? 'Ver Protocolo' : 'Descargar Protocolo'}
