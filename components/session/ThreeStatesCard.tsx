@@ -1,28 +1,50 @@
 "use client"
 
+import { useState } from "react"
+import { ChevronDown, ChevronUp } from "lucide-react"
+
 export function ThreeStatesCard() {
+  const [isExpanded, setIsExpanded] = useState(true)
+
   return (
     <div className="w-full max-w-5xl mx-auto bg-white dark:bg-[#252525] rounded-2xl shadow-lg overflow-hidden border border-[#E5E4E0] dark:border-[#333333]">
       {/* Header */}
-      <div className="relative bg-gradient-to-r from-[#1a365d] to-[#2d3748] px-8 py-7 text-center overflow-hidden">
+      <div 
+        className="relative bg-gradient-to-r from-[#1a365d] to-[#2d3748] px-8 py-7 text-center overflow-hidden cursor-pointer hover:opacity-95 transition-opacity"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <div className="absolute top-0 left-0 w-full h-full opacity-10">
           <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-white rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
         </div>
-            <h1 className="text-3xl font-bold text-white mb-2 relative z-10 font-serif">
+        <div className="flex items-center justify-between relative z-10">
+          <div className="flex-1">
+            <h1 className="text-3xl font-bold text-white mb-2 font-serif">
               Los 3 Estados del Sistema Nervioso
             </h1>
-        <p className="text-sm text-white/85 relative z-10">Tarjeta de Referencia Rápida</p>
+            <p className="text-sm text-white/85">Tarjeta de Referencia Rápida</p>
+          </div>
+          <button className="ml-4 p-2 rounded-full hover:bg-white/10 transition-colors">
+            {isExpanded ? (
+              <ChevronUp className="h-6 w-6 text-white" />
+            ) : (
+              <ChevronDown className="h-6 w-6 text-white" />
+            )}
+          </button>
+        </div>
       </div>
 
-      {/* Intro Box */}
-      <div className="mx-5 mt-5 p-4 rounded-lg bg-gradient-to-br from-[#EEF2FF] to-[#E0E7FF] dark:from-[#2A2A2A] dark:to-[#1F1F1F] border-l-4 border-[#6366F1]">
-        <p className="text-sm text-[#4B5563] dark:text-[#A0A0A0] leading-relaxed">
-          Tu sistema nervioso tiene 3 estados. No estás "roto" — estás respondiendo. Reconocer en qué estado estás es el primer paso para regularte.
-        </p>
-      </div>
+      {/* Collapsible Content */}
+      {isExpanded && (
+        <>
+          {/* Intro Box */}
+          <div className="mx-5 mt-5 p-4 rounded-lg bg-gradient-to-br from-[#EEF2FF] to-[#E0E7FF] dark:from-[#2A2A2A] dark:to-[#1F1F1F] border-l-4 border-[#6366F1]">
+            <p className="text-sm text-[#4B5563] dark:text-[#A0A0A0] leading-relaxed">
+              Tu sistema nervioso tiene 3 estados. No estás "roto" — estás respondiendo. Reconocer en qué estado estás es el primer paso para regularte.
+            </p>
+          </div>
 
-      {/* States Container */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5">
+          {/* States Container */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5">
         {/* Estado 1: Ventral Vagal */}
         <div className="rounded-xl overflow-hidden border border-[#E5E4E0] dark:border-[#333333]">
           <div className="bg-gradient-to-br from-[#2D8659] to-[#1E5C3D] px-4 py-5 text-center text-white">
@@ -168,11 +190,11 @@ export function ThreeStatesCard() {
               </ul>
             </div>
           </div>
+          </div>
         </div>
-      </div>
 
-      {/* Summary Footer */}
-      <div className="bg-[#F8FAFC] dark:bg-[#1A1A1A] px-5 py-4 border-t border-[#E5E4E0] dark:border-[#333333]">
+        {/* Summary Footer */}
+        <div className="bg-[#F8FAFC] dark:bg-[#1A1A1A] px-5 py-4 border-t border-[#E5E4E0] dark:border-[#333333]">
         <h3 className="text-sm font-semibold text-[#1F2937] dark:text-[#E5E5E5] mb-3 text-center font-serif">
           Resumen Rápido
         </h3>
@@ -205,7 +227,9 @@ export function ThreeStatesCard() {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+        </>
+      )}
 
       {/* Footer */}
       <div className="bg-gradient-to-r from-[#1a365d] to-[#2d3748] px-5 py-3 text-center">
