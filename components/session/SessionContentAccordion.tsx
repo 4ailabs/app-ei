@@ -51,7 +51,7 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
       count: contentCounts.pdf,
       color: "text-blue-600",
       bgColor: "bg-blue-50",
-      content: <PDFSection pdfUrl={sessionData.pdfUrl} sessionId={sessionData.id} title="Manual de la Sesión" />
+      content: <PDFSection pdfUrl={sessionData.pdfUrl} pdfs={sessionData.pdfs} sessionId={sessionData.id} title="Manual de la Sesión" />
     },
     {
       id: "videos",

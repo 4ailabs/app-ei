@@ -13,10 +13,13 @@ import {
   Menu,
   X,
   Settings,
-  Video
+  Video,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { useSidebar } from "@/components/providers/SidebarProvider"
 
 interface NavItemProps {
   icon: React.ReactNode
@@ -70,6 +73,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
           const pathname = usePathname()
           const { data: session } = useSession()
           const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+          const { isCollapsed: isDesktopCollapsed, toggleCollapsed } = useSidebar()
 
           const isAdmin = session?.user?.email === ADMIN_EMAIL
 
@@ -206,8 +210,25 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                 </div>
               </aside>
 
+              {/* Botón para colapsar/expandir - Siempre visible */}
+              <button
+                onClick={toggleCollapsed}
+                className="hidden lg:flex fixed top-4 z-[60] p-2 rounded-lg bg-white dark:bg-[#252525] border border-[#E5E4E0] dark:border-[#333333] hover:bg-[#F5F4F0] dark:hover:bg-[#333333] transition-all duration-300 text-[#1A1915] dark:text-[#E5E5E5] shadow-lg hover:shadow-xl"
+                style={{
+                  left: isDesktopCollapsed ? '0.5rem' : '18.5rem'
+                }}
+                aria-label={isDesktopCollapsed ? "Expandir sidebar" : "Colapsar sidebar"}
+              >
+                {isDesktopCollapsed ? (
+                  <ChevronRight className="w-5 h-5" />
+                ) : (
+                  <ChevronLeft className="w-5 h-5" />
+                )}
+              </button>
+
               {/* Desktop Sidebar */}
-              <aside className="hidden lg:flex lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-80 bg-[#F5F4F0] dark:bg-[#1A1A1A] p-8 flex flex-col space-y-12 overflow-y-auto border-r border-[#E5E4E0] dark:border-[#333333]">
+              <aside className={`hidden lg:flex lg:fixed lg:left-0 lg:top-0 lg:h-screen bg-[#F5F4F0] dark:bg-[#1A1A1A] flex flex-col overflow-hidden border-r border-[#E5E4E0] dark:border-[#333333] transition-all duration-300 ${isDesktopCollapsed ? 'lg:w-0 border-r-0' : 'lg:w-80'}`}>
+                <div className={`flex flex-col space-y-12 h-full p-8 transition-all duration-300 ${isDesktopCollapsed ? 'opacity-0 w-0 overflow-hidden pointer-events-none' : 'opacity-100'}`}>
                 <div className="flex items-center justify-between flex-shrink-0">
                   <div className="flex items-center space-x-3">
                     <div className="rounded-lg overflow-hidden">
@@ -224,7 +245,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                   <ThemeToggle />
                 </div>
 
-                <nav className="flex-grow min-h-0">
+                <nav className={`flex-grow min-h-0 transition-all duration-300 ${isDesktopCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
                   <div className="space-y-4">
                     <h3 className="px-6 text-sm font-semibold text-[#9B9A97] dark:text-[#808080] uppercase tracking-wider">MENÚ</h3>
                     <div className="space-y-2">
@@ -287,6 +308,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                     </div>
                   )}
                 </nav>
+                </div>
               </aside>
             </>
           )

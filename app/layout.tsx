@@ -2,8 +2,10 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { SessionProvider } from "@/components/providers/SessionProvider"
+import { SidebarProvider } from "@/components/providers/SidebarProvider"
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { Sidebar } from "@/components/Sidebar"
+import { MainContent } from "@/components/MainContent"
 import { Footer } from "@/components/Footer"
 
 const inter = Inter({
@@ -32,16 +34,18 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SessionProvider>
-            <div className="flex flex-1 min-h-screen">
-              {/* Sidebar (Desktop and Mobile) */}
-              <Sidebar />
+            <SidebarProvider>
+              <div className="flex min-h-screen">
+                {/* Sidebar (Desktop and Mobile) */}
+                <Sidebar />
 
-              {/* Main Content */}
-              <main className="flex-1 lg:ml-80 p-2 lg:p-8 lg:mt-0 mt-16">
-                {children}
-              </main>
-            </div>
-            <Footer />
+                {/* Main Content */}
+                <MainContent>
+                  {children}
+                </MainContent>
+              </div>
+              <Footer />
+            </SidebarProvider>
           </SessionProvider>
         </ThemeProvider>
       </body>

@@ -2,9 +2,13 @@
 
 import { useState, useRef } from "react"
 import { ChevronDown, ChevronUp, Download } from "lucide-react"
-import html2canvas from "html2canvas"
+import { toPng } from "html-to-image"
 
-export function ThreeStatesCard() {
+interface ThreeStatesCardProps {
+  accentColor?: string
+}
+
+export function ThreeStatesCard({ accentColor = "#1B6B4A" }: ThreeStatesCardProps) {
   const [isExpanded, setIsExpanded] = useState(true)
   const [isDownloading, setIsDownloading] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
@@ -18,66 +22,56 @@ export function ThreeStatesCard() {
     setIsDownloading(true)
     try {
       // Asegurar que la tarjeta esté expandida antes de capturar
+      const wasExpanded = isExpanded
       if (!isExpanded) {
         setIsExpanded(true)
-        // Esperar un momento para que se renderice completamente
-        await new Promise(resolve => setTimeout(resolve, 500))
+        await new Promise(resolve => setTimeout(resolve, 300))
       }
 
-      // Scroll al elemento para asegurar que esté visible
-      cardRef.current.scrollIntoView({ behavior: 'instant', block: 'nearest' })
-      await new Promise(resolve => setTimeout(resolve, 100))
-
-      console.log('Iniciando captura de imagen...')
-
-      const canvas = await html2canvas(cardRef.current, {
+      const dataUrl = await toPng(cardRef.current, {
+        quality: 1,
+        pixelRatio: 2,
         backgroundColor: '#ffffff',
-        scale: 2,
-        logging: true, // Habilitar logging para debug
-        useCORS: true,
-        allowTaint: true,
-        scrollX: 0,
-        scrollY: 0,
-        windowWidth: cardRef.current.scrollWidth,
-        windowHeight: cardRef.current.scrollHeight,
+        style: {
+          transform: 'scale(1)',
+          transformOrigin: 'top left',
+        },
+        filter: (node) => {
+          // Excluir botones de la captura
+          if (node instanceof HTMLElement) {
+            const isButton = node.tagName === 'BUTTON'
+            const isInHeader = node.closest?.('[data-header-buttons]')
+            if (isButton && isInHeader) return false
+          }
+          return true
+        }
       })
 
-      console.log('Canvas creado:', canvas.width, 'x', canvas.height)
-
-      // Crear un enlace para descargar
       const link = document.createElement('a')
-      const dataUrl = canvas.toDataURL('image/png', 1.0)
-      
-      if (!dataUrl || dataUrl === 'data:,') {
-        throw new Error('No se pudo generar la imagen')
-      }
-
       link.download = 'los-3-estados-sistema-nervioso.png'
       link.href = dataUrl
-      
-      // Agregar al DOM temporalmente para algunos navegadores
-      document.body.appendChild(link)
       link.click()
-      
-      // Limpiar después de un momento
-      setTimeout(() => {
-        document.body.removeChild(link)
-      }, 100)
 
-      console.log('Descarga iniciada')
+      if (!wasExpanded) {
+        setIsExpanded(false)
+      }
     } catch (error) {
       console.error('Error al descargar la imagen:', error)
-      alert(`Error al descargar la imagen: ${error instanceof Error ? error.message : 'Error desconocido'}`)
+      alert(`Error al descargar la imagen. Por favor, intenta de nuevo.`)
     } finally {
       setIsDownloading(false)
     }
   }
 
   return (
-    <div ref={cardRef} className="w-full max-w-4xl mx-auto bg-white dark:bg-[#252525] overflow-hidden border border-[#E2E8F0] dark:border-[#333333] rounded-lg">
+    <div ref={cardRef} className="w-full bg-white dark:bg-[#252525] overflow-hidden border border-[#E5E4E0] dark:border-[#333333] rounded-xl">
       {/* Header */}
       <div 
-        className="relative bg-[#1a1a2e] dark:bg-[#1a1a2e] px-10 py-8 cursor-pointer hover:opacity-95 transition-opacity"
+        className="relative px-10 py-8 cursor-pointer hover:opacity-95 transition-opacity rounded-t-xl"
+        style={{ 
+          backgroundColor: accentColor,
+          borderBottom: `3px solid ${accentColor}` 
+        }}
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex justify-between items-end">
@@ -128,8 +122,8 @@ export function ThreeStatesCard() {
       {isExpanded && (
         <>
           {/* Intro Section */}
-          <div className="px-10 py-6 border-b border-[#E2E8F0] dark:border-[#333333] bg-[#FAFBFC] dark:bg-[#1A1A1A]">
-            <p className="text-[15px] text-[#2D3748] dark:text-[#E5E5E5] leading-relaxed max-w-3xl">
+          <div className="px-10 py-6 border-b border-[#E5E4E0] dark:border-[#333333] bg-[#FAF9F7] dark:bg-[#1A1A1A]">
+            <p className="text-[15px] text-[#1A1915] dark:text-[#E5E5E5] leading-relaxed max-w-3xl">
               Tu sistema nervioso tiene tres estados diferenciados. <strong className="text-[#1a1a2e] dark:text-[#E5E5E5] font-semibold">No estás "roto" — estás respondiendo.</strong> Reconocer en qué estado te encuentras es el primer paso para la autorregulación consciente.
             </p>
           </div>
@@ -137,72 +131,72 @@ export function ThreeStatesCard() {
           {/* States Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3">
             {/* Estado 1: Ventral Vagal */}
-            <div className="border-r border-[#E2E8F0] dark:border-[#333333] last:border-r-0">
+            <div className="border-r border-[#E5E4E0] dark:border-[#333333] last:border-r-0">
               <div className="relative pt-6 pb-5 px-6 text-center">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-[#1B6B4A]"></div>
                 <p className="text-xs font-semibold uppercase tracking-widest text-[#1B6B4A] dark:text-[#1B6B4A] mb-3">Estado I</p>
                 <h2 className="text-2xl font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] mb-1 font-serif">Ventral Vagal</h2>
-                <p className="text-xs text-[#718096] dark:text-[#A0A0A0] font-medium">Seguridad y Conexión</p>
+                <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] font-medium">Seguridad y Conexión</p>
               </div>
               <div className="px-6 pb-6 space-y-5">
                 <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Experiencia subjetiva</h3>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#706F6C] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E5E4E0] dark:border-[#333333]">Experiencia subjetiva</h3>
                   <ul className="space-y-1.5">
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Calma con estado de alerta
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Presencia y conexión
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Claridad cognitiva
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Apertura hacia otros
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales somáticas</h3>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#706F6C] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E5E4E0] dark:border-[#333333]">Señales somáticas</h3>
                   <ul className="space-y-1.5">
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Respiración lenta y profunda
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Musculatura relajada
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Expresión facial dinámica
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Prosodia vocal variada
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales cognitivas</h3>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#706F6C] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E5E4E0] dark:border-[#333333]">Señales cognitivas</h3>
                   <ul className="space-y-1.5">
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Capacidad de resolución
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Curiosidad activa
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Flexibilidad mental
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
                       Acceso a creatividad
                     </li>
@@ -210,7 +204,7 @@ export function ThreeStatesCard() {
                 </div>
                 <div className="bg-[#F0F7F4] dark:bg-[#1A1A1A] rounded-md p-4 mt-4">
                   <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#1B6B4A] dark:text-[#1B6B4A] mb-2.5">Intervención</h4>
-                  <p className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] leading-relaxed">
+                  <p className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] leading-relaxed">
                     Estado óptimo. Registrar las sensaciones asociadas para facilitar el reconocimiento futuro. Desde este estado es posible realizar trabajo terapéutico profundo.
                   </p>
                 </div>
@@ -218,72 +212,72 @@ export function ThreeStatesCard() {
             </div>
 
             {/* Estado 2: Simpático */}
-            <div className="border-r border-[#E2E8F0] dark:border-[#333333] last:border-r-0">
+            <div className="border-r border-[#E5E4E0] dark:border-[#333333] last:border-r-0">
               <div className="relative pt-6 pb-5 px-6 text-center">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-[#B8860B]"></div>
                 <p className="text-xs font-semibold uppercase tracking-widest text-[#B8860B] dark:text-[#B8860B] mb-3">Estado II</p>
                 <h2 className="text-2xl font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] mb-1 font-serif">Simpático</h2>
-                <p className="text-xs text-[#718096] dark:text-[#A0A0A0] font-medium">Movilización Defensiva</p>
+                <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] font-medium">Movilización Defensiva</p>
               </div>
               <div className="px-6 pb-6 space-y-5">
                 <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Experiencia subjetiva</h3>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#706F6C] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E5E4E0] dark:border-[#333333]">Experiencia subjetiva</h3>
                   <ul className="space-y-1.5">
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Aceleración, ansiedad, irritabilidad
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Urgencia por actuar
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Dificultad para calmarse
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Hipervigilancia
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales somáticas</h3>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#706F6C] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E5E4E0] dark:border-[#333333]">Señales somáticas</h3>
                   <ul className="space-y-1.5">
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Taquicardia
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Respiración superficial y rápida
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Tensión en hombros y mandíbula
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Extremidades frías o sudorosas
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales cognitivas</h3>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#706F6C] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E5E4E0] dark:border-[#333333]">Señales cognitivas</h3>
                   <ul className="space-y-1.5">
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Pensamiento acelerado
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Percepción de urgencia global
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Déficit atencional
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
                       Sesgo hacia amenazas
                     </li>
@@ -291,7 +285,7 @@ export function ThreeStatesCard() {
                 </div>
                 <div className="bg-[#FBF8F1] dark:bg-[#1A1A1A] rounded-md p-4 mt-4">
                   <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#B8860B] dark:text-[#B8860B] mb-2.5">Intervención</h4>
-                  <ul className="space-y-1 text-[13px] text-[#2D3748] dark:text-[#E5E5E5]">
+                  <ul className="space-y-1 text-[13px] text-[#1A1915] dark:text-[#E5E5E5]">
                     <li className="pl-5 relative"><span className="absolute left-0 text-[#B8860B] font-semibold">→</span> Respiración 4-7-8 (3 ciclos)</li>
                     <li className="pl-5 relative"><span className="absolute left-0 text-[#B8860B] font-semibold">→</span> Descarga motora (sacudir, caminar)</li>
                     <li className="pl-5 relative"><span className="absolute left-0 text-[#B8860B] font-semibold">→</span> Orientación sensorial 5-4-3-2-1</li>
@@ -302,72 +296,72 @@ export function ThreeStatesCard() {
             </div>
 
             {/* Estado 3: Dorsal Vagal */}
-            <div className="border-r border-[#E2E8F0] dark:border-[#333333] last:border-r-0">
+            <div className="border-r border-[#E5E4E0] dark:border-[#333333] last:border-r-0">
               <div className="relative pt-6 pb-5 px-6 text-center">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-[#4A5568]"></div>
                 <p className="text-xs font-semibold uppercase tracking-widest text-[#4A5568] dark:text-[#4A5568] mb-3">Estado III</p>
                 <h2 className="text-2xl font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] mb-1 font-serif">Dorsal Vagal</h2>
-                <p className="text-xs text-[#718096] dark:text-[#A0A0A0] font-medium">Inmovilización Defensiva</p>
+                <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] font-medium">Inmovilización Defensiva</p>
               </div>
               <div className="px-6 pb-6 space-y-5">
                 <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Experiencia subjetiva</h3>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#706F6C] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E5E4E0] dark:border-[#333333]">Experiencia subjetiva</h3>
                   <ul className="space-y-1.5">
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       Desconexión, entumecimiento
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       Agotamiento, sensación de apagado
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       Desesperanza
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       Deseo de desaparecer
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales somáticas</h3>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#706F6C] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E5E4E0] dark:border-[#333333]">Señales somáticas</h3>
                   <ul className="space-y-1.5">
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       Pesadez corporal, hipotonía
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       Respiración muy superficial
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       Mirada desenfocada
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       Voz monótona o mutismo
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales cognitivas</h3>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#706F6C] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E5E4E0] dark:border-[#333333]">Señales cognitivas</h3>
                   <ul className="space-y-1.5">
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       "No tiene sentido"
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       "No puedo hacer nada"
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       Enlentecimiento cognitivo
                     </li>
-                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                    <li className="text-[13px] text-[#1A1915] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
                       <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
                       Despersonalización
                     </li>
@@ -375,7 +369,7 @@ export function ThreeStatesCard() {
                 </div>
                 <div className="bg-[#F7F8F9] dark:bg-[#1A1A1A] rounded-md p-4 mt-4">
                   <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#4A5568] dark:text-[#4A5568] mb-2.5">Intervención</h4>
-                  <ul className="space-y-1 text-[13px] text-[#2D3748] dark:text-[#E5E5E5]">
+                  <ul className="space-y-1 text-[13px] text-[#1A1915] dark:text-[#E5E5E5]">
                     <li className="pl-5 relative"><span className="absolute left-0 text-[#4A5568] font-semibold">→</span> Movimiento suave (estiramientos)</li>
                     <li className="pl-5 relative"><span className="absolute left-0 text-[#4A5568] font-semibold">→</span> Estímulo térmico cálido</li>
                     <li className="pl-5 relative"><span className="absolute left-0 text-[#4A5568] font-semibold">→</span> Orientación verbal (nombrar objetos)</li>
@@ -412,12 +406,12 @@ export function ThreeStatesCard() {
           </div>
 
           {/* Footer */}
-          <div className="px-10 py-4 border-t border-[#E2E8F0] dark:border-[#333333] bg-[#FAFBFC] dark:bg-[#1A1A1A] flex justify-between items-center">
-            <div className="text-[11px] text-[#718096] dark:text-[#A0A0A0]">
-              <strong className="text-[#2D3748] dark:text-[#E5E5E5] font-semibold">Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
+          <div className="px-10 py-4 border-t border-[#E5E4E0] dark:border-[#333333] bg-[#FAF9F7] dark:bg-[#1A1A1A] flex justify-between items-center">
+            <div className="text-[11px] text-[#706F6C] dark:text-[#A0A0A0]">
+              <strong className="text-[#1A1915] dark:text-[#E5E5E5] font-semibold">Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
             </div>
-            <div className="text-[10px] text-[#718096] dark:text-[#A0A0A0] text-right">
-              <span className="font-semibold text-[#2D3748] dark:text-[#E5E5E5]">Instituto Centro Bioenergética</span><br />
+            <div className="text-[10px] text-[#706F6C] dark:text-[#A0A0A0] text-right">
+              <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Instituto Centro Bioenergética</span><br />
               inteligencia-energetica.com
             </div>
           </div>

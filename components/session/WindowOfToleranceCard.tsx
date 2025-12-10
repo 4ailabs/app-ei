@@ -2,9 +2,13 @@
 
 import { useState, useRef } from "react"
 import { ChevronDown, ChevronUp, Download } from "lucide-react"
-import html2canvas from "html2canvas"
+import { toPng } from "html-to-image"
 
-export function WindowOfToleranceCard() {
+interface WindowOfToleranceCardProps {
+  accentColor?: string
+}
+
+export function WindowOfToleranceCard({ accentColor = "#B8860B" }: WindowOfToleranceCardProps) {
   const [isExpanded, setIsExpanded] = useState(true)
   const [isDownloading, setIsDownloading] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
@@ -18,65 +22,51 @@ export function WindowOfToleranceCard() {
     setIsDownloading(true)
     try {
       // Asegurar que la tarjeta esté expandida antes de capturar
+      const wasExpanded = isExpanded
       if (!isExpanded) {
         setIsExpanded(true)
-        // Esperar un momento para que se renderice completamente
-        await new Promise(resolve => setTimeout(resolve, 500))
+        await new Promise(resolve => setTimeout(resolve, 300))
       }
 
-      // Scroll al elemento para asegurar que esté visible
-      cardRef.current.scrollIntoView({ behavior: 'instant', block: 'nearest' })
-      await new Promise(resolve => setTimeout(resolve, 100))
-
-      console.log('Iniciando captura de imagen...')
-
-      const canvas = await html2canvas(cardRef.current, {
+      const dataUrl = await toPng(cardRef.current, {
+        quality: 1,
+        pixelRatio: 2,
         backgroundColor: '#ffffff',
-        scale: 2,
-        logging: true, // Habilitar logging para debug
-        useCORS: true,
-        allowTaint: true,
-        scrollX: 0,
-        scrollY: 0,
-        windowWidth: cardRef.current.scrollWidth,
-        windowHeight: cardRef.current.scrollHeight,
+        style: {
+          transform: 'scale(1)',
+          transformOrigin: 'top left',
+        },
+        filter: (node) => {
+          // Excluir botones de la captura
+          if (node instanceof HTMLElement) {
+            const isButton = node.tagName === 'BUTTON'
+            const isInHeader = node.closest?.('[data-header-buttons]')
+            if (isButton && isInHeader) return false
+          }
+          return true
+        }
       })
 
-      console.log('Canvas creado:', canvas.width, 'x', canvas.height)
-
-      // Crear un enlace para descargar
       const link = document.createElement('a')
-      const dataUrl = canvas.toDataURL('image/png', 1.0)
-      
-      if (!dataUrl || dataUrl === 'data:,') {
-        throw new Error('No se pudo generar la imagen')
-      }
-
       link.download = 'mi-ventana-de-tolerancia.png'
       link.href = dataUrl
-      
-      // Agregar al DOM temporalmente para algunos navegadores
-      document.body.appendChild(link)
       link.click()
-      
-      // Limpiar después de un momento
-      setTimeout(() => {
-        document.body.removeChild(link)
-      }, 100)
 
-      console.log('Descarga iniciada')
+      if (!wasExpanded) {
+        setIsExpanded(false)
+      }
     } catch (error) {
       console.error('Error al descargar la imagen:', error)
-      alert(`Error al descargar la imagen: ${error instanceof Error ? error.message : 'Error desconocido'}`)
+      alert(`Error al descargar la imagen. Por favor, intenta de nuevo.`)
     } finally {
       setIsDownloading(false)
     }
   }
 
   return (
-    <div ref={cardRef} className="w-full max-w-5xl mx-auto bg-white dark:bg-[#252525] overflow-hidden border border-[#E2E8F0] dark:border-[#333333]">
+    <div ref={cardRef} className="w-full bg-white dark:bg-[#252525] overflow-hidden border border-[#E5E4E0] dark:border-[#333333] rounded-xl">
       {/* Header */}
-      <div className="relative bg-[#1a1a2e] dark:bg-[#1a1a2e] px-10 py-8">
+      <div className="relative px-10 py-8 rounded-t-xl" style={{ backgroundColor: accentColor, borderBottom: `3px solid ${accentColor}` }}>
         <div className="flex justify-between items-end mb-4">
           <div>
             <h1 className="text-3xl font-semibold text-white mb-1.5 font-serif tracking-tight">
@@ -123,10 +113,10 @@ export function WindowOfToleranceCard() {
       </div>
 
       {isExpanded && (
-        <>
+        <div className="flex-1 flex flex-col">
           {/* Intro Section */}
-          <div className="px-10 py-6 border-b border-[#E2E8F0] dark:border-[#333333] bg-[#FAFBFC] dark:bg-[#1A1A1A]">
-            <p className="text-[15px] text-[#2D3748] dark:text-[#E5E5E5] leading-relaxed max-w-4xl">
+          <div className="px-10 py-6 border-b border-[#E5E4E0] dark:border-[#333333] bg-[#FAF9F7] dark:bg-[#1A1A1A]">
+            <p className="text-[15px] text-[#1A1915] dark:text-[#E5E5E5] leading-relaxed max-w-4xl">
               La Ventana de Tolerancia es el rango de activación fisiológica donde puedes funcionar de manera óptima: ni en hiperactivación ni en hipoactivación. <strong className="text-[#1a1a2e] dark:text-white font-semibold">Tu ventana puede expandirse con práctica sistemática.</strong>
             </p>
           </div>
@@ -134,18 +124,18 @@ export function WindowOfToleranceCard() {
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Diagram Section */}
-            <div className="px-10 py-8 border-r border-[#E2E8F0] dark:border-[#333333]">
-              <h3 className="text-lg font-semibold text-[#1a1a2e] dark:text-white mb-5 pb-2.5 border-b border-[#E2E8F0] dark:border-[#333333] font-serif">
+            <div className="px-10 py-8 border-r border-[#E5E4E0] dark:border-[#333333]">
+              <h3 className="text-lg font-semibold text-[#1a1a2e] dark:text-white mb-5 pb-2.5 border-b border-[#E5E4E0] dark:border-[#333333] font-serif">
                 Modelo de Zonas de Activación
               </h3>
 
               <div className="space-y-0">
                 {/* Arrow container */}
                 <div className="flex justify-between px-5 py-3 bg-white dark:bg-[#1A1A1A]">
-                  <span className="text-[11px] text-[#718096] dark:text-[#A0A0A0] flex items-center gap-1.5">
+                  <span className="text-[11px] text-[#706F6C] dark:text-[#A0A0A0] flex items-center gap-1.5">
                     <span className="text-sm">↑</span> Hiperactivación
                   </span>
-                  <span className="text-[11px] text-[#718096] dark:text-[#A0A0A0] flex items-center gap-1.5">
+                  <span className="text-[11px] text-[#706F6C] dark:text-[#A0A0A0] flex items-center gap-1.5">
                     Hipoactivación <span className="text-sm">↓</span>
                   </span>
                 </div>
@@ -154,7 +144,7 @@ export function WindowOfToleranceCard() {
                 <div className="px-5 py-4 bg-[#FBF8F1] dark:bg-[#3A3320] border-l-4 border-[#B8860B]">
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-[#B8860B] mb-1.5">Zona Superior</p>
                   <h4 className="text-base font-semibold text-[#1a1a2e] dark:text-white mb-2 font-serif">Hiperactivación (Simpático)</h4>
-                  <div className="text-xs text-[#2D3748] dark:text-[#E5E5E5] leading-normal">
+                  <div className="text-xs text-[#1A1915] dark:text-[#E5E5E5] leading-normal">
                     <ul className="mt-1.5 space-y-0.5">
                       <li className="pl-3.5 relative">
                         <span className="absolute left-1 font-bold">·</span> Ansiedad, pánico, ira, agitación
@@ -173,7 +163,7 @@ export function WindowOfToleranceCard() {
                 <div className="px-5 py-6 bg-[#F0F7F4] dark:bg-[#1A3325] border-l-4 border-[#1B6B4A]">
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-[#1B6B4A] mb-1.5">Zona Óptima</p>
                   <h4 className="text-base font-semibold text-[#1a1a2e] dark:text-white mb-2 font-serif">Ventana de Tolerancia</h4>
-                  <div className="text-xs text-[#2D3748] dark:text-[#E5E5E5] leading-normal">
+                  <div className="text-xs text-[#1A1915] dark:text-[#E5E5E5] leading-normal">
                     <ul className="mt-1.5 space-y-0.5">
                       <li className="pl-3.5 relative">
                         <span className="absolute left-1 font-bold">·</span> Capacidad de pensar, sentir y actuar con flexibilidad
@@ -192,7 +182,7 @@ export function WindowOfToleranceCard() {
                 <div className="px-5 py-4 bg-[#F7F8F9] dark:bg-[#2A2A2A] border-l-4 border-[#4A5568]">
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-[#4A5568] mb-1.5">Zona Inferior</p>
                   <h4 className="text-base font-semibold text-[#1a1a2e] dark:text-white mb-2 font-serif">Hipoactivación (Dorsal Vagal)</h4>
-                  <div className="text-xs text-[#2D3748] dark:text-[#E5E5E5] leading-normal">
+                  <div className="text-xs text-[#1A1915] dark:text-[#E5E5E5] leading-normal">
                     <ul className="mt-1.5 space-y-0.5">
                       <li className="pl-3.5 relative">
                         <span className="absolute left-1 font-bold">·</span> Entumecimiento, desconexión, colapso
@@ -209,24 +199,24 @@ export function WindowOfToleranceCard() {
               </div>
 
               {/* Metaphor Box */}
-              <div className="mt-6 p-5 bg-[#F8FAFC] dark:bg-[#2A2A2A] border border-[#E2E8F0] dark:border-[#333333] rounded-md">
-                <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#718096] dark:text-[#A0A0A0] mb-3">Metáfora de la Temperatura</h4>
+              <div className="mt-6 p-5 bg-[#F5F4F0] dark:bg-[#2A2A2A] border border-[#E5E4E0] dark:border-[#333333] rounded-md">
+                <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-3">Metáfora de la Temperatura</h4>
                 <div className="space-y-2.5">
                   <div className="flex items-start gap-3 text-[13px]">
                     <div className="w-2 h-2 rounded-full bg-[#B8860B] mt-1.5 flex-shrink-0"></div>
-                    <div className="text-[#2D3748] dark:text-[#E5E5E5]">
+                    <div className="text-[#1A1915] dark:text-[#E5E5E5]">
                       <strong className="font-semibold">Agua muy caliente</strong> = Hiperactivación. Te quemas, saltas, necesitas salir.
                     </div>
                   </div>
                   <div className="flex items-start gap-3 text-[13px]">
                     <div className="w-2 h-2 rounded-full bg-[#4A5568] mt-1.5 flex-shrink-0"></div>
-                    <div className="text-[#2D3748] dark:text-[#E5E5E5]">
+                    <div className="text-[#1A1915] dark:text-[#E5E5E5]">
                       <strong className="font-semibold">Agua muy fría</strong> = Hipoactivación. Te congelas, te entumeces, no puedes moverte.
                     </div>
                   </div>
                   <div className="flex items-start gap-3 text-[13px]">
                     <div className="w-2 h-2 rounded-full bg-[#1B6B4A] mt-1.5 flex-shrink-0"></div>
-                    <div className="text-[#2D3748] dark:text-[#E5E5E5]">
+                    <div className="text-[#1A1915] dark:text-[#E5E5E5]">
                       <strong className="font-semibold">Temperatura perfecta</strong> = Ventana de Tolerancia. Puedes quedarte, funcionar bien.
                     </div>
                   </div>
@@ -236,50 +226,50 @@ export function WindowOfToleranceCard() {
 
             {/* Exercise Section */}
             <div className="px-10 py-8">
-              <h3 className="text-lg font-semibold text-[#1a1a2e] dark:text-white mb-5 pb-2.5 border-b border-[#E2E8F0] dark:border-[#333333] font-serif">
+              <h3 className="text-lg font-semibold text-[#1a1a2e] dark:text-white mb-5 pb-2.5 border-b border-[#E5E4E0] dark:border-[#333333] font-serif">
                 Ejercicio de Autodiagnóstico
               </h3>
 
               <div className="space-y-6">
                 {/* Exercise 1 */}
                 <div>
-                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#718096] dark:text-[#A0A0A0] mb-2">1. Amplitud actual de mi ventana</h4>
-                  <p className="text-xs text-[#718096] dark:text-[#A0A0A0] mb-2">¿Qué tanta intensidad emocional puedo manejar sin perder claridad cognitiva?</p>
+                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-2">1. Amplitud actual de mi ventana</h4>
+                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mb-2">¿Qué tanta intensidad emocional puedo manejar sin perder claridad cognitiva?</p>
                   <div className="flex items-center gap-3 mb-2">
                     <div className="flex-1 h-2 bg-gradient-to-r from-[#4A5568] via-[#1B6B4A] to-[#B8860B] rounded"></div>
                   </div>
-                  <div className="flex justify-between text-[10px] text-[#718096] dark:text-[#A0A0A0] mb-2">
+                  <div className="flex justify-between text-[10px] text-[#706F6C] dark:text-[#A0A0A0] mb-2">
                     <span>1 — Muy estrecha</span>
                     <span>10 — Muy amplia</span>
                   </div>
                   <input
                     type="text"
-                    className="w-full px-3 py-2.5 border border-[#E2E8F0] dark:border-[#333333] rounded bg-[#FAFBFC] dark:bg-[#1A1A1A] text-[13px] mt-2 text-[#2D3748] dark:text-[#E5E5E5] placeholder:text-[#A0AEC0] dark:placeholder:text-[#666666]"
+                    className="w-full px-3 py-2.5 border border-[#E5E4E0] dark:border-[#333333] rounded bg-[#FAF9F7] dark:bg-[#1A1A1A] text-[13px] mt-2 text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97] dark:placeholder:text-[#666666]"
                     placeholder="Mi número: ___"
                   />
                 </div>
 
                 {/* Exercise 2 */}
                 <div>
-                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#718096] dark:text-[#A0A0A0] mb-2">2. Disparadores hacia hiperactivación</h4>
+                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-2">2. Disparadores hacia hiperactivación</h4>
                   <textarea
-                    className="w-full px-3 py-2.5 border border-[#E2E8F0] dark:border-[#333333] rounded bg-[#FAFBFC] dark:bg-[#1A1A1A] text-[13px] min-h-[60px] resize-y mt-2 text-[#2D3748] dark:text-[#E5E5E5] placeholder:text-[#A0AEC0] dark:placeholder:text-[#666666]"
+                    className="w-full px-3 py-2.5 border border-[#E5E4E0] dark:border-[#333333] rounded bg-[#FAF9F7] dark:bg-[#1A1A1A] text-[13px] min-h-[60px] resize-y mt-2 text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97] dark:placeholder:text-[#666666]"
                     placeholder="Situaciones que me aceleran / estresan / enojan..."
                   />
                 </div>
 
                 {/* Exercise 3 */}
                 <div>
-                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#718096] dark:text-[#A0A0A0] mb-2">3. Disparadores hacia hipoactivación</h4>
+                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-2">3. Disparadores hacia hipoactivación</h4>
                   <textarea
-                    className="w-full px-3 py-2.5 border border-[#E2E8F0] dark:border-[#333333] rounded bg-[#FAFBFC] dark:bg-[#1A1A1A] text-[13px] min-h-[60px] resize-y mt-2 text-[#2D3748] dark:text-[#E5E5E5] placeholder:text-[#A0AEC0] dark:placeholder:text-[#666666]"
+                    className="w-full px-3 py-2.5 border border-[#E5E4E0] dark:border-[#333333] rounded bg-[#FAF9F7] dark:bg-[#1A1A1A] text-[13px] min-h-[60px] resize-y mt-2 text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97] dark:placeholder:text-[#666666]"
                     placeholder="Situaciones que me apagan / desconectan / colapsan..."
                   />
                 </div>
 
                 {/* Exercise 4 */}
                 <div>
-                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#718096] dark:text-[#A0A0A0] mb-3">4. Factores que afectan mi ventana</h4>
+                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-3">4. Factores que afectan mi ventana</h4>
                   <div className="grid grid-cols-2 gap-4">
                     {/* Expand Column */}
                     <div>
@@ -287,22 +277,22 @@ export function WindowOfToleranceCard() {
                         Expanden (agrandan)
                       </h5>
                       <ul className="space-y-1">
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Sueño reparador
                         </li>
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Ejercicio regular
                         </li>
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Conexión social segura
                         </li>
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Prácticas de regulación
                         </li>
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Alimentación balanceada
                         </li>
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Tiempo en naturaleza
                         </li>
                       </ul>
@@ -314,22 +304,22 @@ export function WindowOfToleranceCard() {
                         Estrechan (reducen)
                       </h5>
                       <ul className="space-y-1">
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Privación de sueño
                         </li>
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Estrés crónico
                         </li>
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Aislamiento social
                         </li>
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Trauma no procesado
                         </li>
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Exceso de estimulantes
                         </li>
-                        <li className="text-xs pl-[18px] relative text-[#2D3748] dark:text-[#E5E5E5]">
+                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
                           <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Sedentarismo
                         </li>
                       </ul>
@@ -348,7 +338,7 @@ export function WindowOfToleranceCard() {
           </div>
 
           {/* Action Plan */}
-          <div className="px-10 py-6 bg-[#FAFBFC] dark:bg-[#1A1A1A] border-t border-[#E2E8F0] dark:border-[#333333]">
+          <div className="px-10 py-6 bg-[#FAF9F7] dark:bg-[#1A1A1A] border-t border-[#E5E4E0] dark:border-[#333333]">
             <h3 className="text-base font-semibold text-[#1a1a2e] dark:text-white mb-4 text-center font-serif">
               Mi Plan de Expansión
             </h3>
@@ -358,12 +348,12 @@ export function WindowOfToleranceCard() {
                   +
                 </div>
                 <div className="flex-1">
-                  <label className="text-xs font-semibold text-[#2D3748] dark:text-[#E5E5E5] block mb-1.5">
+                  <label className="text-xs font-semibold text-[#1A1915] dark:text-[#E5E5E5] block mb-1.5">
                     Una cosa que voy a AUMENTAR esta semana:
                   </label>
                   <input
                     type="text"
-                    className="w-full px-2.5 py-2 border border-[#E2E8F0] dark:border-[#333333] rounded bg-white dark:bg-[#252525] text-[13px] text-[#2D3748] dark:text-[#E5E5E5] placeholder:text-[#A0AEC0] dark:placeholder:text-[#666666]"
+                    className="w-full px-2.5 py-2 border border-[#E5E4E0] dark:border-[#333333] rounded bg-white dark:bg-[#252525] text-[13px] text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97] dark:placeholder:text-[#666666]"
                     placeholder=""
                   />
                 </div>
@@ -373,12 +363,12 @@ export function WindowOfToleranceCard() {
                   −
                 </div>
                 <div className="flex-1">
-                  <label className="text-xs font-semibold text-[#2D3748] dark:text-[#E5E5E5] block mb-1.5">
+                  <label className="text-xs font-semibold text-[#1A1915] dark:text-[#E5E5E5] block mb-1.5">
                     Una cosa que voy a REDUCIR esta semana:
                   </label>
                   <input
                     type="text"
-                    className="w-full px-2.5 py-2 border border-[#E2E8F0] dark:border-[#333333] rounded bg-white dark:bg-[#252525] text-[13px] text-[#2D3748] dark:text-[#E5E5E5] placeholder:text-[#A0AEC0] dark:placeholder:text-[#666666]"
+                    className="w-full px-2.5 py-2 border border-[#E5E4E0] dark:border-[#333333] rounded bg-white dark:bg-[#252525] text-[13px] text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97] dark:placeholder:text-[#666666]"
                     placeholder=""
                   />
                 </div>
@@ -387,16 +377,16 @@ export function WindowOfToleranceCard() {
           </div>
 
           {/* Footer */}
-          <div className="px-10 py-4 border-t border-[#E2E8F0] dark:border-[#333333] flex justify-between items-center bg-white dark:bg-[#252525]">
-            <div className="text-[11px] text-[#718096] dark:text-[#A0A0A0]">
-              <strong className="text-[#2D3748] dark:text-[#E5E5E5] font-semibold">Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
+          <div className="px-10 py-4 border-t border-[#E5E4E0] dark:border-[#333333] flex justify-between items-center bg-white dark:bg-[#252525]">
+            <div className="text-[11px] text-[#706F6C] dark:text-[#A0A0A0]">
+              <strong className="text-[#1A1915] dark:text-[#E5E5E5] font-semibold">Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
             </div>
-            <div className="text-[10px] text-[#718096] dark:text-[#A0A0A0] text-right">
-              <span className="font-semibold text-[#2D3748] dark:text-[#E5E5E5]">Instituto Centro Bioenergética</span><br />
+            <div className="text-[10px] text-[#706F6C] dark:text-[#A0A0A0] text-right">
+              <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Instituto Centro Bioenergética</span><br />
               inteligencia-energetica.com
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   )

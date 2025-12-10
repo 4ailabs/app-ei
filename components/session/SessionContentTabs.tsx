@@ -145,7 +145,7 @@ export function SessionContentTabs({ sessionData, contentCounts }: SessionConten
                   <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0]">Manual y documentos de la sesión</p>
                 </div>
               </div>
-              <PDFSection pdfUrl={sessionData.pdfUrl} sessionId={sessionData.id} title="Manual de la Sesión" />
+              <PDFSection pdfUrl={sessionData.pdfUrl} pdfs={sessionData.pdfs} sessionId={sessionData.id} title="Manual de la Sesión" />
             </div>
           </TabsContent>
         )}
@@ -213,7 +213,7 @@ export function SessionContentTabs({ sessionData, contentCounts }: SessionConten
                   <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0]">{contentCounts.protocols} protocolos disponibles</p>
                 </div>
               </div>
-              <ProtocolSection protocols={sessionData.protocols || []} />
+              <ProtocolSection protocols={sessionData.protocols || []} moduleNumber={sessionData.moduleNumber} />
             </div>
           </TabsContent>
         )}

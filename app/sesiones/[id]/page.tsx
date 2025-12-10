@@ -49,7 +49,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
 
   // Calculate content counts
   const contentCounts = {
-    pdf: sessionData.pdfUrl ? 1 : 0,
+    pdf: sessionData.pdfs?.length || (sessionData.pdfUrl ? 1 : 0),
     videos: sessionData.videos.length,
     audios: sessionData.audios.length,
     themes: sessionData.themes.length,

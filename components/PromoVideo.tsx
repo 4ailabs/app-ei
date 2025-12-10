@@ -1,13 +1,13 @@
 "use client"
 
 import { Play } from "lucide-react"
-import { getStreamEmbedUrl } from "@/lib/cloudflare-stream"
 
 // Helper function to get Cloudflare Stream embed URL
 function getCloudflareStreamUrl(streamId: string): string {
   // Usar directamente iframe.videodelivery.net que es el formato estándar
   // Este formato no requiere Account ID y funciona con cualquier video de Cloudflare Stream
-  return `https://iframe.videodelivery.net/${streamId}`
+  // NO incluir autoplay - Cloudflare Stream no reproduce automáticamente por defecto
+  return `https://iframe.videodelivery.net/${streamId}?muted=false&preload=none&controls=true`
 }
 
 const PROMO_VIDEO_ID = "39f53dd7e006eb1ea5de4f0493d35ee3"

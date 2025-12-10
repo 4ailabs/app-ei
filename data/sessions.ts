@@ -6,6 +6,7 @@ export interface Session {
   moduleNumber?: number
   imageUrl?: string
   pdfUrl?: string
+  pdfs?: PDF[]
   videos: Video[]
   audios: Audio[]
   themes: Theme[]
@@ -80,6 +81,40 @@ export const sessions: Session[] = [
     moduleNumber: 1,
     imageUrl: "/images/sessions/session-1.png",
     pdfUrl: "",
+    pdfs: [
+      {
+        id: "pdf1-1",
+        title: "Guía: Factores Ventana de Tolerancia",
+        pages: 0,
+        description: "Factores que expanden y estrechan tu ventana de tolerancia",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Guia_Factores_Ventana_Tolerancia.pdf",
+        category: "referencia"
+      },
+      {
+        id: "pdf1-2",
+        title: "Guía: Neuroplasticidad",
+        pages: 0,
+        description: "Cómo el cerebro puede cambiar a través de la práctica",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Guia_Neuroplasticidad.pdf",
+        category: "contenido_profundo"
+      },
+      {
+        id: "pdf1-3",
+        title: "Guía: Rituales de Consolidación",
+        pages: 0,
+        description: "Rituales para consolidar el aprendizaje",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Guia_Rituales_Consolidacion.pdf",
+        category: "ejercicio"
+      },
+      {
+        id: "pdf1-4",
+        title: "Guía: Teoría Polivagal",
+        pages: 0,
+        description: "Fundamentos teóricos del sistema nervioso autónomo",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Guia_Teoria_Polivagal.pdf",
+        category: "contenido_profundo"
+      }
+    ],
     videos: [
       {
         id: "v1-1",
