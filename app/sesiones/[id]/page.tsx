@@ -58,12 +58,12 @@ export default async function SessionPage({ params }: SessionPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#2F2F2F]">
+    <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A]">
       <div className="container mx-auto px-4 py-8 pb-24">
         {/* Back Button */}
         <div className="mb-6 animate-fade-in">
           <Link href="/">
-            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#4A4A4A] transition-all rounded-full text-[#706F6C] dark:text-[#B4B4B4]">
+            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all rounded-full text-[#706F6C] dark:text-[#A0A0A0]">
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <Home className="mr-2 h-4 w-4" />
               Volver al Dashboard
@@ -73,7 +73,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
 
         <div className="max-w-5xl mx-auto">
           {/* Session Header with Image */}
-          <div className="bg-white dark:bg-[#393939] rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#4A4A4A]">
+          <div className="bg-white dark:bg-[#252525] rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
             {/* Session Image Banner */}
             {sessionData.imageUrl && (
               <div className="relative h-64 lg:h-80 overflow-hidden">
@@ -106,43 +106,43 @@ export default async function SessionPage({ params }: SessionPageProps) {
             {!sessionData.imageUrl && (
               <div className="p-8">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="p-4 bg-[#DA7756] dark:bg-[#ECECEC] rounded-2xl">
-                    <IconComponent className="h-8 w-8 text-white dark:text-[#2F2F2F]" />
+                  <div className="p-4 bg-[#DA7756] dark:bg-[#DA7756] rounded-2xl">
+                    <IconComponent className="h-8 w-8 text-white dark:text-white" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-[#DA7756] dark:bg-[#ECECEC] text-white dark:text-[#2F2F2F]">
+                      <span className="text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-[#DA7756] dark:bg-[#DA7756] text-white dark:text-white">
                         Bloque {sessionData.day}
                       </span>
                       {sessionData.moduleNumber && (
-                        <span className="text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-[#F5F4F0] dark:bg-[#4A4A4A] text-[#706F6C] dark:text-[#B4B4B4]">
+                        <span className="text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-[#F5F4F0] dark:bg-[#333333] text-[#706F6C] dark:text-[#A0A0A0]">
                           Módulo {sessionData.moduleNumber}
                         </span>
                       )}
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-bold text-[#1A1915] dark:text-[#ECECEC] mb-3">
+                    <h1 className="text-4xl md:text-5xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-3">
                       {sessionData.title}
                     </h1>
-                    <p className="text-lg text-[#706F6C] dark:text-[#B4B4B4]">{sessionData.description}</p>
+                    <p className="text-lg text-[#706F6C] dark:text-[#A0A0A0]">{sessionData.description}</p>
                   </div>
                 </div>
               </div>
             )}
 
             {/* Quick Stats Bar */}
-            <div className="px-8 py-5 bg-gradient-to-r from-[#F5F4F0] to-[#FAF9F7] dark:from-[#2F2F2F] dark:to-[#393939] border-t border-[#E5E4E0] dark:border-[#4A4A4A]">
+            <div className="px-8 py-5 bg-[#FAF9F7] dark:bg-[#2A2A2A] border-t border-[#E5E4E0] dark:border-[#333333]">
               <div className="flex flex-wrap items-center gap-6 text-sm">
-                <div className="flex items-center gap-2 text-[#706F6C] dark:text-[#B4B4B4]">
+                <div className="flex items-center gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
                   <Calendar className="h-4 w-4" />
                   <span className="font-medium">Día {sessionData.day}</span>
                 </div>
                 {sessionData.moduleNumber && (
-                  <div className="flex items-center gap-2 text-[#706F6C] dark:text-[#B4B4B4]">
+                  <div className="flex items-center gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
                     <CheckCircle2 className="h-4 w-4" />
                     <span className="font-medium">Módulo {sessionData.moduleNumber}</span>
                   </div>
                 )}
-                <div className="flex items-center gap-2 text-[#706F6C] dark:text-[#B4B4B4]">
+                <div className="flex items-center gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
                   <Clock className="h-4 w-4" />
                   <span className="font-medium">
                     {Object.values(contentCounts).reduce((a, b) => a + b, 0)} elementos
