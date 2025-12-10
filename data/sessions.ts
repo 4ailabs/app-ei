@@ -423,6 +423,60 @@ export const sessions: Session[] = [
         description: "Cierre guiado e integración de la sesión",
         category: "meditacion",
         type: "audio" as const
+      },
+      {
+        id: "ar1-8",
+        title: "Ritual 1: Priming de Regulación",
+        url: "",
+        duration: "5 min",
+        description: "Respiración + Gratitud + Intención",
+        category: "ritual_matutino",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-9",
+        title: "Ritual 2: Priming de Recursos",
+        url: "",
+        duration: "10 min",
+        description: "Movimiento + Respiración + Gratitud + Visualización + Intención",
+        category: "ritual_matutino",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-10",
+        title: "Ritual Completo Mañana",
+        url: "",
+        duration: "15 min",
+        description: "Combinación de Ritual 1 y 2",
+        category: "ritual_matutino",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-11",
+        title: "Regreso a Ventral Vagal",
+        url: "",
+        duration: "10 min",
+        description: "Para cuando estás en simpático o dorsal",
+        category: "meditacion",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-12",
+        title: "Cierre Diario de 5 Minutos",
+        url: "",
+        duration: "5 min",
+        description: "Revisión, gratitud, intención mañana",
+        category: "ritual_nocturno",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-13",
+        title: "Regulación Pre-Sueño",
+        url: "",
+        duration: "10 min",
+        description: "Relajación progresiva + respiración",
+        category: "ritual_nocturno",
+        type: "audio" as const
       }
     ],
     apps: []
@@ -718,31 +772,6 @@ export const sessions: Session[] = [
         duration: "12 min",
         description: "Recorrido por las 4 palancas en secuencia",
         category: "meditacion"
-      },
-      // Rituales matutinos
-      {
-        id: "a3-2",
-        title: "Ritual 1: Priming de Regulación",
-        url: "",
-        duration: "5 min",
-        description: "Respiración + Gratitud + Intención",
-        category: "ritual_matutino"
-      },
-      {
-        id: "a3-3",
-        title: "Ritual 2: Priming de Recursos",
-        url: "",
-        duration: "10 min",
-        description: "Movimiento + Respiración + Gratitud + Visualización + Intención",
-        category: "ritual_matutino"
-      },
-      {
-        id: "a3-4",
-        title: "Ritual Completo Mañana",
-        url: "",
-        duration: "15 min",
-        description: "Combinación de Ritual 1 y 2",
-        category: "ritual_matutino"
       }
     ],
     themes: [
@@ -949,36 +978,11 @@ export const sessions: Session[] = [
     audios: [
       {
         id: "a4-1",
-        title: "Regreso a Ventral Vagal",
-        url: "",
-        duration: "10 min",
-        description: "Para cuando estás en simpático o dorsal",
-        category: "meditacion"
-      },
-      {
-        id: "a4-2",
         title: "Mi Nueva Historia",
         url: "",
         duration: "15 min",
         description: "Visualización del héroe del viaje",
         category: "meditacion"
-      },
-      // Rituales nocturnos
-      {
-        id: "a4-3",
-        title: "Cierre Diario de 5 Minutos",
-        url: "",
-        duration: "5 min",
-        description: "Revisión, gratitud, intención mañana",
-        category: "ritual_nocturno"
-      },
-      {
-        id: "a4-4",
-        title: "Regulación Pre-Sueño",
-        url: "",
-        duration: "10 min",
-        description: "Relajación progresiva + respiración",
-        category: "ritual_nocturno"
       }
     ],
     themes: [
