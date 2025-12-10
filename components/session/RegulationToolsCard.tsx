@@ -66,45 +66,45 @@ export function RegulationToolsCard({ accentColor = "#2563EB" }: RegulationTools
   return (
     <div ref={cardRef} className="w-full bg-white dark:bg-[#252525] overflow-hidden border border-[#E5E4E0] dark:border-[#333333] rounded-xl">
       {/* Header */}
-      <div className="relative px-10 py-7 rounded-t-xl" style={{ backgroundColor: accentColor, borderBottom: `3px solid ${accentColor}` }}>
-        <div className="flex justify-between items-end mb-4">
-          <div>
-            <h1 className="text-3xl font-semibold text-white mb-1.5 font-serif tracking-tight">
+      <div className="relative px-4 sm:px-6 md:px-10 py-4 sm:py-6 md:py-7 rounded-t-xl" style={{ backgroundColor: accentColor, borderBottom: `3px solid ${accentColor}` }}>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-3 sm:mb-4 gap-3 sm:gap-0">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-1.5 font-serif tracking-tight">
               Herramientas de Regulación
             </h1>
-            <p className="text-[13px] text-white/70 uppercase tracking-wider">Las 4 Técnicas Fundamentales</p>
+            <p className="text-[11px] sm:text-[13px] text-white/70 uppercase tracking-wider">Las 4 Técnicas Fundamentales</p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 handleDownload()
               }}
               disabled={isDownloading}
-              className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-medium transition-colors flex items-center gap-2 disabled:opacity-50"
+              className="px-2 sm:px-4 py-1.5 sm:py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-[10px] sm:text-xs font-medium transition-colors flex items-center gap-1 sm:gap-2 disabled:opacity-50"
               title="Descargar como imagen"
             >
-              <Download className="h-4 w-4" />
-              {isDownloading ? 'Descargando...' : 'Descargar'}
+              <Download className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">{isDownloading ? 'Descargando...' : 'Descargar'}</span>
             </button>
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 setIsExpanded(!isExpanded)
               }}
-              className="p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
               title={isExpanded ? "Colapsar" : "Expandir"}
             >
               {isExpanded ? (
-                <ChevronUp className="h-5 w-5 text-white" />
+                <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               ) : (
-                <ChevronDown className="h-5 w-5 text-white" />
+                <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               )}
             </button>
           </div>
         </div>
         {/* Gradient line */}
-        <div className="absolute bottom-0 left-10 right-10 h-[3px]">
+        <div className="absolute bottom-0 left-4 sm:left-6 md:left-10 right-4 sm:right-6 md:right-10 h-[3px]">
           <div className="w-full h-full" style={{
             background: 'linear-gradient(90deg, #2563EB 25%, #7C3AED 25%, #7C3AED 50%, #0891B2 50%, #0891B2 75%, #B8860B 75%)'
           }}></div>
@@ -114,16 +114,16 @@ export function RegulationToolsCard({ accentColor = "#2563EB" }: RegulationTools
       {isExpanded && (
         <>
           {/* Intro Section */}
-          <div className="px-10 py-5 border-b border-[#E5E4E0] dark:border-[#333333] bg-[#FAF9F7] dark:bg-[#1A1A1A]">
-            <p className="text-sm text-[#1A1915] dark:text-[#E5E5E5] leading-relaxed">
+          <div className="px-4 sm:px-6 md:px-10 py-4 sm:py-5 border-b border-[#E5E4E0] dark:border-[#333333] bg-[#FAF9F7] dark:bg-[#1A1A1A]">
+            <p className="text-xs sm:text-sm text-[#1A1915] dark:text-[#E5E5E5] leading-relaxed">
               Estas cuatro técnicas constituyen el kit básico de autorregulación del sistema nervioso. <strong className="text-[#1a1a2e] dark:text-white font-semibold">Practícalas en estado de calma</strong> para que estén disponibles automáticamente cuando las necesites.
             </p>
           </div>
 
           {/* Techniques Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 overflow-x-hidden">
             {/* Técnica 1: Respiración 4-7-8 */}
-            <div className="px-7 py-6 border-b border-[#E5E4E0] dark:border-[#333333] lg:border-r lg:border-b relative before:content-[''] before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-[#2563EB]">
+            <div className="px-4 sm:px-6 md:px-7 py-4 sm:py-6 border-b border-[#E5E4E0] dark:border-[#333333] lg:border-r lg:border-b relative before:content-[''] before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-[#2563EB]">
               <div className="mb-4">
                 <p className="text-[10px] font-semibold tracking-wider uppercase text-[#2563EB] mb-1.5">Técnica I</p>
                 <h3 className="text-xl font-semibold text-[#1a1a2e] dark:text-white mb-1 font-serif">Respiración 4-7-8</h3>
@@ -172,7 +172,7 @@ export function RegulationToolsCard({ accentColor = "#2563EB" }: RegulationTools
             </div>
 
             {/* Técnica 2: Abrazo de Mariposa */}
-            <div className="px-7 py-6 border-b border-[#E5E4E0] dark:border-[#333333] lg:border-b-0 relative before:content-[''] before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-[#7C3AED]">
+            <div className="px-4 sm:px-6 md:px-7 py-4 sm:py-6 border-b border-[#E5E4E0] dark:border-[#333333] lg:border-b-0 relative before:content-[''] before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-[#7C3AED]">
               <div className="mb-4">
                 <p className="text-[10px] font-semibold tracking-wider uppercase text-[#7C3AED] mb-1.5">Técnica II</p>
                 <h3 className="text-xl font-semibold text-[#1a1a2e] dark:text-white mb-1 font-serif">Abrazo de Mariposa</h3>
@@ -221,7 +221,7 @@ export function RegulationToolsCard({ accentColor = "#2563EB" }: RegulationTools
             </div>
 
             {/* Técnica 3: Orientación 5-4-3-2-1 */}
-            <div className="px-7 py-6 border-b border-[#E5E4E0] dark:border-[#333333] lg:border-r lg:border-b-0 relative before:content-[''] before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-[#0891B2]">
+            <div className="px-4 sm:px-6 md:px-7 py-4 sm:py-6 border-b border-[#E5E4E0] dark:border-[#333333] lg:border-r lg:border-b-0 relative before:content-[''] before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-[#0891B2]">
               <div className="mb-4">
                 <p className="text-[10px] font-semibold tracking-wider uppercase text-[#0891B2] mb-1.5">Técnica III</p>
                 <h3 className="text-xl font-semibold text-[#1a1a2e] dark:text-white mb-1 font-serif">Orientación 5-4-3-2-1</h3>
@@ -273,7 +273,7 @@ export function RegulationToolsCard({ accentColor = "#2563EB" }: RegulationTools
             </div>
 
             {/* Técnica 4: Contacto Tranquilizador */}
-            <div className="px-7 py-6 border-b-0 border-[#E5E4E0] dark:border-[#333333] relative before:content-[''] before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-[#B8860B]">
+            <div className="px-4 sm:px-6 md:px-7 py-4 sm:py-6 border-b-0 border-[#E5E4E0] dark:border-[#333333] relative before:content-[''] before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-[#B8860B]">
               <div className="mb-4">
                 <p className="text-[10px] font-semibold tracking-wider uppercase text-[#B8860B] mb-1.5">Técnica IV</p>
                 <h3 className="text-xl font-semibold text-[#1a1a2e] dark:text-white mb-1 font-serif">Contacto Tranquilizador</h3>
@@ -327,11 +327,11 @@ export function RegulationToolsCard({ accentColor = "#2563EB" }: RegulationTools
           </div>
 
           {/* Summary Section */}
-          <div className="bg-[#1a1a2e] dark:bg-[#1a1a2e] px-10 py-6">
-            <h3 className="text-base font-semibold text-white mb-4 text-center font-serif">
+          <div className="bg-[#1a1a2e] dark:bg-[#1a1a2e] px-4 sm:px-6 md:px-10 py-4 sm:py-6">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-3 sm:mb-4 text-center font-serif">
               Guía Rápida de Selección
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
               <div className="p-3.5 bg-white/8 dark:bg-white/8 rounded-md border-l-[3px] border-[#2563EB]">
                 <p className="text-[11px] text-white/70 dark:text-white/70 mb-1.5 leading-snug">Ansiedad subiendo</p>
                 <p className="text-xs font-semibold text-white">Respiración 4-7-8</p>
@@ -352,11 +352,11 @@ export function RegulationToolsCard({ accentColor = "#2563EB" }: RegulationTools
           </div>
 
           {/* Practice Section */}
-          <div className="px-10 py-5 bg-[#FAF9F7] dark:bg-[#1A1A1A] border-t border-[#E5E4E0] dark:border-[#333333]">
-            <h3 className="text-base font-semibold text-[#1a1a2e] dark:text-white mb-3 text-center font-serif">
+          <div className="px-4 sm:px-6 md:px-10 py-4 sm:py-5 bg-[#FAF9F7] dark:bg-[#1A1A1A] border-t border-[#E5E4E0] dark:border-[#333333]">
+            <h3 className="text-sm sm:text-base font-semibold text-[#1a1a2e] dark:text-white mb-3 text-center font-serif">
               Mi Práctica Personal
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-[600px] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 max-w-[600px] mx-auto">
               <div>
                 <label className="text-xs font-medium text-[#1A1915] dark:text-[#E5E5E5] block mb-1.5">
                   La técnica que mejor me funciona:
@@ -381,11 +381,11 @@ export function RegulationToolsCard({ accentColor = "#2563EB" }: RegulationTools
           </div>
 
           {/* Footer */}
-          <div className="px-10 py-4 border-t border-[#E5E4E0] dark:border-[#333333] flex justify-between items-center bg-white dark:bg-[#252525]">
-            <div className="text-[11px] text-[#706F6C] dark:text-[#A0A0A0]">
+          <div className="px-4 sm:px-6 md:px-10 py-3 sm:py-4 border-t border-[#E5E4E0] dark:border-[#333333] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 bg-white dark:bg-[#252525]">
+            <div className="text-[10px] sm:text-[11px] text-[#706F6C] dark:text-[#A0A0A0]">
               <strong className="text-[#1A1915] dark:text-[#E5E5E5] font-semibold">Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
             </div>
-            <div className="text-[10px] text-[#706F6C] dark:text-[#A0A0A0] text-right">
+            <div className="text-[9px] sm:text-[10px] text-[#706F6C] dark:text-[#A0A0A0] text-left sm:text-right">
               <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Instituto Centro Bioenergética</span><br />
               inteligencia-energetica.com
             </div>

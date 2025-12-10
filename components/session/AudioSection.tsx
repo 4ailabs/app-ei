@@ -152,7 +152,7 @@ function AudioPlayer({ audio }: { audio: Audio }) {
   const hasValidUrl = audio.url && audio.url.trim() !== ""
 
   return (
-    <div className="bg-[#F5F4F0] dark:bg-[#2F2F2F] rounded-xl p-4 hover:bg-[#ECEAE5] dark:hover:bg-[#393939] transition-colors border border-[#E5E4E0] dark:border-[#4A4A4A]">
+    <div className="bg-[#F5F4F0] dark:bg-[#2F2F2F] rounded-xl p-3 sm:p-4 hover:bg-[#ECEAE5] dark:hover:bg-[#393939] transition-colors border border-[#E5E4E0] dark:border-[#4A4A4A] overflow-hidden">
       {hasValidUrl && (
         <audio
           ref={audioRef}
@@ -164,44 +164,44 @@ function AudioPlayer({ audio }: { audio: Audio }) {
         />
       )}
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4 w-full min-w-0">
         {/* Play Button */}
         <button
           onClick={togglePlay}
           disabled={!hasValidUrl}
-          className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+          className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
             hasValidUrl
               ? 'bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600 shadow-md hover:shadow-lg'
               : 'bg-[#E5E4E0] dark:bg-[#4A4A4A] text-[#9B9A97] dark:text-[#8C8C8C] cursor-not-allowed'
           }`}
         >
           {isPlaying ? (
-            <Pause className="h-5 w-5" />
+            <Pause className="h-4 w-4 sm:h-5 sm:w-5" />
           ) : (
-            <Play className="h-5 w-5 ml-0.5" />
+            <Play className="h-4 w-4 sm:h-5 sm:w-5 ml-0.5" />
           )}
         </button>
 
         {/* Info and Progress */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between mb-1">
-            <h4 className="font-medium text-[#1A1915] dark:text-[#ECECEC] truncate pr-2">{audio.title}</h4>
+        <div className="flex-1 min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between mb-1 gap-2 min-w-0">
+            <h4 className="font-medium text-[#1A1915] dark:text-[#ECECEC] truncate text-sm sm:text-base min-w-0 flex-1">{audio.title}</h4>
             {audio.duration && (
               <div className="flex items-center gap-1 text-xs text-[#706F6C] dark:text-[#B4B4B4] flex-shrink-0">
-                <Clock className="h-3 w-3" />
-                <span>{audio.duration}</span>
+                <Clock className="h-3 w-3 hidden sm:block" />
+                <span className="whitespace-nowrap">{audio.duration}</span>
               </div>
             )}
           </div>
 
           {audio.description && (
-            <p className="text-sm text-[#706F6C] dark:text-[#B4B4B4] truncate mb-2">{audio.description}</p>
+            <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#B4B4B4] truncate mb-2">{audio.description}</p>
           )}
 
           {/* Progress Bar */}
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] w-10">{formatTime(currentTime)}</span>
-            <div className="flex-1 relative h-1.5 bg-[#E5E4E0] dark:bg-[#4A4A4A] rounded-full overflow-hidden">
+          <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+            <span className="text-[10px] sm:text-xs text-[#9B9A97] dark:text-[#8C8C8C] w-8 sm:w-10 flex-shrink-0">{formatTime(currentTime)}</span>
+            <div className="flex-1 relative h-1.5 bg-[#E5E4E0] dark:bg-[#4A4A4A] rounded-full overflow-hidden min-w-0">
               <div
                 className="absolute inset-y-0 left-0 bg-green-600 dark:bg-green-500 rounded-full transition-all"
                 style={{ width: `${progress}%` }}
@@ -215,7 +215,7 @@ function AudioPlayer({ audio }: { audio: Audio }) {
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
             </div>
-            <span className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] w-10 text-right">{formatTime(duration)}</span>
+            <span className="text-[10px] sm:text-xs text-[#9B9A97] dark:text-[#8C8C8C] w-8 sm:w-10 text-right flex-shrink-0">{formatTime(duration)}</span>
           </div>
         </div>
       </div>

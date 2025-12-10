@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --hostname 127.0.0.1 --port 8080",
     "build": "prisma generate && bash scripts/fix-prisma.sh && prisma db push --skip-generate && next build",
     "start": "next start",
     "lint": "eslint",
@@ -46,6 +46,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
+    "live-server": "^1.2.2",
     "tailwindcss": "^4",
     "tsx": "^4.19.2",
     "typescript": "^5"
