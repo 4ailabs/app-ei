@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuroplasticidad — La Ciencia del Cambio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --neural: #7C3AED;
+            --neural-bg: #F5F3FF;
+            --evidence: #059669;
+            --evidence-bg: #ECFDF5;
+            --mechanism: #2563EB;
+            --mechanism-bg: #EFF6FF;
+            --warning: #DC2626;
+            --warning-bg: #FEF2F2;
+            --gold: #B8860B;
+            --gold-bg: #FBF8F1;
+            --text: #2D3748;
+            --text-light: #718096;
+            --border: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: letter;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            background: #FAFBFC;
+            color: var(--text);
+            line-height: 1.6;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid var(--border);
+        }
+
+        /* Header */
+        .card-header {
+            background: var(--primary);
+            padding: 32px 40px;
+            position: relative;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 40px;
+            right: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neural) 25%, var(--evidence) 25%, var(--evidence) 50%, var(--mechanism) 50%, var(--mechanism) 75%, var(--gold) 75%);
+        }
+
+        .header-content {
+            text-align: center;
+        }
+
+        .header-titles h1 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 36px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .header-titles .subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Definition Box */
+        .definition-section {
+            padding: 24px 40px;
+            border-bottom: 1px solid var(--border);
+            background: var(--neural-bg);
+        }
+
+        .definition-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .definition-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--neural);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .definition-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .definition-content h2 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .definition-content p {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .definition-content strong {
+            color: var(--neural);
+            font-weight: 600;
+        }
+
+        /* Paradigm Shift */
+        .paradigm-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .paradigm-box {
+            padding: 24px 28px;
+            position: relative;
+        }
+
+        .paradigm-box.old {
+            background: #FEF2F2;
+            border-right: 1px solid var(--border);
+        }
+
+        .paradigm-box.new {
+            background: var(--evidence-bg);
+        }
+
+        .paradigm-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .paradigm-box.old::before { background: var(--warning); }
+        .paradigm-box.new::before { background: var(--evidence); }
+
+        .paradigm-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .paradigm-box.old .paradigm-label { color: var(--warning); }
+        .paradigm-box.new .paradigm-label { color: var(--evidence); }
+
+        .paradigm-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .paradigm-list {
+            list-style: none;
+        }
+
+        .paradigm-list li {
+            font-size: 12px;
+            color: var(--text);
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .paradigm-list li::before {
+            content: '×';
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .paradigm-box.old .paradigm-list li::before { 
+            content: '×';
+            color: var(--warning); 
+        }
+        .paradigm-box.new .paradigm-list li::before { 
+            content: '✓';
+            color: var(--evidence); 
+        }
+
+        /* Evidence Section */
+        .evidence-section {
+            padding: 24px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .section-icon.evidence { background: var(--evidence-bg); color: var(--evidence); }
+        .section-icon.mechanism { background: var(--mechanism-bg); color: var(--mechanism); }
+        .section-icon.warning { background: var(--warning-bg); color: var(--warning); }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .evidence-card {
+            padding: 16px;
+            background: #FAFBFC;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            border-top: 3px solid var(--evidence);
+        }
+
+        .evidence-subject {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--evidence);
+            margin-bottom: 8px;
+        }
+
+        .evidence-finding {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .evidence-source {
+            font-size: 10px;
+            color: var(--text-light);
+            font-style: italic;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Mechanism Section */
+        .mechanism-section {
+            padding: 24px 40px;
+            border-bottom: 1px solid var(--border);
+            background: var(--mechanism-bg);
+        }
+
+        .mechanism-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .mechanism-card {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+        }
+
+        .mechanism-card::after {
+            content: '→';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--mechanism);
+            font-weight: bold;
+        }
+
+        .mechanism-card:last-child::after {
+            display: none;
+        }
+
+        .mechanism-number {
+            width: 32px;
+            height: 32px;
+            background: var(--mechanism);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            margin: 0 auto 12px;
+        }
+
+        .mechanism-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .mechanism-desc {
+            font-size: 12px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        /* Warning Section */
+        .warning-section {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            background: var(--warning-bg);
+        }
+
+        .warning-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .warning-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--warning);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .warning-content h3 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--warning);
+            margin-bottom: 8px;
+        }
+
+        .warning-content p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .warning-examples {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .warning-example {
+            font-size: 11px;
+            padding: 8px 10px;
+            background: white;
+            border-radius: 4px;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .warning-example strong {
+            display: block;
+            color: var(--warning);
+            margin-bottom: 2px;
+        }
+
+        /* Key Insight */
+        .insight-section {
+            padding: 24px 40px;
+            background: var(--primary);
+            text-align: center;
+        }
+
+        .insight-box {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .insight-quote {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 22px;
+            font-weight: 500;
+            color: white;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        .insight-explanation {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.7;
+        }
+
+        /* References Section */
+        .references-section {
+            padding: 20px 40px;
+            background: #FAFBFC;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .references-header {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px 24px;
+        }
+
+        .reference-item {
+            font-size: 11px;
+            color: var(--text);
+            line-height: 1.5;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .reference-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--neural);
+        }
+
+        /* Footer */
+        .card-footer {
+            padding: 16px 40px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+        }
+
+        .footer-left {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .footer-left strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .footer-right {
+            font-size: 10px;
+            color: var(--text-light);
+            text-align: right;
+        }
+
+        .footer-right .institute {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .card {
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <div class="header-content">
+                <div class="header-titles">
+                    <h1>Neuroplasticidad</h1>
+                    <p class="subtitle">La Ciencia del Cambio</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="definition-section">
+            <div class="definition-box">
+                <div class="definition-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <div class="definition-content">
+                    <h2>¿Qué es la Neuroplasticidad?</h2>
+                    <p>La capacidad del cerebro de <strong>reorganizar sus conexiones sinápticas</strong> en respuesta a la experiencia, el aprendizaje y el ambiente. El cerebro no es un órgano estático: <strong>cambia físicamente</strong> según lo que practicamos consistentemente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paradigm Shift -->
+        <div class="paradigm-section">
+            <div class="paradigm-box old">
+                <p class="paradigm-label">Paradigma Anterior (Siglo XX)</p>
+                <h3 class="paradigm-title">El Cerebro Estático</h3>
+                <ul class="paradigm-list">
+                    <li>Número de neuronas fijo desde el nacimiento</li>
+                    <li>Conexiones sinápticas permanentes después del desarrollo</li>
+                    <li>Daño neurológico irreversible</li>
+                    <li>Trauma temprano = limitación permanente</li>
+                    <li>Patrones defensivos son rasgos fijos</li>
+                </ul>
+            </div>
+            <div class="paradigm-box new">
+                <p class="paradigm-label">Paradigma Actual (Neurociencia)</p>
+                <h3 class="paradigm-title">El Cerebro Plástico</h3>
+                <ul class="paradigm-list">
+                    <li>Neurogénesis ocurre durante toda la vida</li>
+                    <li>Sinapsis se fortalecen o debilitan según uso</li>
+                    <li>Reorganización funcional es posible</li>
+                    <li>Circuitos pueden ser reconstruidos</li>
+                    <li>Lo que fue aprendido puede ser desaprendido</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Evidence Section -->
+        <div class="evidence-section">
+            <div class="section-header">
+                <div class="section-icon evidence">📊</div>
+                <h2 class="section-title">Evidencia Científica</h2>
+            </div>
+
+            <div class="evidence-grid">
+                <div class="evidence-card">
+                    <p class="evidence-subject">Taxistas de Londres</p>
+                    <p class="evidence-finding">Hipocampo posterior significativamente más grande que controles. Magnitud correlacionada con años de experiencia.</p>
+                    <p class="evidence-source">Maguire et al. (2000), PNAS</p>
+                </div>
+                <div class="evidence-card">
+                    <p class="evidence-subject">Músicos Profesionales</p>
+                    <p class="evidence-finding">Corteza auditiva y motora expandida. Desarrollo correlacionado con horas de práctica desde infancia.</p>
+                    <p class="evidence-source">Schlaug et al. (1995), Science</p>
+                </div>
+                <div class="evidence-card">
+                    <p class="evidence-subject">Meditadores</p>
+                    <p class="evidence-finding">Corteza prefrontal más gruesa, ínsula desarrollada, amígdala reducida. Cambios observados tras 8 semanas de práctica.</p>
+                    <p class="evidence-source">Hölzel et al. (2011), Psychiatry Research</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mechanism Section -->
+        <div class="mechanism-section">
+            <div class="section-header">
+                <div class="section-icon mechanism">⚙️</div>
+                <h2 class="section-title">Los 3 Componentes del Cambio Neuroplástico</h2>
+            </div>
+
+            <div class="mechanism-grid">
+                <div class="mechanism-card">
+                    <div class="mechanism-number">1</div>
+                    <h3 class="mechanism-title">Cesar Patrón Antiguo</h3>
+                    <p class="mechanism-desc">Sin activación consistente, las sinapsis no reciben químicos que las refuerzan. Se vuelven candidatas para poda sináptica.</p>
+                </div>
+                <div class="mechanism-card">
+                    <div class="mechanism-number">2</div>
+                    <h3 class="mechanism-title">Activar Patrón Nuevo</h3>
+                    <p class="mechanism-desc">Cada práctica libera neurotransmisores, activa cascadas intracelulares y expresa proteínas estructurales.</p>
+                </div>
+                <div class="mechanism-card">
+                    <div class="mechanism-number">3</div>
+                    <h3 class="mechanism-title">Duración Suficiente</h3>
+                    <p class="mechanism-desc">Mínimo 66 días (patrones simples), 90-120 días (patrones arraigados). La mielinización requiere repetición sostenida.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warning Section -->
+        <div class="warning-section">
+            <div class="warning-box">
+                <div class="warning-icon">!</div>
+                <div class="warning-content">
+                    <h3>Advertencia Crítica: La Neuroplasticidad es Neutra</h3>
+                    <p>El cerebro NO discrimina entre cambios adaptativos y desadaptativos. <strong>Simplemente fortalece lo que practicas.</strong> Lo que has practicado durante años ha creado circuitos eficientes—pero esos circuitos fueron construidos, y lo que fue construido puede ser reconstruido.</p>
+                    
+                    <div class="warning-examples">
+                        <div class="warning-example">
+                            <strong>Adicción</strong>
+                            Circuitos de recompensa alterados
+                        </div>
+                        <div class="warning-example">
+                            <strong>Rumiación</strong>
+                            Circuitos de preocupación fortalecidos
+                        </div>
+                        <div class="warning-example">
+                            <strong>Autocrítica</strong>
+                            Circuitos de vergüenza automatizados
+                        </div>
+                        <div class="warning-example">
+                            <strong>Hipervigilancia</strong>
+                            Circuitos de amenaza potenciados
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Insight -->
+        <div class="insight-section">
+            <div class="insight-box">
+                <p class="insight-quote">"Lo que fue construido puede ser reconstruido.<br>Lo que fue practicado puede ser despracticado."</p>
+                <p class="insight-explanation">El hecho de que haya practicado preocupación, autocrítica o defensa hipervigilante durante años NO significa que está condenado. Significa que ha construido circuitos sofisticados para esos patrones—y esos mismos mecanismos de plasticidad pueden construir circuitos nuevos.</p>
+            </div>
+        </div>
+
+        <!-- References -->
+        <div class="references-section">
+            <p class="references-header">Referencias Científicas</p>
+            <div class="references-grid">
+                <p class="reference-item">Doidge, N. (2007). The Brain That Changes Itself. Viking Press.</p>
+                <p class="reference-item">Porges, S.W. (2011). The Polyvagal Theory. W.W. Norton.</p>
+                <p class="reference-item">van der Kolk, B. (2014). The Body Keeps the Score. Viking Press.</p>
+                <p class="reference-item">Siegel, D.J. (2012). The Developing Mind. Guilford Press.</p>
+                <p class="reference-item">Davidson, R. & Begley, S. (2012). The Emotional Life of Your Brain.</p>
+                <p class="reference-item">Levine, P.A. (2010). In an Unspoken Voice. North Atlantic Books.</p>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="footer-left">
+                <strong>Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
+            </div>
+            <div class="footer-right">
+                <span class="institute">Instituto Centro Bioenergética</span><br>
+                inteligencia-energetica.com
+            </div>
+        </div>
+    </div>
+</body>
+</html>

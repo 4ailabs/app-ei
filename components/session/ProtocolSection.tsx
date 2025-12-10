@@ -165,9 +165,18 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
 
                                     <div className="px-6 pb-6 md:p-8 md:pl-0 flex items-center justify-end">
                                         {protocol.pdfUrl && (
-                                            <Button className="w-full md:w-auto bg-[#1A1915] hover:bg-[#2F2F2F] dark:bg-[#ECECEC] dark:hover:bg-white dark:text-[#1A1915] text-white rounded-xl px-6 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                                                <Download className="mr-2 h-5 w-5" />
-                                                Descargar Protocolo
+                                            <Button 
+                                                onClick={() => {
+                                                    if (protocol.pdfUrl?.endsWith('.html')) {
+                                                        window.open(protocol.pdfUrl, '_blank')
+                                                    } else {
+                                                        window.open(protocol.pdfUrl, '_blank')
+                                                    }
+                                                }}
+                                                className="w-full md:w-auto bg-[#1A1915] hover:bg-[#2F2F2F] dark:bg-[#ECECEC] dark:hover:bg-white dark:text-[#1A1915] text-white rounded-xl px-6 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                            >
+                                                <ExternalLink className="mr-2 h-5 w-5" />
+                                                {protocol.pdfUrl?.endsWith('.html') ? 'Ver Protocolo' : 'Descargar Protocolo'}
                                             </Button>
                                         )}
                                     </div>

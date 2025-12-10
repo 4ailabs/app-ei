@@ -697,13 +697,13 @@ export const sessions: Session[] = [
         id: "p2-2",
         title: "Plan de Cambio Neuroplástico",
         description: "Plantilla: patrón antiguo → patrón nuevo → práctica",
-        pdfUrl: ""
+        pdfUrl: "/protocols/plan-cambio-neuroplastico.html"
       },
       {
         id: "p2-3",
         title: "Neuroplasticidad — La Ciencia del Cambio",
         description: "Evidencia científica con referencias",
-        pdfUrl: ""
+        pdfUrl: "/protocols/neuroplasticidad-ciencia-cambio.html"
       }
     ],
     apps: []

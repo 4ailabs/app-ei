@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Cambio Neuroplástico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --phase1: #DC2626;
+            --phase1-bg: #FEF2F2;
+            --phase2: #059669;
+            --phase2-bg: #ECFDF5;
+            --phase3: #2563EB;
+            --phase3-bg: #EFF6FF;
+            --accent: #B8860B;
+            --accent-bg: #FBF8F1;
+            --text: #2D3748;
+            --text-light: #718096;
+            --border: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: letter;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            background: #FAFBFC;
+            color: var(--text);
+            line-height: 1.6;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid var(--border);
+        }
+
+        /* Header */
+        .card-header {
+            background: var(--primary);
+            padding: 28px 40px;
+            position: relative;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 40px;
+            right: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--phase1) 33%, var(--phase2) 33%, var(--phase2) 66%, var(--phase3) 66%);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .header-titles h1 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .header-titles .subtitle {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Intro Box */
+        .intro-section {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            background: var(--accent-bg);
+        }
+
+        .intro-section p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .intro-section strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .intro-components {
+            display: flex;
+            gap: 24px;
+            margin-top: 12px;
+        }
+
+        .intro-component {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        .intro-component .num {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 11px;
+            color: white;
+        }
+
+        .intro-component.c1 .num { background: var(--phase1); }
+        .intro-component.c2 .num { background: var(--phase2); }
+        .intro-component.c3 .num { background: var(--phase3); }
+
+        /* User Info */
+        .user-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 16px 40px;
+            border-bottom: 1px solid var(--border);
+            background: #FAFBFC;
+        }
+
+        .user-field label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .user-field input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+            background: white;
+        }
+
+        /* Phase Sections */
+        .phase-section {
+            padding: 24px 40px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .phase-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .phase-section.phase1::before { background: var(--phase1); }
+        .phase-section.phase2::before { background: var(--phase2); }
+        .phase-section.phase3::before { background: var(--phase3); }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .phase-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: white;
+        }
+
+        .phase1 .phase-number { background: var(--phase1); }
+        .phase2 .phase-number { background: var(--phase2); }
+        .phase3 .phase-number { background: var(--phase3); }
+
+        .phase-title-group h2 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+
+        .phase-title-group .phase-subtitle {
+            font-size: 12px;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .question-group {
+            margin-bottom: 16px;
+        }
+
+        .question-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-group label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text);
+            display: block;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .question-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: inherit;
+            background: white;
+            resize: none;
+            min-height: 50px;
+        }
+
+        .question-group textarea.large {
+            min-height: 70px;
+        }
+
+        .question-hint {
+            font-size: 11px;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* Tools Checklist */
+        .tools-section {
+            background: var(--phase3-bg);
+            padding: 16px;
+            border-radius: 6px;
+            margin-top: 12px;
+        }
+
+        .tools-section h4 {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--phase3);
+            margin-bottom: 12px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .tool-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        .tool-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--phase3);
+        }
+
+        /* Time Commitment */
+        .commitment-section {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            background: #FAFBFC;
+        }
+
+        .commitment-header {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .commitment-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .commitment-option {
+            padding: 14px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .commitment-option:hover {
+            border-color: var(--phase3);
+            background: var(--phase3-bg);
+        }
+
+        .commitment-option input {
+            display: none;
+        }
+
+        .commitment-option input:checked + .option-content {
+            color: var(--phase3);
+        }
+
+        .commitment-option:has(input:checked) {
+            border-color: var(--phase3);
+            background: var(--phase3-bg);
+        }
+
+        .option-days {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .option-label {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dates-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Relapse Section */
+        .relapse-section {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .relapse-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .relapse-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--phase1-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .relapse-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .relapse-intro {
+            font-size: 13px;
+            color: var(--text);
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .relapse-checklist {
+            display: grid;
+            gap: 10px;
+        }
+
+        .relapse-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text);
+            padding: 10px 12px;
+            background: #FAFBFC;
+            border-radius: 4px;
+        }
+
+        .relapse-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+            accent-color: var(--phase1);
+        }
+
+        /* Final Commitment */
+        .final-commitment {
+            padding: 24px 40px;
+            background: var(--primary);
+            text-align: center;
+        }
+
+        .commitment-box {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 20px 24px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .commitment-text {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .signature-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .signature-field label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.6);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .signature-field input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .signature-field input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Footer */
+        .card-footer {
+            padding: 16px 40px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+        }
+
+        .footer-left {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .footer-left strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .footer-right {
+            font-size: 10px;
+            color: var(--text-light);
+            text-align: right;
+        }
+
+        .footer-right .institute {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .card {
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <div class="header-content">
+                <div class="header-titles">
+                    <h1>Plan de Cambio Neuroplástico</h1>
+                    <p class="subtitle">Plantilla para Transformación de Patrones</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="intro-section">
+            <p>El cambio neuroplástico tiene <strong>3 componentes esenciales</strong> que trabajan juntos. Mínimo <strong>66 días</strong> para patrones simples, <strong>100+ días</strong> para patrones arraigados.</p>
+            <div class="intro-components">
+                <div class="intro-component c1">
+                    <span class="num">1</span>
+                    <span>Cesar patrón antiguo</span>
+                </div>
+                <div class="intro-component c2">
+                    <span class="num">2</span>
+                    <span>Practicar patrón nuevo</span>
+                </div>
+                <div class="intro-component c3">
+                    <span class="num">3</span>
+                    <span>Repetir consistentemente</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-info">
+            <div class="user-field">
+                <label>Nombre</label>
+                <input type="text" placeholder="">
+            </div>
+            <div class="user-field">
+                <label>Fecha de Inicio</label>
+                <input type="date" placeholder="">
+            </div>
+        </div>
+
+        <!-- Fase 1: Patrón Antiguo -->
+        <div class="phase-section phase1">
+            <div class="phase-header">
+                <div class="phase-number">1</div>
+                <div class="phase-title-group">
+                    <h2>El Patrón Que Quiero Cambiar</h2>
+                    <p class="phase-subtitle">Identificación del circuito neural a debilitar</p>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label>¿Cuál es el patrón/comportamiento/reacción que quiero cambiar?</label>
+                <textarea class="large" placeholder=""></textarea>
+            </div>
+
+            <div class="question-group">
+                <label>¿Cuánto tiempo llevo con este patrón? (aproximado)</label>
+                <textarea placeholder=""></textarea>
+            </div>
+
+            <div class="question-group">
+                <label>¿En qué situaciones aparece más frecuentemente?</label>
+                <textarea placeholder=""></textarea>
+            </div>
+
+            <div class="question-group">
+                <label>¿Qué función tuvo este patrón? ¿De qué me protegió originalmente?</label>
+                <textarea placeholder=""></textarea>
+                <p class="question-hint">Reconocer la función original permite soltar sin culpa</p>
+            </div>
+
+            <div class="question-group">
+                <label>¿Cuál es el costo actual de mantener este patrón?</label>
+                <textarea placeholder=""></textarea>
+            </div>
+        </div>
+
+        <!-- Fase 2: Patrón Nuevo -->
+        <div class="phase-section phase2">
+            <div class="phase-header">
+                <div class="phase-number">2</div>
+                <div class="phase-title-group">
+                    <h2>El Patrón Nuevo Que Quiero Desarrollar</h2>
+                    <p class="phase-subtitle">Diseño del nuevo circuito neural</p>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label>¿Qué quiero hacer/sentir/pensar EN LUGAR del patrón antiguo?</label>
+                <textarea class="large" placeholder=""></textarea>
+            </div>
+
+            <div class="question-group">
+                <label>¿Cómo sabré que estoy usando el patrón nuevo? (señales observables)</label>
+                <textarea placeholder=""></textarea>
+                <p class="question-hint">Identifica indicadores concretos y medibles</p>
+            </div>
+        </div>
+
+        <!-- Fase 3: Plan de Práctica -->
+        <div class="phase-section phase3">
+            <div class="phase-header">
+                <div class="phase-number">3</div>
+                <div class="phase-title-group">
+                    <h2>Mi Plan de Práctica</h2>
+                    <p class="phase-subtitle">Estrategia de repetición consistente</p>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label>¿CUÁNDO voy a practicar el patrón nuevo?</label>
+                <textarea placeholder=""></textarea>
+                <p class="question-hint">Sé específico: momento del día, situación, disparador</p>
+            </div>
+
+            <div class="tools-section">
+                <h4>¿Qué herramientas voy a usar?</h4>
+                <div class="tools-grid">
+                    <label class="tool-item">
+                        <input type="checkbox">
+                        <span>Respiración 4-7-8</span>
+                    </label>
+                    <label class="tool-item">
+                        <input type="checkbox">
+                        <span>Reenfoque de atención (SRA)</span>
+                    </label>
+                    <label class="tool-item">
+                        <input type="checkbox">
+                        <span>Re-etiquetado de lenguaje</span>
+                    </label>
+                    <label class="tool-item">
+                        <input type="checkbox">
+                        <span>Visualización</span>
+                    </label>
+                    <label class="tool-item">
+                        <input type="checkbox">
+                        <span>Abrazo de Mariposa</span>
+                    </label>
+                    <label class="tool-item">
+                        <input type="checkbox">
+                        <span>Otra: ____________</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question-group" style="margin-top: 16px;">
+                <label>¿CÓMO voy a recordar practicar?</label>
+                <textarea placeholder=""></textarea>
+                <p class="question-hint">Alarmas, notas, persona de apoyo, contexto ambiental</p>
+            </div>
+        </div>
+
+        <!-- Compromiso de Tiempo -->
+        <div class="commitment-section">
+            <h3 class="commitment-header">Mi Compromiso de Tiempo</h3>
+            
+            <div class="commitment-grid">
+                <label class="commitment-option">
+                    <input type="radio" name="duration" value="66">
+                    <div class="option-content">
+                        <div class="option-days">66</div>
+                        <div class="option-label">días · Patrones simples</div>
+                    </div>
+                </label>
+                <label class="commitment-option">
+                    <input type="radio" name="duration" value="90">
+                    <div class="option-content">
+                        <div class="option-days">90</div>
+                        <div class="option-label">días · Patrones moderados</div>
+                    </div>
+                </label>
+                <label class="commitment-option">
+                    <input type="radio" name="duration" value="120">
+                    <div class="option-content">
+                        <div class="option-days">120</div>
+                        <div class="option-label">días · Patrones arraigados</div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="dates-row">
+                <div class="user-field">
+                    <label>Fecha de Inicio</label>
+                    <input type="date">
+                </div>
+                <div class="user-field">
+                    <label>Fecha de Evaluación</label>
+                    <input type="date">
+                </div>
+            </div>
+        </div>
+
+        <!-- Manejo de Recaídas -->
+        <div class="relapse-section">
+            <div class="relapse-header">
+                <div class="relapse-icon">↻</div>
+                <h3 class="relapse-title">Manejo de Recaídas</h3>
+            </div>
+            
+            <p class="relapse-intro">Cuando vuelva al patrón antiguo (porque pasará), voy a:</p>
+            
+            <div class="relapse-checklist">
+                <label class="relapse-item">
+                    <input type="checkbox">
+                    <span>Reconocer sin juzgarme: "Noté que usé el patrón antiguo"</span>
+                </label>
+                <label class="relapse-item">
+                    <input type="checkbox">
+                    <span>Recordar que es parte del proceso neuroplástico</span>
+                </label>
+                <label class="relapse-item">
+                    <input type="checkbox">
+                    <span>Identificar qué disparó la recaída</span>
+                </label>
+                <label class="relapse-item">
+                    <input type="checkbox">
+                    <span>Retomar la práctica al día siguiente</span>
+                </label>
+                <label class="relapse-item">
+                    <input type="checkbox">
+                    <span>Contactar a: _________________________ si necesito apoyo</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Compromiso Final -->
+        <div class="final-commitment">
+            <div class="commitment-box">
+                <p class="commitment-text">
+                    Me comprometo a practicar mi nuevo patrón por el tiempo establecido, 
+                    siendo <strong>compasivo/a</strong> conmigo cuando falle y <strong>persistente</strong> en retomar. 
+                    Entiendo que lo que fue construido puede ser reconstruido.
+                </p>
+                <div class="signature-row">
+                    <div class="signature-field">
+                        <label>Firma</label>
+                        <input type="text" placeholder="">
+                    </div>
+                    <div class="signature-field">
+                        <label>Fecha</label>
+                        <input type="date">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="footer-left">
+                <strong>Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
+            </div>
+            <div class="footer-right">
+                <span class="institute">Instituto Centro Bioenergética</span><br>
+                inteligencia-energetica.com
+            </div>
+        </div>
+    </div>
+</body>
+</html>
