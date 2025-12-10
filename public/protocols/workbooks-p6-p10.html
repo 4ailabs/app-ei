@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workbooks P6-P10 - Seminario Inteligencia Energética</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --ventral: #1B6B4A;
+            --ventral-light: #E8F5EE;
+            --accent: #6366F1;
+            --accent-light: #EEF2FF;
+            --gold: #B8860B;
+            --gold-light: #FEF9E7;
+            --rose: #BE185D;
+            --rose-light: #FDF2F8;
+            --teal: #0D9488;
+            --teal-light: #F0FDFA;
+            --text: #2D3748;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --cream: #FDFBF7;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: letter;
+            margin: 15mm;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 11px;
+            line-height: 1.5;
+            color: var(--text);
+            background: #f5f5f5;
+        }
+
+        .workbook {
+            width: 8.5in;
+            min-height: 11in;
+            background: var(--white);
+            margin: 20px auto;
+            padding: 12mm 15mm;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        /* ============ HEADER STYLES ============ */
+        .wb-header {
+            text-align: center;
+            margin-bottom: 8mm;
+            padding-bottom: 6mm;
+            border-bottom: 3px solid var(--primary);
+            position: relative;
+        }
+
+        .wb-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+        }
+
+        .p6 .wb-header::after { background: var(--ventral); }
+        .p7 .wb-header::after { background: var(--accent); }
+        .p8 .wb-header::after { background: var(--rose); }
+        .p9 .wb-header::after { background: var(--gold); }
+        .p10 .wb-header::after { background: var(--teal); }
+
+        .wb-code {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            margin-bottom: 2mm;
+        }
+
+        .wb-title {
+            font-family: 'Cormorant', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 2mm;
+        }
+
+        .wb-subtitle {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        /* ============ INFO BOX ============ */
+        .info-box {
+            background: var(--cream);
+            border-left: 3px solid var(--gold);
+            padding: 4mm;
+            margin: 5mm 0;
+            font-size: 10px;
+        }
+
+        .info-box.ventral { border-color: var(--ventral); background: var(--ventral-light); }
+        .info-box.accent { border-color: var(--accent); background: var(--accent-light); }
+        .info-box.rose { border-color: var(--rose); background: var(--rose-light); }
+        .info-box.teal { border-color: var(--teal); background: var(--teal-light); }
+        .info-box.gold { border-color: var(--gold); background: var(--gold-light); }
+
+        /* ============ SECTION STYLES ============ */
+        .section {
+            margin-bottom: 6mm;
+        }
+
+        .section-title {
+            font-family: 'Cormorant', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 3mm;
+            padding-bottom: 2mm;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 2mm;
+        }
+
+        .section-icon {
+            font-size: 16px;
+        }
+
+        .subsection-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text);
+            margin: 4mm 0 2mm 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============ FORM ELEMENTS ============ */
+        .form-row {
+            margin-bottom: 4mm;
+        }
+
+        .form-label {
+            font-size: 10px;
+            color: var(--text-light);
+            margin-bottom: 1mm;
+            display: block;
+        }
+
+        .form-line {
+            border-bottom: 1px solid var(--border);
+            height: 7mm;
+            margin-bottom: 2mm;
+        }
+
+        .form-line.short {
+            width: 50%;
+            display: inline-block;
+        }
+
+        .form-textarea {
+            border: 1px solid var(--border);
+            border-radius: 2mm;
+            min-height: 15mm;
+            margin-bottom: 2mm;
+            padding: 2mm;
+        }
+
+        .form-textarea.large {
+            min-height: 25mm;
+        }
+
+        .form-textarea.xlarge {
+            min-height: 40mm;
+        }
+
+        /* ============ RESOURCE CARD ============ */
+        .resource-card {
+            border: 1px solid var(--border);
+            border-radius: 3mm;
+            padding: 4mm;
+            margin-bottom: 4mm;
+            background: var(--cream);
+        }
+
+        .resource-card-header {
+            display: flex;
+            align-items: center;
+            gap: 2mm;
+            margin-bottom: 3mm;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .resource-card-icon {
+            font-size: 18px;
+        }
+
+        /* ============ TWO COLUMN ============ */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5mm;
+        }
+
+        /* ============ CHECKBOX LIST ============ */
+        .checkbox-list {
+            margin: 3mm 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 2mm;
+            margin-bottom: 2mm;
+            font-size: 10px;
+        }
+
+        .checkbox {
+            width: 4mm;
+            height: 4mm;
+            border: 1px solid var(--text-light);
+            border-radius: 1mm;
+            flex-shrink: 0;
+        }
+
+        /* ============ TRACKER TABLE ============ */
+        .tracker-week {
+            margin-bottom: 5mm;
+        }
+
+        .tracker-week-title {
+            font-weight: 600;
+            font-size: 11px;
+            color: var(--primary);
+            margin-bottom: 2mm;
+        }
+
+        .tracker-days {
+            display: flex;
+            gap: 2mm;
+            margin-bottom: 2mm;
+        }
+
+        .tracker-day {
+            flex: 1;
+            text-align: center;
+        }
+
+        .tracker-day-label {
+            font-size: 8px;
+            color: var(--text-light);
+            margin-bottom: 1mm;
+        }
+
+        .tracker-day-box {
+            width: 100%;
+            height: 6mm;
+            border: 1px solid var(--border);
+            border-radius: 1mm;
+            background: var(--white);
+        }
+
+        .tracker-notes {
+            font-size: 9px;
+            color: var(--text-light);
+        }
+
+        .tracker-notes-line {
+            border-bottom: 1px dotted var(--border);
+            height: 5mm;
+        }
+
+        /* ============ EMERGENCY KIT ============ */
+        .emergency-kit {
+            background: linear-gradient(135deg, var(--primary) 0%, #2a2a4a 100%);
+            color: var(--white);
+            border-radius: 3mm;
+            padding: 5mm;
+            margin: 5mm 0;
+        }
+
+        .emergency-kit-title {
+            font-family: 'Cormorant', serif;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4mm;
+            text-align: center;
+        }
+
+        .emergency-kit-item {
+            display: flex;
+            align-items: center;
+            gap: 3mm;
+            margin-bottom: 3mm;
+            font-size: 10px;
+        }
+
+        .emergency-kit-line {
+            flex: 1;
+            border-bottom: 1px dotted rgba(255,255,255,0.4);
+            height: 5mm;
+        }
+
+        /* ============ COMPLETION BOX ============ */
+        .completion-box {
+            border: 2px solid var(--primary);
+            border-radius: 3mm;
+            padding: 5mm;
+            margin: 5mm 0;
+            text-align: center;
+        }
+
+        .signature-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4mm;
+        }
+
+        .signature-field {
+            width: 45%;
+        }
+
+        .signature-line {
+            border-bottom: 1px solid var(--primary);
+            height: 8mm;
+            margin-bottom: 1mm;
+        }
+
+        .signature-label {
+            font-size: 9px;
+            color: var(--text-light);
+        }
+
+        /* ============ DAILY LOG ============ */
+        .daily-log {
+            border: 1px solid var(--border);
+            border-radius: 2mm;
+            padding: 3mm;
+            margin-bottom: 3mm;
+        }
+
+        .daily-log-header {
+            font-weight: 600;
+            font-size: 10px;
+            color: var(--primary);
+            margin-bottom: 2mm;
+        }
+
+        .daily-log-row {
+            display: flex;
+            align-items: center;
+            gap: 3mm;
+            font-size: 9px;
+            margin-bottom: 1.5mm;
+        }
+
+        /* ============ CELEBRATION ============ */
+        .celebration {
+            background: linear-gradient(135deg, var(--gold) 0%, #B8860B 100%);
+            color: var(--white);
+            border-radius: 3mm;
+            padding: 6mm;
+            text-align: center;
+            margin: 5mm 0;
+        }
+
+        .celebration-emoji {
+            font-size: 28px;
+            margin-bottom: 2mm;
+        }
+
+        .celebration-title {
+            font-family: 'Cormorant', serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .celebration-text {
+            font-size: 10px;
+            opacity: 0.9;
+            margin-top: 2mm;
+        }
+
+        /* ============ FOOTER ============ */
+        .wb-footer {
+            text-align: center;
+            margin-top: 8mm;
+            padding-top: 4mm;
+            border-top: 1px solid var(--border);
+            font-size: 8px;
+            color: var(--text-light);
+        }
+
+        /* ============ PAGE BREAK ============ */
+        .page-break {
+            page-break-before: always;
+            margin-top: 0;
+        }
+
+        /* ============ HEADER ROW ============ */
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4mm;
+        }
+
+        .header-field {
+            width: 48%;
+        }
+
+        .header-field-label {
+            font-size: 9px;
+            color: var(--text-light);
+        }
+
+        .header-field-line {
+            border-bottom: 1px solid var(--border);
+            height: 6mm;
+        }
+
+        /* ============ PHASE HEADER ============ */
+        .phase-header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 3mm 4mm;
+            border-radius: 2mm;
+            margin: 5mm 0 4mm 0;
+        }
+
+        .phase-title {
+            font-family: 'Cormorant', serif;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .phase-subtitle {
+            font-size: 9px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* ============ PRINT ============ */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .workbook {
+                box-shadow: none;
+                margin: 0;
+                padding: 10mm;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== P6: MI MAPA DE RECURSOS ==================== -->
+<div id="p6" class="workbook p6">
+    <div class="wb-header">
+        <div class="wb-code">P6</div>
+        <h1 class="wb-title">MI MAPA DE RECURSOS</h1>
+        <div class="wb-subtitle">Plantilla para identificar y fortalecer tus recursos personales</div>
+    </div>
+
+    <div class="header-row">
+        <div class="header-field">
+            <div class="header-field-label">Nombre:</div>
+            <div class="header-field-line"></div>
+        </div>
+        <div class="header-field">
+            <div class="header-field-label">Fecha:</div>
+            <div class="header-field-line"></div>
+        </div>
+    </div>
+
+    <div class="info-box ventral">
+        Un recurso es cualquier cosa que te ayuda a regresar a tu Ventana de Tolerancia. Los recursos son tu red de seguridad para el trabajo profundo.
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">RECURSOS EXTERNOS</h2>
+        <p style="font-size: 10px; color: var(--text-light); margin-bottom: 4mm;">Identifica elementos fuera de ti que te ayudan a regularte</p>
+
+        <div class="subsection-title"><span class="section-icon">👤</span> Personas que me hacen sentir seguro/a</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">¿Con quiénes puedo ser yo mismo/a? ¿Quiénes me calman con su presencia?</p>
+
+        <div class="resource-card">
+            <div class="form-row">
+                <div class="form-label">Persona 1 — Nombre / Relación:</div>
+                <div class="form-line"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">¿Qué siento cuando estoy con esta persona?</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+
+        <div class="resource-card">
+            <div class="form-row">
+                <div class="form-label">Persona 2 — Nombre / Relación:</div>
+                <div class="form-line"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">¿Qué siento cuando estoy con esta persona?</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+
+        <div class="resource-card">
+            <div class="form-row">
+                <div class="form-label">Persona 3 — Nombre / Relación:</div>
+                <div class="form-line"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">¿Qué siento cuando estoy con esta persona?</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+
+        <div class="subsection-title"><span class="section-icon">📍</span> Lugares donde me siento en paz</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">¿Dónde se relaja mi sistema nervioso? Pueden ser reales o imaginarios.</p>
+
+        <div class="two-col">
+            <div class="resource-card">
+                <div class="form-row">
+                    <div class="form-label">Lugar 1 — Nombre:</div>
+                    <div class="form-line"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">¿Qué lo hace especial? (colores, olores, sonidos)</div>
+                    <div class="form-textarea"></div>
+                </div>
+            </div>
+            <div class="resource-card">
+                <div class="form-row">
+                    <div class="form-label">Lugar 2 — Nombre:</div>
+                    <div class="form-line"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">¿Qué lo hace especial? (colores, olores, sonidos)</div>
+                    <div class="form-textarea"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="subsection-title"><span class="section-icon">🎯</span> Actividades que me regulan</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">¿Qué me ayuda a volver a mi centro? (ejercicio, arte, música, naturaleza, etc.)</p>
+
+        <div class="resource-card">
+            <div class="two-col">
+                <div>
+                    <div class="form-label">Actividad 1:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">¿Cómo me hace sentir?</div>
+                    <div class="form-line"></div>
+                </div>
+                <div>
+                    <div class="form-label">Actividad 2:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">¿Cómo me hace sentir?</div>
+                    <div class="form-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">RECURSOS INTERNOS</h2>
+        <p style="font-size: 10px; color: var(--text-light); margin-bottom: 4mm;">Identifica elementos dentro de ti que son fuentes de fortaleza</p>
+
+        <div class="subsection-title"><span class="section-icon">💪</span> Mis cualidades y fortalezas</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">¿Qué fortalezas he demostrado en mi vida? (persistencia, creatividad, humor, etc.)</p>
+
+        <div class="resource-card">
+            <div class="two-col">
+                <div>
+                    <div class="form-label">Cualidad 1:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">Un momento donde la demostré:</div>
+                    <div class="form-line"></div>
+                </div>
+                <div>
+                    <div class="form-label">Cualidad 2:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">Un momento donde la demostré:</div>
+                    <div class="form-line"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="subsection-title"><span class="section-icon">🏆</span> Memorias de capacidad</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">Momentos donde superé algo difícil, logré algo importante, o demostré que podía.</p>
+
+        <div class="resource-card">
+            <div class="form-label">Memoria 1 — Describe el momento:</div>
+            <div class="form-textarea"></div>
+            <div class="two-col">
+                <div>
+                    <div class="form-label">¿Qué logré?</div>
+                    <div class="form-line"></div>
+                </div>
+                <div>
+                    <div class="form-label">¿Qué cualidades usé?</div>
+                    <div class="form-line"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="subsection-title"><span class="section-icon">🌊</span> Sensaciones corporales de regulación</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">¿Cómo se siente mi cuerpo cuando estoy calmado/a y regulado/a?</p>
+
+        <div class="resource-card">
+            <div class="two-col">
+                <div>
+                    <div class="form-label">Pecho:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">Hombros:</div>
+                    <div class="form-line"></div>
+                </div>
+                <div>
+                    <div class="form-label">Abdomen:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">Respiración:</div>
+                    <div class="form-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="emergency-kit">
+        <div class="emergency-kit-title">🆘 MI KIT DE EMERGENCIA</div>
+        <p style="font-size: 9px; opacity: 0.8; text-align: center; margin-bottom: 4mm;">Cuando salga de mi ventana de tolerancia, puedo acceder a estos recursos:</p>
+        <div class="emergency-kit-item">
+            <span>Mi persona recurso #1:</span>
+            <div class="emergency-kit-line"></div>
+        </div>
+        <div class="emergency-kit-item">
+            <span>Mi lugar seguro:</span>
+            <div class="emergency-kit-line"></div>
+        </div>
+        <div class="emergency-kit-item">
+            <span>Mi actividad reguladora:</span>
+            <div class="emergency-kit-line"></div>
+        </div>
+        <div class="emergency-kit-item">
+            <span>Mi cualidad principal:</span>
+            <div class="emergency-kit-line"></div>
+        </div>
+        <div class="emergency-kit-item">
+            <span>Sensación corporal de calma:</span>
+            <div class="emergency-kit-line"></div>
+        </div>
+    </div>
+
+    <div class="info-box ventral">
+        <strong>Práctica de activación:</strong> Estos recursos están siempre disponibles para ti. Mientras más los practiques en momentos de calma, más fácil será acceder a ellos cuando los necesites.
+    </div>
+
+    <div class="wb-footer">
+        Dr. Miguel Ojeda Rios · Seminario Internacional de Inteligencia Energética · Instituto Centro Bioenergética · inteligencia-energetica.com
+    </div>
+</div>
+
+<!-- ==================== P7: PLAN DE CAMBIO NEUROPLÁSTICO ==================== -->
+<div id="p7" class="workbook p7 page-break">
+    <div class="wb-header">
+        <div class="wb-code">P7</div>
+        <h1 class="wb-title">PLAN DE CAMBIO NEUROPLÁSTICO</h1>
+        <div class="wb-subtitle">Plantilla para diseñar tu proceso de cambio de patrones</div>
+    </div>
+
+    <div class="header-row">
+        <div class="header-field">
+            <div class="header-field-label">Nombre:</div>
+            <div class="header-field-line"></div>
+        </div>
+        <div class="header-field">
+            <div class="header-field-label">Fecha de inicio:</div>
+            <div class="header-field-line"></div>
+        </div>
+    </div>
+
+    <div class="info-box accent">
+        El cambio neuroplástico tiene 3 componentes: 1) Cesar patrón antiguo, 2) Practicar patrón nuevo, 3) Repetir consistentemente. Mínimo 66 días para patrones simples, 100+ para patrones arraigados.
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">1. EL PATRÓN QUE QUIERO CAMBIAR</h2>
+        
+        <div class="form-row">
+            <div class="form-label">¿Cuál es el patrón/comportamiento/reacción que quiero cambiar?</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="two-col">
+            <div class="form-row">
+                <div class="form-label">¿Cuánto tiempo llevo con este patrón?</div>
+                <div class="form-line"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">¿En qué situaciones aparece más frecuentemente?</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿Qué función tuvo este patrón? ¿De qué me protegió originalmente?</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿Cuál es el costo actual de mantener este patrón?</div>
+            <div class="form-textarea"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">2. EL PATRÓN NUEVO QUE QUIERO DESARROLLAR</h2>
+        
+        <div class="form-row">
+            <div class="form-label">¿Qué quiero hacer/sentir/pensar EN LUGAR del patrón antiguo?</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿Cómo sabré que estoy usando el patrón nuevo? (señales observables)</div>
+            <div class="form-textarea"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">3. MI PLAN DE PRÁCTICA</h2>
+        
+        <div class="form-row">
+            <div class="form-label">¿CUÁNDO voy a practicar el patrón nuevo? (momento del día, situación, disparador)</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿QUÉ HERRAMIENTA(S) voy a usar?</div>
+            <div class="checkbox-list">
+                <div class="checkbox-item"><div class="checkbox"></div> Respiración 4-7-8</div>
+                <div class="checkbox-item"><div class="checkbox"></div> Reenfoque de atención (SRA)</div>
+                <div class="checkbox-item"><div class="checkbox"></div> Re-etiquetado de lenguaje</div>
+                <div class="checkbox-item"><div class="checkbox"></div> Visualización</div>
+                <div class="checkbox-item"><div class="checkbox"></div> Abrazo de Mariposa</div>
+                <div class="checkbox-item"><div class="checkbox"></div> Otra: _______________________</div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿CÓMO voy a recordar practicar? (Alarmas, notas, persona de apoyo, etc.)</div>
+            <div class="form-textarea"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">4. MI COMPROMISO DE TIEMPO</h2>
+        
+        <div class="form-row">
+            <div class="form-label">Duración del compromiso:</div>
+            <div class="checkbox-list">
+                <div class="checkbox-item"><div class="checkbox"></div> 66 días (patrones simples)</div>
+                <div class="checkbox-item"><div class="checkbox"></div> 90 días (patrones moderados)</div>
+                <div class="checkbox-item"><div class="checkbox"></div> 120 días (patrones arraigados)</div>
+            </div>
+        </div>
+
+        <div class="two-col">
+            <div class="form-row">
+                <div class="form-label">Fecha de inicio:</div>
+                <div class="form-line"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">Fecha de evaluación:</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">5. MANEJO DE RECAÍDAS</h2>
+        
+        <div class="form-row">
+            <div class="form-label">Cuando vuelva al patrón antiguo (porque pasará), voy a:</div>
+            <div class="checkbox-list">
+                <div class="checkbox-item"><div class="checkbox"></div> Reconocer sin juzgarme: "Noté que usé el patrón antiguo"</div>
+                <div class="checkbox-item"><div class="checkbox"></div> Recordar que es parte del proceso</div>
+                <div class="checkbox-item"><div class="checkbox"></div> Identificar qué disparó la recaída</div>
+                <div class="checkbox-item"><div class="checkbox"></div> Retomar la práctica al día siguiente</div>
+                <div class="checkbox-item"><div class="checkbox"></div> Contactar a: _______________________ si necesito apoyo</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="completion-box">
+        <div style="font-family: 'Cormorant', serif; font-size: 13px; font-weight: 600; margin-bottom: 3mm;">MI COMPROMISO</div>
+        <p style="font-size: 10px; margin-bottom: 4mm;">Me comprometo a practicar mi nuevo patrón por el tiempo establecido, siendo compasivo/a conmigo cuando falle y persistente en retomar.</p>
+        <div class="signature-row">
+            <div class="signature-field">
+                <div class="signature-line"></div>
+                <div class="signature-label">Firma</div>
+            </div>
+            <div class="signature-field">
+                <div class="signature-line"></div>
+                <div class="signature-label">Fecha</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wb-footer">
+        Dr. Miguel Ojeda Rios · Seminario Internacional de Inteligencia Energética · Instituto Centro Bioenergética · inteligencia-energetica.com
+    </div>
+</div>
+
+<!-- ==================== P8: MI NUEVA HISTORIA ==================== -->
+<div id="p8" class="workbook p8 page-break">
+    <div class="wb-header">
+        <div class="wb-code">P8</div>
+        <h1 class="wb-title">MI NUEVA HISTORIA</h1>
+        <div class="wb-subtitle">Guía para reescribir tu narrativa personal</div>
+    </div>
+
+    <div class="header-row">
+        <div class="header-field">
+            <div class="header-field-label">Nombre:</div>
+            <div class="header-field-line"></div>
+        </div>
+        <div class="header-field">
+            <div class="header-field-label">Fecha:</div>
+            <div class="header-field-line"></div>
+        </div>
+    </div>
+
+    <div class="info-box rose">
+        Reescribir tu historia no es negar lo que pasó. Es cambiar tu relación con el pasado y encontrar el significado, la fortaleza y el aprendizaje que surgió de la adversidad.
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">PARTE 1: LA HISTORIA ANTIGUA</h2>
+        <p style="font-size: 10px; color: var(--text-light); margin-bottom: 4mm; font-style: italic;">Primero, vamos a reconocer la historia que has cargado. Escríbela sin censura.</p>
+        
+        <div class="form-row">
+            <div class="form-label">¿Qué evento(s) difícil(es) marcaron tu historia?</div>
+            <div class="form-textarea large"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿Qué conclusión sacaste sobre ti mismo/a a partir de esa experiencia?</div>
+            <p style="font-size: 9px; color: var(--text-light); font-style: italic;">Ejemplo: "Soy dañado/a", "No soy suficiente", "No puedo confiar", "Estoy solo/a"</p>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿Cómo ha limitado esta conclusión tu vida?</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">La historia antigua en una frase: "Porque me pasó _______, soy _______ y por eso mi vida es _______"</div>
+            <div class="form-textarea"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">PARTE 2: RECONOCIENDO LA ADAPTACIÓN</h2>
+        <p style="font-size: 10px; color: var(--text-light); margin-bottom: 4mm; font-style: italic;">Antes de cambiar la historia, vamos a honrar cómo te adaptaste.</p>
+        
+        <div class="form-row">
+            <div class="form-label">¿Qué patrones desarrollaste para sobrevivir/protegerte?</div>
+            <p style="font-size: 9px; color: var(--text-light); font-style: italic;">Ejemplo: hipervigilancia, complacer, controlar, evitar, desconectarme</p>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿Cómo te protegieron estos patrones en su momento?</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">Carta de agradecimiento a tus patrones: "Gracias, (patrón), por protegerme cuando..."</div>
+            <div class="form-textarea large"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">PARTE 3: ENCONTRANDO LA FORTALEZA</h2>
+        <p style="font-size: 10px; color: var(--text-light); margin-bottom: 4mm; font-style: italic;">Ahora vamos a buscar lo que desarrollaste gracias a (no a pesar de) tu experiencia.</p>
+        
+        <div class="form-row">
+            <div class="form-label">¿Qué cualidades desarrollaste por haber vivido eso?</div>
+            <p style="font-size: 9px; color: var(--text-light); font-style: italic;">Ejemplo: sensibilidad, fortaleza, independencia, empatía, capacidad de supervivencia</p>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿Qué aprendiste sobre ti mismo/a, sobre la vida, sobre las relaciones?</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿Cómo te ha hecho más fuerte, más sabio/a, o más compasivo/a?</div>
+            <div class="form-textarea"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">PARTE 4: LA NUEVA HISTORIA</h2>
+        <p style="font-size: 10px; color: var(--text-light); margin-bottom: 4mm; font-style: italic;">Ahora, reescribamos la historia desde un lugar de agencia y crecimiento.</p>
+        
+        <div class="form-row">
+            <div class="form-label">"Cuando era joven/más joven, viví..."</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">"Para sobrevivir, desarrollé..."</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">"Esos patrones me protegieron porque..."</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">"Lo que esa experiencia me enseñó/me dio fue..."</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">"Hoy, elijo..."</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">"Mi pasado no define mi futuro porque..."</div>
+            <div class="form-textarea"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">MI NUEVA HISTORIA COMPLETA</h2>
+        <p style="font-size: 10px; color: var(--text-light); margin-bottom: 4mm; font-style: italic;">Escribe tu nueva historia en forma de narrativa. Léela en voz alta cuando la termines.</p>
+        <div class="form-textarea xlarge"></div>
+    </div>
+
+    <div class="info-box rose">
+        <strong>Recuerda:</strong> Tu pasado no es tu destino. Cada día que eliges diferente, estás escribiendo un nuevo capítulo.
+    </div>
+
+    <div class="wb-footer">
+        Dr. Miguel Ojeda Rios · Seminario Internacional de Inteligencia Energética · Instituto Centro Bioenergética · inteligencia-energetica.com
+    </div>
+</div>
+
+<!-- ==================== P9: TRACKER DE 90 DÍAS ==================== -->
+<div id="p9" class="workbook p9 page-break">
+    <div class="wb-header">
+        <div class="wb-code">P9</div>
+        <h1 class="wb-title">TRACKER DE 90 DÍAS</h1>
+        <div class="wb-subtitle">Seguimiento diario de tu práctica de cambio</div>
+    </div>
+
+    <div class="resource-card">
+        <div class="two-col">
+            <div>
+                <div class="form-label">Patrón que estoy cambiando:</div>
+                <div class="form-line"></div>
+                <div class="form-label">Herramienta que practico:</div>
+                <div class="form-line"></div>
+            </div>
+            <div>
+                <div class="form-label">Fecha de inicio:</div>
+                <div class="form-line"></div>
+                <div class="form-label">Fecha meta (día 90):</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-box gold">
+        <strong>Instrucciones:</strong> Marca cada día que practiques con ✓. Si no practicas, deja vacío (sin juicio). El objetivo no es perfección, es consistencia.
+    </div>
+
+    <div class="phase-header">
+        <div class="phase-title">FASE 1: DÍAS 1-30 — ESTABLECIENDO EL HÁBITO</div>
+        <div class="phase-subtitle">Esta fase es la más difícil. Todo se sentirá forzado. Es normal. Solo continúa.</div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 1 (Días 1-7)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 2 (Días 8-14)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 3 (Días 15-21)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 4 (Días 22-28)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="resource-card">
+        <div class="form-label"><strong>Reflexión Semana 4:</strong> ¿Qué está funcionando?</div>
+        <div class="form-line"></div>
+        <div class="form-label">¿Qué necesito ajustar?</div>
+        <div class="form-line"></div>
+    </div>
+
+    <div class="phase-header">
+        <div class="phase-title">FASE 2: DÍAS 31-60 — FORTALECIENDO EL CIRCUITO</div>
+        <div class="phase-subtitle">En esta fase empezarás a notar momentos donde la nueva respuesta surge más naturalmente.</div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 5 (Días 29-35)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 6 (Días 36-42)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 7 (Días 43-49)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 8 (Días 50-56)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 9 (Días 57-63)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="resource-card">
+        <div class="form-label"><strong>Reflexión Semana 8:</strong> ¿Qué cambios noto?</div>
+        <div class="form-line"></div>
+        <div class="form-label">¿Cuándo fue más difícil mantener la práctica?</div>
+        <div class="form-line"></div>
+    </div>
+
+    <div class="phase-header">
+        <div class="phase-title">FASE 3: DÍAS 61-90 — CONSOLIDANDO EL CAMBIO</div>
+        <div class="phase-subtitle">El nuevo patrón empieza a competir seriamente con el antiguo. Es parte del proceso.</div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 10 (Días 64-70)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 11 (Días 71-77)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 12 (Días 78-84)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="tracker-week">
+        <div class="tracker-week-title">SEMANA 13 (Días 85-90)</div>
+        <div class="tracker-days">
+            <div class="tracker-day"><div class="tracker-day-label">L</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">M</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">Mi</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">J</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">V</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">S</div><div class="tracker-day-box"></div></div>
+            <div class="tracker-day"><div class="tracker-day-label">D</div><div class="tracker-day-box"></div></div>
+        </div>
+        <div class="tracker-notes">Notas: <span class="tracker-notes-line" style="display: inline-block; width: 80%;"></span></div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">RESUMEN DE LOS 90 DÍAS</h2>
+        <div class="two-col">
+            <div>
+                <div class="form-label">Total de días que practiqué:</div>
+                <div class="form-line short"></div> / 90 días
+            </div>
+            <div>
+                <div class="form-label">Porcentaje de consistencia:</div>
+                <div class="form-line short"></div> %
+            </div>
+        </div>
+        <div class="form-label" style="margin-top: 3mm;">Racha más larga:</div>
+        <div class="form-line short"></div> días consecutivos
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">LO QUE LOGRÉ</h2>
+        <div class="form-row">
+            <div class="form-label">Cambios que noté en mi comportamiento:</div>
+            <div class="form-textarea"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Cambios que noté en cómo me siento:</div>
+            <div class="form-textarea"></div>
+        </div>
+        <div class="two-col">
+            <div>
+                <div class="form-label">Lo más difícil de estos 90 días:</div>
+                <div class="form-line"></div>
+            </div>
+            <div>
+                <div class="form-label">Lo que me sorprendió:</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">PRÓXIMOS PASOS</h2>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><div class="checkbox"></div> Continuar con el mismo patrón por 30 días más</div>
+            <div class="checkbox-item"><div class="checkbox"></div> Iniciar trabajo con un nuevo patrón</div>
+            <div class="checkbox-item"><div class="checkbox"></div> Mantener práctica de mantenimiento (3x por semana)</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Mi próximo objetivo:</div>
+            <div class="form-textarea"></div>
+        </div>
+    </div>
+
+    <div class="celebration">
+        <div class="celebration-emoji">🎉</div>
+        <div class="celebration-title">¡FELICIDADES!</div>
+        <div class="celebration-text">Completaste 90 días de práctica consciente. Tu cerebro cambió. Tus circuitos se fortalecieron. Lo lograste.</div>
+    </div>
+
+    <div class="wb-footer">
+        Dr. Miguel Ojeda Rios · Seminario Internacional de Inteligencia Energética · Instituto Centro Bioenergética · inteligencia-energetica.com
+    </div>
+</div>
+
+<!-- ==================== P10: DIARIO DE REGULACIÓN SEMANAL ==================== -->
+<div id="p10" class="workbook p10 page-break">
+    <div class="wb-header">
+        <div class="wb-code">P10</div>
+        <h1 class="wb-title">DIARIO DE REGULACIÓN SEMANAL</h1>
+        <div class="wb-subtitle">Registro de práctica y observaciones</div>
+    </div>
+
+    <div class="resource-card">
+        <div class="two-col">
+            <div>
+                <div class="form-label">Semana del:</div>
+                <div class="form-line short"></div> al <div class="form-line short" style="display: inline-block; width: 30%;"></div>
+            </div>
+            <div>
+                <div class="form-label">Herramienta que practico:</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-box teal">
+        Registra diariamente: ¿Practiqué? ¿Cómo estuvo mi nivel de estrés? ¿Qué observé? El registro te ayuda a ver patrones y progreso.
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">REGISTRO DIARIO</h2>
+
+        <div class="daily-log">
+            <div class="daily-log-header">LUNES</div>
+            <div class="daily-log-row">
+                <span>¿Practiqué?</span>
+                <div class="checkbox"></div> Sí
+                <div class="checkbox"></div> No
+                <span style="margin-left: 5mm;">Nivel de estrés (1-10):</span>
+                <div style="border-bottom: 1px solid var(--border); width: 15mm; display: inline-block;"></div>
+            </div>
+            <div class="daily-log-row">
+                <span>Observaciones:</span>
+                <div style="border-bottom: 1px dotted var(--border); flex: 1; height: 5mm;"></div>
+            </div>
+        </div>
+
+        <div class="daily-log">
+            <div class="daily-log-header">MARTES</div>
+            <div class="daily-log-row">
+                <span>¿Practiqué?</span>
+                <div class="checkbox"></div> Sí
+                <div class="checkbox"></div> No
+                <span style="margin-left: 5mm;">Nivel de estrés (1-10):</span>
+                <div style="border-bottom: 1px solid var(--border); width: 15mm; display: inline-block;"></div>
+            </div>
+            <div class="daily-log-row">
+                <span>Observaciones:</span>
+                <div style="border-bottom: 1px dotted var(--border); flex: 1; height: 5mm;"></div>
+            </div>
+        </div>
+
+        <div class="daily-log">
+            <div class="daily-log-header">MIÉRCOLES</div>
+            <div class="daily-log-row">
+                <span>¿Practiqué?</span>
+                <div class="checkbox"></div> Sí
+                <div class="checkbox"></div> No
+                <span style="margin-left: 5mm;">Nivel de estrés (1-10):</span>
+                <div style="border-bottom: 1px solid var(--border); width: 15mm; display: inline-block;"></div>
+            </div>
+            <div class="daily-log-row">
+                <span>Observaciones:</span>
+                <div style="border-bottom: 1px dotted var(--border); flex: 1; height: 5mm;"></div>
+            </div>
+        </div>
+
+        <div class="daily-log">
+            <div class="daily-log-header">JUEVES</div>
+            <div class="daily-log-row">
+                <span>¿Practiqué?</span>
+                <div class="checkbox"></div> Sí
+                <div class="checkbox"></div> No
+                <span style="margin-left: 5mm;">Nivel de estrés (1-10):</span>
+                <div style="border-bottom: 1px solid var(--border); width: 15mm; display: inline-block;"></div>
+            </div>
+            <div class="daily-log-row">
+                <span>Observaciones:</span>
+                <div style="border-bottom: 1px dotted var(--border); flex: 1; height: 5mm;"></div>
+            </div>
+        </div>
+
+        <div class="daily-log">
+            <div class="daily-log-header">VIERNES</div>
+            <div class="daily-log-row">
+                <span>¿Practiqué?</span>
+                <div class="checkbox"></div> Sí
+                <div class="checkbox"></div> No
+                <span style="margin-left: 5mm;">Nivel de estrés (1-10):</span>
+                <div style="border-bottom: 1px solid var(--border); width: 15mm; display: inline-block;"></div>
+            </div>
+            <div class="daily-log-row">
+                <span>Observaciones:</span>
+                <div style="border-bottom: 1px dotted var(--border); flex: 1; height: 5mm;"></div>
+            </div>
+        </div>
+
+        <div class="daily-log">
+            <div class="daily-log-header">SÁBADO</div>
+            <div class="daily-log-row">
+                <span>¿Practiqué?</span>
+                <div class="checkbox"></div> Sí
+                <div class="checkbox"></div> No
+                <span style="margin-left: 5mm;">Nivel de estrés (1-10):</span>
+                <div style="border-bottom: 1px solid var(--border); width: 15mm; display: inline-block;"></div>
+            </div>
+            <div class="daily-log-row">
+                <span>Observaciones:</span>
+                <div style="border-bottom: 1px dotted var(--border); flex: 1; height: 5mm;"></div>
+            </div>
+        </div>
+
+        <div class="daily-log">
+            <div class="daily-log-header">DOMINGO</div>
+            <div class="daily-log-row">
+                <span>¿Practiqué?</span>
+                <div class="checkbox"></div> Sí
+                <div class="checkbox"></div> No
+                <span style="margin-left: 5mm;">Nivel de estrés (1-10):</span>
+                <div style="border-bottom: 1px solid var(--border); width: 15mm; display: inline-block;"></div>
+            </div>
+            <div class="daily-log-row">
+                <span>Observaciones:</span>
+                <div style="border-bottom: 1px dotted var(--border); flex: 1; height: 5mm;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">REFLEXIÓN DE LA SEMANA</h2>
+        <div class="two-col">
+            <div>
+                <div class="form-label">¿Cuántos días practiqué esta semana?</div>
+                <div class="form-line short"></div> / 7 días
+            </div>
+            <div>
+                <div class="form-label">Promedio de nivel de estrés:</div>
+                <div class="form-line short"></div>
+            </div>
+        </div>
+
+        <div class="form-row" style="margin-top: 4mm;">
+            <div class="form-label">¿Qué funcionó bien esta semana?</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿Qué fue difícil?</div>
+            <div class="form-textarea"></div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-label">¿Qué voy a ajustar para la próxima semana?</div>
+            <div class="form-textarea"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">PATRONES QUE OBSERVÉ</h2>
+        <div class="form-row">
+            <div class="form-label">¿Hubo días/momentos donde me fue más fácil practicar?</div>
+            <div class="form-line"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">¿Hubo días/momentos donde me fue más difícil?</div>
+            <div class="form-line"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">¿Noté alguna relación entre mi práctica y mi nivel de estrés?</div>
+            <div class="form-textarea"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">MI INTENCIÓN PARA LA PRÓXIMA SEMANA</h2>
+        <div class="form-row">
+            <div class="form-label">La próxima semana me comprometo a:</div>
+            <div class="form-textarea"></div>
+        </div>
+    </div>
+
+    <div class="info-box teal">
+        <strong>Tip:</strong> Imprime varias copias de este diario para tener registro de múltiples semanas. Comparar semanas te ayuda a ver tu progreso.
+    </div>
+
+    <div class="wb-footer">
+        Dr. Miguel Ojeda Rios · Seminario Internacional de Inteligencia Energética · Instituto Centro Bioenergética · inteligencia-energetica.com
+    </div>
+</div>
+
+</body>
+</html>
