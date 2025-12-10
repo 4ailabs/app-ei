@@ -59,45 +59,46 @@ export default async function SessionPage({ params }: SessionPageProps) {
 
   return (
     <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A]">
-      <div className="container mx-auto px-6 py-12 pb-32">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-8 lg:py-12 pb-20 sm:pb-28 lg:pb-32">
         {/* Back Button */}
-        <div className="mb-10 animate-fade-in">
+        <div className="mb-4 sm:mb-6 lg:mb-10 animate-fade-in">
           <Link href="/">
-            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all rounded-full text-[#706F6C] dark:text-[#A0A0A0] px-5 py-3 h-auto">
-              <ArrowLeft className="mr-2 h-5 w-5 transition-transform group-hover:-translate-x-1" />
-              <Home className="mr-2 h-5 w-5" />
-              Volver al Dashboard
+            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all rounded-full text-[#706F6C] dark:text-[#A0A0A0] px-3 sm:px-5 py-2 sm:py-3 h-auto text-sm sm:text-base">
+              <ArrowLeft className="mr-1.5 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:-translate-x-1" />
+              <Home className="mr-1.5 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="hidden sm:inline">Volver al Dashboard</span>
+              <span className="sm:hidden">Volver</span>
             </Button>
           </Link>
         </div>
 
-        <div className="max-w-5xl mx-auto space-y-10">
+        <div className="max-w-5xl mx-auto space-y-4 sm:space-y-6 lg:space-y-10">
           {/* Session Header with Image */}
-          <div className="bg-white dark:bg-[#252525] rounded-3xl overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
+          <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
             {/* Session Image Banner */}
             {sessionData.imageUrl && (
-              <div className="relative h-72 lg:h-96 overflow-hidden">
+              <div className="relative h-48 sm:h-64 lg:h-96 overflow-hidden">
                 <img
                   src={sessionData.imageUrl}
                   alt={sessionData.title}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                <div className="absolute bottom-10 left-10 right-10">
-                  <div className="flex gap-3 mb-5">
-                    <span className="text-sm font-bold uppercase tracking-wider px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white inline-block">
+                <div className="absolute bottom-4 sm:bottom-6 lg:bottom-10 left-4 sm:left-6 lg:left-10 right-4 sm:right-6 lg:right-10">
+                  <div className="flex flex-wrap gap-2 sm:gap-3 mb-2 sm:mb-4 lg:mb-5">
+                    <span className="text-xs sm:text-sm font-bold uppercase tracking-wider px-2.5 sm:px-4 py-1 sm:py-2 rounded-full bg-white/20 backdrop-blur-sm text-white inline-block">
                       Bloque {sessionData.day}
                     </span>
                     {sessionData.moduleNumber && (
-                      <span className="text-sm font-bold uppercase tracking-wider px-4 py-2 rounded-full bg-black/40 backdrop-blur-sm text-white inline-block">
+                      <span className="text-xs sm:text-sm font-bold uppercase tracking-wider px-2.5 sm:px-4 py-1 sm:py-2 rounded-full bg-black/40 backdrop-blur-sm text-white inline-block">
                         Módulo {sessionData.moduleNumber}
                       </span>
                     )}
                   </div>
-                  <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                  <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-1.5 sm:mb-3 lg:mb-4">
                     {sessionData.title}
                   </h1>
-                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">{sessionData.description}</p>
+                  <p className="text-sm sm:text-base lg:text-xl text-white/90 leading-relaxed line-clamp-2 sm:line-clamp-none">{sessionData.description}</p>
                 </div>
               </div>
             )}
@@ -130,59 +131,59 @@ export default async function SessionPage({ params }: SessionPageProps) {
             )}
 
             {/* Quick Stats Bar */}
-            <div className="px-10 py-7 bg-[#FAF9F7] dark:bg-[#2A2A2A] border-t border-[#E5E4E0] dark:border-[#333333]">
-              <div className="flex flex-wrap items-center gap-10 text-sm">
-                <div className="flex items-center gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
-                  <Calendar className="h-4 w-4" />
+            <div className="px-3 sm:px-6 lg:px-10 py-3 sm:py-5 lg:py-7 bg-[#FAF9F7] dark:bg-[#2A2A2A] border-t border-[#E5E4E0] dark:border-[#333333]">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-6 lg:gap-10 text-xs sm:text-sm">
+                <div className="flex items-center gap-1.5 sm:gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
+                  <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   <span className="font-medium">Día {sessionData.day}</span>
                 </div>
                 {sessionData.moduleNumber && (
-                  <div className="flex items-center gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
-                    <CheckCircle2 className="h-4 w-4" />
+                  <div className="flex items-center gap-1.5 sm:gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
+                    <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     <span className="font-medium">Módulo {sessionData.moduleNumber}</span>
                   </div>
                 )}
-                <div className="flex items-center gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
-                  <Clock className="h-4 w-4" />
+                <div className="flex items-center gap-1.5 sm:gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
+                  <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   <span className="font-medium">
                     {Object.values(contentCounts).reduce((a, b) => a + b, 0)} elementos
                   </span>
                 </div>
-                <div className="ml-auto flex flex-wrap gap-4">
+                <div className="w-full sm:w-auto sm:ml-auto flex flex-wrap gap-2 sm:gap-3 lg:gap-4 mt-2 sm:mt-0">
                   {contentCounts.pdf > 0 && (
-                    <div className="flex items-center gap-2.5 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
-                      <FileText className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                      <span className="text-blue-700 dark:text-blue-400 font-medium">{contentCounts.pdf}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg sm:rounded-xl">
+                      <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600 dark:text-blue-400" />
+                      <span className="text-blue-700 dark:text-blue-400 font-medium text-xs sm:text-sm">{contentCounts.pdf}</span>
                     </div>
                   )}
                   {contentCounts.videos > 0 && (
-                    <div className="flex items-center gap-2.5 px-4 py-2 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
-                      <Video className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                      <span className="text-purple-700 dark:text-purple-400 font-medium">{contentCounts.videos}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg sm:rounded-xl">
+                      <Video className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-purple-600 dark:text-purple-400" />
+                      <span className="text-purple-700 dark:text-purple-400 font-medium text-xs sm:text-sm">{contentCounts.videos}</span>
                     </div>
                   )}
                   {contentCounts.audios > 0 && (
-                    <div className="flex items-center gap-2.5 px-4 py-2 bg-green-50 dark:bg-green-900/20 rounded-xl">
-                      <Headphones className="h-4 w-4 text-green-600 dark:text-green-400" />
-                      <span className="text-green-700 dark:text-green-400 font-medium">{contentCounts.audios}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-green-50 dark:bg-green-900/20 rounded-lg sm:rounded-xl">
+                      <Headphones className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-600 dark:text-green-400" />
+                      <span className="text-green-700 dark:text-green-400 font-medium text-xs sm:text-sm">{contentCounts.audios}</span>
                     </div>
                   )}
                   {contentCounts.themes > 0 && (
-                    <div className="flex items-center gap-2.5 px-4 py-2 bg-orange-50 dark:bg-orange-900/20 rounded-xl">
-                      <BookOpen className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-                      <span className="text-orange-700 dark:text-orange-400 font-medium">{contentCounts.themes}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg sm:rounded-xl">
+                      <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-orange-600 dark:text-orange-400" />
+                      <span className="text-orange-700 dark:text-orange-400 font-medium text-xs sm:text-sm">{contentCounts.themes}</span>
                     </div>
                   )}
                   {contentCounts.protocols > 0 && (
-                    <div className="flex items-center gap-2.5 px-4 py-2 bg-red-50 dark:bg-red-900/20 rounded-xl">
-                      <ClipboardList className="h-4 w-4 text-red-600 dark:text-red-400" />
-                      <span className="text-red-700 dark:text-red-400 font-medium">{contentCounts.protocols}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-red-50 dark:bg-red-900/20 rounded-lg sm:rounded-xl">
+                      <ClipboardList className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-600 dark:text-red-400" />
+                      <span className="text-red-700 dark:text-red-400 font-medium text-xs sm:text-sm">{contentCounts.protocols}</span>
                     </div>
                   )}
                   {contentCounts.apps > 0 && (
-                    <div className="flex items-center gap-2.5 px-4 py-2 bg-cyan-50 dark:bg-cyan-900/20 rounded-xl">
-                      <Smartphone className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
-                      <span className="text-cyan-700 dark:text-cyan-400 font-medium">{contentCounts.apps}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg sm:rounded-xl">
+                      <Smartphone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-cyan-600 dark:text-cyan-400" />
+                      <span className="text-cyan-700 dark:text-cyan-400 font-medium text-xs sm:text-sm">{contentCounts.apps}</span>
                     </div>
                   )}
                 </div>

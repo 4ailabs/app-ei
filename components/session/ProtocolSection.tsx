@@ -23,20 +23,20 @@ function SectionDivider({
     description: string
 }) {
     return (
-        <div className="relative py-10">
+        <div className="relative py-4 sm:py-6 lg:py-8">
             {/* Línea decorativa */}
             <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-[#E5E4E0] dark:border-[#333333]"></div>
             </div>
             {/* Contenido central */}
             <div className="relative flex justify-center">
-                <div className="bg-[#FAF9F7] dark:bg-[#1A1A1A] px-6 py-3 rounded-full border border-[#E5E4E0] dark:border-[#333333] flex items-center gap-3">
-                    <div className="p-2 bg-[#F5F4F0] dark:bg-[#252525] rounded-full">
-                        <Icon className="h-5 w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+                <div className="bg-[#FAF9F7] dark:bg-[#1A1A1A] px-3 sm:px-5 py-2 sm:py-2.5 rounded-full border border-[#E5E4E0] dark:border-[#333333] flex items-center gap-2 sm:gap-3">
+                    <div className="p-1.5 sm:p-2 bg-[#F5F4F0] dark:bg-[#252525] rounded-full">
+                        <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5]">{title}</h3>
-                        <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0]">{description}</p>
+                        <h3 className="text-xs sm:text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5]">{title}</h3>
+                        <p className="text-[10px] sm:text-xs text-[#706F6C] dark:text-[#A0A0A0] hidden sm:block">{description}</p>
                     </div>
                 </div>
             </div>
@@ -80,14 +80,14 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
     const otherProtocols = protocols.filter(p => !["p1-1", "p1-2", "p1-3"].includes(p.id))
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-2 sm:space-y-4">
             {/* SECCIÓN 1: Tarjetas de Bolsillo */}
             {showPocketCards && (
                 <section>
                     <SectionDivider
                         icon={CreditCard}
                         title="Tarjetas de Bolsillo"
-                        description="6 tarjetas para imprimir y llevar contigo"
+                        description="6 tarjetas para imprimir"
                     />
                     <PocketCards />
                 </section>
@@ -99,9 +99,9 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
                     <SectionDivider
                         icon={BookOpen}
                         title="Materiales de Referencia"
-                        description="Infografías descargables para estudio"
+                        description="Infografías descargables"
                     />
-                    <div className="space-y-8">
+                    <div className="space-y-4 sm:space-y-6">
                         {specialProtocols.map((protocol) => {
                             const accentColor = getProtocolColor(protocol.id)
 
