@@ -6,11 +6,9 @@ import { useState } from "react"
 
 // Helper function to get Cloudflare Stream embed URL
 function getCloudflareStreamUrl(streamId: string): string {
-  // Usar directamente iframe.videodelivery.net que es el formato estándar y más confiable
-  // Este formato no requiere Account ID y funciona con cualquier video de Cloudflare Stream
-  // NO incluir autoplay en la URL - Cloudflare Stream no reproduce automáticamente por defecto
-  // Solo incluir parámetros que desactivamos explícitamente
-  return `https://iframe.videodelivery.net/${streamId}?muted=false&preload=none&controls=true`
+  // Usar el Customer Subdomain específico de la cuenta de Cloudflare Stream
+  // Este formato es más confiable para cuentas con subdominio personalizado
+  return `https://customer-qhobzy75u1p8j3tq.cloudflarestream.com/${streamId}/iframe`
 }
 
 interface VideoSectionProps {

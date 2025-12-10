@@ -13,8 +13,8 @@ interface VideoCardProps {
 
 // Helper function to get Cloudflare Stream thumbnail URL
 function getThumbnailUrl(streamId: string): string {
-  // Usar videodelivery.net que es el formato estándar y no requiere Account ID
-  return `https://videodelivery.net/${streamId}/thumbnails/thumbnail.jpg?time=1s`
+  // Usar el Customer Subdomain específico para thumbnails
+  return `https://customer-qhobzy75u1p8j3tq.cloudflarestream.com/${streamId}/thumbnails/thumbnail.jpg?time=1s`
 }
 
 export function VideoCard({ video, index, onPlay, accentColor = "bg-blue-500" }: VideoCardProps) {

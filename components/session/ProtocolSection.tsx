@@ -23,7 +23,7 @@ function SectionDivider({
     description: string
 }) {
     return (
-        <div className="relative py-8">
+        <div className="relative py-10">
             {/* Línea decorativa */}
             <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-[#E5E4E0] dark:border-[#333333]"></div>
@@ -80,7 +80,7 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
     const otherProtocols = protocols.filter(p => !["p1-1", "p1-2", "p1-3"].includes(p.id))
 
     return (
-        <div className="space-y-2">
+        <div className="space-y-4">
             {/* SECCIÓN 1: Tarjetas de Bolsillo */}
             {showPocketCards && (
                 <section>
@@ -101,7 +101,7 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
                         title="Materiales de Referencia"
                         description="Infografías descargables para estudio"
                     />
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                         {specialProtocols.map((protocol) => {
                             const accentColor = getProtocolColor(protocol.id)
 
@@ -143,7 +143,7 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
                         title="Protocolos Adicionales"
                         description="Guías y documentos complementarios"
                     />
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         {otherProtocols.map((protocol) => (
                             <Card key={protocol.id} className="overflow-hidden border-0 shadow-sm hover:shadow-md transition-all duration-300 group bg-white dark:bg-[#393939]">
                                 <div className="flex flex-col md:flex-row md:items-center">

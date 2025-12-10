@@ -59,32 +59,32 @@ export default async function SessionPage({ params }: SessionPageProps) {
 
   return (
     <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A]">
-      <div className="container mx-auto px-4 py-8 pb-24">
+      <div className="container mx-auto px-6 py-12 pb-32">
         {/* Back Button */}
-        <div className="mb-6 animate-fade-in">
+        <div className="mb-10 animate-fade-in">
           <Link href="/">
-            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all rounded-full text-[#706F6C] dark:text-[#A0A0A0]">
-              <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-              <Home className="mr-2 h-4 w-4" />
+            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all rounded-full text-[#706F6C] dark:text-[#A0A0A0] px-5 py-3 h-auto">
+              <ArrowLeft className="mr-2 h-5 w-5 transition-transform group-hover:-translate-x-1" />
+              <Home className="mr-2 h-5 w-5" />
               Volver al Dashboard
             </Button>
           </Link>
         </div>
 
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto space-y-10">
           {/* Session Header with Image */}
-          <div className="bg-white dark:bg-[#252525] rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
+          <div className="bg-white dark:bg-[#252525] rounded-3xl overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
             {/* Session Image Banner */}
             {sessionData.imageUrl && (
-              <div className="relative h-64 lg:h-80 overflow-hidden">
+              <div className="relative h-72 lg:h-96 overflow-hidden">
                 <img
                   src={sessionData.imageUrl}
                   alt={sessionData.title}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                <div className="absolute bottom-8 left-8 right-8">
-                  <div className="flex gap-2 mb-4">
+                <div className="absolute bottom-10 left-10 right-10">
+                  <div className="flex gap-3 mb-5">
                     <span className="text-sm font-bold uppercase tracking-wider px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white inline-block">
                       Bloque {sessionData.day}
                     </span>
@@ -94,10 +94,10 @@ export default async function SessionPage({ params }: SessionPageProps) {
                       </span>
                     )}
                   </div>
-                  <h1 className="text-3xl md:text-5xl font-bold text-white mb-3">
+                  <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
                     {sessionData.title}
                   </h1>
-                  <p className="text-lg text-white/90">{sessionData.description}</p>
+                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">{sessionData.description}</p>
                 </div>
               </div>
             )}
@@ -130,8 +130,8 @@ export default async function SessionPage({ params }: SessionPageProps) {
             )}
 
             {/* Quick Stats Bar */}
-            <div className="px-8 py-5 bg-[#FAF9F7] dark:bg-[#2A2A2A] border-t border-[#E5E4E0] dark:border-[#333333]">
-              <div className="flex flex-wrap items-center gap-6 text-sm">
+            <div className="px-10 py-7 bg-[#FAF9F7] dark:bg-[#2A2A2A] border-t border-[#E5E4E0] dark:border-[#333333]">
+              <div className="flex flex-wrap items-center gap-10 text-sm">
                 <div className="flex items-center gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
                   <Calendar className="h-4 w-4" />
                   <span className="font-medium">Día {sessionData.day}</span>
@@ -150,37 +150,37 @@ export default async function SessionPage({ params }: SessionPageProps) {
                 </div>
                 <div className="ml-auto flex flex-wrap gap-4">
                   {contentCounts.pdf > 0 && (
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <div className="flex items-center gap-2.5 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
                       <FileText className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                       <span className="text-blue-700 dark:text-blue-400 font-medium">{contentCounts.pdf}</span>
                     </div>
                   )}
                   {contentCounts.videos > 0 && (
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                    <div className="flex items-center gap-2.5 px-4 py-2 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
                       <Video className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                       <span className="text-purple-700 dark:text-purple-400 font-medium">{contentCounts.videos}</span>
                     </div>
                   )}
                   {contentCounts.audios > 0 && (
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                    <div className="flex items-center gap-2.5 px-4 py-2 bg-green-50 dark:bg-green-900/20 rounded-xl">
                       <Headphones className="h-4 w-4 text-green-600 dark:text-green-400" />
                       <span className="text-green-700 dark:text-green-400 font-medium">{contentCounts.audios}</span>
                     </div>
                   )}
                   {contentCounts.themes > 0 && (
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                    <div className="flex items-center gap-2.5 px-4 py-2 bg-orange-50 dark:bg-orange-900/20 rounded-xl">
                       <BookOpen className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                       <span className="text-orange-700 dark:text-orange-400 font-medium">{contentCounts.themes}</span>
                     </div>
                   )}
                   {contentCounts.protocols > 0 && (
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                    <div className="flex items-center gap-2.5 px-4 py-2 bg-red-50 dark:bg-red-900/20 rounded-xl">
                       <ClipboardList className="h-4 w-4 text-red-600 dark:text-red-400" />
                       <span className="text-red-700 dark:text-red-400 font-medium">{contentCounts.protocols}</span>
                     </div>
                   )}
                   {contentCounts.apps > 0 && (
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg">
+                    <div className="flex items-center gap-2.5 px-4 py-2 bg-cyan-50 dark:bg-cyan-900/20 rounded-xl">
                       <Smartphone className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
                       <span className="text-cyan-700 dark:text-cyan-400 font-medium">{contentCounts.apps}</span>
                     </div>
