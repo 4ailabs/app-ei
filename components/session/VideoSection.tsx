@@ -7,8 +7,8 @@ import { useState } from "react"
 // Helper function to get Cloudflare Stream embed URL
 function getCloudflareStreamUrl(streamId: string): string {
   // Formato correcto para iframe embed de Cloudflare Stream
-  // Sin autoplay - el usuario debe iniciar la reproducción manualmente
-  const url = `https://iframe.videodelivery.net/${streamId}?preload=metadata&autoplay=false&controls=true`
+  // Sin autoplay y sin preload - el usuario debe iniciar la reproducción manualmente
+  const url = `https://iframe.videodelivery.net/${streamId}?preload=none&autoplay=false&controls=true`
   return url
 }
 
@@ -47,7 +47,7 @@ export function VideoSection({ videos }: VideoSectionProps) {
               />
             ) : selectedVideo.vimeoId ? (
               <iframe
-                src={`https://player.vimeo.com/video/${selectedVideo.vimeoId}?title=0&byline=0&portrait=0&autoplay=0`}
+                src={`https://player.vimeo.com/video/${selectedVideo.vimeoId}?title=0&byline=0&portrait=0&autoplay=0&muted=0`}
                 className="w-full h-full"
                 allow="fullscreen; picture-in-picture"
                 allowFullScreen
