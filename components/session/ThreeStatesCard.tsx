@@ -7,237 +7,337 @@ export function ThreeStatesCard() {
   const [isExpanded, setIsExpanded] = useState(true)
 
   return (
-    <div className="w-full max-w-5xl mx-auto bg-white dark:bg-[#252525] rounded-2xl shadow-lg overflow-hidden border border-[#E5E4E0] dark:border-[#333333]">
+    <div className="w-full max-w-4xl mx-auto bg-white dark:bg-[#252525] overflow-hidden border border-[#E2E8F0] dark:border-[#333333] rounded-lg">
       {/* Header */}
       <div 
-        className="relative bg-gradient-to-r from-[#1a365d] to-[#2d3748] px-8 py-7 text-center overflow-hidden cursor-pointer hover:opacity-95 transition-opacity"
+        className="relative bg-[#1a1a2e] dark:bg-[#1a1a2e] px-10 py-8 cursor-pointer hover:opacity-95 transition-opacity"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="absolute top-0 left-0 w-full h-full opacity-10">
-          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-white rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
-        </div>
-        <div className="flex items-center justify-between relative z-10">
-          <div className="flex-1">
-            <h1 className="text-3xl font-bold text-white mb-2 font-serif">
+        <div className="flex justify-between items-end">
+          <div>
+            <h1 className="text-3xl font-semibold text-white mb-1.5 font-serif tracking-tight">
               Los 3 Estados del Sistema Nervioso
             </h1>
-            <p className="text-sm text-white/85">Tarjeta de Referencia Rápida</p>
+            <p className="text-xs text-white/70 uppercase tracking-widest">Teoría Polivagal Aplicada</p>
           </div>
-          <button className="ml-4 p-2 rounded-full hover:bg-white/10 transition-colors">
-            {isExpanded ? (
-              <ChevronUp className="h-6 w-6 text-white" />
-            ) : (
-              <ChevronDown className="h-6 w-6 text-white" />
-            )}
-          </button>
+          <div className="text-right">
+            <p className="text-xs text-white/50 uppercase tracking-wide">Material de Referencia</p>
+            <button className="ml-4 p-2 rounded-full hover:bg-white/10 transition-colors">
+              {isExpanded ? (
+                <ChevronUp className="h-5 w-5 text-white" />
+              ) : (
+                <ChevronDown className="h-5 w-5 text-white" />
+              )}
+            </button>
+          </div>
+        </div>
+        {/* Gradient line at bottom - 3 colors representing the 3 states */}
+        <div className="absolute bottom-0 left-10 right-10 h-0.5">
+          <div className="w-full h-full" style={{
+            background: 'linear-gradient(to right, #1B6B4A 0%, #1B6B4A 33%, #B8860B 33%, #B8860B 66%, #4A5568 66%, #4A5568 100%)'
+          }}></div>
         </div>
       </div>
 
       {/* Collapsible Content */}
       {isExpanded && (
         <>
-          {/* Intro Box */}
-          <div className="mx-5 mt-5 p-4 rounded-lg bg-gradient-to-br from-[#EEF2FF] to-[#E0E7FF] dark:from-[#2A2A2A] dark:to-[#1F1F1F] border-l-4 border-[#6366F1]">
-            <p className="text-sm text-[#4B5563] dark:text-[#A0A0A0] leading-relaxed">
-              Tu sistema nervioso tiene 3 estados. No estás "roto" — estás respondiendo. Reconocer en qué estado estás es el primer paso para regularte.
+          {/* Intro Section */}
+          <div className="px-10 py-6 border-b border-[#E2E8F0] dark:border-[#333333] bg-[#FAFBFC] dark:bg-[#1A1A1A]">
+            <p className="text-[15px] text-[#2D3748] dark:text-[#E5E5E5] leading-relaxed max-w-3xl">
+              Tu sistema nervioso tiene tres estados diferenciados. <strong className="text-[#1a1a2e] dark:text-[#E5E5E5] font-semibold">No estás "roto" — estás respondiendo.</strong> Reconocer en qué estado te encuentras es el primer paso para la autorregulación consciente.
             </p>
           </div>
 
-          {/* States Container */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5">
-        {/* Estado 1: Ventral Vagal */}
-        <div className="rounded-xl overflow-hidden border border-[#E5E4E0] dark:border-[#333333]">
-          <div className="bg-gradient-to-br from-[#2D8659] to-[#1E5C3D] px-4 py-5 text-center text-white">
-            <p className="text-xs font-bold opacity-70 tracking-wide mb-2">ESTADO 1</p>
-            <div className="w-10 h-10 mx-auto mb-2 flex items-center justify-center border-2 border-white/80 rounded-full">
-              <div className="w-3 h-3 bg-white/90 rounded-full"></div>
+          {/* States Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3">
+            {/* Estado 1: Ventral Vagal */}
+            <div className="border-r border-[#E2E8F0] dark:border-[#333333] last:border-r-0">
+              <div className="relative pt-6 pb-5 px-6 text-center">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-[#1B6B4A]"></div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-[#1B6B4A] dark:text-[#1B6B4A] mb-3">Estado I</p>
+                <h2 className="text-2xl font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] mb-1 font-serif">Ventral Vagal</h2>
+                <p className="text-xs text-[#718096] dark:text-[#A0A0A0] font-medium">Seguridad y Conexión</p>
+              </div>
+              <div className="px-6 pb-6 space-y-5">
+                <div>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Experiencia subjetiva</h3>
+                  <ul className="space-y-1.5">
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Calma con estado de alerta
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Presencia y conexión
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Claridad cognitiva
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Apertura hacia otros
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales somáticas</h3>
+                  <ul className="space-y-1.5">
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Respiración lenta y profunda
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Musculatura relajada
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Expresión facial dinámica
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Prosodia vocal variada
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales cognitivas</h3>
+                  <ul className="space-y-1.5">
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Capacidad de resolución
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Curiosidad activa
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Flexibilidad mental
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#1B6B4A] opacity-40"></span>
+                      Acceso a creatividad
+                    </li>
+                  </ul>
+                </div>
+                <div className="bg-[#F0F7F4] dark:bg-[#1A1A1A] rounded-md p-4 mt-4">
+                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#1B6B4A] dark:text-[#1B6B4A] mb-2.5">Intervención</h4>
+                  <p className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] leading-relaxed">
+                    Estado óptimo. Registrar las sensaciones asociadas para facilitar el reconocimiento futuro. Desde este estado es posible realizar trabajo terapéutico profundo.
+                  </p>
+                </div>
+              </div>
             </div>
-            <h2 className="text-lg font-semibold mb-1 font-serif">Ventral Vagal</h2>
-            <p className="text-xs uppercase tracking-wider opacity-85 font-semibold">Seguridad y Conexión</p>
-          </div>
-          <div className="bg-[#E8F5EE] dark:bg-[#2A2A2A] p-4 space-y-3">
-            <div>
-              <h3 className="text-xs uppercase tracking-wide text-[#4B5563] dark:text-[#A0A0A0] mb-2 font-bold">Cómo se siente</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-4 relative">• Calmado pero alerta</li>
-                <li className="pl-4 relative">• Presente y conectado</li>
-                <li className="pl-4 relative">• Capaz de pensar con claridad</li>
-                <li className="pl-4 relative">• Abierto a los demás</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-xs uppercase tracking-wide text-[#4B5563] dark:text-[#A0A0A0] mb-2 font-bold">Señales en el cuerpo</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-4 relative">• Respiración lenta y profunda</li>
-                <li className="pl-4 relative">• Hombros relajados</li>
-                <li className="pl-4 relative">• Rostro expresivo</li>
-                <li className="pl-4 relative">• Voz con variación de tono</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-xs uppercase tracking-wide text-[#4B5563] dark:text-[#A0A0A0] mb-2 font-bold">Señales en la mente</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-4 relative">• Puedo resolver problemas</li>
-                <li className="pl-4 relative">• Me siento curioso</li>
-                <li className="pl-4 relative">• Puedo ver opciones</li>
-                <li className="pl-4 relative">• Tengo acceso a mi creatividad</li>
-              </ul>
-            </div>
-            <div className="bg-white dark:bg-[#1A1A1A] rounded-lg p-3 border border-[#E5E4E0] dark:border-[#333333]">
-              <h3 className="text-xs uppercase tracking-wide text-[#2D8659] dark:text-[#2D8659] mb-2 font-bold">Qué hacer</h3>
-              <p className="text-xs text-[#1F2937] dark:text-[#E5E5E5] leading-relaxed">
-                ¡Disfrútalo! Este es tu estado óptimo. Nota cómo se siente para reconocerlo. Desde aquí puedes hacer trabajo profundo.
-              </p>
-            </div>
-          </div>
-        </div>
 
-        {/* Estado 2: Simpático */}
-        <div className="rounded-xl overflow-hidden border border-[#E5E4E0] dark:border-[#333333]">
-          <div className="bg-gradient-to-br from-[#D97706] to-[#B45309] px-4 py-5 text-center text-white">
-            <p className="text-xs font-bold opacity-70 tracking-wide mb-2">ESTADO 2</p>
-            <div className="w-10 h-10 mx-auto mb-2 flex items-center justify-center">
-              <div className="w-0 h-0 border-l-[9px] border-r-[9px] border-b-[16px] border-transparent border-b-white/90"></div>
+            {/* Estado 2: Simpático */}
+            <div className="border-r border-[#E2E8F0] dark:border-[#333333] last:border-r-0">
+              <div className="relative pt-6 pb-5 px-6 text-center">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-[#B8860B]"></div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-[#B8860B] dark:text-[#B8860B] mb-3">Estado II</p>
+                <h2 className="text-2xl font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] mb-1 font-serif">Simpático</h2>
+                <p className="text-xs text-[#718096] dark:text-[#A0A0A0] font-medium">Movilización Defensiva</p>
+              </div>
+              <div className="px-6 pb-6 space-y-5">
+                <div>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Experiencia subjetiva</h3>
+                  <ul className="space-y-1.5">
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Aceleración, ansiedad, irritabilidad
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Urgencia por actuar
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Dificultad para calmarse
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Hipervigilancia
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales somáticas</h3>
+                  <ul className="space-y-1.5">
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Taquicardia
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Respiración superficial y rápida
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Tensión en hombros y mandíbula
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Extremidades frías o sudorosas
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales cognitivas</h3>
+                  <ul className="space-y-1.5">
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Pensamiento acelerado
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Percepción de urgencia global
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Déficit atencional
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#B8860B] opacity-40"></span>
+                      Sesgo hacia amenazas
+                    </li>
+                  </ul>
+                </div>
+                <div className="bg-[#FBF8F1] dark:bg-[#1A1A1A] rounded-md p-4 mt-4">
+                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#B8860B] dark:text-[#B8860B] mb-2.5">Intervención</h4>
+                  <ul className="space-y-1 text-[13px] text-[#2D3748] dark:text-[#E5E5E5]">
+                    <li className="pl-5 relative"><span className="absolute left-0 text-[#B8860B] font-semibold">→</span> Respiración 4-7-8 (3 ciclos)</li>
+                    <li className="pl-5 relative"><span className="absolute left-0 text-[#B8860B] font-semibold">→</span> Descarga motora (sacudir, caminar)</li>
+                    <li className="pl-5 relative"><span className="absolute left-0 text-[#B8860B] font-semibold">→</span> Orientación sensorial 5-4-3-2-1</li>
+                    <li className="pl-5 relative"><span className="absolute left-0 text-[#B8860B] font-semibold">→</span> Estímulo térmico frío en muñecas</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <h2 className="text-lg font-semibold mb-1 font-serif">Simpático</h2>
-            <p className="text-xs uppercase tracking-wider opacity-85 font-semibold">Pelea o Huida</p>
-          </div>
-          <div className="bg-[#FEF3E2] dark:bg-[#2A2A2A] p-4 space-y-3">
-            <div>
-              <h3 className="text-xs uppercase tracking-wide text-[#4B5563] dark:text-[#A0A0A0] mb-2 font-bold">Cómo se siente</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-4 relative">• Acelerado, ansioso, irritable</li>
-                <li className="pl-4 relative">• Necesidad de actuar YA</li>
-                <li className="pl-4 relative">• Dificultad para calmarse</li>
-                <li className="pl-4 relative">• Hipervigilante</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-xs uppercase tracking-wide text-[#4B5563] dark:text-[#A0A0A0] mb-2 font-bold">Señales en el cuerpo</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-4 relative">• Corazón acelerado</li>
-                <li className="pl-4 relative">• Respiración rápida y superficial</li>
-                <li className="pl-4 relative">• Tensión en hombros y mandíbula</li>
-                <li className="pl-4 relative">• Manos frías o sudorosas</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-xs uppercase tracking-wide text-[#4B5563] dark:text-[#A0A0A0] mb-2 font-bold">Señales en la mente</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-4 relative">• Pensamientos acelerados</li>
-                <li className="pl-4 relative">• Todo parece urgente</li>
-                <li className="pl-4 relative">• Dificultad para concentrarse</li>
-                <li className="pl-4 relative">• Veo amenazas por todos lados</li>
-              </ul>
-            </div>
-            <div className="bg-white dark:bg-[#1A1A1A] rounded-lg p-3 border border-[#E5E4E0] dark:border-[#333333]">
-              <h3 className="text-xs uppercase tracking-wide text-[#D97706] dark:text-[#D97706] mb-2 font-bold">Qué hacer</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-5 relative"><span className="absolute left-1 text-[#D97706]">→</span> Respiración 4-7-8 (3 ciclos)</li>
-                <li className="pl-5 relative"><span className="absolute left-1 text-[#D97706]">→</span> Movimiento físico (sacudir)</li>
-                <li className="pl-5 relative"><span className="absolute left-1 text-[#D97706]">→</span> Orientación 5-4-3-2-1</li>
-                <li className="pl-5 relative"><span className="absolute left-1 text-[#D97706]">→</span> Agua fría en muñecas/cara</li>
-              </ul>
-            </div>
-          </div>
-        </div>
 
-        {/* Estado 3: Dorsal Vagal */}
-        <div className="rounded-xl overflow-hidden border border-[#E5E4E0] dark:border-[#333333]">
-          <div className="bg-gradient-to-br from-[#4B5563] to-[#374151] px-4 py-5 text-center text-white">
-            <p className="text-xs font-bold opacity-70 tracking-wide mb-2">ESTADO 3</p>
-            <div className="w-10 h-10 mx-auto mb-2 flex items-center justify-center">
-              <div className="w-7 h-7 bg-white/90 rounded"></div>
+            {/* Estado 3: Dorsal Vagal */}
+            <div className="border-r border-[#E2E8F0] dark:border-[#333333] last:border-r-0">
+              <div className="relative pt-6 pb-5 px-6 text-center">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-[#4A5568]"></div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-[#4A5568] dark:text-[#4A5568] mb-3">Estado III</p>
+                <h2 className="text-2xl font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] mb-1 font-serif">Dorsal Vagal</h2>
+                <p className="text-xs text-[#718096] dark:text-[#A0A0A0] font-medium">Inmovilización Defensiva</p>
+              </div>
+              <div className="px-6 pb-6 space-y-5">
+                <div>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Experiencia subjetiva</h3>
+                  <ul className="space-y-1.5">
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      Desconexión, entumecimiento
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      Agotamiento, sensación de apagado
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      Desesperanza
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      Deseo de desaparecer
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales somáticas</h3>
+                  <ul className="space-y-1.5">
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      Pesadez corporal, hipotonía
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      Respiración muy superficial
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      Mirada desenfocada
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      Voz monótona o mutismo
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-widest text-[#718096] dark:text-[#A0A0A0] mb-2.5 pb-1.5 border-b border-[#E2E8F0] dark:border-[#333333]">Señales cognitivas</h3>
+                  <ul className="space-y-1.5">
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      "No tiene sentido"
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      "No puedo hacer nada"
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      Enlentecimiento cognitivo
+                    </li>
+                    <li className="text-[13px] text-[#2D3748] dark:text-[#E5E5E5] pl-4 relative leading-relaxed">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-[#4A5568] opacity-40"></span>
+                      Despersonalización
+                    </li>
+                  </ul>
+                </div>
+                <div className="bg-[#F7F8F9] dark:bg-[#1A1A1A] rounded-md p-4 mt-4">
+                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#4A5568] dark:text-[#4A5568] mb-2.5">Intervención</h4>
+                  <ul className="space-y-1 text-[13px] text-[#2D3748] dark:text-[#E5E5E5]">
+                    <li className="pl-5 relative"><span className="absolute left-0 text-[#4A5568] font-semibold">→</span> Movimiento suave (estiramientos)</li>
+                    <li className="pl-5 relative"><span className="absolute left-0 text-[#4A5568] font-semibold">→</span> Estímulo térmico cálido</li>
+                    <li className="pl-5 relative"><span className="absolute left-0 text-[#4A5568] font-semibold">→</span> Orientación verbal (nombrar objetos)</li>
+                    <li className="pl-5 relative"><span className="absolute left-0 text-[#4A5568] font-semibold">→</span> Co-regulación (contacto social seguro)</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <h2 className="text-lg font-semibold mb-1 font-serif">Dorsal Vagal</h2>
-            <p className="text-xs uppercase tracking-wider opacity-85 font-semibold">Colapso o Congelamiento</p>
           </div>
-          <div className="bg-[#F3F4F6] dark:bg-[#2A2A2A] p-4 space-y-3">
-            <div>
-              <h3 className="text-xs uppercase tracking-wide text-[#4B5563] dark:text-[#A0A0A0] mb-2 font-bold">Cómo se siente</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-4 relative">• Desconectado, entumecido</li>
-                <li className="pl-4 relative">• Sin energía, "apagado"</li>
-                <li className="pl-4 relative">• Desesperanza</li>
-                <li className="pl-4 relative">• Querer desaparecer</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-xs uppercase tracking-wide text-[#4B5563] dark:text-[#A0A0A0] mb-2 font-bold">Señales en el cuerpo</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-4 relative">• Cuerpo pesado, sin fuerza</li>
-                <li className="pl-4 relative">• Respiración muy superficial</li>
-                <li className="pl-4 relative">• Mirada perdida</li>
-                <li className="pl-4 relative">• Voz monótona o sin hablar</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-xs uppercase tracking-wide text-[#4B5563] dark:text-[#A0A0A0] mb-2 font-bold">Señales en la mente</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-4 relative">• "No tiene caso"</li>
-                <li className="pl-4 relative">• "No puedo hacer nada"</li>
-                <li className="pl-4 relative">• Dificultad para pensar</li>
-                <li className="pl-4 relative">• Sensación de irrealidad</li>
-              </ul>
-            </div>
-            <div className="bg-white dark:bg-[#1A1A1A] rounded-lg p-3 border border-[#E5E4E0] dark:border-[#333333]">
-              <h3 className="text-xs uppercase tracking-wide text-[#4B5563] dark:text-[#4B5563] mb-2 font-bold">Qué hacer</h3>
-              <ul className="space-y-1 text-xs text-[#1F2937] dark:text-[#E5E5E5]">
-                <li className="pl-5 relative"><span className="absolute left-1 text-[#4B5563]">→</span> Movimiento suave (estirar)</li>
-                <li className="pl-5 relative"><span className="absolute left-1 text-[#4B5563]">→</span> Contacto con agua tibia</li>
-                <li className="pl-5 relative"><span className="absolute left-1 text-[#4B5563]">→</span> Nombrar objetos en voz alta</li>
-                <li className="pl-5 relative"><span className="absolute left-1 text-[#4B5563]">→</span> Llamar a alguien seguro</li>
-              </ul>
-            </div>
-          </div>
-          </div>
-        </div>
 
-        {/* Summary Footer */}
-        <div className="bg-[#F8FAFC] dark:bg-[#1A1A1A] px-5 py-4 border-t border-[#E5E4E0] dark:border-[#333333]">
-        <h3 className="text-sm font-semibold text-[#1F2937] dark:text-[#E5E5E5] mb-3 text-center font-serif">
-          Resumen Rápido
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="flex items-center gap-3 p-3 rounded-lg bg-white dark:bg-[#252525] border border-[#E5E4E0] dark:border-[#333333]">
-            <div className="w-9 h-9 rounded-full bg-[#2D8659] flex items-center justify-center flex-shrink-0">
-              <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
-            </div>
-            <div className="text-xs leading-snug">
-              <strong className="block text-[#2D8659] dark:text-[#2D8659] text-sm mb-0.5">Ventral Vagal</strong>
-              Seguro y conectado → Disfrutar, trabajar, conectar
-            </div>
-          </div>
-          <div className="flex items-center gap-3 p-3 rounded-lg bg-white dark:bg-[#252525] border border-[#E5E4E0] dark:border-[#333333]">
-            <div className="w-9 h-9 rounded-full bg-[#D97706] flex items-center justify-center flex-shrink-0">
-              <div className="w-0 h-0 border-l-2 border-r-2 border-b-[7px] border-transparent border-b-white"></div>
-            </div>
-            <div className="text-xs leading-snug">
-              <strong className="block text-[#D97706] dark:text-[#D97706] text-sm mb-0.5">Simpático</strong>
-              Activado, ansioso → Bajar la activación
-            </div>
-          </div>
-          <div className="flex items-center gap-3 p-3 rounded-lg bg-white dark:bg-[#252525] border border-[#E5E4E0] dark:border-[#333333]">
-            <div className="w-9 h-9 rounded-full bg-[#4B5563] flex items-center justify-center flex-shrink-0">
-              <div className="w-3 h-3 bg-white rounded"></div>
-            </div>
-            <div className="text-xs leading-snug">
-              <strong className="block text-[#4B5563] dark:text-[#4B5563] text-sm mb-0.5">Dorsal Vagal</strong>
-              Apagado, colapsado → Subir energía suavemente
+          {/* Summary Section */}
+          <div className="bg-[#1a1a2e] dark:bg-[#1a1a2e] px-10 py-6">
+            <h3 className="text-base font-semibold text-white mb-4 text-center font-serif">Síntesis Operativa</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="flex items-center gap-3 p-3 bg-white/8 rounded-md border-l-4 border-[#1B6B4A]">
+                <div>
+                  <span className="block text-xs font-semibold text-white mb-0.5">Ventral Vagal</span>
+                  <span className="text-[11px] text-white/70 leading-snug">Seguridad percibida → Mantener, anclar, trabajar</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-white/8 rounded-md border-l-4 border-[#B8860B]">
+                <div>
+                  <span className="block text-xs font-semibold text-white mb-0.5">Simpático</span>
+                  <span className="text-[11px] text-white/70 leading-snug">Activación excesiva → Reducir arousal</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-white/8 rounded-md border-l-4 border-[#4A5568]">
+                <div>
+                  <span className="block text-xs font-semibold text-white mb-0.5">Dorsal Vagal</span>
+                  <span className="text-[11px] text-white/70 leading-snug">Hipoactivación → Elevar energía gradualmente</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        </div>
+
+          {/* Footer */}
+          <div className="px-10 py-4 border-t border-[#E2E8F0] dark:border-[#333333] bg-[#FAFBFC] dark:bg-[#1A1A1A] flex justify-between items-center">
+            <div className="text-[11px] text-[#718096] dark:text-[#A0A0A0]">
+              <strong className="text-[#2D3748] dark:text-[#E5E5E5] font-semibold">Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
+            </div>
+            <div className="text-[10px] text-[#718096] dark:text-[#A0A0A0] text-right">
+              <span className="font-semibold text-[#2D3748] dark:text-[#E5E5E5]">Instituto Centro Bioenergética</span><br />
+              inteligencia-energetica.com
+            </div>
+          </div>
         </>
       )}
-
-      {/* Footer */}
-      <div className="bg-gradient-to-r from-[#1a365d] to-[#2d3748] px-5 py-3 text-center">
-        <p className="text-xs text-white/70 tracking-wide">
-          Seminario Internacional de Inteligencia Energética • Dr. Miguel Ojeda Rios • Instituto Centro Bioenergética
-        </p>
-      </div>
     </div>
   )
 }
-
