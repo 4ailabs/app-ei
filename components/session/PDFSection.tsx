@@ -44,39 +44,37 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
   if (pdfs && pdfs.length > 0) {
     // Determinar si son recursos adicionales basado en la categoría del primer PDF
     const isAdditionalResources = pdfs.some(pdf => pdf.category === "recursos_adicionales")
-    const bgGradient = isAdditionalResources 
-      ? "from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20"
-      : "from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20"
+    // PDFs normales usan naranja (#DA7756), recursos adicionales usan verde (#2ca58d)
     const borderColor = isAdditionalResources
-      ? "border-amber-100 dark:border-amber-800/30"
-      : "border-blue-100 dark:border-blue-800/30"
+      ? "border-[#2ca58d]/40 dark:border-[#2ca58d]/50"
+      : "border-[#DA7756]/40 dark:border-[#DA7756]/50"
     const iconBg = isAdditionalResources
-      ? "bg-amber-100 dark:bg-amber-900/30"
-      : "bg-blue-100 dark:bg-blue-900/30"
+      ? "bg-[#2ca58d]/10 dark:bg-[#2ca58d]/20"
+      : "bg-[#DA7756]/10 dark:bg-[#DA7756]/20"
     const iconColor = isAdditionalResources
-      ? "text-amber-600 dark:text-amber-400"
-      : "text-blue-600 dark:text-blue-400"
+      ? "text-[#2ca58d]"
+      : "text-[#DA7756]"
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {pdfs.map((pdf) => (
           <div
             key={pdf.id}
-            className={`flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 bg-gradient-to-r ${bgGradient} rounded-xl border ${borderColor} hover:shadow-md transition-shadow`}
+            className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4 sm:p-6 bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border ${borderColor} hover:shadow-md transition-shadow`}
           >
-            <div className={`flex-shrink-0 p-3 ${iconBg} rounded-xl`}>
-              <FileText className={`h-8 w-8 ${iconColor}`} />
+            <div className={`flex-shrink-0 p-2 sm:p-3 ${iconBg} rounded-lg sm:rounded-xl`}>
+              <FileText className={`h-6 w-6 sm:h-8 sm:w-8 ${iconColor}`} />
             </div>
             <div className="flex-grow min-w-0">
-              <h4 className="font-bold text-lg text-[#1A1915] dark:text-[#ECECEC] mb-1">{pdf.title}</h4>
-              <p className="text-sm text-[#706F6C] dark:text-[#B4B4B4] mb-2">{pdf.description}</p>
+              <h4 className="font-bold text-sm sm:text-lg text-[#1A1915] dark:text-[#ECECEC] mb-0.5 sm:mb-1">{pdf.title}</h4>
+              <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#B4B4B4] mb-1.5 sm:mb-2 line-clamp-2">{pdf.description}</p>
               {pdf.category && (
-                <span className="inline-block px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+                <span className="inline-block px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-medium rounded-full bg-[#DA7756]/10 dark:bg-[#DA7756]/20 text-[#DA7756]">
                   {pdf.category === "referencia" ? "Referencia" : pdf.category === "ejercicio" ? "Ejercicio" : pdf.category === "contenido_profundo" ? "Contenido Profundo" : "Recurso Adicional"}
                 </span>
               )}
             </div>
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 w-full sm:w-auto">
               {pdf.url ? (
                 <Button
                   onClick={() => {
@@ -85,12 +83,13 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
                   }}
                   variant="outline"
                   size="default"
+                  className="w-full sm:w-auto text-sm"
                 >
                   <Download className="mr-2 h-4 w-4" />
                   Descargar
                 </Button>
               ) : (
-                <Button disabled variant="outline" size="default">
+                <Button disabled variant="outline" size="default" className="w-full sm:w-auto text-sm">
                   <Download className="mr-2 h-4 w-4" />
                   No disponible
                 </Button>
@@ -105,10 +104,10 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
   // Si solo hay un PDFUrl, mostrar el componente original
   if (!pdfUrl) {
     return (
-      <div className="text-center py-8">
-        <FileText className="h-12 w-12 text-[#9B9A97] dark:text-[#8C8C8C] mx-auto mb-3" />
-        <h3 className="text-lg font-medium text-[#1A1915] dark:text-[#ECECEC] mb-1">PDF no disponible</h3>
-        <p className="text-[#706F6C] dark:text-[#B4B4B4] text-sm">El material PDF estará disponible próximamente</p>
+      <div className="text-center py-6 sm:py-8">
+        <FileText className="h-10 w-10 sm:h-12 sm:w-12 text-[#9B9A97] dark:text-[#8C8C8C] mx-auto mb-2 sm:mb-3" />
+        <h3 className="text-base sm:text-lg font-medium text-[#1A1915] dark:text-[#ECECEC] mb-1">PDF no disponible</h3>
+        <p className="text-[#706F6C] dark:text-[#B4B4B4] text-xs sm:text-sm">El material PDF estará disponible próximamente</p>
       </div>
     )
   }
@@ -121,19 +120,19 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
   }
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-100 dark:border-blue-800/30">
-      <div className="p-4 bg-white dark:bg-[#393939] rounded-xl shadow-sm">
-        <FileText className="h-10 w-10 text-blue-600 dark:text-blue-400" />
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4 sm:p-6 bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#DA7756]/40 dark:border-[#DA7756]/50">
+      <div className="p-3 sm:p-4 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
+        <FileText className="h-8 w-8 sm:h-10 sm:w-10 text-[#DA7756]" />
       </div>
 
-      <div className="flex-1">
-        <div className="flex items-center gap-2 mb-1">
-          <h3 className="text-lg font-bold text-[#1A1915] dark:text-[#ECECEC]">{title}</h3>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
+          <h3 className="text-sm sm:text-lg font-bold text-[#1A1915] dark:text-[#ECECEC]">{title}</h3>
           {viewed && (
-            <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
+            <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#2ca58d]" />
           )}
         </div>
-        <p className="text-sm text-[#706F6C] dark:text-[#B4B4B4]">
+        <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#B4B4B4]">
           Descarga el manual completo de esta sesión en formato PDF
         </p>
       </div>
@@ -141,7 +140,7 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
       <Button
         onClick={handleDownload}
         variant="outline"
-        className="w-full sm:w-auto"
+        className="w-full sm:w-auto text-sm"
       >
         <Download className="mr-2 h-4 w-4" />
         Descargar

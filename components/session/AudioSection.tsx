@@ -46,10 +46,10 @@ const categoryInfo: Record<string, { label: string; icon: React.ReactNode; color
 export function AudioSection({ audios }: AudioSectionProps) {
   if (audios.length === 0) {
     return (
-      <div className="text-center py-8">
-        <Headphones className="h-12 w-12 text-[#9B9A97] dark:text-[#8C8C8C] mx-auto mb-3" />
-        <h3 className="text-lg font-medium text-[#1A1915] dark:text-[#ECECEC] mb-1">No hay audios disponibles</h3>
-        <p className="text-[#706F6C] dark:text-[#B4B4B4] text-sm">Los audios estarán disponibles próximamente</p>
+      <div className="text-center py-6 sm:py-8">
+        <Headphones className="h-10 w-10 sm:h-12 sm:w-12 text-[#9B9A97] dark:text-[#8C8C8C] mx-auto mb-2 sm:mb-3" />
+        <h3 className="text-base sm:text-lg font-medium text-[#1A1915] dark:text-[#ECECEC] mb-1">No hay audios disponibles</h3>
+        <p className="text-[#706F6C] dark:text-[#B4B4B4] text-xs sm:text-sm">Los audios estarán disponibles próximamente</p>
       </div>
     )
   }
@@ -169,10 +169,10 @@ function AudioPlayer({ audio }: { audio: Audio }) {
         <button
           onClick={togglePlay}
           disabled={!hasValidUrl}
-          className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
+          className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all border-2 border-[#DA7756] ${
             hasValidUrl
-              ? 'bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600 shadow-md hover:shadow-lg'
-              : 'bg-[#E5E4E0] dark:bg-[#4A4A4A] text-[#9B9A97] dark:text-[#8C8C8C] cursor-not-allowed'
+              ? 'text-[#DA7756] hover:bg-[#DA7756] hover:text-white'
+              : 'text-[#DA7756]/50 cursor-not-allowed'
           }`}
         >
           {isPlaying ? (
@@ -203,7 +203,7 @@ function AudioPlayer({ audio }: { audio: Audio }) {
             <span className="text-[10px] sm:text-xs text-[#9B9A97] dark:text-[#8C8C8C] w-8 sm:w-10 flex-shrink-0">{formatTime(currentTime)}</span>
             <div className="flex-1 relative h-1.5 bg-[#E5E4E0] dark:bg-[#4A4A4A] rounded-full overflow-hidden min-w-0">
               <div
-                className="absolute inset-y-0 left-0 bg-green-600 dark:bg-green-500 rounded-full transition-all"
+                className="absolute inset-y-0 left-0 bg-[#DA7756] rounded-full transition-all"
                 style={{ width: `${progress}%` }}
               />
               <input

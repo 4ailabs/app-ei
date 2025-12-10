@@ -19,7 +19,7 @@ export default async function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A]">
       <Navbar />
       <AdminPanel />
     </div>

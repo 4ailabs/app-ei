@@ -71,10 +71,10 @@ export function DialogosAudioPlayer({ audio }: DialogosAudioPlayerProps) {
         <button
           onClick={togglePlay}
           disabled={!hasValidUrl}
-          className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ${
+          className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all border-2 border-[#DA7756] ${
             hasValidUrl
-              ? 'bg-green-600 dark:bg-green-500 text-white'
-              : 'bg-[#E5E4E0] dark:bg-[#4A4A4A] text-[#9B9A97] dark:text-[#8C8C8C]'
+              ? 'text-[#DA7756] hover:bg-[#DA7756] hover:text-white'
+              : 'text-[#DA7756]/50 cursor-not-allowed'
           }`}
         >
           {isPlaying ? (
@@ -103,7 +103,7 @@ export function DialogosAudioPlayer({ audio }: DialogosAudioPlayerProps) {
             <span className="text-[10px] sm:text-xs text-[#9B9A97] dark:text-[#8C8C8C] w-8 sm:w-10">{formatTime(currentTime)}</span>
             <div className="flex-1 relative h-1.5 bg-[#E5E4E0] dark:bg-[#4A4A4A] rounded-full">
               <div
-                className="absolute inset-y-0 left-0 bg-green-600 dark:bg-green-500 rounded-full"
+                className="absolute inset-y-0 left-0 bg-[#DA7756] rounded-full"
                 style={{ width: `${progress}%` }}
               />
               <input

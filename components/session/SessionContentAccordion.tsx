@@ -67,8 +67,8 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
       title: "Audios y Meditaciones",
       icon: <Headphones className="h-5 w-5" />,
       count: contentCounts.audios,
-      color: "text-green-600",
-      bgColor: "bg-green-50",
+      color: "text-[#DA7756]",
+      bgColor: "bg-[#DA7756]/10",
       content: <AudioSection audios={sessionData.audios} />
     },
     {

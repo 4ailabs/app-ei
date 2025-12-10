@@ -143,7 +143,7 @@ export function SessionsAccordion({ sessions, progressMap }: SessionsAccordionPr
                   <div className="hidden sm:flex items-center gap-3 mr-4">
                     <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-green-500 rounded-full transition-all duration-500"
+                        className="h-full bg-[#DA7756] rounded-full transition-all duration-500"
                         style={{ width: `${progress.percentage}%` }}
                       />
                     </div>
