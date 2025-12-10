@@ -69,7 +69,7 @@ export default async function HomePage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Video Promocional */}
+        {/* Video de Introducción */}
         <PromoVideo />
 
         {/* Noticias */}

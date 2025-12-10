@@ -19,7 +19,7 @@ export function PromoVideo() {
     <div className="lg:col-span-2 bg-white dark:bg-[#252525] p-6 lg:p-8 rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#DA7756]/30">
       <div className="flex items-center gap-2 mb-4">
         <Play className="h-5 w-5 text-[#DA7756] dark:text-[#ECECEC]" />
-        <h2 className="text-xl lg:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Video Promocional</h2>
+        <h2 className="text-xl lg:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Video de Introducción</h2>
       </div>
       <div className="aspect-video w-full rounded-xl overflow-hidden bg-[#1A1915] dark:bg-black shadow-lg border border-[#E5E4E0] dark:border-[#DA7756]/30">
         {videoUrl ? (
@@ -32,7 +32,7 @@ export function PromoVideo() {
             style={{ border: "none" }}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title="Video Promocional"
+            title="Video de Introducción"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
