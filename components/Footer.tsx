@@ -1,4 +1,5 @@
-import { Zap, Mail } from "lucide-react"
+import Image from "next/image"
+import { Mail } from "lucide-react"
 
 export function Footer() {
   return (
@@ -7,8 +8,14 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
           {/* Left Section - Logo & Brand */}
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-[#DA7756] dark:bg-[#DA7756] rounded-lg">
-              <Zap className="h-5 w-5 text-white dark:text-white" />
+            <div className="rounded-lg overflow-hidden">
+              <Image
+                src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
+                alt="Inteligencia Energética"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain"
+              />
             </div>
             <div>
               <p className="font-bold text-[#1A1915] dark:text-[#E5E5E5] text-sm">Inteligencia Energética</p>

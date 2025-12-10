@@ -1,8 +1,9 @@
 "use client"
 
 import { signOut, useSession } from "next-auth/react"
-import { Zap, LogOut, User, Settings } from "lucide-react"
+import { LogOut, User, Settings } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 
 export function Navbar() {
@@ -13,8 +14,14 @@ export function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="p-2 bg-[#DA7756] dark:bg-[#DA7756] rounded-lg">
-              <Zap className="h-5 w-5 text-white" />
+            <div className="rounded-lg overflow-hidden">
+              <Image
+                src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
+                alt="Inteligencia Energética"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain"
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-lg text-[#1A1915] dark:text-[#E5E5E5]">

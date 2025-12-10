@@ -1,16 +1,12 @@
 import { auth } from "@/lib/auth-server"
 import { redirect, notFound } from "next/navigation"
 import { sessions } from "@/data/sessions"
-import { prisma } from "@/lib/prisma"
 import { SessionCard } from "@/components/session/SessionCard"
 import {
   ArrowLeft,
-  Home,
   BookOpen,
   Calendar,
-  GraduationCap,
-  CheckCircle2,
-  Clock
+  GraduationCap
 } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -73,23 +69,6 @@ const bloqueInfo: Record<number, BloqueInfo> = {
   }
 }
 
-type ProgressRecord = {
-  sessionId: number
-  completed: boolean
-  pdfViewed: boolean
-  videosViewed: boolean
-  audiosViewed: boolean
-  themesViewed: boolean
-}
-
-type ProgressData = {
-  completed: boolean
-  pdfViewed: boolean
-  videosViewed: boolean
-  audiosViewed: boolean
-  themesViewed: boolean
-}
-
 export default async function BloquePage({ params }: BloquePageProps) {
   const session = await auth()
 
@@ -111,47 +90,22 @@ export default async function BloquePage({ params }: BloquePageProps) {
     description: ""
   }
 
-  // Get progress data
-  let progressMap: Record<number, ProgressData> = {}
-  try {
-    const progressRecords = await prisma.progress.findMany({
-      where: { userId: session.user.id },
-    })
-
-    progressMap = progressRecords.reduce((acc: Record<number, ProgressData>, p: ProgressRecord) => {
-      acc[p.sessionId] = {
-        completed: p.completed,
-        pdfViewed: p.pdfViewed,
-        videosViewed: p.videosViewed,
-        audiosViewed: p.audiosViewed,
-        themesViewed: p.themesViewed,
-      }
-      return acc
-    }, {} as Record<number, ProgressData>)
-  } catch (error) {
-    console.error("Error fetching progress:", error)
-  }
-
-  // Calculate bloque progress
-  const completedSessions = bloqueSessions.filter(s => progressMap[s.id]?.completed).length
-  const progressPercentage = Math.round((completedSessions / bloqueSessions.length) * 100)
-
   // Paleta de colores estilo Claude
   const bloqueColors = [
-    { gradient: "from-[#264653] to-[#2a5563]", accent: "bg-[#264653]", hover: "hover:bg-[#2a5563]" },
-    { gradient: "from-[#2ca58d] to-[#2fb59d]", accent: "bg-[#2ca58d]", hover: "hover:bg-[#2fb59d]" },
-    { gradient: "from-[#a682ff] to-[#b592ff]", accent: "bg-[#a682ff]", hover: "hover:bg-[#b592ff]" },
+    { gradient: "from-[#DA7756] to-[#C4684A]", accent: "bg-[#DA7756]", hover: "hover:bg-[#C4684A]" },
+    { gradient: "from-[#2ca58d] to-[#259078]", accent: "bg-[#2ca58d]", hover: "hover:bg-[#259078]" },
+    { gradient: "from-[#706F6C] to-[#1A1915]", accent: "bg-[#706F6C]", hover: "hover:bg-[#1A1915]" },
   ]
 
   const colors = bloqueColors[(dayNumber - 1) % bloqueColors.length]
 
   return (
-    <div className="min-h-screen bg-[#f9f9f9]">
+    <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A]">
       <div className="container mx-auto px-4 py-8 pb-24">
         {/* Back Button */}
         <div className="mb-6 animate-fade-in">
           <Link href="/sesiones">
-            <Button variant="ghost" className="group hover:bg-[#f9f9f9] transition-all rounded-full text-[#264653]">
+            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all rounded-full text-[#706F6C] dark:text-[#A0A0A0]">
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <BookOpen className="mr-2 h-4 w-4" />
               Volver a Sesiones
@@ -161,74 +115,47 @@ export default async function BloquePage({ params }: BloquePageProps) {
 
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="bg-white rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E5E5]">
-            <div className={`p-8 lg:p-12 bg-gradient-to-br ${colors.gradient} text-white relative overflow-hidden`}>
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+          <div className="bg-white dark:bg-[#252525] rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border-2 border-[#DA7756] dark:border-[#DA7756]">
+            <div className="p-8 lg:p-12 text-[#1A1915] dark:text-[#E5E5E5] relative overflow-hidden">
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4">
-                  <Calendar className="h-8 w-8 text-white/90" />
-                  <span className="text-sm font-semibold uppercase tracking-wider text-white/90">
+                  <Calendar className="h-8 w-8 text-[#DA7756] dark:text-[#DA7756]" />
+                  <span className="text-sm font-semibold uppercase tracking-wider text-[#DA7756] dark:text-[#DA7756]">
                     Bloque {dayNumber}
                   </span>
                 </div>
                 <div className="flex items-center gap-4 mb-4">
-                  <div className={`w-20 h-20 rounded-xl ${colors.accent} bg-white/10 backdrop-blur-sm flex items-center justify-center font-bold text-3xl shadow-sm`}>
+                  <div className={`w-20 h-20 rounded-xl bg-[#DA7756] dark:bg-[#DA7756] flex items-center justify-center font-bold text-3xl shadow-sm text-white`}>
                     {dayNumber}
                   </div>
                   <div>
-                    <h1 className="text-3xl md:text-5xl font-bold mb-2">
+                    <h1 className="text-3xl md:text-5xl font-bold mb-2 text-[#1A1915] dark:text-[#E5E5E5]">
                       {info.title}
                     </h1>
-                    <p className="text-lg text-white/80">{info.description}</p>
+                    <p className="text-lg text-[#706F6C] dark:text-[#A0A0A0]">{info.description}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-white/90">
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
-                    <GraduationCap className="h-5 w-5" />
-                    <span className="font-semibold">{bloqueSessions.length} sesiones</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
-                    <CheckCircle2 className="h-5 w-5" />
-                    <span className="font-semibold">{completedSessions}/{bloqueSessions.length} completadas</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
-                    <Clock className="h-5 w-5" />
-                    <span className="font-semibold">{progressPercentage}% progreso</span>
+                <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-2 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 border border-[#DA7756]/20 dark:border-[#DA7756]/30 px-4 py-2 rounded-lg">
+                    <GraduationCap className="h-5 w-5 text-[#DA7756] dark:text-[#DA7756]" />
+                    <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">{bloqueSessions.length} sesiones</span>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="px-8 py-4 bg-[#f9f9f9] border-t border-[#E5E5E5]">
-              <div className="flex items-center justify-between text-sm mb-2">
-                <span className="text-[#264653]/70">Progreso del Bloque</span>
-                <span className={`font-bold ${progressPercentage === 100 ? 'text-[#2ca58d]' : 'text-[#264653]'}`}>
-                  {progressPercentage}%
-                </span>
-              </div>
-              <div className="w-full bg-[#E5E5E5] rounded-full h-2 overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all duration-500 ${
-                    progressPercentage === 100 ? 'bg-[#2ca58d]' : colors.accent
-                  }`}
-                  style={{ width: `${progressPercentage}%` }}
-                />
               </div>
             </div>
           </div>
 
           {/* Sessions Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             {bloqueSessions.map((sessionData, index) => (
               <div
                 key={sessionData.id}
-                className="animate-fade-in-up"
+                className="animate-fade-in-up h-full"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <SessionCard
                   session={sessionData}
-                  progress={progressMap[sessionData.id]}
+                  progress={undefined}
                   index={index}
                   compact={false}
                 />

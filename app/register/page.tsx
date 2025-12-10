@@ -1,9 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Zap, Mail, Lock, User, ArrowRight, AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react"
+import { Mail, Lock, User, ArrowRight, AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
 
 export default function RegisterPage() {
@@ -77,8 +78,14 @@ export default function RegisterPage() {
       <Card className="w-full max-w-md shadow-xl border-[#E5E4E0] dark:border-[#4A4A4A] bg-white dark:bg-[#393939]">
         <CardHeader className="text-center space-y-4 pb-8">
           <div className="flex justify-center">
-            <div className="p-4 bg-[#DA7756] dark:bg-[#ECECEC] rounded-2xl">
-              <Zap className="h-8 w-8 text-white dark:text-[#2F2F2F]" />
+            <div className="rounded-2xl overflow-hidden">
+              <Image
+                src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
+                alt="Inteligencia Energética"
+                width={64}
+                height={64}
+                className="w-16 h-16 object-contain"
+              />
             </div>
           </div>
           <div>

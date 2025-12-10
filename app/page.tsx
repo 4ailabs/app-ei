@@ -1,57 +1,12 @@
 import { auth } from "@/lib/auth-server"
 import { sessions } from "@/data/sessions"
-import { prisma } from "@/lib/prisma"
-import { GraduationCap, Clock, Award, Bell, Play, Sparkles, Lock, ArrowRight, BookOpen } from "lucide-react"
+import { GraduationCap, Bell, Play, Sparkles, Lock, ArrowRight, BookOpen } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
-
-type ProgressData = {
-  completed: boolean
-  pdfViewed: boolean
-  videosViewed: boolean
-  audiosViewed: boolean
-  themesViewed: boolean
-}
-
-type ProgressRecord = {
-  sessionId: number
-  completed: boolean
-  pdfViewed: boolean
-  videosViewed: boolean
-  audiosViewed: boolean
-  themesViewed: boolean
-}
 
 export default async function HomePage() {
   const session = await auth()
   const isLoggedIn = !!session
-
-  let progressMap: Record<number, ProgressData> = {}
-  let completedSessions = 0
-  let overallProgress = 0
-
-  if (isLoggedIn) {
-    try {
-      const progressRecords = await prisma.progress.findMany({
-        where: { userId: session.user.id },
-      })
-
-      progressMap = progressRecords.reduce((acc: Record<number, ProgressData>, p: ProgressRecord) => {
-        acc[p.sessionId] = {
-          completed: p.completed,
-          pdfViewed: p.pdfViewed,
-          videosViewed: p.videosViewed,
-          audiosViewed: p.audiosViewed,
-          themesViewed: p.themesViewed,
-        }
-        return acc
-      }, {} as Record<number, ProgressData>)
-
-      completedSessions = Object.values(progressMap).filter(p => p.completed).length
-      overallProgress = Math.round((completedSessions / sessions.length) * 100)
-    } catch (error) {
-      console.error("Error fetching progress:", error)
-    }
-  }
 
   const totalSessions = sessions.length
 
@@ -64,7 +19,15 @@ export default async function HomePage() {
 
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="h-6 w-6 text-white/90" />
+            <div className="rounded-lg overflow-hidden bg-white/10 backdrop-blur-sm p-1">
+              <Image
+                src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
+                alt="Inteligencia Energética"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain"
+              />
+            </div>
             <span className="text-sm font-semibold uppercase tracking-wider text-white/90">
               {isLoggedIn ? "Bienvenido de nuevo" : "Bienvenido"}
             </span>
@@ -80,48 +43,14 @@ export default async function HomePage() {
           <div className="flex flex-wrap gap-6 mt-8">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-white bg-opacity-15 rounded-xl backdrop-blur-sm">
-                <GraduationCap className="h-6 w-6" />
+                <GraduationCap className="h-6 w-6 text-white" />
               </div>
               <div>
                 <p className="text-2xl font-bold">{totalSessions}</p>
                 <p className="text-sm text-white/70">Sesiones</p>
               </div>
             </div>
-            {isLoggedIn && (
-              <>
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-white bg-opacity-15 rounded-xl backdrop-blur-sm">
-                    <Award className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold">{completedSessions}/{totalSessions}</p>
-                    <p className="text-sm text-white/70">Completadas</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-white bg-opacity-15 rounded-xl backdrop-blur-sm">
-                    <Clock className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold">{overallProgress}%</p>
-                    <p className="text-sm text-white/70">Progreso</p>
-                  </div>
-                </div>
-              </>
-            )}
           </div>
-
-          {/* Progress Bar - Only for logged in users */}
-          {isLoggedIn && overallProgress > 0 && (
-            <div className="mt-6 max-w-md">
-              <div className="w-full bg-white bg-opacity-20 rounded-full h-2 overflow-hidden backdrop-blur-sm">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-white to-white/80 transition-all duration-1000 ease-out"
-                  style={{ width: `${overallProgress}%` }}
-                />
-              </div>
-            </div>
-          )}
 
           {/* CTA Button - Access Sessions */}
           {isLoggedIn && (

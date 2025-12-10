@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Zap, Mail, Lock, User, Key, AlertCircle, CheckCircle } from "lucide-react"
+import { Mail, Lock, User, Key, AlertCircle, CheckCircle } from "lucide-react"
 import Link from "next/link"
 
 export default function SetupPage() {
@@ -117,8 +117,14 @@ export default function SetupPage() {
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="p-4 bg-black rounded-2xl">
-              <Zap className="h-8 w-8 text-white" />
+            <div className="rounded-2xl overflow-hidden">
+              <Image
+                src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
+                alt="Inteligencia Energética"
+                width={64}
+                height={64}
+                className="w-16 h-16 object-contain"
+              />
             </div>
           </div>
           <CardTitle className="text-2xl font-bold">Configuración Inicial</CardTitle>

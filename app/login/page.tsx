@@ -4,9 +4,10 @@ import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import Image from "next/image"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Zap, Mail, Lock, ArrowRight, AlertCircle, Eye, EyeOff } from "lucide-react"
+import { Mail, Lock, ArrowRight, AlertCircle, Eye, EyeOff } from "lucide-react"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -80,8 +81,14 @@ export default function LoginPage() {
       <Card className="w-full max-w-md border border-[#E5E4E0] dark:border-[#4A4A4A] shadow-lg bg-white dark:bg-[#393939] rounded-3xl">
         <CardHeader className="text-center pb-2">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-[#DA7756] dark:bg-[#ECECEC] rounded-2xl">
-              <Zap className="h-10 w-10 text-white dark:text-[#2F2F2F]" />
+            <div className="rounded-2xl overflow-hidden">
+              <Image
+                src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
+                alt="Inteligencia Energética"
+                width={64}
+                height={64}
+                className="w-16 h-16 object-contain"
+              />
             </div>
           </div>
           <CardTitle className="text-3xl font-bold text-[#1A1915] dark:text-[#ECECEC]">

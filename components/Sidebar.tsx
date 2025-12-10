@@ -3,13 +3,13 @@
 import { useState } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
+import Image from "next/image"
 import { signOut, useSession } from "next-auth/react"
 import {
   Layout,
   BookOpen,
   LogOut,
   User,
-  Zap,
   Menu,
   X,
   Settings,
@@ -83,8 +83,14 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
               <div className="lg:hidden fixed top-0 left-0 right-0 bg-[#FAF9F7] dark:bg-[#1A1A1A] border-b border-[#E5E4E0] dark:border-[#333333] z-50 p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-[#DA7756] dark:bg-[#333333] rounded-lg">
-                      <Zap className="h-6 w-6 text-white dark:text-[#E5E5E5]" />
+                    <div className="rounded-lg overflow-hidden">
+                      <Image
+                        src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
+                        alt="Inteligencia Energética"
+                        width={48}
+                        height={48}
+                        className="w-12 h-12 object-contain"
+                      />
                     </div>
                     <span className="text-xs sm:text-sm font-bold text-[#1A1915] dark:text-[#E5E5E5]">Inteligencia Energética</span>
                   </div>
@@ -113,8 +119,14 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                 }`}>
                 <div className="p-8 pt-20 flex flex-col space-y-12 h-full">
                   <div className="flex items-center space-x-3 pb-4">
-                    <div className="p-2 bg-[#DA7756] dark:bg-[#333333] rounded-lg">
-                      <Zap className="h-6 w-6 text-white dark:text-[#E5E5E5]" />
+                    <div className="rounded-lg overflow-hidden">
+                      <Image
+                        src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
+                        alt="Inteligencia Energética"
+                        width={32}
+                        height={32}
+                        className="w-8 h-8 object-contain"
+                      />
                     </div>
                     <span className="text-xs sm:text-sm font-bold text-[#1A1915] dark:text-[#E5E5E5]">Inteligencia Energética</span>
                   </div>
@@ -198,8 +210,14 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
               <aside className="hidden lg:flex lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-80 bg-[#F5F4F0] dark:bg-[#1A1A1A] p-8 flex flex-col space-y-12 overflow-y-auto border-r border-[#E5E4E0] dark:border-[#333333]">
                 <div className="flex items-center justify-between flex-shrink-0">
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-[#DA7756] dark:bg-[#333333] rounded-lg">
-                      <Zap className="h-6 w-6 text-white dark:text-[#E5E5E5]" />
+                    <div className="rounded-lg overflow-hidden">
+                      <Image
+                        src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
+                        alt="Inteligencia Energética"
+                        width={48}
+                        height={48}
+                        className="w-12 h-12 object-contain"
+                      />
                     </div>
                     <span className="text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Inteligencia Energética</span>
                   </div>

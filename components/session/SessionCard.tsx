@@ -25,49 +25,24 @@ const sessionColors = [
 ]
 
 export function SessionCard({ session, progress, index = 0, compact = false }: SessionCardProps) {
-  const completionPercentage = progress
-    ? Math.round(
-      ((Number(progress.pdfViewed) +
-        Number(progress.videosViewed) +
-        Number(progress.audiosViewed) +
-        Number(progress.themesViewed)) /
-        4) *
-      100
-    )
-    : 0
-
   const colors = sessionColors[index % sessionColors.length]
 
   // Compact mode: simplified card for accordion view
   if (compact) {
     return (
       <Link href={`/sesiones/${session.id}`} className="block">
-        <div className="bg-gray-50 hover:bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col group border border-gray-200 h-full">
+        <div className="bg-[#F5F4F0] dark:bg-[#252525] hover:bg-white dark:hover:bg-[#2A2A2A] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col group border border-[#E5E4E0] dark:border-[#333333] h-full">
           <div className="p-4 flex flex-col flex-grow">
             <div className="flex items-center gap-2 mb-2">
               {session.moduleNumber && (
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+                <span className="text-xs font-bold text-[#706F6C] dark:text-[#A0A0A0] uppercase tracking-wide">
                   Módulo {session.moduleNumber}
                 </span>
               )}
-              {progress?.completed && (
-                <span className="text-xs text-green-700 font-medium bg-green-100 px-2 py-0.5 rounded-full ml-auto">
-                  ✓
-                </span>
-              )}
             </div>
-            <h3 className="text-sm font-bold mb-2 text-black group-hover:text-gray-700 transition-colors line-clamp-2">
+            <h3 className="text-sm font-bold mb-2 text-[#1A1915] dark:text-[#E5E5E5] group-hover:text-[#DA7756] dark:group-hover:text-[#DA7756] transition-colors line-clamp-2">
               {session.title}
             </h3>
-            <div className="mt-auto">
-              <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all duration-500 ${completionPercentage === 100 ? 'bg-green-500' : 'bg-black'}`}
-                  style={{ width: `${completionPercentage}%` }}
-                />
-              </div>
-              <p className="text-xs text-gray-400 mt-1.5">{completionPercentage}% completado</p>
-            </div>
           </div>
         </div>
       </Link>
@@ -75,8 +50,8 @@ export function SessionCard({ session, progress, index = 0, compact = false }: S
   }
 
   return (
-    <Link href={`/sesiones/${session.id}`} className="block">
-      <div className="bg-white hover:bg-gray-50 rounded-2xl lg:rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group border border-gray-200">
+    <Link href={`/sesiones/${session.id}`} className="block h-full">
+      <div className="bg-white dark:bg-[#252525] hover:bg-[#FAF9F7] dark:hover:bg-[#2A2A2A] rounded-2xl lg:rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group border border-[#E5E4E0] dark:border-[#333333] h-full">
         {/* Session Image */}
         {session.imageUrl && (
           <div className="relative h-48 lg:h-56 overflow-hidden">
@@ -99,61 +74,25 @@ export function SessionCard({ session, progress, index = 0, compact = false }: S
           </div>
         )}
 
-        <div className="p-4 lg:p-6 flex flex-col flex-grow">
+        <div className="p-4 lg:p-6 flex flex-col flex-grow min-h-0">
           {!session.imageUrl && (
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide px-2.5 py-1 rounded-md bg-gray-100">
+            <div className="flex items-center gap-3 mb-3 flex-shrink-0">
+              <span className="text-xs font-semibold text-[#706F6C] dark:text-[#A0A0A0] uppercase tracking-wide px-2.5 py-1 rounded-md bg-[#F5F4F0] dark:bg-[#333333]">
                 Día {session.day}
               </span>
               {session.moduleNumber && (
-                <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide px-2.5 py-1 rounded-md bg-gray-200">
+                <span className="text-xs font-semibold text-[#706F6C] dark:text-[#A0A0A0] uppercase tracking-wide px-2.5 py-1 rounded-md bg-[#E5E4E0] dark:bg-[#4A4A4A]">
                   Módulo {session.moduleNumber}
-                </span>
-              )}
-              {progress?.completed && (
-                <span className="text-xs text-green-700 font-medium bg-green-50 px-2.5 py-1 rounded-md">
-                  Completado
                 </span>
               )}
             </div>
           )}
 
-          <h3 className="text-base lg:text-xl font-bold mb-2 lg:mb-3 text-black">{session.title}</h3>
-          <p className="text-gray-500 text-xs lg:text-sm mb-4 lg:mb-6 flex-grow line-clamp-3">{session.description}</p>
+          <h3 className="text-base lg:text-xl font-bold mb-2 lg:mb-3 text-[#1A1915] dark:text-[#E5E5E5] group-hover:text-[#DA7756] dark:group-hover:text-[#DA7756] transition-colors flex-shrink-0">{session.title}</h3>
+          <p className="text-[#706F6C] dark:text-[#A0A0A0] text-xs lg:text-sm mb-4 lg:mb-6 flex-grow line-clamp-3 min-h-0">{session.description}</p>
 
-          {/* Progress Section */}
-          <div className="space-y-3 mb-4">
-            <div className="flex items-center justify-between text-xs lg:text-sm">
-              <span className="text-gray-500">Progreso</span>
-              <span className={`font-bold ${completionPercentage === 100 ? 'text-green-600' : 'text-black'}`}>
-                {completionPercentage}%
-              </span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-              <div
-                className={`h-full rounded-full transition-all duration-700 ease-out ${completionPercentage === 100
-                  ? 'bg-green-600'
-                  : 'bg-black'
-                  }`}
-                style={{ width: `${completionPercentage}%` }}
-              />
-            </div>
-          </div>
-
-          <div className="border-t border-gray-300 pt-4 lg:pt-6 flex justify-between items-center">
-            <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-6 text-xs lg:text-sm">
-              <p className="text-gray-500">
-                Material: <span className="text-black font-bold">
-                  {[progress?.pdfViewed, progress?.videosViewed, progress?.audiosViewed, progress?.themesViewed].filter(Boolean).length}/4
-                </span>
-              </p>
-              <p className="text-gray-500">
-                Estado: <span className="text-black font-bold">
-                  {progress?.completed ? 'Completado' : 'En progreso'}
-                </span>
-              </p>
-            </div>
-            <div className="text-black hover:text-gray-600 transition-transform duration-300 group-hover:translate-x-1">
+          <div className="border-t border-[#E5E4E0] dark:border-[#333333] pt-4 lg:pt-6 flex justify-end items-center flex-shrink-0 mt-auto">
+            <div className="text-[#1A1915] dark:text-[#E5E5E5] hover:text-[#DA7756] dark:hover:text-[#DA7756] transition-all duration-300 group-hover:translate-x-1">
               <svg className="w-4 h-4 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
