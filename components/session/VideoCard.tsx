@@ -17,7 +17,7 @@ function getThumbnailUrl(streamId: string): string {
   return `https://customer-qhobzy75u1p8j3tq.cloudflarestream.com/${streamId}/thumbnails/thumbnail.jpg?time=1s`
 }
 
-export function VideoCard({ video, index, onPlay, accentColor = "bg-purple-600" }: VideoCardProps) {
+export function VideoCard({ video, index, onPlay, accentColor = "bg-[#DA7756]" }: VideoCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const hasVideo = !!video.cloudflareStreamId || !!video.vimeoId
   const thumbnailUrl = video.cloudflareStreamId ? getThumbnailUrl(video.cloudflareStreamId) : null

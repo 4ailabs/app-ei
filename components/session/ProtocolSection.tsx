@@ -149,11 +149,11 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
                                 <div className="flex flex-col md:flex-row md:items-center">
                                     <div className="p-6 md:p-8 flex-1">
                                         <div className="flex items-start gap-4">
-                                            <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 dark:group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                                            <div className="p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-xl text-[#DA7756] dark:text-[#DA7756] group-hover:bg-[#DA7756] dark:group-hover:bg-[#DA7756] group-hover:text-white transition-colors duration-300">
                                                 <FileText className="h-6 w-6" />
                                             </div>
                                             <div>
-                                                <h3 className="text-xl font-bold text-[#1A1915] dark:text-[#ECECEC] mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                <h3 className="text-xl font-bold text-[#1A1915] dark:text-[#ECECEC] mb-2 group-hover:text-[#DA7756] dark:group-hover:text-[#DA7756] transition-colors">
                                                     {protocol.title}
                                                 </h3>
                                                 <p className="text-[#706F6C] dark:text-[#B4B4B4] leading-relaxed">
@@ -173,7 +173,7 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
                                                         window.open(protocol.pdfUrl, '_blank')
                                                     }
                                                 }}
-                                                className="w-full md:w-auto bg-[#1A1915] hover:bg-[#2F2F2F] dark:bg-[#ECECEC] dark:hover:bg-white dark:text-[#1A1915] text-white rounded-xl px-6 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                                className="w-full md:w-auto bg-[#DA7756] hover:bg-[#C4684A] dark:bg-[#DA7756] dark:hover:bg-[#C4684A] text-white dark:text-white rounded-xl px-6 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                                             >
                                                 <ExternalLink className="mr-2 h-5 w-5" />
                                                 {protocol.pdfUrl?.endsWith('.html') ? 'Ver Protocolo' : 'Descargar Protocolo'}

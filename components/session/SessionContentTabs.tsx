@@ -127,8 +127,8 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           <TabsContent value="pdf" className="mt-0">
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
-                <div className="p-2 sm:p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg sm:rounded-xl">
-                  <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400" />
+                <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
+                  <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756] dark:text-[#DA7756]" />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Material Principal</h3>

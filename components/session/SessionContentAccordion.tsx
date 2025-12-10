@@ -49,8 +49,8 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
       title: "Material Principal",
       icon: <FileText className="h-5 w-5" />,
       count: contentCounts.pdf,
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
+      color: "text-[#DA7756] dark:text-[#DA7756]",
+      bgColor: "bg-[#DA7756]/10 dark:bg-[#DA7756]/20",
       content: <PDFSection pdfUrl={sessionData.pdfUrl} pdfs={sessionData.pdfs} sessionId={sessionData.id} title="Manual de la Sesión" />
     },
     {
@@ -58,8 +58,8 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
       title: "Videos de Formación",
       icon: <Video className="h-5 w-5" />,
       count: contentCounts.videos,
-      color: "text-purple-600",
-      bgColor: "bg-purple-50",
+      color: "text-[#DA7756] dark:text-[#DA7756]",
+      bgColor: "bg-[#DA7756]/10 dark:bg-[#DA7756]/20",
       content: <VideoSection videos={sessionData.videos} />
     },
     {
@@ -67,8 +67,8 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
       title: "Audios y Meditaciones",
       icon: <Headphones className="h-5 w-5" />,
       count: contentCounts.audios,
-      color: "text-[#DA7756]",
-      bgColor: "bg-[#DA7756]/10",
+      color: "text-[#DA7756] dark:text-[#DA7756]",
+      bgColor: "bg-[#DA7756]/10 dark:bg-[#DA7756]/20",
       content: <AudioSection audios={sessionData.audios} />
     },
     {
@@ -76,8 +76,8 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
       title: "Temas y Conceptos",
       icon: <BookOpen className="h-5 w-5" />,
       count: contentCounts.themes,
-      color: "text-orange-600",
-      bgColor: "bg-orange-50",
+      color: "text-[#DA7756] dark:text-[#DA7756]",
+      bgColor: "bg-[#DA7756]/10 dark:bg-[#DA7756]/20",
       content: <ThemeExplorer themes={sessionData.themes} />
     },
     {
@@ -85,8 +85,8 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
       title: "Protocolos y Herramientas",
       icon: <ClipboardList className="h-5 w-5" />,
       count: contentCounts.protocols,
-      color: "text-red-600",
-      bgColor: "bg-red-50",
+      color: "text-[#DA7756] dark:text-[#DA7756]",
+      bgColor: "bg-[#DA7756]/10 dark:bg-[#DA7756]/20",
       content: <ProtocolSection protocols={sessionData.protocols || []} />
     },
     {
@@ -94,8 +94,8 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
       title: "Aplicaciones",
       icon: <Smartphone className="h-5 w-5" />,
       count: contentCounts.apps,
-      color: "text-cyan-600",
-      bgColor: "bg-cyan-50",
+      color: "text-[#DA7756] dark:text-[#DA7756]",
+      bgColor: "bg-[#DA7756]/10 dark:bg-[#DA7756]/20",
       content: <AppSection apps={sessionData.apps || []} />
     }
   ]
@@ -108,12 +108,12 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
 
   if (activeSections.length === 0) {
     return (
-      <div className="bg-white rounded-3xl p-8 text-center border border-gray-200">
-        <div className="text-gray-400 mb-4">
+      <div className="bg-white dark:bg-[#252525] rounded-3xl p-8 text-center border border-[#E5E4E0] dark:border-[#333333]">
+        <div className="text-[#9B9A97] dark:text-[#808080] mb-4">
           <FileText className="h-16 w-16 mx-auto" />
         </div>
-        <h3 className="text-xl font-bold text-gray-900 mb-2">Contenido próximamente</h3>
-        <p className="text-gray-500">El material de esta sesión estará disponible pronto.</p>
+        <h3 className="text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">Contenido próximamente</h3>
+        <p className="text-[#706F6C] dark:text-[#A0A0A0]">El material de esta sesión estará disponible pronto.</p>
       </div>
     )
   }
@@ -125,16 +125,16 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
           <AccordionItem
             key={section.id}
             value={section.id}
-            className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm"
+            className="bg-white dark:bg-[#252525] rounded-2xl border border-[#E5E4E0] dark:border-[#333333] overflow-hidden shadow-sm"
           >
-            <AccordionTrigger className="px-6 py-5 hover:no-underline hover:bg-gray-50 transition-colors [&[data-state=open]]:bg-gray-50">
+            <AccordionTrigger className="px-6 py-5 hover:no-underline hover:bg-[#F5F4F0] dark:hover:bg-[#2A2A2A] transition-colors [&[data-state=open]]:bg-[#F5F4F0] dark:[&[data-state=open]]:bg-[#2A2A2A]">
               <div className="flex items-center gap-4 w-full">
                 <div className={`p-3 rounded-xl ${section.bgColor} ${section.color}`}>
                   {section.icon}
                 </div>
                 <div className="flex-1 text-left">
-                  <h3 className="text-lg font-bold text-gray-900">{section.title}</h3>
-                  <p className="text-sm text-gray-500">
+                  <h3 className="text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">{section.title}</h3>
+                  <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0]">
                     {section.count} {section.count === 1 ? 'elemento' : 'elementos'} disponibles
                   </p>
                 </div>
@@ -144,7 +144,7 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-6 pb-6">
-              <div className="pt-4 border-t border-gray-100">
+              <div className="pt-4 border-t border-[#E5E4E0] dark:border-[#333333]">
                 {section.content}
               </div>
             </AccordionContent>
@@ -155,12 +155,12 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
       {/* Show sections without content at the bottom */}
       {sections.filter(s => s.count === 0).length > 0 && (
         <div className="mt-8">
-          <p className="text-sm text-gray-400 mb-3 px-2">Próximamente</p>
+          <p className="text-sm text-[#9B9A97] dark:text-[#808080] mb-3 px-2">Próximamente</p>
           <div className="flex flex-wrap gap-3">
             {sections.filter(s => s.count === 0).map((section) => (
               <div
                 key={section.id}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full text-gray-400"
+                className="flex items-center gap-2 px-4 py-2 bg-[#F5F4F0] dark:bg-[#333333] rounded-full text-[#9B9A97] dark:text-[#808080]"
               >
                 {section.icon}
                 <span className="text-sm">{section.title}</span>
