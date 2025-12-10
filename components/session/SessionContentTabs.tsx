@@ -237,7 +237,14 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
                   <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0]">{contentCounts.additionalResources} recursos disponibles</p>
                 </div>
               </div>
-              <PDFSection pdfUrl="" pdfs={sessionData.additionalResources} sessionId={sessionData.id} title="Recursos Adicionales" />
+              <PDFSection 
+                pdfUrl="" 
+                pdfs={sessionData.additionalResources?.filter((r): r is Extract<typeof r, { pages?: number }> => 
+                  'pages' in r || (!('type' in r))
+                ) || []} 
+                sessionId={sessionData.id} 
+                title="Recursos Adicionales" 
+              />
             </div>
           </TabsContent>
         )}
