@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las 4 Palancas — Referencia Rápida</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --p1: #DC2626;
+            --p1-bg: #FEF2F2;
+            --p2: #7C3AED;
+            --p2-bg: #F5F3FF;
+            --p3: #059669;
+            --p3-bg: #ECFDF5;
+            --p4: #2563EB;
+            --p4-bg: #EFF6FF;
+            --text: #2D3748;
+            --text-light: #718096;
+            --border: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: letter;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #FAFBFC;
+            color: var(--text);
+            line-height: 1.6;
+            padding: 12px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @media (min-width: 640px) {
+            body {
+                padding: 24px;
+            }
+        }
+
+        .card {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid var(--border);
+        }
+
+        /* Header */
+        .card-header {
+            background: var(--primary);
+            padding: 16px 20px;
+            position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .card-header {
+                padding: 28px 40px;
+            }
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--p1) 25%, var(--p2) 25%, var(--p2) 50%, var(--p3) 50%, var(--p3) 75%, var(--p4) 75%);
+        }
+
+        @media (min-width: 640px) {
+            .card-header::after {
+                left: 40px;
+                right: 40px;
+            }
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        @media (min-width: 640px) {
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-end;
+            }
+        }
+
+        .header-titles h1 {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        @media (min-width: 640px) {
+            .header-titles h1 {
+                font-size: 32px;
+            }
+        }
+
+        .header-titles .subtitle {
+            font-size: 10px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @media (min-width: 640px) {
+            .header-titles .subtitle {
+                font-size: 13px;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Intro */
+        .intro-section {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            background: #FAFBFC;
+        }
+
+        @media (min-width: 640px) {
+            .intro-section {
+                padding: 20px 40px;
+            }
+        }
+
+        .intro-section p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        @media (min-width: 640px) {
+            .intro-section p {
+                font-size: 14px;
+            }
+        }
+
+        .intro-section strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Palancas Grid */
+        .palancas-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 640px) {
+            .palancas-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .palanca {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .palanca {
+                padding: 24px 28px;
+            }
+            .palanca:nth-child(odd) {
+                border-right: 1px solid var(--border);
+            }
+        }
+
+        .palanca::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .palanca.p1::before { background: var(--p1); }
+        .palanca.p2::before { background: var(--p2); }
+        .palanca.p3::before { background: var(--p3); }
+        .palanca.p4::before { background: var(--p4); }
+
+        .palanca-header {
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .palanca-header {
+                margin-bottom: 14px;
+            }
+        }
+
+        .palanca-number {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        @media (min-width: 640px) {
+            .palanca-number {
+                font-size: 10px;
+                letter-spacing: 1.5px;
+            }
+        }
+
+        .p1 .palanca-number { color: var(--p1); }
+        .p2 .palanca-number { color: var(--p2); }
+        .p3 .palanca-number { color: var(--p3); }
+        .p4 .palanca-number { color: var(--p4); }
+
+        .palanca-title {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        @media (min-width: 640px) {
+            .palanca-title {
+                font-size: 20px;
+            }
+        }
+
+        .palanca-sistema {
+            font-size: 10px;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        @media (min-width: 640px) {
+            .palanca-sistema {
+                font-size: 11px;
+            }
+        }
+
+        .palanca-section {
+            margin-bottom: 12px;
+        }
+
+        .palanca-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .palanca-section h4 {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .palanca-section h4 {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+        }
+
+        .palanca-section p {
+            font-size: 11px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        @media (min-width: 640px) {
+            .palanca-section p {
+                font-size: 12px;
+            }
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+
+        @media (min-width: 640px) {
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .tool-item {
+            font-size: 10px;
+            padding: 8px 10px;
+            background: #F8FAFC;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        @media (min-width: 640px) {
+            .tool-item {
+                font-size: 11px;
+            }
+        }
+
+        .p1 .tool-item { background: var(--p1-bg); border-color: rgba(220,38,38,0.2); }
+        .p2 .tool-item { background: var(--p2-bg); border-color: rgba(124,58,237,0.2); }
+        .p3 .tool-item { background: var(--p3-bg); border-color: rgba(5,150,105,0.2); }
+        .p4 .tool-item { background: var(--p4-bg); border-color: rgba(37,99,235,0.2); }
+
+        .use-box {
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .use-box {
+                padding: 12px 14px;
+            }
+        }
+
+        .p1 .use-box { background: var(--p1-bg); }
+        .p2 .use-box { background: var(--p2-bg); }
+        .p3 .use-box { background: var(--p3-bg); }
+        .p4 .use-box { background: var(--p4-bg); }
+
+        .use-box h4 {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        @media (min-width: 640px) {
+            .use-box h4 {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+        }
+
+        .p1 .use-box h4 { color: var(--p1); }
+        .p2 .use-box h4 { color: var(--p2); }
+        .p3 .use-box h4 { color: var(--p3); }
+        .p4 .use-box h4 { color: var(--p4); }
+
+        .use-box p {
+            font-size: 10px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        @media (min-width: 640px) {
+            .use-box p {
+                font-size: 11px;
+            }
+        }
+
+        /* Protocol Steps for Imagination */
+        .protocol-steps {
+            list-style: none;
+        }
+
+        .protocol-steps li {
+            font-size: 10px;
+            color: var(--text);
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.4;
+        }
+
+        @media (min-width: 640px) {
+            .protocol-steps li {
+                font-size: 11px;
+            }
+        }
+
+        .protocol-steps li .step-num {
+            position: absolute;
+            left: 0;
+            font-weight: 600;
+            font-size: 9px;
+        }
+
+        @media (min-width: 640px) {
+            .protocol-steps li .step-num {
+                font-size: 10px;
+            }
+        }
+
+        .p4 .protocol-steps .step-num { color: var(--p4); }
+
+        /* Integration Section */
+        .integration-section {
+            background: var(--primary);
+            padding: 16px 20px;
+        }
+
+        @media (min-width: 640px) {
+            .integration-section {
+                padding: 24px 40px;
+            }
+        }
+
+        .integration-section h3 {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        @media (min-width: 640px) {
+            .integration-section h3 {
+                font-size: 16px;
+                margin-bottom: 16px;
+            }
+        }
+
+        .integration-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .integration-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .integration-item {
+            padding: 12px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 6px;
+        }
+
+        @media (min-width: 640px) {
+            .integration-item {
+                padding: 14px;
+            }
+        }
+
+        .integration-item .situation {
+            font-size: 10px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        @media (min-width: 640px) {
+            .integration-item .situation {
+                font-size: 11px;
+            }
+        }
+
+        .integration-item .formula {
+            font-size: 10px;
+            color: white;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 640px) {
+            .integration-item .formula {
+                font-size: 11px;
+            }
+        }
+
+        .integration-item .formula strong {
+            color: #FCD34D;
+        }
+
+        /* Principle Box */
+        .principle-section {
+            padding: 16px 20px;
+            background: #FAFBFC;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        @media (min-width: 640px) {
+            .principle-section {
+                padding: 20px 40px;
+            }
+        }
+
+        .principle-quote {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--primary);
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        @media (min-width: 640px) {
+            .principle-quote {
+                font-size: 18px;
+            }
+        }
+
+        /* Footer */
+        .card-footer {
+            padding: 12px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+            background: white;
+        }
+
+        @media (min-width: 640px) {
+            .card-footer {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 16px 40px;
+            }
+        }
+
+        .footer-left {
+            font-size: 10px;
+            color: var(--text-light);
+        }
+
+        @media (min-width: 640px) {
+            .footer-left {
+                font-size: 11px;
+            }
+        }
+
+        .footer-left strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .footer-right {
+            font-size: 9px;
+            color: var(--text-light);
+            text-align: left;
+        }
+
+        @media (min-width: 640px) {
+            .footer-right {
+                font-size: 10px;
+                text-align: right;
+            }
+        }
+
+        .footer-right .institute {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 639px) {
+            .card {
+                border-left: none;
+                border-right: none;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .card {
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <div class="header-content">
+                <div class="header-titles">
+                    <h1>Las 4 Palancas del Estado</h1>
+                    <p class="subtitle">Referencia Rápida</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="intro-section">
+            <p>Las cuatro palancas funcionan porque trabajan <strong>CON la biología</strong>, no contra ella. Cambia cualquiera de estos sistemas y tu sistema nervioso responde recalibrando. No necesitas usar todas cada vez—a veces una es suficiente.</p>
+        </div>
+
+        <div class="palancas-grid">
+            <!-- Palanca 1: Fisiología -->
+            <div class="palanca p1">
+                <div class="palanca-header">
+                    <p class="palanca-number">Palanca I</p>
+                    <h3 class="palanca-title">Fisiología</h3>
+                    <p class="palanca-sistema">Sistema nervioso autónomo, señalización interoceptiva</p>
+                </div>
+                
+                <div class="palanca-section">
+                    <h4>Mecanismo</h4>
+                    <p>Tu cuerpo comunica con tu cerebro constantemente. Cambiar la señal somática cambia la respuesta neurobiológica.</p>
+                </div>
+
+                <div class="palanca-section">
+                    <h4>Herramientas</h4>
+                    <div class="tools-grid">
+                        <div class="tool-item">Respiración 4-7-8</div>
+                        <div class="tool-item">Postura expandida</div>
+                        <div class="tool-item">Movimiento</div>
+                        <div class="tool-item">Ducha fría/caliente</div>
+                        <div class="tool-item">Temperatura</div>
+                        <div class="tool-item">Vibración/sonido</div>
+                    </div>
+                </div>
+
+                <div class="use-box">
+                    <h4>Cuándo usarla</h4>
+                    <p>Cuando necesitas cambio inmediato de estado. Es la más accesible—puedes cambiarla en este momento.</p>
+                </div>
+            </div>
+
+            <!-- Palanca 2: Enfoque -->
+            <div class="palanca p2">
+                <div class="palanca-header">
+                    <p class="palanca-number">Palanca II</p>
+                    <h3 class="palanca-title">Enfoque</h3>
+                    <p class="palanca-sistema">Sistema Reticular Activador (SRA), filtro perceptual</p>
+                </div>
+                
+                <div class="palanca-section">
+                    <h4>Mecanismo</h4>
+                    <p>Tu SRA busca lo que le instruyes. Cambiar tu enfoque cambia tu filtro de percepción—y la realidad que experimentas.</p>
+                </div>
+
+                <div class="palanca-section">
+                    <h4>Pregunta diaria</h4>
+                    <div class="tools-grid">
+                        <div class="tool-item">¿Qué quiero notar?</div>
+                        <div class="tool-item">¿Qué quiero buscar?</div>
+                        <div class="tool-item">¿Dónde están mis recursos?</div>
+                    </div>
+                </div>
+
+                <div class="use-box">
+                    <h4>Cuándo usarla</h4>
+                    <p>Cada mañana ANTES del modo automático. Recalibra el SRA hacia capacidades en lugar de amenazas.</p>
+                </div>
+            </div>
+
+            <!-- Palanca 3: Lenguaje -->
+            <div class="palanca p3">
+                <div class="palanca-header">
+                    <p class="palanca-number">Palanca III</p>
+                    <h3 class="palanca-title">Lenguaje</h3>
+                    <p class="palanca-sistema">Interpretación narrativa, respuesta neurobiológica</p>
+                </div>
+                
+                <div class="palanca-section">
+                    <h4>Mecanismo</h4>
+                    <p>Las palabras que usas crean tu realidad bioquímica. Cambiar la palabra cambia cómo tu sistema nervioso interpreta el evento.</p>
+                </div>
+
+                <div class="palanca-section">
+                    <h4>Re-etiquetaciones clave</h4>
+                    <div class="tools-grid">
+                        <div class="tool-item">Problema → Desafío</div>
+                        <div class="tool-item">No puedo → Todavía no</div>
+                        <div class="tool-item">Soy X → Practico X</div>
+                    </div>
+                </div>
+
+                <div class="use-box">
+                    <h4>Cuándo usarla</h4>
+                    <p>Cuando notes lenguaje limitante. Cambios pequeños de lenguaje = cambios grandes de neurobiología.</p>
+                </div>
+            </div>
+
+            <!-- Palanca 4: Imaginación -->
+            <div class="palanca p4">
+                <div class="palanca-header">
+                    <p class="palanca-number">Palanca IV</p>
+                    <h3 class="palanca-title">Imaginación</h3>
+                    <p class="palanca-sistema">Corteza visual, redes de simulación mental</p>
+                </div>
+                
+                <div class="palanca-section">
+                    <h4>Mecanismo</h4>
+                    <p>Tu cerebro no diferencia entre experiencia real e imaginada vívidamente. Las mismas redes neuronales se activan.</p>
+                </div>
+
+                <div class="palanca-section">
+                    <h4>Protocolo (2-5 min)</h4>
+                    <ul class="protocol-steps">
+                        <li><span class="step-num">1.</span> Visualiza el PROCESO (no solo el resultado)</li>
+                        <li><span class="step-num">2.</span> Incluye TODOS los sentidos</li>
+                        <li><span class="step-num">3.</span> Incluye RECUPERACIÓN de errores</li>
+                    </ul>
+                </div>
+
+                <div class="use-box">
+                    <h4>Cuándo usarla</h4>
+                    <p>Antes de eventos importantes. Tu cerebro "ensaya" y crea confianza de "hemos hecho esto antes."</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="integration-section">
+            <h3>Combinaciones Estratégicas</h3>
+            <div class="integration-grid">
+                <div class="integration-item">
+                    <p class="situation">Antes de presentación importante</p>
+                    <p class="formula"><strong>Fisiología</strong> (postura + respiración) + <strong>Imaginación</strong> (visualización de proceso)</p>
+                </div>
+                <div class="integration-item">
+                    <p class="situation">Después de mala noticia</p>
+                    <p class="formula"><strong>Fisiología</strong> (movimiento) + <strong>Enfoque</strong> (¿qué controlo?) + <strong>Lenguaje</strong> (desafío nuevo)</p>
+                </div>
+                <div class="integration-item">
+                    <p class="situation">Conversación difícil</p>
+                    <p class="formula"><strong>Lenguaje</strong> + <strong>Fisiología</strong> (4-7-8) + <strong>Imaginación</strong> + <strong>Enfoque</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="principle-section">
+            <p class="principle-quote">"Las palancas son el puente entre comprensión cognitiva y cambio neurobiológico. Sin ellas, la nueva narrativa permanece como idea sin impacto en comportamiento automático."</p>
+        </div>
+
+        <div class="card-footer">
+            <div class="footer-left">
+                <strong>Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
+            </div>
+            <div class="footer-right">
+                <span class="institute">Instituto Centro Bioenergética</span><br>
+                inteligencia-energetica.com
+            </div>
+        </div>
+    </div>
+</body>
+</html>

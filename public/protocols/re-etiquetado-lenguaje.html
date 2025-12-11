@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Re-etiquetado de Lenguaje</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --old: #DC2626;
+            --old-bg: #FEF2F2;
+            --new: #059669;
+            --new-bg: #ECFDF5;
+            --effect: #2563EB;
+            --effect-bg: #EFF6FF;
+            --text: #2D3748;
+            --text-light: #718096;
+            --border: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: letter;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #FAFBFC;
+            color: var(--text);
+            line-height: 1.6;
+            padding: 12px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @media (min-width: 640px) {
+            body {
+                padding: 24px;
+            }
+        }
+
+        .card {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid var(--border);
+        }
+
+        /* Header */
+        .card-header {
+            background: var(--primary);
+            padding: 16px 20px;
+            position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .card-header {
+                padding: 28px 40px;
+            }
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--old) 33%, var(--new) 33%, var(--new) 66%, var(--effect) 66%);
+        }
+
+        @media (min-width: 640px) {
+            .card-header::after {
+                left: 40px;
+                right: 40px;
+            }
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        @media (min-width: 640px) {
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-end;
+            }
+        }
+
+        .header-titles h1 {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        @media (min-width: 640px) {
+            .header-titles h1 {
+                font-size: 32px;
+            }
+        }
+
+        .header-titles .subtitle {
+            font-size: 10px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @media (min-width: 640px) {
+            .header-titles .subtitle {
+                font-size: 13px;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Intro */
+        .intro-section {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            background: #FAFBFC;
+        }
+
+        @media (min-width: 640px) {
+            .intro-section {
+                padding: 20px 40px;
+            }
+        }
+
+        .intro-section p {
+            font-size: 12px;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        @media (min-width: 640px) {
+            .intro-section p {
+                font-size: 13px;
+            }
+        }
+
+        .intro-section strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Mechanism Box */
+        .mechanism-section {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--effect-bg);
+        }
+
+        @media (min-width: 640px) {
+            .mechanism-section {
+                padding: 16px 40px;
+            }
+        }
+
+        .mechanism-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .mechanism-flow {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+        }
+
+        .mechanism-step {
+            font-size: 11px;
+            color: var(--effect);
+            font-weight: 500;
+        }
+
+        @media (min-width: 640px) {
+            .mechanism-step {
+                font-size: 12px;
+            }
+        }
+
+        .mechanism-arrow {
+            font-size: 14px;
+            color: var(--effect);
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .mechanism-arrow {
+                display: inline;
+                font-size: 16px;
+            }
+        }
+
+        /* Table Header */
+        .table-header {
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .table-header {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1.2fr;
+                background: var(--primary);
+                padding: 14px 20px;
+            }
+        }
+
+        .table-header-cell {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+            text-align: center;
+        }
+
+        .table-header-cell.old { color: #FCA5A5; }
+        .table-header-cell.new { color: #6EE7B7; }
+        .table-header-cell.effect { color: #93C5FD; }
+
+        /* Table Rows */
+        .table-row {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid var(--border);
+            padding: 12px;
+            gap: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .table-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1.2fr;
+                padding: 0;
+                gap: 0;
+            }
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-cell {
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .table-cell {
+                padding: 16px 20px;
+                font-size: 13px;
+            }
+        }
+
+        .table-cell.old {
+            background: var(--old-bg);
+            border-radius: 4px;
+        }
+
+        @media (min-width: 640px) {
+            .table-cell.old {
+                border-right: 1px solid var(--border);
+                border-radius: 0;
+            }
+        }
+
+        .table-cell.new {
+            background: var(--new-bg);
+            border-radius: 4px;
+        }
+
+        @media (min-width: 640px) {
+            .table-cell.new {
+                border-right: 1px solid var(--border);
+                border-radius: 0;
+            }
+        }
+
+        .table-cell.effect {
+            background: white;
+        }
+
+        .cell-content {
+            width: 100%;
+        }
+
+        .old-phrase {
+            color: var(--old);
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .new-phrase {
+            color: var(--new);
+            font-weight: 600;
+        }
+
+        .effect-text {
+            color: var(--text);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 640px) {
+            .effect-text {
+                font-size: 12px;
+            }
+        }
+
+        .arrow-cell {
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .arrow-cell {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 8px;
+                font-size: 18px;
+                color: var(--text-light);
+            }
+        }
+
+        /* Category Headers */
+        .category-header {
+            background: #F1F5F9;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        @media (min-width: 640px) {
+            .category-header {
+                padding: 10px 20px;
+            }
+        }
+
+        .category-header h3 {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+        }
+
+        @media (min-width: 640px) {
+            .category-header h3 {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+            }
+        }
+
+        /* Evidence Section */
+        .evidence-section {
+            padding: 16px 20px;
+            background: var(--primary);
+        }
+
+        @media (min-width: 640px) {
+            .evidence-section {
+                padding: 20px 40px;
+            }
+        }
+
+        .evidence-box {
+            background: rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+
+        @media (min-width: 640px) {
+            .evidence-box {
+                padding: 16px 20px;
+            }
+        }
+
+        .evidence-title {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 10px;
+        }
+
+        @media (min-width: 640px) {
+            .evidence-title {
+                font-size: 11px;
+                letter-spacing: 1px;
+            }
+        }
+
+        .evidence-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+        }
+
+        @media (min-width: 640px) {
+            .evidence-text {
+                font-size: 13px;
+            }
+        }
+
+        .evidence-source {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        @media (min-width: 640px) {
+            .evidence-source {
+                font-size: 11px;
+            }
+        }
+
+        /* Practice Section */
+        .practice-section {
+            padding: 16px 20px;
+            background: #FAFBFC;
+            border-bottom: 1px solid var(--border);
+        }
+
+        @media (min-width: 640px) {
+            .practice-section {
+                padding: 24px 40px;
+            }
+        }
+
+        .practice-header {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        @media (min-width: 640px) {
+            .practice-header {
+                font-size: 18px;
+                margin-bottom: 16px;
+            }
+        }
+
+        .practice-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .practice-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+        }
+
+        .practice-field label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .practice-field label {
+                font-size: 12px;
+            }
+        }
+
+        .practice-field textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+            background: white;
+            resize: none;
+            min-height: 60px;
+        }
+
+        .practice-field.full {
+            grid-column: 1 / -1;
+        }
+
+        /* Footer */
+        .card-footer {
+            padding: 12px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+            background: white;
+        }
+
+        @media (min-width: 640px) {
+            .card-footer {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 16px 40px;
+            }
+        }
+
+        .footer-left {
+            font-size: 10px;
+            color: var(--text-light);
+        }
+
+        @media (min-width: 640px) {
+            .footer-left {
+                font-size: 11px;
+            }
+        }
+
+        .footer-left strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .footer-right {
+            font-size: 9px;
+            color: var(--text-light);
+            text-align: left;
+        }
+
+        @media (min-width: 640px) {
+            .footer-right {
+                font-size: 10px;
+                text-align: right;
+            }
+        }
+
+        .footer-right .institute {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 639px) {
+            .card {
+                border-left: none;
+                border-right: none;
+            }
+
+            .table-row {
+                background: #FAFBFC;
+            }
+
+            .table-cell.old::before {
+                content: "Limitante: ";
+                font-size: 9px;
+                color: var(--text-light);
+                font-weight: 600;
+                text-transform: uppercase;
+                display: block;
+                margin-bottom: 4px;
+            }
+
+            .table-cell.new::before {
+                content: "Re-etiquetación: ";
+                font-size: 9px;
+                color: var(--text-light);
+                font-weight: 600;
+                text-transform: uppercase;
+                display: block;
+                margin-bottom: 4px;
+            }
+
+            .table-cell.effect::before {
+                content: "Efecto: ";
+                font-size: 9px;
+                color: var(--text-light);
+                font-weight: 600;
+                text-transform: uppercase;
+                display: block;
+                margin-bottom: 4px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .card {
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <div class="header-content">
+                <div class="header-titles">
+                    <h1>Re-etiquetado de Lenguaje</h1>
+                    <p class="subtitle">Conversiones Neurobiológicas</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="intro-section">
+            <p>Las palabras que usas crean tu realidad bioquímica. Esto no es metáfora—es <strong>neurocientífico</strong>. Cuando cambias la palabra, cambias cómo tu sistema nervioso interpreta el evento. Cambios pequeños de lenguaje = cambios grandes de química.</p>
+        </div>
+
+        <div class="mechanism-section">
+            <div class="mechanism-flow">
+                <span class="mechanism-step">Cambias la palabra</span>
+                <span class="mechanism-arrow">→</span>
+                <span class="mechanism-step">Cambias la narrativa</span>
+                <span class="mechanism-arrow">→</span>
+                <span class="mechanism-step">Cambias la interpretación</span>
+                <span class="mechanism-arrow">→</span>
+                <span class="mechanism-step">Cambias la respuesta neurobiológica</span>
+            </div>
+        </div>
+
+        <!-- Table Header -->
+        <div class="table-header">
+            <div class="table-header-cell old">Etiqueta Limitante</div>
+            <div class="table-header-cell new">Re-etiquetación</div>
+            <div class="table-header-cell effect">Cambio Neurobiológico</div>
+        </div>
+
+        <!-- Category: Estados Emocionales -->
+        <div class="category-header">
+            <h3>Estados Emocionales</h3>
+        </div>
+
+        <div class="table-row">
+            <div class="table-cell old">
+                <div class="cell-content">
+                    <span class="old-phrase">"Estoy estresado"</span>
+                </div>
+            </div>
+            <div class="table-cell new">
+                <div class="cell-content">
+                    <span class="new-phrase">"Mi cuerpo está activado para esto"</span>
+                </div>
+            </div>
+            <div class="table-cell effect">
+                <div class="cell-content">
+                    <span class="effect-text">Interpreta activación como preparación, no amenaza. Reduce cortisol.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-row">
+            <div class="table-cell old">
+                <div class="cell-content">
+                    <span class="old-phrase">"Soy ansioso"</span>
+                </div>
+            </div>
+            <div class="table-cell new">
+                <div class="cell-content">
+                    <span class="new-phrase">"Practico ansiedad y puedo practicar calma"</span>
+                </div>
+            </div>
+            <div class="table-cell effect">
+                <div class="cell-content">
+                    <span class="effect-text">De identidad fija a comportamiento modificable. Abre neuroplasticidad.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-row">
+            <div class="table-cell old">
+                <div class="cell-content">
+                    <span class="old-phrase">"Tengo miedo"</span>
+                </div>
+            </div>
+            <div class="table-cell new">
+                <div class="cell-content">
+                    <span class="new-phrase">"Mi sistema está alertándome"</span>
+                </div>
+            </div>
+            <div class="table-cell effect">
+                <div class="cell-content">
+                    <span class="effect-text">Externaliza la emoción. Permite observarla sin fusionarse.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category: Capacidad -->
+        <div class="category-header">
+            <h3>Capacidad y Posibilidad</h3>
+        </div>
+
+        <div class="table-row">
+            <div class="table-cell old">
+                <div class="cell-content">
+                    <span class="old-phrase">"No puedo"</span>
+                </div>
+            </div>
+            <div class="table-cell new">
+                <div class="cell-content">
+                    <span class="new-phrase">"Todavía no he encontrado cómo"</span>
+                </div>
+            </div>
+            <div class="table-cell effect">
+                <div class="cell-content">
+                    <span class="effect-text">Temporal, permeable, generador de opciones. Activa búsqueda.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-row">
+            <div class="table-cell old">
+                <div class="cell-content">
+                    <span class="old-phrase">"Esto es imposible"</span>
+                </div>
+            </div>
+            <div class="table-cell new">
+                <div class="cell-content">
+                    <span class="new-phrase">"Esto es nuevo. Necesito aprender el proceso"</span>
+                </div>
+            </div>
+            <div class="table-cell effect">
+                <div class="cell-content">
+                    <span class="effect-text">Abre curiosidad en lugar de cerrar a defensa. Activa corteza prefrontal.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-row">
+            <div class="table-cell old">
+                <div class="cell-content">
+                    <span class="old-phrase">"Siempre me pasa lo mismo"</span>
+                </div>
+            </div>
+            <div class="table-cell new">
+                <div class="cell-content">
+                    <span class="new-phrase">"He notado este patrón antes"</span>
+                </div>
+            </div>
+            <div class="table-cell effect">
+                <div class="cell-content">
+                    <span class="effect-text">De fatalismo a observación. Permite intervención consciente.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category: Identidad -->
+        <div class="category-header">
+            <h3>Identidad y Autoconcepto</h3>
+        </div>
+
+        <div class="table-row">
+            <div class="table-cell old">
+                <div class="cell-content">
+                    <span class="old-phrase">"Soy un fracaso"</span>
+                </div>
+            </div>
+            <div class="table-cell new">
+                <div class="cell-content">
+                    <span class="new-phrase">"Obtuve un resultado diferente. ¿Qué aprendí?"</span>
+                </div>
+            </div>
+            <div class="table-cell effect">
+                <div class="cell-content">
+                    <span class="effect-text">Integración de información, no identificación con fracaso.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-row">
+            <div class="table-cell old">
+                <div class="cell-content">
+                    <span class="old-phrase">"Soy depresivo"</span>
+                </div>
+            </div>
+            <div class="table-cell new">
+                <div class="cell-content">
+                    <span class="new-phrase">"Experimento depresión"</span>
+                </div>
+            </div>
+            <div class="table-cell effect">
+                <div class="cell-content">
+                    <span class="effect-text">Separación observacional. Crea espacio entre tú y la experiencia.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-row">
+            <div class="table-cell old">
+                <div class="cell-content">
+                    <span class="old-phrase">"Tengo un problema"</span>
+                </div>
+            </div>
+            <div class="table-cell new">
+                <div class="cell-content">
+                    <span class="new-phrase">"Tengo un desafío"</span>
+                </div>
+            </div>
+            <div class="table-cell effect">
+                <div class="cell-content">
+                    <span class="effect-text">De amenaza sin solución a situación navegable. Expansión de opciones.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evidence -->
+        <div class="evidence-section">
+            <div class="evidence-box">
+                <p class="evidence-title">Evidencia Científica</p>
+                <p class="evidence-text">Estudio de Jamieson et al. (2013): Estudiantes pre-examen con misma respuesta fisiológica (nervios, corazón acelerado, palmas sudorosas). Grupo A: "Esto es ansiedad, tu cuerpo está bajo amenaza." Grupo B: "Esto es emoción, tu cuerpo se activa para el desafío." <strong>Resultado: Grupo B mostró mejor desempeño.</strong> La diferencia fue solo la etiqueta.</p>
+                <p class="evidence-source">Jamieson, J.P., et al. (2013). Journal of Experimental Social Psychology</p>
+            </div>
+        </div>
+
+        <!-- Practice Section -->
+        <div class="practice-section">
+            <h3 class="practice-header">Mi Práctica de Re-etiquetado</h3>
+            <div class="practice-grid">
+                <div class="practice-field">
+                    <label>Una frase limitante que uso frecuentemente:</label>
+                    <textarea placeholder=""></textarea>
+                </div>
+                <div class="practice-field">
+                    <label>Cómo la voy a re-etiquetar:</label>
+                    <textarea placeholder=""></textarea>
+                </div>
+                <div class="practice-field full">
+                    <label>Situación específica donde voy a practicar esta semana:</label>
+                    <textarea placeholder=""></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="footer-left">
+                <strong>Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
+            </div>
+            <div class="footer-right">
+                <span class="institute">Instituto Centro Bioenergética</span><br>
+                inteligencia-energetica.com
+            </div>
+        </div>
+    </div>
+</body>
+</html>
