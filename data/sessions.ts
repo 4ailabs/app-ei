@@ -691,7 +691,7 @@ export const sessions: Session[] = [
         id: "p2-1",
         title: "Mi Mapa de Recursos (Plantilla)",
         description: "Formato completo para identificar recursos",
-        pdfUrl: "/protocols/workbooks-p6-p10.html#p7"
+        pdfUrl: "/protocols/workbooks-p6-p10.html#plan-cambio-neuroplastico"
       },
       {
         id: "p2-2",
@@ -1100,19 +1100,19 @@ export const sessions: Session[] = [
         id: "p4-1",
         title: "Mi Nueva Historia (Guía de Escritura)",
         description: "Estructura para reescribir narrativa personal",
-        pdfUrl: "/protocols/workbooks-p6-p10.html#p8"
+        pdfUrl: "/protocols/workbooks-p6-p10.html#mi-nueva-historia"
       },
       {
         id: "p4-2",
         title: "Tracker de 90 Días",
         description: "Calendario de seguimiento con checkboxes",
-        pdfUrl: "/protocols/workbooks-p6-p10.html#p9"
+        pdfUrl: "/protocols/workbooks-p6-p10.html#tracker-90-dias"
       },
       {
         id: "p4-3",
         title: "Diario de Regulación Semanal",
         description: "Formato para registrar práctica y observaciones",
-        pdfUrl: "/protocols/workbooks-p6-p10.html#p10"
+        pdfUrl: "/protocols/workbooks-p6-p10.html#diario-regulacion-semanal"
       },
       {
         id: "p4-4",
