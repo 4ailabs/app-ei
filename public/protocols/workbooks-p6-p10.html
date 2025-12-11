@@ -42,24 +42,46 @@
             line-height: 1.5;
             color: var(--text);
             background: #f5f5f5;
+            padding: 8px;
+        }
+
+        @media (min-width: 640px) {
+            body {
+                padding: 0;
+            }
         }
 
         .workbook {
-            width: 8.5in;
+            width: 100%;
+            max-width: 8.5in;
             min-height: 11in;
             background: var(--white);
-            margin: 20px auto;
-            padding: 12mm 15mm;
+            margin: 0 auto;
+            padding: 8mm 10mm;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        @media (min-width: 640px) {
+            .workbook {
+                margin: 20px auto;
+                padding: 12mm 15mm;
+            }
         }
 
         /* ============ HEADER STYLES ============ */
         .wb-header {
             text-align: center;
-            margin-bottom: 8mm;
-            padding-bottom: 6mm;
+            margin-bottom: 6mm;
+            padding-bottom: 4mm;
             border-bottom: 3px solid var(--primary);
             position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .wb-header {
+                margin-bottom: 8mm;
+                padding-bottom: 6mm;
+            }
         }
 
         .wb-header::after {
@@ -87,10 +109,16 @@
 
         .wb-title {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 600;
             color: var(--primary);
             margin-bottom: 2mm;
+        }
+
+        @media (min-width: 640px) {
+            .wb-title {
+                font-size: 24px;
+            }
         }
 
         .wb-subtitle {
@@ -115,20 +143,34 @@
 
         /* ============ SECTION STYLES ============ */
         .section {
-            margin-bottom: 6mm;
+            margin-bottom: 4mm;
+        }
+
+        @media (min-width: 640px) {
+            .section {
+                margin-bottom: 6mm;
+            }
         }
 
         .section-title {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--primary);
-            margin-bottom: 3mm;
-            padding-bottom: 2mm;
+            margin-bottom: 2mm;
+            padding-bottom: 1.5mm;
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             gap: 2mm;
+        }
+
+        @media (min-width: 640px) {
+            .section-title {
+                font-size: 14px;
+                margin-bottom: 3mm;
+                padding-bottom: 2mm;
+            }
         }
 
         .section-icon {
@@ -208,8 +250,15 @@
         /* ============ TWO COLUMN ============ */
         .two-col {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5mm;
+            grid-template-columns: 1fr;
+            gap: 4mm;
+        }
+
+        @media (min-width: 640px) {
+            .two-col {
+                grid-template-columns: 1fr 1fr;
+                gap: 5mm;
+            }
         }
 
         /* ============ CHECKBOX LIST ============ */
@@ -246,9 +295,17 @@
         }
 
         .tracker-days {
-            display: flex;
-            gap: 2mm;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1mm;
             margin-bottom: 2mm;
+        }
+
+        @media (min-width: 640px) {
+            .tracker-days {
+                display: flex;
+                gap: 2mm;
+            }
         }
 
         .tracker-day {
@@ -264,10 +321,16 @@
 
         .tracker-day-box {
             width: 100%;
-            height: 6mm;
+            height: 5mm;
             border: 1px solid var(--border);
             border-radius: 1mm;
             background: var(--white);
+        }
+
+        @media (min-width: 640px) {
+            .tracker-day-box {
+                height: 6mm;
+            }
         }
 
         .tracker-notes {
@@ -450,6 +513,49 @@
         }
 
         /* ============ PRINT ============ */
+        /* Mobile optimizations */
+        @media (max-width: 639px) {
+            .header-row {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .header-field {
+                width: 100%;
+            }
+
+            .resource-card {
+                padding: 3mm;
+            }
+
+            .form-textarea {
+                font-size: 14px;
+            }
+
+            .form-label {
+                font-size: 11px;
+            }
+
+            .info-box {
+                padding: 3mm;
+                font-size: 11px;
+            }
+
+            .emergency-kit {
+                padding: 4mm;
+            }
+
+            .emergency-kit-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            .emergency-kit-line {
+                width: 100%;
+            }
+        }
+
         @media print {
             body {
                 background: white;

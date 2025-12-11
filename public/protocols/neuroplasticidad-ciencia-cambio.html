@@ -39,8 +39,14 @@
             background: #FAFBFC;
             color: var(--text);
             line-height: 1.6;
-            padding: 24px;
+            padding: 12px;
             -webkit-font-smoothing: antialiased;
+        }
+
+        @media (min-width: 640px) {
+            body {
+                padding: 24px;
+            }
         }
 
         .card {
@@ -54,18 +60,31 @@
         /* Header */
         .card-header {
             background: var(--primary);
-            padding: 32px 40px;
+            padding: 16px 20px;
             position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .card-header {
+                padding: 32px 40px;
+            }
         }
 
         .card-header::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 40px;
-            right: 40px;
+            left: 20px;
+            right: 20px;
             height: 3px;
             background: linear-gradient(90deg, var(--neural) 25%, var(--evidence) 25%, var(--evidence) 50%, var(--mechanism) 50%, var(--mechanism) 75%, var(--gold) 75%);
+        }
+
+        @media (min-width: 640px) {
+            .card-header::after {
+                left: 40px;
+                right: 40px;
+            }
         }
 
         .header-content {
@@ -74,11 +93,17 @@
 
         .header-titles h1 {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 36px;
+            font-size: 22px;
             font-weight: 600;
             color: white;
             letter-spacing: -0.5px;
             margin-bottom: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .header-titles h1 {
+                font-size: 36px;
+            }
         }
 
         .header-titles .subtitle {
@@ -91,9 +116,15 @@
 
         /* Definition Box */
         .definition-section {
-            padding: 24px 40px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
             background: var(--neural-bg);
+        }
+
+        @media (min-width: 640px) {
+            .definition-section {
+                padding: 24px 40px;
+            }
         }
 
         .definition-box {
@@ -121,16 +152,28 @@
 
         .definition-content h2 {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--primary);
             margin-bottom: 8px;
         }
 
+        @media (min-width: 640px) {
+            .definition-content h2 {
+                font-size: 20px;
+            }
+        }
+
         .definition-content p {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text);
             line-height: 1.7;
+        }
+
+        @media (min-width: 640px) {
+            .definition-content p {
+                font-size: 14px;
+            }
         }
 
         .definition-content strong {
@@ -141,7 +184,13 @@
         /* Paradigm Shift */
         .paradigm-section {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 640px) {
+            .paradigm-section {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         .paradigm-box {
@@ -221,8 +270,14 @@
 
         /* Evidence Section */
         .evidence-section {
-            padding: 24px 40px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
+        }
+
+        @media (min-width: 640px) {
+            .evidence-section {
+                padding: 24px 40px;
+            }
         }
 
         .section-header {
@@ -255,8 +310,15 @@
 
         .evidence-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .evidence-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
         }
 
         .evidence-card {
@@ -293,15 +355,28 @@
 
         /* Mechanism Section */
         .mechanism-section {
-            padding: 24px 40px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
             background: var(--mechanism-bg);
         }
 
+        @media (min-width: 640px) {
+            .mechanism-section {
+                padding: 24px 40px;
+            }
+        }
+
         .mechanism-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .mechanism-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
         }
 
         .mechanism-card {
@@ -357,9 +432,15 @@
 
         /* Warning Section */
         .warning-section {
-            padding: 20px 40px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
             background: var(--warning-bg);
+        }
+
+        @media (min-width: 640px) {
+            .warning-section {
+                padding: 20px 40px;
+            }
         }
 
         .warning-box {
@@ -398,9 +479,16 @@
 
         .warning-examples {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            grid-template-columns: 1fr;
+            gap: 8px;
             margin-top: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .warning-examples {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
         }
 
         .warning-example {
@@ -420,9 +508,15 @@
 
         /* Key Insight */
         .insight-section {
-            padding: 24px 40px;
+            padding: 16px 20px;
             background: var(--primary);
             text-align: center;
+        }
+
+        @media (min-width: 640px) {
+            .insight-section {
+                padding: 24px 40px;
+            }
         }
 
         .insight-box {
@@ -448,9 +542,15 @@
 
         /* References Section */
         .references-section {
-            padding: 20px 40px;
+            padding: 16px 20px;
             background: #FAFBFC;
             border-bottom: 1px solid var(--border);
+        }
+
+        @media (min-width: 640px) {
+            .references-section {
+                padding: 20px 40px;
+            }
         }
 
         .references-header {
@@ -464,8 +564,15 @@
 
         .references-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px 24px;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .references-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px 24px;
+            }
         }
 
         .reference-item {
@@ -485,12 +592,22 @@
 
         /* Footer */
         .card-footer {
-            padding: 16px 40px;
+            padding: 12px 20px;
             border-top: 1px solid var(--border);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
             background: white;
+        }
+
+        @media (min-width: 640px) {
+            .card-footer {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 16px 40px;
+            }
         }
 
         .footer-left {
@@ -512,6 +629,58 @@
         .footer-right .institute {
             font-weight: 600;
             color: var(--text);
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 639px) {
+            .card {
+                border-left: none;
+                border-right: none;
+            }
+
+            .definition-box {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .definition-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .section-header {
+                flex-wrap: wrap;
+            }
+
+            .mechanism-card::after {
+                display: none;
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 639px) {
+            .card {
+                border-left: none;
+                border-right: none;
+            }
+
+            .definition-box {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .definition-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .section-header {
+                flex-wrap: wrap;
+            }
+
+            .mechanism-card::after {
+                display: none;
+            }
         }
 
         @media print {
