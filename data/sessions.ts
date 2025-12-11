@@ -691,7 +691,7 @@ export const sessions: Session[] = [
         id: "p2-1",
         title: "Mi Mapa de Recursos (Plantilla)",
         description: "Formato completo para identificar recursos",
-        pdfUrl: "/protocols/workbooks-p6-p10.html#plan-cambio-neuroplastico"
+        pdfUrl: "/protocols/workbooks-p6-p10.html#mi-mapa-recursos"
       },
       {
         id: "p2-2",

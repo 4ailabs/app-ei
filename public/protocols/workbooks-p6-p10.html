@@ -94,10 +94,11 @@
             height: 3px;
         }
 
-        .workbook:nth-of-type(1) .wb-header::after { background: var(--accent); }
-        .workbook:nth-of-type(2) .wb-header::after { background: var(--rose); }
-        .workbook:nth-of-type(3) .wb-header::after { background: var(--gold); }
-        .workbook:nth-of-type(4) .wb-header::after { background: var(--teal); }
+        .workbook:nth-of-type(1) .wb-header::after { background: var(--ventral); }
+        .workbook:nth-of-type(2) .wb-header::after { background: var(--accent); }
+        .workbook:nth-of-type(3) .wb-header::after { background: var(--rose); }
+        .workbook:nth-of-type(4) .wb-header::after { background: var(--gold); }
+        .workbook:nth-of-type(5) .wb-header::after { background: var(--teal); }
 
         .wb-code {
             font-size: 10px;
@@ -573,6 +574,212 @@
     </style>
 </head>
 <body>
+
+<!-- ==================== MI MAPA DE RECURSOS ==================== -->
+<div id="mi-mapa-recursos" class="workbook page-break">
+    <div class="wb-header">
+        <h1 class="wb-title">MI MAPA DE RECURSOS</h1>
+        <div class="wb-subtitle">Plantilla para identificar y fortalecer tus recursos personales</div>
+    </div>
+
+    <div class="header-row">
+        <div class="header-field">
+            <div class="header-field-label">Nombre:</div>
+            <div class="header-field-line"></div>
+        </div>
+        <div class="header-field">
+            <div class="header-field-label">Fecha:</div>
+            <div class="header-field-line"></div>
+        </div>
+    </div>
+
+    <div class="info-box ventral">
+        Un recurso es cualquier cosa que te ayuda a regresar a tu Ventana de Tolerancia. Los recursos son tu red de seguridad para el trabajo profundo.
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">RECURSOS EXTERNOS</h2>
+        <p style="font-size: 10px; color: var(--text-light); margin-bottom: 4mm;">Identifica elementos fuera de ti que te ayudan a regularte</p>
+
+        <div class="subsection-title"><span class="section-icon">👤</span> Personas que me hacen sentir seguro/a</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">¿Con quiénes puedo ser yo mismo/a? ¿Quiénes me calman con su presencia?</p>
+
+        <div class="resource-card">
+            <div class="form-row">
+                <div class="form-label">Persona 1 — Nombre / Relación:</div>
+                <div class="form-line"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">¿Qué siento cuando estoy con esta persona?</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+
+        <div class="resource-card">
+            <div class="form-row">
+                <div class="form-label">Persona 2 — Nombre / Relación:</div>
+                <div class="form-line"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">¿Qué siento cuando estoy con esta persona?</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+
+        <div class="resource-card">
+            <div class="form-row">
+                <div class="form-label">Persona 3 — Nombre / Relación:</div>
+                <div class="form-line"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">¿Qué siento cuando estoy con esta persona?</div>
+                <div class="form-line"></div>
+            </div>
+        </div>
+
+        <div class="subsection-title"><span class="section-icon">📍</span> Lugares donde me siento en paz</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">¿Dónde se relaja mi sistema nervioso? Pueden ser reales o imaginarios.</p>
+
+        <div class="two-col">
+            <div class="resource-card">
+                <div class="form-row">
+                    <div class="form-label">Lugar 1 — Nombre:</div>
+                    <div class="form-line"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">¿Qué lo hace especial? (colores, olores, sonidos)</div>
+                    <div class="form-textarea"></div>
+                </div>
+            </div>
+            <div class="resource-card">
+                <div class="form-row">
+                    <div class="form-label">Lugar 2 — Nombre:</div>
+                    <div class="form-line"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">¿Qué lo hace especial? (colores, olores, sonidos)</div>
+                    <div class="form-textarea"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="subsection-title"><span class="section-icon">🎯</span> Actividades que me regulan</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">¿Qué me ayuda a volver a mi centro? (ejercicio, arte, música, naturaleza, etc.)</p>
+
+        <div class="resource-card">
+            <div class="two-col">
+                <div>
+                    <div class="form-label">Actividad 1:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">¿Cómo me hace sentir?</div>
+                    <div class="form-line"></div>
+                </div>
+                <div>
+                    <div class="form-label">Actividad 2:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">¿Cómo me hace sentir?</div>
+                    <div class="form-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">RECURSOS INTERNOS</h2>
+        <p style="font-size: 10px; color: var(--text-light); margin-bottom: 4mm;">Identifica elementos dentro de ti que son fuentes de fortaleza</p>
+
+        <div class="subsection-title"><span class="section-icon">💪</span> Mis cualidades y fortalezas</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">¿Qué fortalezas he demostrado en mi vida? (persistencia, creatividad, humor, etc.)</p>
+
+        <div class="resource-card">
+            <div class="two-col">
+                <div>
+                    <div class="form-label">Cualidad 1:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">Un momento donde la demostré:</div>
+                    <div class="form-line"></div>
+                </div>
+                <div>
+                    <div class="form-label">Cualidad 2:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">Un momento donde la demostré:</div>
+                    <div class="form-line"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="subsection-title"><span class="section-icon">🏆</span> Memorias de capacidad</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">Momentos donde superé algo difícil, logré algo importante, o demostré que podía.</p>
+
+        <div class="resource-card">
+            <div class="form-label">Memoria 1 — Describe el momento:</div>
+            <div class="form-textarea"></div>
+            <div class="two-col">
+                <div>
+                    <div class="form-label">¿Qué logré?</div>
+                    <div class="form-line"></div>
+                </div>
+                <div>
+                    <div class="form-label">¿Qué cualidades usé?</div>
+                    <div class="form-line"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="subsection-title"><span class="section-icon">🌊</span> Sensaciones corporales de regulación</div>
+        <p style="font-size: 9px; color: var(--text-light); margin-bottom: 3mm; font-style: italic;">¿Cómo se siente mi cuerpo cuando estoy calmado/a y regulado/a?</p>
+
+        <div class="resource-card">
+            <div class="two-col">
+                <div>
+                    <div class="form-label">Pecho:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">Hombros:</div>
+                    <div class="form-line"></div>
+                </div>
+                <div>
+                    <div class="form-label">Abdomen:</div>
+                    <div class="form-line"></div>
+                    <div class="form-label">Respiración:</div>
+                    <div class="form-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="emergency-kit">
+        <div class="emergency-kit-title">🆘 MI KIT DE EMERGENCIA</div>
+        <p style="font-size: 9px; opacity: 0.8; text-align: center; margin-bottom: 4mm;">Cuando salga de mi ventana de tolerancia, puedo acceder a estos recursos:</p>
+        <div class="emergency-kit-item">
+            <span>Mi persona recurso #1:</span>
+            <div class="emergency-kit-line"></div>
+        </div>
+        <div class="emergency-kit-item">
+            <span>Mi lugar seguro:</span>
+            <div class="emergency-kit-line"></div>
+        </div>
+        <div class="emergency-kit-item">
+            <span>Mi actividad reguladora:</span>
+            <div class="emergency-kit-line"></div>
+        </div>
+        <div class="emergency-kit-item">
+            <span>Mi cualidad principal:</span>
+            <div class="emergency-kit-line"></div>
+        </div>
+        <div class="emergency-kit-item">
+            <span>Sensación corporal de calma:</span>
+            <div class="emergency-kit-line"></div>
+        </div>
+    </div>
+
+    <div class="info-box ventral">
+        <strong>Práctica de activación:</strong> Estos recursos están siempre disponibles para ti. Mientras más los practiques en momentos de calma, más fácil será acceder a ellos cuando los necesites.
+    </div>
+
+    <div class="wb-footer">
+        Dr. Miguel Ojeda Rios · Seminario Internacional de Inteligencia Energética · Instituto Centro Bioenergética · inteligencia-energetica.com
+    </div>
+</div>
 
 <!-- ==================== PLAN DE CAMBIO NEUROPLÁSTICO ==================== -->
 <div id="plan-cambio-neuroplastico" class="workbook page-break">
