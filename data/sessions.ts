@@ -916,19 +916,19 @@ export const sessions: Session[] = [
         id: "p3-1",
         title: "Las 4 Palancas — Referencia Rápida",
         description: "Resumen visual de las 4 palancas",
-        pdfUrl: ""
+        pdfUrl: "/protocols/las-4-palancas.html"
       },
       {
         id: "p3-2",
         title: "Re-etiquetado de Lenguaje",
         description: "Tabla de conversiones (limitante → empoderador)",
-        pdfUrl: ""
+        pdfUrl: "/protocols/re-etiquetado-lenguaje.html"
       },
       {
         id: "p3-3",
         title: "Los Rituales de Consolidación",
         description: "Guía completa de los 3 rituales",
-        pdfUrl: ""
+        pdfUrl: "/protocols/rituales-consolidacion.html"
       }
     ],
     apps: []
