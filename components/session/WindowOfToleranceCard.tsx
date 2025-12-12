@@ -9,7 +9,7 @@ interface WindowOfToleranceCardProps {
 }
 
 export function WindowOfToleranceCard({ accentColor = "#B8860B" }: WindowOfToleranceCardProps) {
-  const [isExpanded, setIsExpanded] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(false)
   const [isDownloading, setIsDownloading] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
 

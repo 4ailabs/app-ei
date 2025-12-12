@@ -97,7 +97,7 @@ export function SessionsAccordion({ sessions, progressMap }: SessionsAccordionPr
   }
 
   return (
-    <Accordion type="single" collapsible defaultValue="bloque-1" className="w-full">
+    <Accordion type="single" collapsible className="w-full">
       {bloqueNumbers.map((bloqueNum, index) => {
         const bloqueSessions = sessionsByBloque[bloqueNum]
         const info = bloqueInfo[bloqueNum] || {

@@ -9,7 +9,7 @@ interface ThreeStatesCardProps {
 }
 
 export function ThreeStatesCard({ accentColor = "#1B6B4A" }: ThreeStatesCardProps) {
-  const [isExpanded, setIsExpanded] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(false)
   const [isDownloading, setIsDownloading] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
 

@@ -9,7 +9,7 @@ interface PocketCardsProps {
 }
 
 export function PocketCards({ accentColor = "#DA7756" }: PocketCardsProps) {
-  const [isSectionExpanded, setIsSectionExpanded] = useState<boolean>(true)
+  const [isSectionExpanded, setIsSectionExpanded] = useState<boolean>(false)
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set(["T1", "T2", "T3", "T4", "T5", "T6"]))
   const [isDownloading, setIsDownloading] = useState<string | null>(null)
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({})

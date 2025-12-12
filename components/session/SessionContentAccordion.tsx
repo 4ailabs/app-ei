@@ -103,9 +103,6 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
   // Filter sections that have content
   const activeSections = sections.filter(section => section.count > 0)
 
-  // Default open the first section with content
-  const defaultValue = activeSections.length > 0 ? activeSections[0].id : undefined
-
   if (activeSections.length === 0) {
     return (
       <div className="bg-white dark:bg-[#252525] rounded-3xl p-8 text-center border border-[#E5E4E0] dark:border-[#333333]">
@@ -120,7 +117,7 @@ export function SessionContentAccordion({ sessionData, contentCounts }: SessionC
 
   return (
     <div className="space-y-4">
-      <Accordion type="multiple" defaultValue={[defaultValue || ""]} className="space-y-4">
+      <Accordion type="multiple" className="space-y-4">
         {activeSections.map((section) => (
           <AccordionItem
             key={section.id}

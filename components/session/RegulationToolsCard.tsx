@@ -9,7 +9,7 @@ interface RegulationToolsCardProps {
 }
 
 export function RegulationToolsCard({ accentColor = "#2563EB" }: RegulationToolsCardProps) {
-  const [isExpanded, setIsExpanded] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(false)
   const [isDownloading, setIsDownloading] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
 
