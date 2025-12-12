@@ -112,7 +112,7 @@ export const sessions: Session[] = [
     description: "Bases científicas del sistema nervioso: los 3 estados, la ventana de tolerancia y técnicas de regulación.",
     day: 1,
     moduleNumber: 1,
-    imageUrl: "/images/sessions/session-1.png",
+    imageUrl: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Neurobiologia%20de%20la%20regulacion%20main.png",
     pdfUrl: "",
     pdfs: [
       {
@@ -197,7 +197,7 @@ export const sessions: Session[] = [
       {
         id: "a1-1",
         title: "Respiración 4-7-8 (versión corta)",
-        url: "https://framerusercontent.com/assets/QisPBLZPi7Hekh1gfdiq74WQ.wav",
+        url: "/Audios/A1%20—%20RESPIRACIÓN%204-7-8%20CORTA.wav",
         duration: "3 min",
         description: "3 ciclos con guía de voz",
         category: "regulacion"
@@ -205,7 +205,7 @@ export const sessions: Session[] = [
       {
         id: "a1-2",
         title: "Respiración 4-7-8 (versión extendida)",
-        url: "https://framerusercontent.com/assets/zCb6RHBb1PG1oW6htd84B1L30.wav",
+        url: "/Audios/A2%20—%20RESPIRACIÓN%204-7-8%20EXTENDIDA.wav",
         duration: "8 min",
         description: "10 ciclos con música suave",
         category: "regulacion"
@@ -213,7 +213,7 @@ export const sessions: Session[] = [
       {
         id: "a1-3",
         title: "Abrazo de Mariposa Guiado",
-        url: "https://framerusercontent.com/assets/VDjT3EQMsubrxzpIWVBBoPtiwWQ.wav",
+        url: "/Audios/A3%20—%20ABRAZO%20DE%20MARIPOSA%20GUIADO%20.wav",
         duration: "5 min",
         description: "Estimulación bilateral con visualización",
         category: "regulacion"
@@ -221,7 +221,7 @@ export const sessions: Session[] = [
       {
         id: "a1-4",
         title: "Orientación 5-4-3-2-1",
-        url: "https://framerusercontent.com/assets/HEzZIU7OtII2mhAlVwuxWJH0Cao.wav",
+        url: "/Audios/A4%20—%20ORIENTACIÓN%205-4-3-2-1.wav",
         duration: "6 min",
         description: "Anclaje sensorial completo",
         category: "regulacion"
@@ -229,7 +229,7 @@ export const sessions: Session[] = [
       {
         id: "a1-5",
         title: "Regulación de Emergencia",
-        url: "https://framerusercontent.com/assets/wCpUNN9S5ZMgIE0q7CbC3Iejt1A.wav",
+        url: "/Audios/A5%20—%20REGULACIÓN%20DE%20EMERGENCIA%20.wav",
         duration: "2 min",
         description: "Para momentos de crisis, muy directivo",
         category: "regulacion"
@@ -364,16 +364,25 @@ export const sessions: Session[] = [
       {
         id: "ar1-1",
         title: "Diálogo 1: Identificando el Estado del Sistema Nervioso",
-        url: "",
+        url: "/Audios/DIÁLOGO%201%20IDENTIFICANDO%20EL%20ESTADO%20DEL%20SISTEMA%20NERVIOSO%20.wav",
         duration: "",
         description: "Diálogo guiado para identificar el estado actual del sistema nervioso",
         category: "meditacion",
         type: "audio" as const
       },
       {
+        id: "ar1-1b",
+        title: "Diálogo 2: Trabajando con Recursos",
+        url: "/Audios/DIÁLOGO%202%20TRABAJANDO%20CON%20RECURSOS.wav",
+        duration: "",
+        description: "Diálogo guiado para trabajar con recursos",
+        category: "meditacion",
+        type: "audio" as const
+      },
+      {
         id: "ar1-2",
         title: "Diálogo 3: Pendulación en Práctica",
-        url: "",
+        url: "/Audios/DIÁLOGO%203%20PENDULACIÓN%20EN%20PRÁCTICA.wav",
         duration: "",
         description: "Práctica guiada de pendulación entre estados",
         category: "meditacion",
@@ -382,7 +391,7 @@ export const sessions: Session[] = [
       {
         id: "ar1-3",
         title: "Diálogo 4: Re-etiquetando el Lenguaje",
-        url: "",
+        url: "/Audios/DIÁLOGO%204%20RE-ETIQUETANDO%20EL%20LENGUAJE.wav",
         duration: "",
         description: "Guía para transformar el lenguaje interno",
         category: "meditacion",
@@ -391,7 +400,7 @@ export const sessions: Session[] = [
       {
         id: "ar1-4",
         title: "Diálogo 5: Validando Patrones Defensivos",
-        url: "",
+        url: "/Audios/DIÁLOGO%205%20VALIDANDO%20PATRONES%20DEFENSIVOS%20.wav",
         duration: "",
         description: "Exploración compasiva de los patrones defensivos",
         category: "meditacion",
@@ -400,7 +409,7 @@ export const sessions: Session[] = [
       {
         id: "ar1-5",
         title: "Diálogo 6: Aplicando las 4 Palancas",
-        url: "",
+        url: "/Audios/DIÁLOGO%206%20APLICANDO%20LAS%204%20PALANCAS.wav",
         duration: "",
         description: "Práctica guiada de las 4 palancas del estado",
         category: "meditacion",
@@ -427,7 +436,7 @@ export const sessions: Session[] = [
       {
         id: "ar1-8",
         title: "Ritual 1: Priming de Regulación",
-        url: "",
+        url: "/Audios/A6%20—%20RITUAL%20PRIMING%20DE%20REGULACIÓN.wav",
         duration: "5 min",
         description: "Respiración + Gratitud + Intención",
         category: "ritual_matutino",
@@ -435,8 +444,17 @@ export const sessions: Session[] = [
       },
       {
         id: "ar1-9",
-        title: "Ritual 2: Priming de Recursos",
-        url: "",
+        title: "Ritual 2: Priming de Recursos (10 min) — Parte 1",
+        url: "/Audios/A7%20—%20RITUAL%20PRIMING%20DE%20RECURSOS%20(10%20min)%20—%20Parte%201.wav",
+        duration: "10 min",
+        description: "Movimiento + Respiración + Gratitud + Visualización + Intención",
+        category: "ritual_matutino",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-9b",
+        title: "Ritual 2: Priming de Recursos (10 min) — Parte 2",
+        url: "/Audios/A7%20—%20RITUAL%20PRIMING%20DE%20RECURSOS%20(10%20min)%20—%20Parte%202.wav",
         duration: "10 min",
         description: "Movimiento + Respiración + Gratitud + Visualización + Intención",
         category: "ritual_matutino",
@@ -453,8 +471,17 @@ export const sessions: Session[] = [
       },
       {
         id: "ar1-11",
-        title: "Regreso a Ventral Vagal",
-        url: "",
+        title: "Regreso a Ventral Vagal (10 min) — Parte 1",
+        url: "/Audios/A13%20—%20REGRESO%20A%20VENTRAL%20VAGAL%20(10%20min)%20—%20Parte%201%20.wav",
+        duration: "10 min",
+        description: "Para cuando estás en simpático o dorsal",
+        category: "meditacion",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-11b",
+        title: "Regreso a Ventral Vagal (10 min) — Parte 2",
+        url: "/Audios/A13%20—%20REGRESO%20A%20VENTRAL%20VAGAL%20(10%20min)%20—%20Parte%202.wav",
         duration: "10 min",
         description: "Para cuando estás en simpático o dorsal",
         category: "meditacion",
@@ -463,7 +490,7 @@ export const sessions: Session[] = [
       {
         id: "ar1-12",
         title: "Cierre Diario de 5 Minutos",
-        url: "",
+        url: "/Audios/A9%20—%20CIERRE%20DIARIO%20(5%20min).wav",
         duration: "5 min",
         description: "Revisión, gratitud, intención mañana",
         category: "ritual_nocturno",
@@ -471,8 +498,17 @@ export const sessions: Session[] = [
       },
       {
         id: "ar1-13",
-        title: "Regulación Pre-Sueño",
-        url: "",
+        title: "Regulación Pre-Sueño (10 min) — Parte 1",
+        url: "/Audios/A10%20—%20REGULACIÓN%20PRE-SUEÑO%20(10%20min)%20—%20Parte%201%20.wav",
+        duration: "10 min",
+        description: "Relajación progresiva + respiración",
+        category: "ritual_nocturno",
+        type: "audio" as const
+      },
+      {
+        id: "ar1-13b",
+        title: "Regulación Pre-Sueño (10 min) — Parte 2",
+        url: "/Audios/A10%20—%20REGULACIÓN%20PRE-SUEÑO%20(10%20min)%20—%20Parte%202%20.wav",
         duration: "10 min",
         description: "Relajación progresiva + respiración",
         category: "ritual_nocturno",
@@ -534,8 +570,16 @@ export const sessions: Session[] = [
       // Meditaciones especializadas para recursos
       {
         id: "a2-1",
-        title: "Accediendo a Mis Recursos",
-        url: "",
+        title: "Accediendo a Mis Recursos (12 min) — Parte 1",
+        url: "/Audios/A11%20—%20ACCEDIENDO%20A%20MIS%20RECURSOS%20(12%20min)%20—%20Parte%201%20.wav",
+        duration: "12 min",
+        description: "Visualización guiada de personas, lugares, cualidades",
+        category: "meditacion"
+      },
+      {
+        id: "a2-1b",
+        title: "Accediendo a Mis Recursos (12 min) — Parte 2",
+        url: "/Audios/A11%20—%20ACCEDIENDO%20A%20MIS%20RECURSOS%20(12%20min)%20—%20Parte%202%20.wav",
         duration: "12 min",
         description: "Visualización guiada de personas, lugares, cualidades",
         category: "meditacion"
@@ -767,8 +811,16 @@ export const sessions: Session[] = [
     audios: [
       {
         id: "a3-1",
-        title: "Las 4 Palancas en Acción",
-        url: "",
+        title: "Las 4 Palancas en Acción (12 min) — Parte 1",
+        url: "/Audios/A15%20—%20LAS%204%20PALANCAS%20EN%20ACCIÓN%20(12%20min)%20—%20Parte%201.wav",
+        duration: "12 min",
+        description: "Recorrido por las 4 palancas en secuencia",
+        category: "meditacion"
+      },
+      {
+        id: "a3-1b",
+        title: "Las 4 Palancas en Acción (12 min) — Parte 2",
+        url: "/Audios/A15%20—%20LAS%204%20PALANCAS%20EN%20ACCIÓN%20(12%20min)%20—%20Parte%202%20.wav",
         duration: "12 min",
         description: "Recorrido por las 4 palancas en secuencia",
         category: "meditacion"
@@ -978,8 +1030,16 @@ export const sessions: Session[] = [
     audios: [
       {
         id: "a4-1",
-        title: "Mi Nueva Historia",
-        url: "",
+        title: "Mi Nueva Historia (15 min) — Parte 1",
+        url: "/Audios/A14%20—%20MI%20NUEVA%20HISTORIA%20(15%20min)%20—%20Parte%201%20.wav",
+        duration: "15 min",
+        description: "Visualización del héroe del viaje",
+        category: "meditacion"
+      },
+      {
+        id: "a4-1b",
+        title: "Mi Nueva Historia (15 min) — Parte 2",
+        url: "/Audios/A14%20—%20MI%20NUEVA%20HISTORIA%20(15%20min)%20—%20Parte%202.wav",
         duration: "15 min",
         description: "Visualización del héroe del viaje",
         category: "meditacion"
@@ -1113,18 +1173,6 @@ export const sessions: Session[] = [
         title: "Diario de Regulación Semanal",
         description: "Formato para registrar práctica y observaciones",
         pdfUrl: "/protocols/workbooks-p6-p10.html#diario-regulacion-semanal"
-      },
-      {
-        id: "p4-4",
-        title: "Teoría Polivagal — Guía Completa",
-        description: "Porges explicado para no-profesionales",
-        pdfUrl: ""
-      },
-      {
-        id: "p4-5",
-        title: "Factores que Expanden/Estrechan la Ventana",
-        description: "Lista detallada con recomendaciones",
-        pdfUrl: ""
       }
     ],
     apps: []

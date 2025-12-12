@@ -107,7 +107,7 @@ export default async function BloquePage({ params }: BloquePageProps) {
 
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl lg:rounded-3xl mb-4 sm:mb-8 overflow-hidden animate-fade-in-up shadow-sm border-2 border-[#DA7756] dark:border-[#DA7756]">
+          <div className="bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl lg:rounded-3xl mb-6 sm:mb-10 overflow-hidden animate-fade-in-up shadow-sm border-2 border-[#DA7756] dark:border-[#DA7756]">
             <div className="p-4 sm:p-6 lg:p-12 text-[#1A1915] dark:text-[#E5E5E5] relative overflow-hidden">
               <div className="relative z-10">
                 <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
@@ -138,7 +138,7 @@ export default async function BloquePage({ params }: BloquePageProps) {
           </div>
 
           {/* Sessions Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-stretch">
             {bloqueSessions.map((sessionData, index) => (
               <div
                 key={sessionData.id}

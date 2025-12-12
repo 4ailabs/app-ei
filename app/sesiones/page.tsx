@@ -80,9 +80,27 @@ export default async function SesionesPage() {
 
   // Paleta de colores estilo Claude de Anthropic
   const bloqueColors = [
-    { border: "border-[#DA7756]", accent: "bg-[#DA7756]", text: "text-[#DA7756]", hover: "hover:bg-[#C4684A]" },
-    { border: "border-[#2ca58d]", accent: "bg-[#2ca58d]", text: "text-[#2ca58d]", hover: "hover:bg-[#259078]" },
-    { border: "border-[#706F6C]", accent: "bg-[#706F6C]", text: "text-[#706F6C]", hover: "hover:bg-[#1A1915]" },
+    {
+      border: "border-[#DA7756]",
+      hoverBorder: "hover:border-[#DA7756]",
+      accent: "bg-[#DA7756]",
+      tintHover: "hover:bg-[#DA7756]/10",
+      text: "text-[#DA7756]"
+    },
+    {
+      border: "border-[#2ca58d]",
+      hoverBorder: "hover:border-[#2ca58d]",
+      accent: "bg-[#2ca58d]",
+      tintHover: "hover:bg-[#2ca58d]/10",
+      text: "text-[#2ca58d]"
+    },
+    {
+      border: "border-[#706F6C]",
+      hoverBorder: "hover:border-[#706F6C]",
+      accent: "bg-[#706F6C]",
+      tintHover: "hover:bg-[#706F6C]/10",
+      text: "text-[#706F6C]"
+    },
   ]
 
   return (
@@ -116,7 +134,7 @@ export default async function SesionesPage() {
           </div>
 
           {/* Bloques Grid - 2 columnas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
             {bloqueNumbers.map((bloqueNum, index) => {
               const bloqueSessions = sessionsByBloque[bloqueNum]
               const info = bloqueInfo[bloqueNum] || {
@@ -135,7 +153,7 @@ export default async function SesionesPage() {
                 >
                   <div className={`bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border-2 ${colors.border} h-full flex flex-col`}>
                     {/* Header */}
-                    <div className="p-4 sm:p-6 text-[#1A1915] dark:text-[#E5E5E5] relative overflow-hidden">
+                    <div className="p-5 sm:p-7 lg:p-8 text-[#1A1915] dark:text-[#E5E5E5] relative overflow-hidden">
                       <div className="relative z-10">
                         <div className="flex items-center justify-between mb-3 sm:mb-4">
                           <div className={`w-12 h-12 sm:w-16 sm:h-16 ${colors.accent} rounded-lg sm:rounded-xl flex items-center justify-center font-bold text-xl sm:text-2xl shadow-sm text-white`}>
@@ -154,13 +172,13 @@ export default async function SesionesPage() {
                     </div>
 
                     {/* Content */}
-                    <div className="p-4 sm:p-6 flex-1 flex flex-col">
+                    <div className="p-5 sm:p-7 lg:p-8 flex-1 flex flex-col">
                       {/* Sessions Preview */}
-                      <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4 flex-1">
+                      <div className="space-y-2.5 sm:space-y-3 mb-3 sm:mb-4 flex-1">
                         {bloqueSessions.slice(0, 3).map((session) => (
                           <div
                             key={session.id}
-                            className="flex items-center gap-2 text-xs sm:text-sm p-1.5 sm:p-2 rounded-lg bg-[#F5F4F0] dark:bg-[#333333]"
+                            className="flex items-center gap-2.5 text-xs sm:text-sm p-2 sm:p-2.5 rounded-lg bg-[#F5F4F0] dark:bg-[#333333]"
                           >
                             <span className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0] line-clamp-1">
                               {session.moduleNumber && `M${session.moduleNumber}: `}
@@ -177,8 +195,9 @@ export default async function SesionesPage() {
 
                       {/* Action Button */}
                       <div
-                        className={`w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${colors.accent} text-white ${colors.hover} group-hover:scale-[1.02] text-sm sm:text-base`}
+                        className={`w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 bg-[#FAF9F7] dark:bg-[#2A2A2A] text-[#1A1915] dark:text-[#E5E5E5] border border-[#E5E4E0] dark:border-[#333333] ${colors.hoverBorder} ${colors.tintHover} hover:shadow-sm`}
                       >
+                        <span className={`h-2.5 w-2.5 rounded-full ${colors.accent} opacity-80`} />
                         <span>Ver Bloque</span>
                         <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 group-hover:translate-x-1 transition-transform" />
                       </div>

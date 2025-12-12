@@ -112,9 +112,9 @@ export function SessionsAccordion({ sessions, progressMap }: SessionsAccordionPr
           <AccordionItem
             key={bloqueNum}
             value={`bloque-${bloqueNum}`}
-            className="border border-gray-200 rounded-2xl mb-4 overflow-hidden bg-white"
+            className="border border-gray-200 rounded-2xl mb-6 lg:mb-8 overflow-hidden bg-white"
           >
-            <AccordionTrigger className="px-6 py-5 hover:no-underline hover:bg-gray-50 transition-colors">
+            <AccordionTrigger className="px-6 py-6 lg:py-7 hover:no-underline hover:bg-gray-50 transition-colors">
               <div className="flex items-center gap-4 w-full">
                 <div className="p-3 bg-black rounded-xl text-white">
                   <Layers className="h-5 w-5" />
@@ -152,8 +152,8 @@ export function SessionsAccordion({ sessions, progressMap }: SessionsAccordionPr
                 )}
               </div>
             </AccordionTrigger>
-            <AccordionContent className="px-6 pb-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pt-2">
+            <AccordionContent className="px-6 pb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 pt-4">
                 {bloqueSessions.map((sessionData, sessionIndex) => (
                   <div
                     key={sessionData.id}

@@ -84,11 +84,6 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
             {/* SECCIÓN 1: Tarjetas de Bolsillo */}
             {showPocketCards && (
                 <section>
-                    <SectionDivider
-                        icon={CreditCard}
-                        title="Tarjetas de Bolsillo"
-                        description="6 tarjetas para imprimir"
-                    />
                     <PocketCards />
                 </section>
             )}

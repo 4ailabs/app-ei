@@ -8,6 +8,22 @@ interface AudioSectionProps {
   audios: Audio[]
 }
 
+const AUDIO_BASE_URL = (process.env.NEXT_PUBLIC_R2_AUDIO_BASE_URL || "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev").replace(/\/$/, "")
+
+function resolveAudioUrl(url: string) {
+  if (!url) return ""
+  // Full URL already
+  if (/^https?:\/\//i.test(url)) return url
+  // Relative path/key (e.g. "/Audios/file.wav" or "Audios/file.wav")
+  if (!AUDIO_BASE_URL) return ""
+  const path = url.startsWith("/") ? url : `/${url}`
+  return `${AUDIO_BASE_URL}${path}`
+}
+
+function needsBaseUrl(url: string) {
+  return !!url && !/^https?:\/\//i.test(url)
+}
+
 const categoryInfo: Record<string, { label: string; icon: React.ReactNode; color: string; bgColor: string; darkBgColor: string; darkColor: string }> = {
   regulacion: {
     label: "Regulación",
@@ -111,14 +127,29 @@ function AudioPlayer({ audio }: { audio: Audio }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
+  const [hasPlaybackError, setHasPlaybackError] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  const togglePlay = () => {
+  const resolvedUrl = resolveAudioUrl(audio.url)
+  const missingBaseUrl = needsBaseUrl(audio.url) && !AUDIO_BASE_URL
+
+  const togglePlay = async () => {
     if (audioRef.current) {
+      if (!resolvedUrl || hasPlaybackError) return
       if (isPlaying) {
         audioRef.current.pause()
       } else {
-        audioRef.current.play()
+        try {
+          if (process.env.NODE_ENV !== "production") {
+            // Helpful debug for misconfigured URLs / buckets
+            console.debug("[audio] play", { id: audio.id, title: audio.title, url: audio.url, resolvedUrl })
+          }
+          await audioRef.current.play()
+        } catch {
+          setHasPlaybackError(true)
+          setIsPlaying(false)
+          return
+        }
       }
       setIsPlaying(!isPlaying)
     }
@@ -149,17 +180,22 @@ function AudioPlayer({ audio }: { audio: Audio }) {
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0
 
   // Only render audio element if URL is valid
-  const hasValidUrl = audio.url && audio.url.trim() !== ""
+  const hasValidUrl = resolvedUrl && resolvedUrl.trim() !== "" && !hasPlaybackError
+  const canPlay = hasValidUrl && !missingBaseUrl
 
   return (
     <div className="bg-[#F5F4F0] dark:bg-[#2F2F2F] rounded-xl p-3 sm:p-4 hover:bg-[#ECEAE5] dark:hover:bg-[#393939] transition-colors border border-[#E5E4E0] dark:border-[#4A4A4A] overflow-hidden">
       {hasValidUrl && (
         <audio
           ref={audioRef}
-          src={audio.url}
+          src={resolvedUrl}
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleTimeUpdate}
           onEnded={() => setIsPlaying(false)}
+          onError={() => {
+            setHasPlaybackError(true)
+            setIsPlaying(false)
+          }}
           className="hidden"
         />
       )}
@@ -168,12 +204,13 @@ function AudioPlayer({ audio }: { audio: Audio }) {
         {/* Play Button */}
         <button
           onClick={togglePlay}
-          disabled={!hasValidUrl}
-          className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all border-2 border-[#DA7756] ${
-            hasValidUrl
-              ? 'text-[#DA7756] hover:bg-[#DA7756] hover:text-white'
-              : 'text-[#DA7756]/50 cursor-not-allowed'
+          disabled={!canPlay}
+          className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all border-2 ${
+            canPlay
+              ? 'border-[#DA7756] text-[#DA7756] hover:bg-[#DA7756] hover:text-white cursor-pointer'
+              : 'border-[#DA7756]/30 text-[#DA7756]/30 cursor-not-allowed opacity-50'
           }`}
+          title={!canPlay ? (missingBaseUrl ? "Falta configurar NEXT_PUBLIC_R2_AUDIO_BASE_URL" : "Audio no disponible") : undefined}
         >
           {isPlaying ? (
             <Pause className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -198,6 +235,18 @@ function AudioPlayer({ audio }: { audio: Audio }) {
             <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#B4B4B4] truncate mb-2">{audio.description}</p>
           )}
 
+          {missingBaseUrl && (
+            <p className="text-xs text-[#706F6C] dark:text-[#B4B4B4] mb-2">
+              Falta configurar <span className="font-mono">NEXT_PUBLIC_R2_AUDIO_BASE_URL</span>.
+            </p>
+          )}
+
+          {hasPlaybackError && (
+            <p className="text-xs text-[#706F6C] dark:text-[#B4B4B4] mb-2">
+              Audio no disponible (URL inválida o no pública).
+            </p>
+          )}
+
           {/* Progress Bar */}
           <div className="flex items-center gap-1 sm:gap-2 min-w-0">
             <span className="text-[10px] sm:text-xs text-[#9B9A97] dark:text-[#8C8C8C] w-8 sm:w-10 flex-shrink-0">{formatTime(currentTime)}</span>
@@ -213,6 +262,7 @@ function AudioPlayer({ audio }: { audio: Audio }) {
                 value={currentTime}
                 onChange={handleSeek}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                disabled={!canPlay}
               />
             </div>
             <span className="text-[10px] sm:text-xs text-[#9B9A97] dark:text-[#8C8C8C] w-8 sm:w-10 text-right flex-shrink-0">{formatTime(duration)}</span>

@@ -23,7 +23,7 @@ export function SessionCard({ session, progress, index = 0, compact = false }: S
     return (
       <Link href={`/sesiones/${session.id}`} className="block">
         <div className="bg-[#F5F4F0] dark:bg-[#252525] hover:bg-white dark:hover:bg-[#2A2A2A] rounded-lg sm:rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col group border border-[#E5E4E0] dark:border-[#333333] h-full">
-          <div className="p-3 sm:p-4 flex flex-col flex-grow">
+          <div className="p-4 sm:p-5 flex flex-col flex-grow">
             <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
               {session.moduleNumber && (
                 <span className="text-[10px] sm:text-xs font-bold text-[#706F6C] dark:text-[#A0A0A0] uppercase tracking-wide">
@@ -65,7 +65,7 @@ export function SessionCard({ session, progress, index = 0, compact = false }: S
           </div>
         )}
 
-        <div className="p-3 sm:p-4 lg:p-6 flex flex-col flex-grow min-h-0">
+        <div className="p-4 sm:p-5 lg:p-8 flex flex-col flex-grow min-h-0">
           {!session.imageUrl && (
             <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 flex-shrink-0">
               <span className="text-[10px] sm:text-xs font-semibold text-[#706F6C] dark:text-[#A0A0A0] uppercase tracking-wide px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md bg-[#F5F4F0] dark:bg-[#333333]">
@@ -80,9 +80,9 @@ export function SessionCard({ session, progress, index = 0, compact = false }: S
           )}
 
           <h3 className="text-sm sm:text-base lg:text-xl font-bold mb-1.5 sm:mb-2 lg:mb-3 text-[#1A1915] dark:text-[#E5E5E5] group-hover:text-[#DA7756] dark:group-hover:text-[#DA7756] transition-colors flex-shrink-0">{session.title}</h3>
-          <p className="text-[#706F6C] dark:text-[#A0A0A0] text-[11px] sm:text-xs lg:text-sm mb-3 sm:mb-4 lg:mb-6 flex-grow line-clamp-2 sm:line-clamp-3 min-h-0">{session.description}</p>
+          <p className="text-[#706F6C] dark:text-[#A0A0A0] text-[11px] sm:text-xs lg:text-sm mb-4 sm:mb-5 lg:mb-7 flex-grow line-clamp-2 sm:line-clamp-3 min-h-0">{session.description}</p>
 
-          <div className="border-t border-[#E5E4E0] dark:border-[#333333] pt-3 sm:pt-4 lg:pt-6 flex justify-end items-center flex-shrink-0 mt-auto">
+          <div className="border-t border-[#E5E4E0] dark:border-[#333333] pt-4 sm:pt-5 lg:pt-8 flex justify-end items-center flex-shrink-0 mt-auto">
             <div className="text-[#1A1915] dark:text-[#E5E5E5] hover:text-[#DA7756] dark:hover:text-[#DA7756] transition-all duration-300 group-hover:translate-x-1">
               <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { ChevronDown, ChevronUp, Download, Anchor, Wind, Target, MessageCircle, Brain, User, MapPin, Sparkles } from "lucide-react"
+import { ChevronDown, ChevronUp, Download, Anchor, Wind, Target, MessageCircle, Brain, User, MapPin, Sparkles, CreditCard } from "lucide-react"
 import { toPng } from "html-to-image"
 
 interface PocketCardsProps {
@@ -9,6 +9,7 @@ interface PocketCardsProps {
 }
 
 export function PocketCards({ accentColor = "#DA7756" }: PocketCardsProps) {
+  const [isSectionExpanded, setIsSectionExpanded] = useState<boolean>(true)
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set(["T1", "T2", "T3", "T4", "T5", "T6"]))
   const [isDownloading, setIsDownloading] = useState<string | null>(null)
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({})
@@ -130,42 +131,65 @@ export function PocketCards({ accentColor = "#DA7756" }: PocketCardsProps) {
   }
 
   return (
-    <div className="space-y-3 sm:space-y-4">
-      {/* T1: Respiración 4-7-8 */}
-      <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
-        <div
-          className="border-b-2 sm:border-b-3 border-[#1a1a2e] dark:border-[#1a1a2e] p-2.5 sm:p-4 flex items-center justify-between cursor-pointer"
-          style={{ borderBottomColor: "#1a1a2e" }}
-          data-header-buttons
-          onClick={() => toggleCard("T1")}
-        >
-          <h3 className="font-serif text-sm sm:text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">T1 — Respiración 4-7-8</h3>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                handleDownload("T1")
-              }}
-              disabled={isDownloading === "T1"}
-              className="p-1.5 sm:p-2 hover:bg-[#F5F4F0] dark:hover:bg-[#333333] rounded-lg transition-colors"
-              title="Descargar tarjeta"
-            >
-              <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
-            </button>
-            {expandedCards.has("T1") ? (
-              <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
-            ) : (
-              <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
-            )}
-          </div>
+    <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
+      {/* Header colapsable */}
+      <div
+        className="p-3 sm:p-4 flex items-center justify-between cursor-pointer hover:bg-[#F5F4F0] dark:hover:bg-[#2A2A2A] transition-colors"
+        onClick={() => setIsSectionExpanded(!isSectionExpanded)}
+      >
+        <div className="flex items-center gap-2 sm:gap-3">
+          <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+          <h3 className="text-sm sm:text-base font-semibold text-[#1A1915] dark:text-[#E5E5E5]">
+            Tarjetas de Bolsillo
+          </h3>
+          <span className="text-xs text-[#706F6C] dark:text-[#A0A0A0]">
+            (6 tarjetas)
+          </span>
         </div>
+        {isSectionExpanded ? (
+          <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+        ) : (
+          <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+        )}
+      </div>
 
-        {expandedCards.has("T1") && (
-          <div className="p-2.5 sm:p-4 lg:p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
-              <div ref={(el) => { cardRefs.current["T1-front"] = el }} className="w-full max-w-[428px]">
-                {/* T1 Front */}
-                <div className="bg-gradient-to-br from-[#1a1a2e] to-[#2d2d4a] rounded-lg p-6 text-white flex flex-col items-center justify-center aspect-[85.6/53.98] relative w-full">
+      {isSectionExpanded && (
+        <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
+          {/* T1: Respiración 4-7-8 */}
+          <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
+            <div
+              className="border-b-2 sm:border-b-3 border-[#1a1a2e] dark:border-[#1a1a2e] p-2.5 sm:p-4 flex items-center justify-between cursor-pointer"
+              style={{ borderBottomColor: "#1a1a2e" }}
+              data-header-buttons
+              onClick={() => toggleCard("T1")}
+            >
+              <h3 className="font-serif text-sm sm:text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">T1 — Respiración 4-7-8</h3>
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleDownload("T1")
+                  }}
+                  disabled={isDownloading === "T1"}
+                  className="p-1.5 sm:p-2 hover:bg-[#F5F4F0] dark:hover:bg-[#333333] rounded-lg transition-colors"
+                  title="Descargar tarjeta"
+                >
+                  <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
+                </button>
+                {expandedCards.has("T1") ? (
+                  <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+                ) : (
+                  <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+                )}
+              </div>
+            </div>
+
+            {expandedCards.has("T1") && (
+              <div className="p-2.5 sm:p-4 lg:p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
+                  <div ref={(el) => { cardRefs.current["T1-front"] = el }} className="w-full max-w-[428px]">
+                    {/* T1 Front */}
+                    <div className="bg-gradient-to-br from-[#1a1a2e] to-[#2d2d4a] rounded-lg p-6 text-white flex flex-col items-center justify-center aspect-[85.6/53.98] relative w-full">
                   <span className="absolute top-2 right-3 text-[7px] opacity-50 tracking-wide">T1</span>
                   <div className="font-serif text-sm font-semibold tracking-wider uppercase mb-4">Respiración 4-7-8</div>
                   <div className="flex items-center gap-3">
@@ -184,59 +208,59 @@ export function PocketCards({ accentColor = "#DA7756" }: PocketCardsProps) {
                       <div className="text-[7px] uppercase tracking-wide opacity-80">Exhala</div>
                     </div>
                   </div>
-                  <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight">inteligencia-energetica.com</div>
-                </div>
-              </div>
-              <div ref={(el) => { cardRefs.current["T1-back"] = el }} className="w-full max-w-[428px]">
-                {/* T1 Back */}
-                <div className="bg-[#FDFBF7] dark:bg-[#2A2A2A] rounded-lg p-6 flex flex-col items-center justify-center aspect-[85.6/53.98] text-center w-full relative">
+                    <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight">inteligencia-energetica.com</div>
+                    </div>
+                  </div>
+                  <div ref={(el) => { cardRefs.current["T1-back"] = el }} className="w-full max-w-[428px]">
+                    {/* T1 Back */}
+                    <div className="bg-[#FDFBF7] dark:bg-[#2A2A2A] rounded-lg p-6 flex flex-col items-center justify-center aspect-[85.6/53.98] text-center w-full relative">
                   <div className="font-serif text-xl font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] mb-4 tracking-widest">INHALA 4 · RETÉN 7 · EXHALA 8</div>
                   <div className="text-[9px] text-[#706F6C] dark:text-[#A0A0A0] border-t border-[#E5E4E0] dark:border-[#4A4A4A] pt-3">
                     Úsala cuando sientas ansiedad subiendo.<br />Repite 3-4 ciclos completos.
                   </div>
-                  <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight text-[#706F6C] dark:text-[#808080]">inteligencia-energetica.com</div>
+                    <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight text-[#706F6C] dark:text-[#808080]">inteligencia-energetica.com</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* T2: Los 3 Estados */}
-      <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
-        <div
-          className="border-b-2 sm:border-b-3 border-[#1a1a2e] dark:border-[#1a1a2e] p-2.5 sm:p-4 flex items-center justify-between cursor-pointer"
-          style={{ borderBottomColor: "#1a1a2e" }}
-          data-header-buttons
-          onClick={() => toggleCard("T2")}
-        >
-          <h3 className="font-serif text-sm sm:text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">T2 — Los 3 Estados</h3>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                handleDownload("T2")
-              }}
-              disabled={isDownloading === "T2"}
-              className="p-1.5 sm:p-2 hover:bg-[#F5F4F0] dark:hover:bg-[#333333] rounded-lg transition-colors"
-              title="Descargar tarjeta"
-            >
-              <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
-            </button>
-            {expandedCards.has("T2") ? (
-              <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
-            ) : (
-              <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
             )}
           </div>
-        </div>
 
-        {expandedCards.has("T2") && (
-          <div className="p-2.5 sm:p-4 lg:p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
-              <div ref={(el) => { cardRefs.current["T2-front"] = el }} className="w-full max-w-[428px]">
-                {/* T2 Front */}
-                <div className="bg-[#1a1a2e] rounded-lg p-5 text-white flex flex-col aspect-[85.6/53.98] relative w-full">
+          {/* T2: Los 3 Estados */}
+          <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
+            <div
+              className="border-b-2 sm:border-b-3 border-[#1a1a2e] dark:border-[#1a1a2e] p-2.5 sm:p-4 flex items-center justify-between cursor-pointer"
+              style={{ borderBottomColor: "#1a1a2e" }}
+              data-header-buttons
+              onClick={() => toggleCard("T2")}
+            >
+              <h3 className="font-serif text-sm sm:text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">T2 — Los 3 Estados</h3>
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleDownload("T2")
+                  }}
+                  disabled={isDownloading === "T2"}
+                  className="p-1.5 sm:p-2 hover:bg-[#F5F4F0] dark:hover:bg-[#333333] rounded-lg transition-colors"
+                  title="Descargar tarjeta"
+                >
+                  <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
+                </button>
+                {expandedCards.has("T2") ? (
+                  <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+                ) : (
+                  <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+                )}
+              </div>
+            </div>
+
+            {expandedCards.has("T2") && (
+              <div className="p-2.5 sm:p-4 lg:p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
+                  <div ref={(el) => { cardRefs.current["T2-front"] = el }} className="w-full max-w-[428px]">
+                    {/* T2 Front */}
+                    <div className="bg-[#1a1a2e] rounded-lg p-5 text-white flex flex-col aspect-[85.6/53.98] relative w-full">
                   <div className="font-serif text-[11px] font-semibold tracking-wider uppercase text-center mb-3">Los 3 Estados</div>
                   <div className="flex justify-around items-center flex-1">
                     <div className="flex flex-col items-center gap-2">
@@ -270,12 +294,12 @@ export function PocketCards({ accentColor = "#DA7756" }: PocketCardsProps) {
                       <span className="text-[6.5px] uppercase tracking-wide opacity-90">Dorsal</span>
                     </div>
                   </div>
-                  <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight">inteligencia-energetica.com</div>
-                </div>
-              </div>
-              <div ref={(el) => { cardRefs.current["T2-back"] = el }} className="w-full max-w-[428px]">
-                {/* T2 Back */}
-                <div className="bg-[#FDFBF7] dark:bg-[#2A2A2A] rounded-lg p-4 flex flex-col aspect-[85.6/53.98] text-[7px] relative w-full">
+                    <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight">inteligencia-energetica.com</div>
+                    </div>
+                  </div>
+                  <div ref={(el) => { cardRefs.current["T2-back"] = el }} className="w-full max-w-[428px]">
+                    {/* T2 Back */}
+                    <div className="bg-[#FDFBF7] dark:bg-[#2A2A2A] rounded-lg p-4 flex flex-col aspect-[85.6/53.98] text-[7px] relative w-full">
                   <div className="flex flex-1">
                     <div className="flex-1 p-2 border-l-2 border-[#1B6B4A] pl-2 first:border-l-0">
                       <div className="text-[6px] font-semibold uppercase tracking-wide mb-2 text-[#1B6B4A]">Ventral</div>
@@ -296,49 +320,49 @@ export function PocketCards({ accentColor = "#DA7756" }: PocketCardsProps) {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight text-[#706F6C] dark:text-[#808080]">inteligencia-energetica.com</div>
+                    <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight text-[#706F6C] dark:text-[#808080]">inteligencia-energetica.com</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* T3: 5-4-3-2-1 */}
-      <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
-        <div
-          className="border-b-2 sm:border-b-3 border-[#0891B2] dark:border-[#0891B2] p-2.5 sm:p-4 flex items-center justify-between cursor-pointer"
-          style={{ borderBottomColor: "#0891B2" }}
-          data-header-buttons
-          onClick={() => toggleCard("T3")}
-        >
-          <h3 className="font-serif text-sm sm:text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">T3 — Orientación 5-4-3-2-1</h3>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                handleDownload("T3")
-              }}
-              disabled={isDownloading === "T3"}
-              className="p-1.5 sm:p-2 hover:bg-[#F5F4F0] dark:hover:bg-[#333333] rounded-lg transition-colors"
-              title="Descargar tarjeta"
-            >
-              <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
-            </button>
-            {expandedCards.has("T3") ? (
-              <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
-            ) : (
-              <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
             )}
           </div>
-        </div>
 
-        {expandedCards.has("T3") && (
-          <div className="p-2.5 sm:p-4 lg:p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
-              <div ref={(el) => { cardRefs.current["T3-front"] = el }} className="w-full max-w-[428px]">
-                {/* T3 Front */}
-                <div className="bg-gradient-to-br from-[#0891B2] to-[#0E7490] rounded-lg p-5 text-white flex flex-col items-center justify-center aspect-[85.6/53.98] relative w-full">
+          {/* T3: 5-4-3-2-1 */}
+          <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
+            <div
+              className="border-b-2 sm:border-b-3 border-[#0891B2] dark:border-[#0891B2] p-2.5 sm:p-4 flex items-center justify-between cursor-pointer"
+              style={{ borderBottomColor: "#0891B2" }}
+              data-header-buttons
+              onClick={() => toggleCard("T3")}
+            >
+              <h3 className="font-serif text-sm sm:text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">T3 — Orientación 5-4-3-2-1</h3>
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleDownload("T3")
+                  }}
+                  disabled={isDownloading === "T3"}
+                  className="p-1.5 sm:p-2 hover:bg-[#F5F4F0] dark:hover:bg-[#333333] rounded-lg transition-colors"
+                  title="Descargar tarjeta"
+                >
+                  <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
+                </button>
+                {expandedCards.has("T3") ? (
+                  <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+                ) : (
+                  <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+                )}
+              </div>
+            </div>
+
+            {expandedCards.has("T3") && (
+              <div className="p-2.5 sm:p-4 lg:p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
+                  <div ref={(el) => { cardRefs.current["T3-front"] = el }} className="w-full max-w-[428px]">
+                    {/* T3 Front */}
+                    <div className="bg-gradient-to-br from-[#0891B2] to-[#0E7490] rounded-lg p-5 text-white flex flex-col items-center justify-center aspect-[85.6/53.98] relative w-full">
                   <div className="font-serif text-xs font-semibold tracking-wider uppercase mb-3">Orientación 5-4-3-2-1</div>
                   <div className="flex flex-col gap-1.5 w-full">
                     {[
@@ -354,60 +378,60 @@ export function PocketCards({ accentColor = "#DA7756" }: PocketCardsProps) {
                       </div>
                     ))}
                   </div>
-                  <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight">inteligencia-energetica.com</div>
-                </div>
-              </div>
-              <div ref={(el) => { cardRefs.current["T3-back"] = el }} className="w-full max-w-[428px]">
-                {/* T3 Back */}
-                <div className="bg-[#FDFBF7] dark:bg-[#2A2A2A] rounded-lg p-6 flex flex-col items-center justify-center aspect-[85.6/53.98] text-center relative w-full">
-                  <Anchor className="w-6 h-6 mb-3 text-[#1a1a2e] dark:text-[#E5E5E5]" />
-                  <div className="font-serif text-sm font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] mb-2">Para anclarte al presente</div>
-                  <div className="text-[8px] text-[#706F6C] dark:text-[#A0A0A0]">
-                    Usa esta técnica cuando tu mente<br />esté atrapada en preocupaciones<br />o durante momentos de ansiedad.
+                    <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight">inteligencia-energetica.com</div>
+                    </div>
                   </div>
-                  <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight text-[#706F6C] dark:text-[#808080]">inteligencia-energetica.com</div>
+                  <div ref={(el) => { cardRefs.current["T3-back"] = el }} className="w-full max-w-[428px]">
+                    {/* T3 Back */}
+                    <div className="bg-[#FDFBF7] dark:bg-[#2A2A2A] rounded-lg p-6 flex flex-col items-center justify-center aspect-[85.6/53.98] text-center relative w-full">
+                      <Anchor className="w-6 h-6 mb-3 text-[#1a1a2e] dark:text-[#E5E5E5]" />
+                      <div className="font-serif text-sm font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] mb-2">Para anclarte al presente</div>
+                      <div className="text-[8px] text-[#706F6C] dark:text-[#A0A0A0]">
+                        Usa esta técnica cuando tu mente<br />esté atrapada en preocupaciones<br />o durante momentos de ansiedad.
+                      </div>
+                      <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight text-[#706F6C] dark:text-[#808080]">inteligencia-energetica.com</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* T4: Las 4 Palancas */}
-      <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
-        <div
-          className="border-b-2 sm:border-b-3 border-[#B8860B] dark:border-[#B8860B] p-2.5 sm:p-4 flex items-center justify-between cursor-pointer"
-          style={{ borderBottomColor: "#B8860B" }}
-          data-header-buttons
-          onClick={() => toggleCard("T4")}
-        >
-          <h3 className="font-serif text-sm sm:text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">T4 — Las 4 Palancas</h3>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                handleDownload("T4")
-              }}
-              disabled={isDownloading === "T4"}
-              className="p-1.5 sm:p-2 hover:bg-[#F5F4F0] dark:hover:bg-[#333333] rounded-lg transition-colors"
-              title="Descargar tarjeta"
-            >
-              <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
-            </button>
-            {expandedCards.has("T4") ? (
-              <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
-            ) : (
-              <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
             )}
           </div>
-        </div>
 
-        {expandedCards.has("T4") && (
-          <div className="p-2.5 sm:p-4 lg:p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
-              <div ref={(el) => { cardRefs.current["T4-front"] = el }} className="w-full max-w-[428px]">
-                {/* T4 Front */}
-                <div className="bg-gradient-to-br from-[#B8860B] to-[#9A7209] rounded-lg p-4 text-white flex flex-col aspect-[85.6/53.98] relative w-full">
+          {/* T4: Las 4 Palancas */}
+          <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
+            <div
+              className="border-b-2 sm:border-b-3 border-[#B8860B] dark:border-[#B8860B] p-2.5 sm:p-4 flex items-center justify-between cursor-pointer"
+              style={{ borderBottomColor: "#B8860B" }}
+              data-header-buttons
+              onClick={() => toggleCard("T4")}
+            >
+              <h3 className="font-serif text-sm sm:text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">T4 — Las 4 Palancas</h3>
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleDownload("T4")
+                  }}
+                  disabled={isDownloading === "T4"}
+                  className="p-1.5 sm:p-2 hover:bg-[#F5F4F0] dark:hover:bg-[#333333] rounded-lg transition-colors"
+                  title="Descargar tarjeta"
+                >
+                  <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
+                </button>
+                {expandedCards.has("T4") ? (
+                  <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+                ) : (
+                  <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
+                )}
+              </div>
+            </div>
+
+            {expandedCards.has("T4") && (
+              <div className="p-2.5 sm:p-4 lg:p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
+                  <div ref={(el) => { cardRefs.current["T4-front"] = el }} className="w-full max-w-[428px]">
+                    {/* T4 Front */}
+                    <div className="bg-gradient-to-br from-[#B8860B] to-[#9A7209] rounded-lg p-4 text-white flex flex-col aspect-[85.6/53.98] relative w-full">
                   <div className="font-serif text-[11px] font-semibold tracking-wider uppercase text-center mb-2">Las 4 Palancas del Estado</div>
                   <div className="grid grid-cols-2 gap-2 flex-1">
                     <div className="bg-white/20 rounded-lg flex flex-col items-center justify-center p-2">
@@ -427,33 +451,33 @@ export function PocketCards({ accentColor = "#DA7756" }: PocketCardsProps) {
                       <span className="text-[7px] uppercase tracking-wide font-medium">Imaginación</span>
                     </div>
                   </div>
-                  <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight">inteligencia-energetica.com</div>
-                </div>
-              </div>
-              <div ref={(el) => { cardRefs.current["T4-back"] = el }} className="w-full max-w-[428px]">
-                {/* T4 Back */}
-                <div className="bg-[#FDFBF7] dark:bg-[#2A2A2A] rounded-lg p-4 flex flex-col aspect-[85.6/53.98] text-[7px] relative w-full">
-                  {[
-                    { label: "Fisiología:", desc: "Respiración 4-7-8, postura erguida" },
-                    { label: "Enfoque:", desc: "¿Qué quiero NOTAR hoy?" },
-                    { label: "Lenguaje:", desc: '"Estoy eligiendo..." en lugar de "Tengo que..."' },
-                    { label: "Imaginación:", desc: "Visualiza el resultado deseado" }
-                  ].map((tool, idx, arr) => (
-                    <div key={idx} className={`flex gap-2 mb-2.5 pb-2 ${idx < arr.length - 1 ? 'border-b border-[#E5E4E0] dark:border-[#4A4A4A]' : ''}`}>
-                      <span className="font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] min-w-[18mm] text-[6.5px]">{tool.label}</span>
-                      <span className="text-[#1A1915] dark:text-[#A0A0A0] text-[6.5px] leading-tight">{tool.desc}</span>
+                    <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight">inteligencia-energetica.com</div>
                     </div>
-                  ))}
-                  <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight text-[#706F6C] dark:text-[#808080]">inteligencia-energetica.com</div>
+                  </div>
+                  <div ref={(el) => { cardRefs.current["T4-back"] = el }} className="w-full max-w-[428px]">
+                    {/* T4 Back */}
+                    <div className="bg-[#FDFBF7] dark:bg-[#2A2A2A] rounded-lg p-4 flex flex-col aspect-[85.6/53.98] text-[7px] relative w-full">
+                      {[
+                        { label: "Fisiología:", desc: "Respiración 4-7-8, postura erguida" },
+                        { label: "Enfoque:", desc: "¿Qué quiero NOTAR hoy?" },
+                        { label: "Lenguaje:", desc: '"Estoy eligiendo..." en lugar de "Tengo que..."' },
+                        { label: "Imaginación:", desc: "Visualiza el resultado deseado" }
+                      ].map((tool, idx, arr) => (
+                        <div key={idx} className={`flex gap-2 mb-2.5 pb-2 ${idx < arr.length - 1 ? 'border-b border-[#E5E4E0] dark:border-[#4A4A4A]' : ''}`}>
+                          <span className="font-semibold text-[#1a1a2e] dark:text-[#E5E5E5] min-w-[18mm] text-[6.5px]">{tool.label}</span>
+                          <span className="text-[#1A1915] dark:text-[#A0A0A0] text-[6.5px] leading-tight">{tool.desc}</span>
+                        </div>
+                      ))}
+                      <div className="absolute bottom-1.5 right-2 text-[4px] opacity-40 tracking-tight text-[#706F6C] dark:text-[#808080]">inteligencia-energetica.com</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
-        )}
-      </div>
 
-      {/* T5: Pregunta del Enfoque */}
-      <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
+          {/* T5: Pregunta del Enfoque */}
+          <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
         <div
           className="border-b-2 sm:border-b-3 border-[#6366F1] dark:border-[#6366F1] p-2.5 sm:p-4 flex items-center justify-between cursor-pointer"
           style={{ borderBottomColor: "#6366F1" }}
@@ -505,11 +529,11 @@ export function PocketCards({ accentColor = "#DA7756" }: PocketCardsProps) {
               </div>
             </div>
           </div>
-        )}
-      </div>
+          )}
+          </div>
 
-      {/* T6: Mi Ancla de Recurso */}
-      <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
+          {/* T6: Mi Ancla de Recurso */}
+          <div className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border border-[#E5E4E0] dark:border-[#333333] shadow-sm overflow-hidden">
         <div
           className="border-b-2 sm:border-b-3 border-[#1B6B4A] dark:border-[#1B6B4A] p-2.5 sm:p-4 flex items-center justify-between cursor-pointer"
           style={{ borderBottomColor: "#1B6B4A" }}
@@ -582,8 +606,10 @@ export function PocketCards({ accentColor = "#DA7756" }: PocketCardsProps) {
               </div>
             </div>
           </div>
-        )}
-      </div>
+          )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
