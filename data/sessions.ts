@@ -513,6 +513,13 @@ export const sessions: Session[] = [
         description: "Relajación progresiva + respiración",
         category: "ritual_nocturno",
         type: "audio" as const
+      },
+      {
+        id: "ar1-14",
+        title: "Seguridad y Ventana de Tolerancia",
+        url: "https://docs.google.com/presentation/d/1o_Xv8p5FG6l0-jo5PDLBUsZUWCnXSKEn/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
+        description: "Presentación sobre seguridad y ventana de tolerancia",
+        type: "slide" as const
       }
     ],
     apps: []
