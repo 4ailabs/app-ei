@@ -67,6 +67,11 @@ const bloqueInfo: Record<number, BloqueInfo> = {
   },
   9: {
     id: 9,
+    title: "Las Tres Decisiones Conscientes",
+    description: "Las tres decisiones fundamentales que transforman tu vida"
+  },
+  10: {
+    id: 10,
     title: "LSP Insight System",
     description: "Sistema de insight profundo para la transformación"
   }

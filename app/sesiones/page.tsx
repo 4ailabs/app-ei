@@ -73,6 +73,13 @@ const bloqueInfo: Record<number, BloqueInfo> = {
   },
   9: {
     id: 9,
+    title: "Las Tres Decisiones Conscientes",
+    shortTitle: "Tres Decisiones",
+    description: "Las tres decisiones fundamentales que transforman tu vida",
+    intro: "Las Tres Decisiones Conscientes son elecciones fundamentales que determinan la calidad de tu experiencia y tu capacidad de transformación. En este bloque aprenderás a identificar y aplicar estas tres decisiones en tu vida diaria, creando un marco de acción consciente que te permite navegar los desafíos con mayor claridad y propósito."
+  },
+  10: {
+    id: 10,
     title: "Sistema de Insight Profundo",
     shortTitle: "Insight",
     description: "Sistema de insight profundo para la transformación",

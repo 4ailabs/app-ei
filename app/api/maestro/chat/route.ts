@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { auth } from '@/lib/auth-server'
 import { GoogleGenAI } from '@google/genai'
 import { getSystemPromptForDay } from '@/lib/maestro/prompts'
 import { Message, DayNumber } from '@/lib/maestro/types'
@@ -13,6 +14,15 @@ const getAiClient = () => {
 
 export async function POST(request: NextRequest) {
   try {
+    // Verificar autenticación
+    const session = await auth()
+    
+    if (!session) {
+      return NextResponse.json(
+        { error: 'No autorizado. Debes iniciar sesión.' },
+        { status: 401 }
+      )
+    }
     const { message, history, day } = await request.json() as {
       message: string
       history: Message[]

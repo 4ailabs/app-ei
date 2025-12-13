@@ -1769,10 +1769,30 @@ export const sessions: Session[] = [
     apps: []
   },
   {
+    id: 13,
+    title: "Las Tres Decisiones Conscientes",
+    description: "Las tres decisiones fundamentales que transforman tu vida y determinan tu experiencia.",
+    day: 9,
+    imageUrl: "/images/sessions/session-13.png",
+    pdfUrl: "",
+    videos: [],
+    audios: [],
+    themes: [],
+    protocols: [
+      {
+        id: "p13-1",
+        title: "Guía de las Tres Decisiones Conscientes",
+        description: "Cómo aplicar las tres decisiones conscientes en tu vida diaria.",
+        pdfUrl: ""
+      }
+    ],
+    apps: []
+  },
+  {
     id: 12,
     title: "LSP Insight System",
     description: "Sistema de insight profundo para el autoconocimiento y transformación personal.",
-    day: 9,
+    day: 10,
     imageUrl: "/images/sessions/session-12.png",
     pdfUrl: "",
     videos: [],
