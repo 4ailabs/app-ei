@@ -531,6 +531,27 @@ export const sessions: Session[] = [
         description: "Presentación sobre seguridad y ventana de tolerancia",
         type: "slide" as const
       },
+      {
+        id: "ar1-15",
+        title: "Módulo 2: Recursos y Neuroplasticidad",
+        url: "https://docs.google.com/presentation/d/1H4HseXNuiw9szE76eH5o14LqkCSi0jPj/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
+        description: "Presentación del módulo de recursos y neuroplasticidad",
+        type: "slide" as const
+      },
+      {
+        id: "ar1-16",
+        title: "Módulo 3: Las 4 Palancas del Estado",
+        url: "https://docs.google.com/presentation/d/1jebi_1mXTGsKYs6F1wN9mTBHOXHAYM8R/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
+        description: "Presentación del módulo de las 4 palancas",
+        type: "slide" as const
+      },
+      {
+        id: "ar1-17",
+        title: "Módulo 4: Sufrimiento y Nueva Historia",
+        url: "https://docs.google.com/presentation/d/1_zZ2AwLVCB4-GhMc41xM5_n8btFEZh1f/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
+        description: "Presentación del módulo de transformación narrativa",
+        type: "slide" as const
+      },
 
       // =============================================
       // GALERÍA DE IMÁGENES - BLOQUE 1
