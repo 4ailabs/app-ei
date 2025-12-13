@@ -39,8 +39,8 @@ export function ResourceSlide({ title, url, description }: ResourceSlideProps) {
   return (
     <div className="bg-white dark:bg-[#252525] rounded-xl p-3 sm:p-4 lg:p-6 border border-[#E5E4E0] dark:border-[#333333]">
       <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
-        <div className="p-2 sm:p-3 bg-orange-100 dark:bg-orange-900/30 rounded-lg sm:rounded-xl flex-shrink-0">
-          <Presentation className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600 dark:text-orange-400" />
+        <div className="p-2 sm:p-3 bg-[#F5F4F0] dark:bg-[#333333] rounded-lg sm:rounded-xl flex-shrink-0">
+          <Presentation className="h-5 w-5 sm:h-6 sm:w-6 text-[#706F6C] dark:text-[#A0A0A0]" />
         </div>
         <div className="flex-1 min-w-0">
           <h4 className="font-bold text-base sm:text-lg text-[#1A1915] dark:text-[#ECECEC] mb-1 break-words">{title}</h4>
@@ -94,11 +94,11 @@ export function ResourceSlide({ title, url, description }: ResourceSlideProps) {
           {/* Vista embebida de Google Slides */}
           {showEmbed && embedUrl && (
             <div className="relative w-full rounded-lg overflow-hidden border border-[#E5E4E0] dark:border-[#333333] bg-[#F5F4F0] dark:bg-[#2F2F2F]">
-              <div className="relative" style={{ paddingBottom: '56.25%', minHeight: '500px' }}> {/* 16:9 aspect ratio */}
+              {/* Aspect ratio container - altura mínima adaptada a móvil */}
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
                   src={embedUrl}
-                  className="absolute top-0 left-0 w-full h-full"
-                  frameBorder="0"
+                  className="absolute top-0 left-0 w-full h-full min-h-[250px] sm:min-h-[400px]"
                   allowFullScreen
                   title={title}
                   loading="lazy"

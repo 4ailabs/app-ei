@@ -1,61 +1,82 @@
 import { auth } from "@/lib/auth-server"
 import { redirect } from "next/navigation"
 import { sessions } from "@/data/sessions"
-import { BookOpen, ArrowRight, Home, GraduationCap } from "lucide-react"
+import { BookOpen, Home } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { SessionsByBloqueTabs } from "@/components/session/SessionsByBloqueTabs"
 
 interface BloqueInfo {
   id: number
   title: string
+  shortTitle: string
   description: string
+  intro: string
 }
 
 const bloqueInfo: Record<number, BloqueInfo> = {
   1: {
     id: 1,
     title: "Fundamentos de Regulación",
-    description: "Bases científicas del sistema nervioso y técnicas de autorregulación"
+    shortTitle: "Fundamentos",
+    description: "Bases científicas del sistema nervioso y técnicas de autorregulación",
+    intro: "En este bloque exploraremos las bases científicas del sistema nervioso y cómo influye en nuestras respuestas emocionales y conductuales. Aprenderás sobre la Ventana de Tolerancia, los tres estados del sistema nervioso autónomo, y las técnicas fundamentales de autorregulación que te permitirán mantener un estado de equilibrio óptimo para el bienestar y el rendimiento."
   },
   2: {
     id: 2,
     title: "TRSB",
-    description: "Técnica de Reprocesamiento Somato-Cognitivo Bilateral"
+    shortTitle: "TRSB",
+    description: "Técnica de Reprocesamiento Somato-Cognitivo Bilateral",
+    intro: "La Técnica de Reprocesamiento Somato-Cognitivo Bilateral (TRSB) es una herramienta poderosa para procesar experiencias difíciles y liberar bloqueos emocionales. En este bloque aprenderás los fundamentos teóricos y prácticos de esta técnica, incluyendo los protocolos paso a paso para aplicarla de manera segura y efectiva."
   },
   3: {
     id: 3,
     title: "PONS",
-    description: "Procesamiento Ocular Neural Somático"
+    shortTitle: "PONS",
+    description: "Procesamiento Ocular Neural Somático",
+    intro: "El Procesamiento Ocular Neural Somático (PONS) integra el movimiento ocular con la conciencia corporal para facilitar el procesamiento de información emocional. En este bloque descubrirás cómo los patrones de movimiento ocular están conectados con estados emocionales y aprenderás a utilizar esta conexión para promover la regulación y el bienestar."
   },
   4: {
     id: 4,
     title: "Context Engineering",
-    description: "Ingeniería del contexto y las 7 fases"
+    shortTitle: "Context",
+    description: "Ingeniería del contexto y las 7 fases",
+    intro: "La Ingeniería del Contexto te enseña a diseñar y modificar los ambientes internos y externos que influyen en tu comportamiento y bienestar. A través de las 7 fases del proceso, aprenderás a identificar los elementos contextuales que te afectan y a crear condiciones óptimas para el cambio positivo y sostenible."
   },
   5: {
     id: 5,
     title: "Miracle Question",
-    description: "La pregunta del milagro y visualización de soluciones"
+    shortTitle: "Miracle Q.",
+    description: "La pregunta del milagro y visualización de soluciones",
+    intro: "La Pregunta del Milagro es una técnica transformadora que proviene de la terapia breve centrada en soluciones. En este bloque aprenderás a utilizar esta poderosa herramienta para ayudar a visualizar un futuro preferido, identificar recursos ocultos y generar motivación para el cambio desde una perspectiva orientada a las soluciones."
   },
   6: {
     id: 6,
     title: "Los 4 Protocolos",
-    description: "Protocolos Alpha, Beta, Gamma y Delta"
+    shortTitle: "4 Protocolos",
+    description: "Protocolos Alpha, Beta, Gamma y Delta",
+    intro: "Los 4 Protocolos (Alpha, Beta, Gamma y Delta) son secuencias estructuradas de intervención diseñadas para abordar diferentes tipos de desafíos emocionales y conductuales. Cada protocolo tiene un propósito específico y en este bloque aprenderás cuándo y cómo aplicar cada uno para obtener los mejores resultados."
   },
   7: {
     id: 7,
     title: "El Poder de los Rituales",
-    description: "Los 3 elementos para rituales transformadores"
+    shortTitle: "Rituales",
+    description: "Los 3 elementos para rituales transformadores",
+    intro: "Los rituales son prácticas estructuradas que tienen el poder de crear cambios profundos y duraderos. En este bloque explorarás los 3 elementos esenciales que hacen que un ritual sea verdaderamente transformador y aprenderás a diseñar e implementar rituales personalizados para diferentes objetivos terapéuticos y de desarrollo personal."
   },
   8: {
     id: 8,
     title: "Las 7 Excepciones",
-    description: "Identificación y manejo de excepciones en el cambio"
+    shortTitle: "Excepciones",
+    description: "Identificación y manejo de excepciones en el cambio",
+    intro: "Las excepciones son esos momentos en los que el problema no ocurre o es menos intenso. En este bloque aprenderás a identificar sistemáticamente estas excepciones, a amplificarlas y a utilizarlas como recursos para construir soluciones. Este enfoque te permitirá trabajar con las fortalezas existentes en lugar de enfocarte solo en los problemas."
   },
   9: {
     id: 9,
     title: "Sistema de Insight Profundo",
-    description: "Sistema de insight profundo para la transformación"
+    shortTitle: "Insight",
+    description: "Sistema de insight profundo para la transformación",
+    intro: "El Sistema de Insight Profundo es un marco integrador que combina las herramientas y técnicas aprendidas en los bloques anteriores. En este bloque final aprenderás a facilitar momentos de comprensión profunda que generan cambios significativos y duraderos, integrando todos los conocimientos adquiridos en un enfoque coherente y efectivo."
   }
 }
 
@@ -78,30 +99,11 @@ export default async function SesionesPage() {
 
   const bloqueNumbers = Object.keys(sessionsByBloque).map(Number).sort((a, b) => a - b)
 
-  // Paleta de colores estilo Claude de Anthropic
-  const bloqueColors = [
-    {
-      border: "border-[#DA7756]",
-      hoverBorder: "hover:border-[#DA7756]",
-      accent: "bg-[#DA7756]",
-      tintHover: "hover:bg-[#DA7756]/10",
-      text: "text-[#DA7756]"
-    },
-    {
-      border: "border-[#2ca58d]",
-      hoverBorder: "hover:border-[#2ca58d]",
-      accent: "bg-[#2ca58d]",
-      tintHover: "hover:bg-[#2ca58d]/10",
-      text: "text-[#2ca58d]"
-    },
-    {
-      border: "border-[#706F6C]",
-      hoverBorder: "hover:border-[#706F6C]",
-      accent: "bg-[#706F6C]",
-      tintHover: "hover:bg-[#706F6C]/10",
-      text: "text-[#706F6C]"
-    },
-  ]
+  // Prepare data for client component
+  const bloquesData = bloqueNumbers.map(bloqueNum => ({
+    ...bloqueInfo[bloqueNum],
+    sessions: sessionsByBloque[bloqueNum]
+  }))
 
   return (
     <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A]">
@@ -112,7 +114,7 @@ export default async function SesionesPage() {
             <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all rounded-full text-[#706F6C] dark:text-[#A0A0A0] px-3 sm:px-5 py-2 h-auto text-sm">
               <Home className="mr-1.5 sm:mr-2 h-4 w-4" />
               <span className="hidden sm:inline">Volver al Dashboard</span>
-              <span className="sm:hidden">Volver</span>
+              <span className="sm:hidden">Inicio</span>
             </Button>
           </Link>
         </div>
@@ -133,83 +135,10 @@ export default async function SesionesPage() {
             </div>
           </div>
 
-          {/* Bloques Grid - 2 columnas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
-            {bloqueNumbers.map((bloqueNum, index) => {
-              const bloqueSessions = sessionsByBloque[bloqueNum]
-              const info = bloqueInfo[bloqueNum] || {
-                id: bloqueNum,
-                title: `Bloque ${bloqueNum}`,
-                description: ""
-              }
-              const colors = bloqueColors[index % bloqueColors.length]
-
-              return (
-                <Link
-                  key={bloqueNum}
-                  href={`/sesiones/bloque/${bloqueNum}`}
-                  className="group block animate-fade-in-up"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className={`bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border-2 ${colors.border} h-full flex flex-col`}>
-                    {/* Header */}
-                    <div className="p-5 sm:p-7 lg:p-8 text-[#1A1915] dark:text-[#E5E5E5] relative overflow-hidden">
-                      <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-3 sm:mb-4">
-                          <div className={`w-12 h-12 sm:w-16 sm:h-16 ${colors.accent} rounded-lg sm:rounded-xl flex items-center justify-center font-bold text-xl sm:text-2xl shadow-sm text-white`}>
-                            {bloqueNum}
-                          </div>
-                          <div className="flex items-center gap-1.5 sm:gap-2">
-                            <GraduationCap className={`h-4 w-4 sm:h-5 sm:w-5 ${colors.text}`} />
-                            <span className={`text-xs sm:text-sm font-semibold ${colors.text}`}>
-                              {bloqueSessions.length} {bloqueSessions.length === 1 ? 'sesión' : 'sesiones'}
-                            </span>
-                          </div>
-                        </div>
-                        <h3 className="text-base sm:text-xl font-bold mb-1.5 sm:mb-2 text-[#1A1915] dark:text-[#E5E5E5]">{info.title}</h3>
-                        <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0] line-clamp-2">{info.description}</p>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-5 sm:p-7 lg:p-8 flex-1 flex flex-col">
-                      {/* Sessions Preview */}
-                      <div className="space-y-2.5 sm:space-y-3 mb-3 sm:mb-4 flex-1">
-                        {bloqueSessions.slice(0, 3).map((session) => (
-                          <div
-                            key={session.id}
-                            className="flex items-center gap-2.5 text-xs sm:text-sm p-2 sm:p-2.5 rounded-lg bg-[#F5F4F0] dark:bg-[#333333]"
-                          >
-                            <span className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0] line-clamp-1">
-                              {session.moduleNumber && `M${session.moduleNumber}: `}
-                              {session.title}
-                            </span>
-                          </div>
-                        ))}
-                        {bloqueSessions.length > 3 && (
-                          <p className="text-[10px] sm:text-xs text-[#9B9A97] dark:text-[#808080] text-center">
-                            +{bloqueSessions.length - 3} más
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Action Button */}
-                      <div
-                        className={`w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 bg-[#FAF9F7] dark:bg-[#2A2A2A] text-[#1A1915] dark:text-[#E5E5E5] border border-[#E5E4E0] dark:border-[#333333] ${colors.hoverBorder} ${colors.tintHover} hover:shadow-sm`}
-                      >
-                        <span className={`h-2.5 w-2.5 rounded-full ${colors.accent} opacity-80`} />
-                        <span>Ver Bloque</span>
-                        <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
+          {/* Tabs by Bloque */}
+          <SessionsByBloqueTabs bloquesData={bloquesData} />
         </div>
       </div>
     </div>
   )
 }
-

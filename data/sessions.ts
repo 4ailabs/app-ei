@@ -1,9 +1,19 @@
+export type ImageCategory =
+  | "sistema_nervioso"
+  | "ventana_tolerancia"
+  | "respiracion"
+  | "palancas"
+  | "neuroplasticidad"
+  | "recursos"
+  | "tecnicas"
+
 export interface AdditionalImage {
   id: string
   title: string
   url: string
   description?: string
   type: 'image'
+  category?: ImageCategory
 }
 
 export interface AdditionalDiagram {
@@ -520,7 +530,193 @@ export const sessions: Session[] = [
         url: "https://docs.google.com/presentation/d/1o_Xv8p5FG6l0-jo5PDLBUsZUWCnXSKEn/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
         description: "Presentación sobre seguridad y ventana de tolerancia",
         type: "slide" as const
-      }
+      },
+
+      // =============================================
+      // GALERÍA DE IMÁGENES - BLOQUE 1
+      // Organizadas por tema para mejor comprensión
+      // =============================================
+
+      // --- SISTEMA NERVIOSO (Los 3 Estados) ---
+      {
+        id: "img-sn-1",
+        title: "Los Tres Estados del Sistema Nervioso",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Los%20tres%20estados%20del%20sistema%20nervioso.png",
+        description: "Diagrama visual de los tres estados del sistema nervioso autónomo según la Teoría Polivagal",
+        type: "image" as const,
+        category: "sistema_nervioso"
+      },
+      {
+        id: "img-sn-2",
+        title: "Los Tres Estados - Cerebro",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Los%20tres%20estados%20del%20sistema%20nervioso%20cerebro.png",
+        description: "Representación cerebral de los estados del sistema nervioso",
+        type: "image" as const,
+        category: "sistema_nervioso"
+      },
+      {
+        id: "img-sn-3",
+        title: "Los Tres Estados - Círculo",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Los%20tres%20estados%20del%20sistema%20nervioso%20circulo.png",
+        description: "Diagrama circular de los estados del sistema nervioso",
+        type: "image" as const,
+        category: "sistema_nervioso"
+      },
+      {
+        id: "img-sn-4",
+        title: "Los Tres Estados - Columnas",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Los%20tres%20estafos%20del%20sistema%20nervioso%20columnas.png",
+        description: "Comparación de los tres estados en formato columna",
+        type: "image" as const,
+        category: "sistema_nervioso"
+      },
+
+      // --- TÉCNICAS DE RESPIRACIÓN ---
+      {
+        id: "img-resp478-1",
+        title: "Respiración 4-7-8 - Tarjeta",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Respiracion%204-7-8%20card.png",
+        description: "Tarjeta de referencia rápida para la técnica 4-7-8",
+        type: "image" as const,
+        category: "respiracion"
+      },
+      {
+        id: "img-resp478-2",
+        title: "Respiración 4-7-8 - Círculo",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Respiracion%204-7-8%20circulo%20.png",
+        description: "Guía visual circular para la respiración 4-7-8",
+        type: "image" as const,
+        category: "respiracion"
+      },
+      {
+        id: "img-resp478-3",
+        title: "Respiración 4-7-8 - Columnas",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Respiracion%204-7-8%20columnas.png",
+        description: "Pasos de la técnica 4-7-8 en formato columna",
+        type: "image" as const,
+        category: "respiracion"
+      },
+      {
+        id: "img-resp478-4",
+        title: "Respiración 4-7-8 - Práctica de Ciclos",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Respiracion%204-7-8%20practica%20ciclos.png",
+        description: "Guía para practicar múltiples ciclos de respiración 4-7-8",
+        type: "image" as const,
+        category: "respiracion"
+      },
+      {
+        id: "img-respcuad-1",
+        title: "Respiración Cuadrada",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Respiracion%20cuadrada.png",
+        description: "Técnica de respiración cuadrada (box breathing)",
+        type: "image" as const,
+        category: "respiracion"
+      },
+      {
+        id: "img-respcuad-2",
+        title: "Respiración Cuadrada - Variante",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Respiracion%20cuadrada%202.png",
+        description: "Variante de la técnica de respiración cuadrada",
+        type: "image" as const,
+        category: "respiracion"
+      },
+
+      // --- LAS 4 PALANCAS ---
+      {
+        id: "img-palancas-1",
+        title: "Las 4 Palancas del Estado",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Las%204%20palancas%20del%20estado.png",
+        description: "Las cuatro palancas para cambiar el estado emocional",
+        type: "image" as const,
+        category: "palancas"
+      },
+      {
+        id: "img-palancas-2",
+        title: "Las 4 Palancas - Progresivo",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Las%204%20palancas%20de%20estado%20progresivo.png",
+        description: "Aplicación progresiva de las 4 palancas",
+        type: "image" as const,
+        category: "palancas"
+      },
+      {
+        id: "img-palancas-3",
+        title: "Tarjeta Las 4 Palancas",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Tarjeta%20las%204%20palancas.png",
+        description: "Tarjeta de referencia rápida de las 4 palancas",
+        type: "image" as const,
+        category: "palancas"
+      },
+      {
+        id: "img-enfoque-1",
+        title: "Tarjeta de Enfoque",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Tarjeta%20enfoque.png",
+        description: "Tarjeta sobre el enfoque como palanca de cambio",
+        type: "image" as const,
+        category: "palancas"
+      },
+
+      // --- NEUROPLASTICIDAD ---
+      {
+        id: "img-neuro-1",
+        title: "Neuroplasticidad - Cerebros",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Neuroplasticidad%20cerebros%20.png",
+        description: "Visualización de cómo el cerebro puede cambiar",
+        type: "image" as const,
+        category: "neuroplasticidad"
+      },
+      {
+        id: "img-neuro-2",
+        title: "Ciclo de Neuroplasticidad",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Ciclo%20de%20neuroplasticidad.png",
+        description: "El ciclo de cambio neural: práctica, repetición y consolidación",
+        type: "image" as const,
+        category: "neuroplasticidad"
+      },
+
+      // --- RECURSOS Y CONCEPTOS ---
+      {
+        id: "img-recursos-1",
+        title: "Mapa de Recursos Amplio",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Mapa%20de%20recursos%20amplio.png",
+        description: "Mapa visual de recursos internos y externos",
+        type: "image" as const,
+        category: "recursos"
+      },
+      {
+        id: "img-narrativa-1",
+        title: "Narrativa Víctima vs Héroe",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Narrativa%20victima%20heroe.png",
+        description: "Transformación de la narrativa personal",
+        type: "image" as const,
+        category: "recursos"
+      },
+      {
+        id: "img-pendulacion-1",
+        title: "Pendulación - Esferas",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Pendulacion%20esferas.png",
+        description: "Concepto de pendulación de Peter Levine",
+        type: "image" as const,
+        category: "recursos"
+      },
+      {
+        id: "img-balanza-1",
+        title: "Balanza",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Balanza.png",
+        description: "Concepto de equilibrio entre estados",
+        type: "image" as const,
+        category: "recursos"
+      },
+
+      // --- TÉCNICAS ADICIONALES ---
+      {
+        id: "img-mariposa-1",
+        title: "Alas de Mariposa",
+        url: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Alas%20de%20mariposa.png",
+        description: "Técnica del Abrazo de Mariposa para autorregulación",
+        type: "image" as const,
+        category: "tecnicas"
+      },
+
     ],
     apps: []
   },
@@ -534,7 +730,7 @@ export const sessions: Session[] = [
     description: "Descubre tus recursos internos y externos, y cómo el cerebro puede cambiar a través de la práctica consistente.",
     day: 1,
     moduleNumber: 2,
-    imageUrl: "/images/sessions/session-2.png",
+    imageUrl: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Recursos%20y%20neuroplasticidad%20main%20.png",
     pdfUrl: "",
     videos: [
       {
@@ -1002,7 +1198,7 @@ export const sessions: Session[] = [
     description: "Transforma tu narrativa personal: del juicio a la compasión, de víctima a héroe de tu propia historia.",
     day: 1,
     moduleNumber: 4,
-    imageUrl: "/images/sessions/session-4.png",
+    imageUrl: "https://pub-4e8440b7b5814f1497b4c7191ca36e31.r2.dev/Bloque%201/Sufrimiento%20y%20nueva%20historia%20main.png",
     pdfUrl: "",
     videos: [
       {

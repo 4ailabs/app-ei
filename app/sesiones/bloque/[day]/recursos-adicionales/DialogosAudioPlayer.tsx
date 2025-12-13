@@ -1,7 +1,7 @@
 "use client"
 
 import { Audio } from "@/data/sessions"
-import { Play, Pause, Clock, Headphones } from "lucide-react"
+import { Play, Pause, Clock } from "lucide-react"
 import { useState, useRef } from "react"
 
 interface DialogosAudioPlayerProps {
@@ -96,11 +96,7 @@ export function DialogosAudioPlayer({ audio }: DialogosAudioPlayerProps) {
         />
       )}
 
-      <div className="mb-2">
-        <Headphones className="h-4 w-4 text-[#9B9A97] dark:text-[#8C8C8C]" />
-      </div>
-
-      <div className="flex items-center gap-2 sm:gap-4">
+      <div className="flex items-center gap-2 sm:gap-3">
         <button
           onClick={togglePlay}
           disabled={!canPlay}

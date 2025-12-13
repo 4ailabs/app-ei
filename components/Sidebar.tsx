@@ -45,23 +45,8 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
     </div>
   )
 
-  if (onClick) {
-    return (
-      <a
-        href="#"
-        onClick={(e) => {
-          e.preventDefault()
-          onClick()
-        }}
-        className="block group"
-      >
-        {content}
-      </a>
-    )
-  }
-
   return (
-    <Link href={href} className="block group">
+    <Link href={href} className="block group" onClick={onClick}>
       {content}
     </Link>
   )
@@ -77,7 +62,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
 
           const isAdmin = session?.user?.email === ADMIN_EMAIL
 
-          const handleMobileNavigation = (href: string) => {
+          const closeMobileMenu = () => {
             setIsMobileMenuOpen(false)
           }
 
@@ -145,7 +130,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                           href="/"
                           active={pathname === '/'}
                           mobile={true}
-                          onClick={() => handleMobileNavigation('/')}
+                          onClick={closeMobileMenu}
                         />
                     <NavItem
                       icon={<BookOpen className="w-6 h-6" />}
@@ -153,7 +138,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                       href="/sesiones"
                       active={pathname.startsWith('/sesiones')}
                       mobile={true}
-                      onClick={() => handleMobileNavigation('/sesiones')}
+                      onClick={closeMobileMenu}
                     />
                         <NavItem
                           icon={<Video className="w-6 h-6" />}
@@ -161,7 +146,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                           href="/seminario-pasado"
                           active={pathname === '/seminario-pasado' || pathname?.startsWith('/seminario-pasado/')}
                           mobile={true}
-                          onClick={() => handleMobileNavigation('/seminario-pasado')}
+                          onClick={closeMobileMenu}
                         />
                         {isAdmin && (
                           <NavItem
@@ -170,7 +155,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                             href="/admin"
                             active={pathname === '/admin'}
                             mobile={true}
-                            onClick={() => handleMobileNavigation('/admin')}
+                            onClick={closeMobileMenu}
                           />
                         )}
                       </div>

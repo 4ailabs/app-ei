@@ -1,7 +1,7 @@
 "use client"
 
 import { Video } from "@/data/sessions"
-import { Play, Clock } from "lucide-react"
+import { Play, Clock, CheckCircle2 } from "lucide-react"
 import { useState } from "react"
 
 // Helper function to get Cloudflare Stream embed URL
@@ -20,20 +20,25 @@ export function VideoSection({ videos }: VideoSectionProps) {
 
   if (videos.length === 0) {
     return (
-      <div className="text-center py-8">
-        <Play className="h-12 w-12 text-[#9B9A97] dark:text-[#808080] mx-auto mb-3" />
-        <h3 className="text-lg font-medium text-[#1A1915] dark:text-[#E5E5E5] mb-1">No hay videos disponibles</h3>
-        <p className="text-[#706F6C] dark:text-[#A0A0A0] text-sm">Los videos estarán disponibles próximamente</p>
+      <div className="text-center py-12 sm:py-16">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+          <Play className="h-8 w-8 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#808080]" />
+        </div>
+        <h3 className="text-lg sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">No hay videos disponibles</h3>
+        <p className="text-[#706F6C] dark:text-[#A0A0A0] text-sm sm:text-base max-w-md mx-auto">
+          Los videos de esta sección estarán disponibles próximamente.
+        </p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 sm:space-y-10">
       {/* Video Player */}
       {selectedVideo && (
-        <div className="space-y-3">
-          <div className="aspect-video w-full rounded-xl overflow-hidden bg-[#1A1915] dark:bg-black shadow-lg">
+        <div className="space-y-4 sm:space-y-6">
+          {/* Video Container */}
+          <div className="aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-[#1A1915] dark:bg-black shadow-xl ring-1 ring-black/5">
             {selectedVideo.cloudflareStreamId ? (
               <iframe
                 key={`cloudflare-${selectedVideo.cloudflareStreamId}`}
@@ -62,60 +67,124 @@ export function VideoSection({ videos }: VideoSectionProps) {
               </div>
             )}
           </div>
-          <div className="px-1">
-            <h3 className="font-bold text-[#1A1915] dark:text-[#E5E5E5]">{selectedVideo.title}</h3>
-            {selectedVideo.description && (
-              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mt-1">{selectedVideo.description}</p>
-            )}
+
+          {/* Video Info */}
+          <div className="px-1 sm:px-2">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">
+                  {selectedVideo.title}
+                </h3>
+                {selectedVideo.description && (
+                  <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed">
+                    {selectedVideo.description}
+                  </p>
+                )}
+              </div>
+              {selectedVideo.duration && (
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F5F4F0] dark:bg-[#333333] rounded-full flex-shrink-0">
+                  <Clock className="h-4 w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
+                  <span className="text-sm font-medium text-[#706F6C] dark:text-[#A0A0A0]">{selectedVideo.duration}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
 
       {/* Video List */}
       {videos.length > 1 && (
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-[#706F6C] dark:text-[#A0A0A0] uppercase tracking-wider">
-            Todos los videos ({videos.length})
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {videos.map((video, index) => (
-              <button
-                key={video.id}
-                onClick={() => setSelectedVideo(video)}
-                className={`flex items-center gap-4 p-4 rounded-xl text-left transition-all ${
-                  selectedVideo?.id === video.id
-                    ? 'bg-[#1A1915] dark:bg-[#E5E5E5] text-white dark:text-[#1A1915] shadow-md'
-                    : 'bg-[#F5F4F0] dark:bg-[#333333] hover:bg-[#ECEAE5] dark:hover:bg-[#4A4A4A] text-[#1A1915] dark:text-[#E5E5E5] border border-[#E5E4E0] dark:border-[#333333]'
-                }`}
-              >
-                <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
-                  selectedVideo?.id === video.id ? 'bg-white/20 dark:bg-black/20' : 'bg-[#E5E4E0] dark:bg-[#4A4A4A]'
-                }`}>
-                  <span className={`font-bold ${selectedVideo?.id === video.id ? 'text-white dark:text-[#1A1915]' : 'text-[#706F6C] dark:text-[#A0A0A0]'}`}>
-                    {index + 1}
-                  </span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className={`font-medium truncate ${
-                    selectedVideo?.id === video.id ? 'text-white dark:text-[#1A1915]' : 'text-[#1A1915] dark:text-[#E5E5E5]'
-                  }`}>
-                    {video.title}
-                  </h4>
-                  {video.duration && (
-                    <div className={`flex items-center gap-1 text-sm mt-0.5 ${
-                      selectedVideo?.id === video.id ? 'text-white/70 dark:text-[#1A1915]/70' : 'text-[#706F6C] dark:text-[#A0A0A0]'
-                    }`}>
-                      <Clock className="h-3 w-3" />
-                      <span>{video.duration}</span>
-                    </div>
-                  )}
-                </div>
-                <Play className={`h-5 w-5 flex-shrink-0 ${
-                  selectedVideo?.id === video.id ? 'text-white dark:text-[#1A1915]' : 'text-[#9B9A97] dark:text-[#808080]'
-                }`} />
-              </button>
-            ))}
+        <div className="space-y-4 sm:space-y-5">
+          {/* Section Header */}
+          <div className="flex items-center justify-between pb-3 border-b border-[#E5E4E0] dark:border-[#333333]">
+            <h4 className="text-sm sm:text-base font-semibold text-[#1A1915] dark:text-[#E5E5E5]">
+              Todos los videos
+            </h4>
+            <span className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0] bg-[#F5F4F0] dark:bg-[#333333] px-2.5 py-1 rounded-full">
+              {videos.length} videos
+            </span>
           </div>
+
+          {/* Video Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            {videos.map((video, index) => {
+              const isSelected = selectedVideo?.id === video.id
+              const hasVideo = video.cloudflareStreamId || video.vimeoId
+
+              return (
+                <button
+                  key={video.id}
+                  onClick={() => setSelectedVideo(video)}
+                  className={`group flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl sm:rounded-2xl text-left transition-all duration-200 ${
+                    isSelected
+                      ? 'bg-[#DA7756] text-white shadow-lg scale-[1.02]'
+                      : 'bg-white dark:bg-[#2A2A2A] hover:bg-[#FAF9F7] dark:hover:bg-[#333333] text-[#1A1915] dark:text-[#E5E5E5] border border-[#E5E4E0] dark:border-[#333333] hover:border-[#DA7756]/30 dark:hover:border-[#DA7756]/30 hover:shadow-md'
+                  }`}
+                >
+                  {/* Video Number / Play Icon */}
+                  <div className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all ${
+                    isSelected
+                      ? 'bg-white/20'
+                      : 'bg-[#F5F4F0] dark:bg-[#333333] group-hover:bg-[#DA7756]/10 dark:group-hover:bg-[#DA7756]/20'
+                  }`}>
+                    {isSelected ? (
+                      <CheckCircle2 className="w-6 h-6 text-white" />
+                    ) : (
+                      <span className={`font-bold text-lg ${hasVideo ? 'text-[#DA7756]' : 'text-[#9B9A97] dark:text-[#808080]'}`}>
+                        {index + 1}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Video Info */}
+                  <div className="flex-1 min-w-0">
+                    <h5 className={`font-semibold text-sm sm:text-base mb-1 line-clamp-2 ${
+                      isSelected ? 'text-white' : 'text-[#1A1915] dark:text-[#E5E5E5]'
+                    }`}>
+                      {video.title}
+                    </h5>
+                    <div className="flex items-center gap-3">
+                      {video.duration && (
+                        <div className={`flex items-center gap-1 text-xs sm:text-sm ${
+                          isSelected ? 'text-white/80' : 'text-[#706F6C] dark:text-[#A0A0A0]'
+                        }`}>
+                          <Clock className="h-3.5 w-3.5" />
+                          <span>{video.duration}</span>
+                        </div>
+                      )}
+                      {!hasVideo && (
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${
+                          isSelected ? 'bg-white/20 text-white/80' : 'bg-[#F5F4F0] dark:bg-[#333333] text-[#9B9A97] dark:text-[#808080]'
+                        }`}>
+                          Próximamente
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Play Button */}
+                  <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                    isSelected
+                      ? 'bg-white/20'
+                      : 'bg-[#F5F4F0] dark:bg-[#333333] group-hover:bg-[#DA7756] group-hover:text-white'
+                  }`}>
+                    <Play className={`h-4 w-4 sm:h-5 sm:w-5 ${
+                      isSelected ? 'text-white' : 'text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-white'
+                    }`} />
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Single video info message */}
+      {videos.length === 1 && (
+        <div className="text-center pt-4 border-t border-[#E5E4E0] dark:border-[#333333]">
+          <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0]">
+            Este módulo contiene un video de formación
+          </p>
         </div>
       )}
     </div>
