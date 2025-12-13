@@ -101,7 +101,7 @@ export default function DayPage() {
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="bg-white dark:bg-[#252525] rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
-            <div className={`p-8 lg:p-12 bg-gradient-to-br ${colors.gradient} text-white relative overflow-hidden`}>
+            <div className={`p-5 sm:p-8 lg:p-12 bg-gradient-to-br ${colors.gradient} text-white relative overflow-hidden`}>
               {/* Background Pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl"></div>
@@ -109,49 +109,49 @@ export default function DayPage() {
               </div>
               
               <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <Calendar className="h-8 w-8 text-white" />
-                  <span className="text-sm font-semibold uppercase tracking-wider text-white">
+                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                  <Calendar className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+                  <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-white">
                     Seminario On Line
                   </span>
                 </div>
                 
-                <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 mb-6">
-                  <div className={`w-20 h-20 rounded-xl ${colors.accent} bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-3xl shadow-lg flex-shrink-0`}>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6">
+                  <div className={`w-14 h-14 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl ${colors.accent} bg-white/20 backdrop-blur-sm flex items-center justify-center font-bold text-2xl sm:text-3xl shadow-lg flex-shrink-0`}>
                     {dia.day}
                   </div>
                   <div className="flex-1">
-                    <h1 className="text-3xl md:text-5xl font-bold mb-2 text-white">
+                    <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-1 sm:mb-2 text-white">
                       {dia.title}
                     </h1>
                     {dia.date ? (
-                      <p className="text-lg text-white/90">{dia.date}</p>
+                      <p className="text-sm sm:text-lg text-white/90">{dia.date}</p>
                     ) : (
-                      <p className="text-lg text-white/80">Videos del seminario</p>
+                      <p className="text-sm sm:text-lg text-white/80">Videos del seminario</p>
                     )}
                   </div>
                 </div>
                 
-                <div className="flex flex-wrap items-center gap-4 text-sm">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
                   {dia.videos.length > 0 && (
-                    <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2.5 rounded-lg border border-white/20">
-                      <VideoIcon className="h-5 w-5 text-white" />
+                    <div className="flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-lg border border-white/20">
+                      <VideoIcon className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                       <span className="font-semibold text-white">
                         {videosConStreamId.length} / {dia.videos.length} videos
                       </span>
                     </div>
                   )}
                   {dia.audios.length > 0 && (
-                    <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2.5 rounded-lg border border-white/20">
-                      <Volume2 className="h-5 w-5 text-white" />
+                    <div className="flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-lg border border-white/20">
+                      <Volume2 className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                       <span className="font-semibold text-white">
                         {dia.audios.length} audios
                       </span>
                     </div>
                   )}
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2.5 rounded-lg border border-white/20">
+                  <div className="hidden sm:flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2.5 rounded-lg border border-white/20">
                     <Play className="h-5 w-5 text-white" />
-                    <span className="font-semibold text-white">Haz clic en una tarjeta para reproducir</span>
+                    <span className="font-semibold text-white">Haz clic para reproducir</span>
                   </div>
                 </div>
               </div>
@@ -269,21 +269,23 @@ export default function DayPage() {
 
           {/* Video Player Modal */}
           {selectedVideo && (
-            <div className="fixed inset-0 bg-[#1A1915]/80 dark:bg-[#000000]/80 z-50 flex items-center justify-center p-4 animate-fade-in">
-              <div className="bg-white dark:bg-[#252525] rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="fixed inset-0 bg-[#1A1915]/80 dark:bg-[#000000]/80 z-50 flex items-center justify-center p-2 sm:p-4 animate-fade-in">
+              <div className="bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl max-w-5xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="sticky top-0 bg-white dark:bg-[#252525] border-b border-[#E5E4E0] dark:border-[#333333] p-4 flex items-center justify-between z-10">
-                  <h2 className="text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5]">{selectedVideo.title}</h2>
+                <div className="sticky top-0 bg-white dark:bg-[#252525] border-b border-[#E5E4E0] dark:border-[#333333] p-3 sm:p-4 flex items-center justify-between z-10">
+                  <h2 className="text-base sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] line-clamp-1 pr-2">{selectedVideo.title}</h2>
                   <Button
                     variant="ghost"
+                    size="sm"
                     onClick={() => setSelectedVideo(null)}
+                    className="flex-shrink-0"
                   >
                     <X className="h-5 w-5" />
                   </Button>
                 </div>
 
                 {/* Video Player */}
-                <div className="p-6">
+                <div className="p-3 sm:p-6">
                   <VideoSection videos={[selectedVideo]} />
                 </div>
               </div>
@@ -292,21 +294,23 @@ export default function DayPage() {
 
           {/* Audio Player Modal */}
           {selectedAudio && (
-            <div className="fixed inset-0 bg-[#1A1915]/80 dark:bg-[#000000]/80 z-50 flex items-center justify-center p-4 animate-fade-in">
-              <div className="bg-white dark:bg-[#252525] rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="fixed inset-0 bg-[#1A1915]/80 dark:bg-[#000000]/80 z-50 flex items-center justify-center p-2 sm:p-4 animate-fade-in">
+              <div className="bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl max-w-3xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="sticky top-0 bg-white dark:bg-[#252525] border-b border-[#E5E4E0] dark:border-[#333333] p-4 flex items-center justify-between z-10">
-                  <h2 className="text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5]">{selectedAudio.title}</h2>
+                <div className="sticky top-0 bg-white dark:bg-[#252525] border-b border-[#E5E4E0] dark:border-[#333333] p-3 sm:p-4 flex items-center justify-between z-10">
+                  <h2 className="text-base sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] line-clamp-1 pr-2">{selectedAudio.title}</h2>
                   <Button
                     variant="ghost"
+                    size="sm"
                     onClick={() => setSelectedAudio(null)}
+                    className="flex-shrink-0"
                   >
                     <X className="h-5 w-5" />
                   </Button>
                 </div>
 
                 {/* Audio Player */}
-                <div className="p-6">
+                <div className="p-3 sm:p-6">
                   <AudioVisualizer
                     audioUrl={selectedAudio.audioUrl}
                     title={selectedAudio.title}
