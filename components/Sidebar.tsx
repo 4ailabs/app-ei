@@ -143,8 +143,8 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                         <NavItem
                           icon={<Video className="w-6 h-6" />}
                           label="Seminario On Line"
-                          href="/seminario-pasado"
-                          active={pathname === '/seminario-pasado' || pathname?.startsWith('/seminario-pasado/')}
+                          href="/seminario-online"
+                          active={pathname === '/seminario-online' || pathname?.startsWith('/seminario-online/')}
                           mobile={true}
                           onClick={closeMobileMenu}
                         />
@@ -249,8 +249,8 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                       <NavItem
                         icon={<Video className="w-6 h-6" />}
                         label="Seminario On Line"
-                        href="/seminario-pasado"
-                        active={pathname === '/seminario-pasado' || pathname?.startsWith('/seminario-pasado/')}
+                        href="/seminario-online"
+                        active={pathname === '/seminario-online' || pathname?.startsWith('/seminario-online/')}
                       />
                       {isAdmin && (
                         <NavItem

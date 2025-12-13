@@ -3,14 +3,12 @@
 import { useState } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter, useParams } from "next/navigation"
-import { seminarioPasado } from "@/data/seminario-pasado"
+import { seminarioOnline, AudioSeminarioOnline, SEMINARIO_BACKGROUND_VIDEO_ID } from "@/data/seminario-online"
 import { VideoSection } from "@/components/session/VideoSection"
-import { VideoCard } from "@/components/session/VideoCard"
 import { Calendar, Video as VideoIcon, ArrowLeft, Home, Play, X, Volume2 } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Video } from "@/data/sessions"
-import { AudioSeminarioPasado, SEMINARIO_BACKGROUND_VIDEO_ID } from "@/data/seminario-pasado"
 import { AudioVisualizer } from "@/components/session/AudioVisualizer"
 
 // Paleta de colores estilo Claude de Anthropic
@@ -39,14 +37,13 @@ export default function DayPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const params = useParams()
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
-  const [selectedAudio, setSelectedAudio] = useState<AudioSeminarioPasado | null>(null)
+  const [selectedAudio, setSelectedAudio] = useState<AudioSeminarioOnline | null>(null)
 
   const dayNumber = parseInt(params?.day as string)
-  const dia = seminarioPasado.find(d => d.day === dayNumber)
-  
+  const dia = seminarioOnline.find(d => d.day === dayNumber)
+
   if (!dia) {
-    router.push("/seminario-pasado")
+    router.push("/seminario-online")
     return null
   }
 
@@ -69,18 +66,17 @@ export default function DayPage() {
   const colors = dayColors[(dayNumber - 1) % dayColors.length]
   const videosConStreamId = dia.videos.filter(v => v.cloudflareStreamId)
 
-  const handleVideoClick = (video: any) => {
-    setSelectedVideo({
-      id: video.id,
-      title: video.title,
-      cloudflareStreamId: video.cloudflareStreamId,
-      vimeoId: undefined,
-      duration: video.duration,
-      description: video.description
-    })
-  }
+  // Convertir videos del seminario al formato Video para VideoSection
+  const videosForSection: Video[] = dia.videos.map(video => ({
+    id: video.id,
+    title: video.title,
+    cloudflareStreamId: video.cloudflareStreamId,
+    vimeoId: undefined,
+    duration: video.duration,
+    description: video.description
+  }))
 
-  const handleAudioClick = (audio: AudioSeminarioPasado) => {
+  const handleAudioClick = (audio: AudioSeminarioOnline) => {
     setSelectedAudio(audio)
   }
 
@@ -89,7 +85,7 @@ export default function DayPage() {
       <div className="container mx-auto px-4 py-8 pb-24">
         {/* Back Button */}
         <div className="mb-6 animate-fade-in">
-          <Link href="/seminario-pasado">
+          <Link href="/seminario-online">
             <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all text-[#706F6C] dark:text-[#A0A0A0]">
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <Home className="mr-2 h-4 w-4" />
@@ -158,7 +154,7 @@ export default function DayPage() {
             </div>
           </div>
 
-          {/* Sección de Videos Recuperados */}
+          {/* Sección de Videos - Reproductor embebido */}
           {dia.videos.length > 0 && (
             <div className="mb-10">
               <div className="flex items-center gap-3 mb-6">
@@ -166,26 +162,11 @@ export default function DayPage() {
                   <VideoIcon className="h-5 w-5 text-white" />
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1A1915] dark:text-[#E5E5E5]">
-                  Videos Recuperados
+                  Videos del Seminario
                 </h2>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {dia.videos.map((video, index) => (
-                  <VideoCard
-                    key={video.id}
-                    video={{
-                      id: video.id,
-                      title: video.title,
-                      cloudflareStreamId: video.cloudflareStreamId,
-                      vimeoId: undefined,
-                      duration: video.duration,
-                      description: video.description
-                    }}
-                    index={index}
-                    onPlay={handleVideoClick}
-                    accentColor={colors.accent}
-                  />
-                ))}
+              <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-[#E5E4E0] dark:border-[#333333]">
+                <VideoSection videos={videosForSection} />
               </div>
             </div>
           )}
@@ -201,50 +182,35 @@ export default function DayPage() {
                   Sesiones en Audio
                 </h2>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="flex flex-col gap-3">
                 {dia.audios.map((audio, index) => (
                   <div
                     key={audio.id}
                     onClick={() => handleAudioClick(audio)}
-                    className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-[#E5E4E0] dark:border-[#333333] group cursor-pointer"
+                    className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl border border-[#E5E4E0] dark:border-[#333333] hover:border-[#DA7756]/30 dark:hover:border-[#DA7756]/30 hover:shadow-md transition-all duration-200 cursor-pointer"
                   >
-                    {/* Audio Thumbnail con video de fondo */}
-                    <div className="relative aspect-video bg-[#1A1915] overflow-hidden">
-                      {/* Video thumbnail de fondo */}
-                      <img
-                        src={`https://customer-qhobzy75u1p8j3tq.cloudflarestream.com/${audio.backgroundVideoId || SEMINARIO_BACKGROUND_VIDEO_ID}/thumbnails/thumbnail.jpg?time=2s`}
-                        alt={audio.title}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                      {/* Overlay oscuro */}
-                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-
-                      {/* Play Button pequeño */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#DA7756] rounded-full flex items-center justify-center shadow-lg transform transition-all duration-300 group-hover:scale-110">
-                          <Volume2 className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                        </div>
-                      </div>
-
-                      {/* Number Badge */}
-                      <div className="absolute top-2 left-2 sm:top-3 sm:left-3">
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-[#DA7756] rounded-md flex items-center justify-center font-semibold text-white shadow-lg text-xs sm:text-sm">
-                          {index + 1}
-                        </div>
-                      </div>
-
+                    {/* Número */}
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-[#F5F4F0] dark:bg-[#333333] group-hover:bg-[#DA7756]/10 dark:group-hover:bg-[#DA7756]/20 flex items-center justify-center transition-colors">
+                      <span className="font-bold text-sm sm:text-base text-[#DA7756]">
+                        {index + 1}
+                      </span>
                     </div>
 
-                    {/* Content */}
-                    <div className="p-3 sm:p-4">
-                      <h3 className="font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-1 line-clamp-2 group-hover:text-[#DA7756] transition-colors text-sm sm:text-base">
+                    {/* Contenido */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-sm sm:text-base text-[#1A1915] dark:text-[#E5E5E5] group-hover:text-[#DA7756] transition-colors line-clamp-1">
                         {audio.title}
                       </h3>
                       {audio.description && (
-                        <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0] line-clamp-2 mt-1">
+                        <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0] line-clamp-1 mt-0.5">
                           {audio.description}
                         </p>
                       )}
+                    </div>
+
+                    {/* Botón de reproducir */}
+                    <div className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F5F4F0] dark:bg-[#333333] group-hover:bg-[#DA7756] flex items-center justify-center transition-all duration-200">
+                      <Play className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-white transition-colors ml-0.5" fill="currentColor" />
                     </div>
                   </div>
                 ))}
@@ -264,31 +230,6 @@ export default function DayPage() {
               <p className="text-[#706F6C] dark:text-[#A0A0A0] text-sm max-w-md mx-auto">
                 Los videos y audios de este día estarán disponibles pronto.
               </p>
-            </div>
-          )}
-
-          {/* Video Player Modal */}
-          {selectedVideo && (
-            <div className="fixed inset-0 bg-[#1A1915]/80 dark:bg-[#000000]/80 z-50 flex items-center justify-center p-2 sm:p-4 animate-fade-in">
-              <div className="bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl max-w-5xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
-                {/* Header */}
-                <div className="sticky top-0 bg-white dark:bg-[#252525] border-b border-[#E5E4E0] dark:border-[#333333] p-3 sm:p-4 flex items-center justify-between z-10">
-                  <h2 className="text-base sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] line-clamp-1 pr-2">{selectedVideo.title}</h2>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedVideo(null)}
-                    className="flex-shrink-0"
-                  >
-                    <X className="h-5 w-5" />
-                  </Button>
-                </div>
-
-                {/* Video Player */}
-                <div className="p-3 sm:p-6">
-                  <VideoSection videos={[selectedVideo]} />
-                </div>
-              </div>
             </div>
           )}
 

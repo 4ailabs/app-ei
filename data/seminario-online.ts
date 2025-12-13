@@ -1,4 +1,4 @@
-export interface VideoSeminarioPasado {
+export interface VideoSeminarioOnline {
   id: string
   title: string
   cloudflareStreamId?: string
@@ -7,7 +7,7 @@ export interface VideoSeminarioPasado {
   order: number // Orden dentro del día
 }
 
-export interface AudioSeminarioPasado {
+export interface AudioSeminarioOnline {
   id: string
   title: string
   audioUrl: string
@@ -20,21 +20,27 @@ export interface AudioSeminarioPasado {
 // Video de ambiente compartido para los audios del seminario
 export const SEMINARIO_BACKGROUND_VIDEO_ID = "cab0ffefc4cee4a08a7f4bf41a78b7bc"
 
-export interface DiaSeminarioPasado {
+export interface DiaSeminarioOnline {
   day: number // 1, 2, o 3
   title: string // Ej: "Día 1: Introducción"
   date?: string // Fecha del seminario (opcional)
-  videos: VideoSeminarioPasado[] // Videos recuperados
-  audios: AudioSeminarioPasado[] // Audios del seminario
+  videos: VideoSeminarioOnline[] // Videos recuperados
+  audios: AudioSeminarioOnline[] // Audios del seminario
 }
 
-export const seminarioPasado: DiaSeminarioPasado[] = [
+export const seminarioOnline: DiaSeminarioOnline[] = [
   {
     day: 1,
     title: "Día 1 - Sesión 1",
     date: undefined,
     videos: [
-      // Videos recuperados irán aquí cuando estén disponibles
+      {
+        id: "sp-v1-1",
+        title: "Día 1 Módulo 1",
+        cloudflareStreamId: "e9d4fc13a2baa8b792331d2e3db6a4bd",
+        order: 1,
+        description: "Primera parte del seminario"
+      }
     ],
     audios: [
       {

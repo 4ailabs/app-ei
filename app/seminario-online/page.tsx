@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth-server"
 import { redirect } from "next/navigation"
-import { seminarioPasado } from "@/data/seminario-pasado"
+import { seminarioOnline } from "@/data/seminario-online"
 import { Calendar, Video as VideoIcon, ArrowLeft, Home, Play, CheckCircle2, Clock, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -27,15 +27,15 @@ const dayColors = [
   }
 ]
 
-export default async function SeminarioPasadoPage() {
+export default async function SeminarioOnlinePage() {
   const session = await auth()
 
   if (!session) {
     redirect("/login")
   }
 
-  const totalVideos = seminarioPasado.reduce((acc, dia) => acc + dia.videos.length, 0)
-  const videosWithStreamId = seminarioPasado.reduce((acc, dia) => {
+  const totalVideos = seminarioOnline.reduce((acc, dia) => acc + dia.videos.length, 0)
+  const videosWithStreamId = seminarioOnline.reduce((acc, dia) => {
     return acc + dia.videos.filter(v => v.cloudflareStreamId).length
   }, 0)
 
@@ -77,7 +77,7 @@ export default async function SeminarioPasadoPage() {
                   </div>
                   <div className="flex items-center gap-2 bg-[#DA7756]/10 dark:bg-[#DA7756]/10 border border-[#DA7756]/20 dark:border-[#DA7756]/20 px-4 py-2 rounded-full">
                     <Calendar className="h-5 w-5 text-[#DA7756] dark:text-[#DA7756]" />
-                    <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">{seminarioPasado.length} días</span>
+                    <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">{seminarioOnline.length} días</span>
                   </div>
                 </div>
               </div>
@@ -86,7 +86,7 @@ export default async function SeminarioPasadoPage() {
 
           {/* Grid de Días - 2 columnas */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {seminarioPasado.map((dia, index) => {
+            {seminarioOnline.map((dia, index) => {
               const colors = dayColors[index % dayColors.length]
               const videosConStreamId = dia.videos.filter(v => v.cloudflareStreamId)
               const hasVideos = videosConStreamId.length > 0
@@ -94,7 +94,7 @@ export default async function SeminarioPasadoPage() {
               return (
                 <Link
                   key={dia.day}
-                  href={`/seminario-pasado/${dia.day}`}
+                  href={`/seminario-online/${dia.day}`}
                   className="group block"
                 >
                   <div className="bg-white dark:bg-[#252525] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-[#E5E4E0] dark:border-[#333333] hover:border-[#DA7756]/30 dark:hover:border-[#E5E5E5]/30 h-full flex flex-col">
