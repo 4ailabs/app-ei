@@ -33,15 +33,16 @@ export default async function RecursosAdicionalesPage({ params }: RecursosAdicio
   const { day } = await params
   const dayNumber = parseInt(day)
 
-  // Solo permitir para bloque 1
-  if (dayNumber !== 1) {
-    notFound()
-  }
+  // Obtener todas las sesiones del bloque y combinar sus recursos adicionales
+  const bloqueSessions = sessions.filter(s => s.day === dayNumber)
 
-  // Obtener la sesión 1 para acceder a los recursos adicionales
-  const sessionData = sessions.find(s => s.id === 1)
+  // Combinar todos los recursos adicionales de las sesiones del bloque
+  const allAdditionalResources = bloqueSessions.flatMap(s => s.additionalResources || [])
 
-  if (!sessionData || !sessionData.additionalResources || sessionData.additionalResources.length === 0) {
+  // Usar la primera sesión como referencia para datos básicos
+  const sessionData = bloqueSessions[0]
+
+  if (!sessionData || allAdditionalResources.length === 0) {
     return (
       <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A]">
         <div className="container mx-auto px-4 py-8 pb-24">
@@ -72,7 +73,7 @@ export default async function RecursosAdicionalesPage({ params }: RecursosAdicio
   const images: any[] = []
   const slides: any[] = []
 
-  sessionData.additionalResources.forEach((resource) => {
+  allAdditionalResources.forEach((resource) => {
     if ('type' in resource) {
       switch (resource.type) {
         case 'audio':
@@ -132,13 +133,13 @@ export default async function RecursosAdicionalesPage({ params }: RecursosAdicio
                       Recursos Adicionales
                     </h1>
                     <p className="text-xs sm:text-sm text-[#DA7756] font-medium">
-                      Bloque 1 • Material Complementario
+                      Bloque {dayNumber} • Material Complementario
                     </p>
                   </div>
                   <div className="hidden sm:flex items-center gap-2 bg-[#DA7756]/10 px-3 py-1.5 rounded-lg flex-shrink-0">
-                    <Headphones className="h-4 w-4 text-[#DA7756]" />
+                    <Presentation className="h-4 w-4 text-[#DA7756]" />
                     <span className="text-sm font-semibold text-[#DA7756]">
-                      {audios.length} audios
+                      {slides.length > 0 ? `${slides.length} presentaciones` : `${audios.length} audios`}
                     </span>
                   </div>
                 </div>
@@ -153,11 +154,19 @@ export default async function RecursosAdicionalesPage({ params }: RecursosAdicio
             </div>
 
             {/* Mobile stats */}
-            <div className="flex sm:hidden items-center gap-4 mt-4 pt-4 border-t border-[#E5E4E0] dark:border-[#333333]">
-              <div className="flex items-center gap-1.5">
-                <Headphones className="h-4 w-4 text-[#DA7756]" />
-                <span className="text-sm font-semibold text-[#DA7756]">{audios.length} audios</span>
-              </div>
+            <div className="flex sm:hidden items-center gap-4 mt-4 pt-4 border-t border-[#E5E4E0] dark:border-[#333333] flex-wrap">
+              {slides.length > 0 && (
+                <div className="flex items-center gap-1.5">
+                  <Presentation className="h-4 w-4 text-[#DA7756]" />
+                  <span className="text-sm font-semibold text-[#DA7756]">{slides.length} presentaciones</span>
+                </div>
+              )}
+              {audios.length > 0 && (
+                <div className="flex items-center gap-1.5">
+                  <Headphones className="h-4 w-4 text-[#DA7756]" />
+                  <span className="text-sm font-semibold text-[#DA7756]">{audios.length} audios</span>
+                </div>
+              )}
               {images.length > 0 && (
                 <div className="flex items-center gap-1.5">
                   <Images className="h-4 w-4 text-[#DA7756]" />

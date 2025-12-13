@@ -1,14 +1,44 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Download, FileText, CheckCircle2 } from "lucide-react"
+import { Download, FileText, CheckCircle2, Maximize2, ExternalLink, Presentation } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { PDF } from "@/data/sessions"
 
+// Tipo flexible que acepta PDFs y slides
+interface PDFOrSlide {
+  id: string
+  title: string
+  url?: string
+  description?: string
+  pages?: number
+  category?: string
+  type?: 'slide'
+}
+
+// Función para convertir URL de Google Slides a formato embed
+function getGoogleSlidesEmbedUrl(url: string): string | null {
+  const googleSlidesRegex = /docs\.google\.com\/presentation\/d\/(?:e\/)?([a-zA-Z0-9-_]+)/
+  const match = url.match(googleSlidesRegex)
+  if (match) {
+    const presentationId = match[1]
+    return `https://docs.google.com/presentation/d/${presentationId}/preview`
+  }
+  return null
+}
+
+// Función para detectar si es un PDF y obtener URL de visor
+function getPdfViewerUrl(url: string): string | null {
+  if (url.toLowerCase().endsWith('.pdf')) {
+    return `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`
+  }
+  return null
+}
+
 interface PDFSectionProps {
   pdfUrl?: string
-  pdfs?: PDF[]
+  pdfs?: (PDF | PDFOrSlide)[]
   title?: string
   sessionId: number
 }
@@ -16,6 +46,7 @@ interface PDFSectionProps {
 export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessionId }: PDFSectionProps) {
   const { data: session } = useSession()
   const [viewed, setViewed] = useState(false)
+  const [expandedSlides, setExpandedSlides] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
     if (viewed && session) {
@@ -57,46 +88,92 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
 
     return (
       <div className="space-y-3 sm:space-y-4">
-        {pdfs.map((pdf) => (
-          <div
-            key={pdf.id}
-            className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4 sm:p-6 bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border ${borderColor} hover:shadow-md transition-shadow`}
-          >
-            <div className={`flex-shrink-0 p-2 sm:p-3 ${iconBg} rounded-lg sm:rounded-xl`}>
-              <FileText className={`h-6 w-6 sm:h-8 sm:w-8 ${iconColor}`} />
-            </div>
-            <div className="flex-grow min-w-0">
-              <h4 className="font-bold text-sm sm:text-lg text-[#1A1915] dark:text-[#ECECEC] mb-0.5 sm:mb-1">{pdf.title}</h4>
-              <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#B4B4B4] mb-1.5 sm:mb-2 line-clamp-2">{pdf.description}</p>
-              {pdf.category && (
-                <span className="inline-block px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-medium rounded-full bg-[#DA7756]/10 dark:bg-[#DA7756]/20 text-[#DA7756]">
-                  {pdf.category === "referencia" ? "Referencia" : pdf.category === "ejercicio" ? "Ejercicio" : pdf.category === "contenido_profundo" ? "Contenido Profundo" : "Recurso Adicional"}
-                </span>
+        {pdfs.map((pdf) => {
+          const isSlide = 'type' in pdf && pdf.type === 'slide'
+          const googleSlidesUrl = pdf.url ? getGoogleSlidesEmbedUrl(pdf.url) : null
+          const pdfViewerUrl = pdf.url ? getPdfViewerUrl(pdf.url) : null
+          const embedUrl = googleSlidesUrl || pdfViewerUrl
+          const isEmbeddable = isSlide && embedUrl !== null
+          const isExpanded = expandedSlides[pdf.id] || false
+
+          return (
+            <div
+              key={pdf.id}
+              className={`bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl border ${borderColor} hover:shadow-md transition-shadow overflow-hidden`}
+            >
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4 sm:p-6">
+                <div className={`flex-shrink-0 p-2 sm:p-3 ${iconBg} rounded-lg sm:rounded-xl`}>
+                  {isSlide ? (
+                    <Presentation className={`h-6 w-6 sm:h-8 sm:w-8 ${iconColor}`} />
+                  ) : (
+                    <FileText className={`h-6 w-6 sm:h-8 sm:w-8 ${iconColor}`} />
+                  )}
+                </div>
+                <div className="flex-grow min-w-0">
+                  <h4 className="font-bold text-sm sm:text-lg text-[#1A1915] dark:text-[#ECECEC] mb-0.5 sm:mb-1">{pdf.title}</h4>
+                  <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#B4B4B4] mb-1.5 sm:mb-2 line-clamp-2">{pdf.description}</p>
+                  {pdf.category && (
+                    <span className="inline-block px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-medium rounded-full bg-[#DA7756]/10 dark:bg-[#DA7756]/20 text-[#DA7756]">
+                      {pdf.category === "referencia" ? "Referencia" : pdf.category === "ejercicio" ? "Ejercicio" : pdf.category === "contenido_profundo" ? "Contenido Profundo" : "Recurso Adicional"}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-shrink-0 w-full sm:w-auto flex flex-col sm:flex-row gap-2">
+                  {pdf.url ? (
+                    <>
+                      {isEmbeddable && (
+                        <Button
+                          onClick={() => setExpandedSlides(prev => ({ ...prev, [pdf.id]: !prev[pdf.id] }))}
+                          variant="outline"
+                          size="default"
+                          className="w-full sm:w-auto text-sm"
+                        >
+                          <Maximize2 className="mr-2 h-4 w-4" />
+                          {isExpanded ? 'Ocultar' : 'Ver aquí'}
+                        </Button>
+                      )}
+                      <Button
+                        onClick={() => {
+                          window.open(pdf.url, "_blank")
+                          setViewed(true)
+                        }}
+                        variant="outline"
+                        size="default"
+                        className="w-full sm:w-auto text-sm"
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        {isEmbeddable ? 'Abrir' : 'Descargar'}
+                      </Button>
+                    </>
+                  ) : (
+                    <Button disabled variant="outline" size="default" className="w-full sm:w-auto text-sm">
+                      <Download className="mr-2 h-4 w-4" />
+                      No disponible
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Vista embebida para slides */}
+              {isExpanded && embedUrl && (
+                <div className="px-4 sm:px-6 pb-4 sm:pb-6">
+                  <div className="relative w-full rounded-lg overflow-hidden border border-[#E5E4E0] dark:border-[#333333] bg-[#F5F4F0] dark:bg-[#2F2F2F]">
+                    <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                      <iframe
+                        src={embedUrl}
+                        className="absolute top-0 left-0 w-full h-full min-h-[250px] sm:min-h-[400px]"
+                        allowFullScreen
+                        title={pdf.title}
+                        loading="lazy"
+                        allow="autoplay; encrypted-media"
+                      />
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
-            <div className="flex-shrink-0 w-full sm:w-auto">
-              {pdf.url ? (
-                <Button
-                  onClick={() => {
-                    window.open(pdf.url, "_blank")
-                    setViewed(true)
-                  }}
-                  variant="outline"
-                  size="default"
-                  className="w-full sm:w-auto text-sm"
-                >
-                  <Download className="mr-2 h-4 w-4" />
-                  Descargar
-                </Button>
-              ) : (
-                <Button disabled variant="outline" size="default" className="w-full sm:w-auto text-sm">
-                  <Download className="mr-2 h-4 w-4" />
-                  No disponible
-                </Button>
-              )}
-            </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     )
   }

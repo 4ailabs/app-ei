@@ -527,29 +527,29 @@ export const sessions: Session[] = [
       },
       {
         id: "ar1-14",
-        title: "Seguridad y Ventana de Tolerancia",
-        url: "https://docs.google.com/presentation/d/1o_Xv8p5FG6l0-jo5PDLBUsZUWCnXSKEn/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
+        title: "Sesión 1: Seguridad y Ventana de Tolerancia",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion1_Seguridad_Ventana_Tolerancia.pptx.pdf",
         description: "Presentación sobre seguridad y ventana de tolerancia",
         type: "slide" as const
       },
       {
         id: "ar1-15",
-        title: "Módulo 2: Recursos y Neuroplasticidad",
-        url: "https://docs.google.com/presentation/d/1H4HseXNuiw9szE76eH5o14LqkCSi0jPj/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
-        description: "Presentación del módulo de recursos y neuroplasticidad",
+        title: "Sesión 2: Cerebro Reactivo y Recursos",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion2_Cerebro_Reactivo_Recursos.pptx.pdf",
+        description: "Presentación del módulo de cerebro reactivo y recursos",
         type: "slide" as const
       },
       {
         id: "ar1-16",
-        title: "Módulo 3: Las 4 Palancas del Estado",
-        url: "https://docs.google.com/presentation/d/1jebi_1mXTGsKYs6F1wN9mTBHOXHAYM8R/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
-        description: "Presentación del módulo de las 4 palancas",
+        title: "Sesión 3: Estados Óptimos y Las 4 Palancas",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion3_Estados_Optimos_4_Palancas.pptx.pdf",
+        description: "Presentación del módulo de estados óptimos y las 4 palancas",
         type: "slide" as const
       },
       {
         id: "ar1-17",
-        title: "Módulo 4: Sufrimiento y Nueva Historia",
-        url: "https://docs.google.com/presentation/d/1_zZ2AwLVCB4-GhMc41xM5_n8btFEZh1f/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
+        title: "Sesión 4: Sufrimiento, Patrones y Nueva Historia",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion4_Sufrimiento_Patrones_Nueva_Historia.pptx.pdf",
         description: "Presentación del módulo de transformación narrativa",
         type: "slide" as const
       },
@@ -1648,6 +1648,15 @@ export const sessions: Session[] = [
     day: 4,
     imageUrl: "/images/sessions/session-7.png",
     pdfUrl: "",
+    additionalResources: [
+      {
+        id: "ar7-1",
+        title: "Escucha Somática Profunda",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Dia%202/ESCUCHA%20SOMATICA%20PROFUNDA/Escucha%20somatica%20profunda%20pptx.pdf",
+        description: "Guía de escucha somática profunda para la conexión mente-cuerpo",
+        type: "slide"
+      }
+    ],
     videos: [],
     audios: [],
     themes: [],
