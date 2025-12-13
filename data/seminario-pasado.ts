@@ -120,6 +120,41 @@ export const seminarioPasado: DiaSeminarioPasado[] = [
         audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%204.3%20Tu%20nueva%20historia%20R.wav",
         order: 12,
         description: "Construyendo tu nueva narrativa personal"
+      },
+      {
+        id: "sp-d1-a13",
+        title: "Audio Guiado para Workbook 1",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%20guiado%20para%20workbook%201R.wav",
+        order: 13,
+        description: "Ejercicio guiado para completar el workbook - Parte 1"
+      },
+      {
+        id: "sp-d1-a14",
+        title: "Audio Guiado para Workbook 2",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%20guiado%20para%20workboom%202R.wav",
+        order: 14,
+        description: "Ejercicio guiado para completar el workbook - Parte 2"
+      },
+      {
+        id: "sp-d1-a15",
+        title: "Audio Guiado para Workbook 3",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%20guiado%20para%20workbook%203R.wav",
+        order: 15,
+        description: "Ejercicio guiado para completar el workbook - Parte 3"
+      },
+      {
+        id: "sp-d1-a16",
+        title: "Audio Guiado para Workbook 4",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%20guiado%20para%20workbook%204R.wav",
+        order: 16,
+        description: "Ejercicio guiado para completar el workbook - Parte 4"
+      },
+      {
+        id: "sp-d1-a17",
+        title: "Audio Guía para Terapeutas",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%20guia%20para%20terapeutas%20R.wav",
+        order: 17,
+        description: "Guía especializada para terapeutas y profesionales"
       }
     ]
   },
