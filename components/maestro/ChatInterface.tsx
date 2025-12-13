@@ -27,7 +27,6 @@ export function ChatInterface({
   const [inputText, setInputText] = useState('')
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [showScrollButton, setShowScrollButton] = useState(false)
-  const [charCount, setCharCount] = useState(0)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
 
@@ -81,9 +80,7 @@ export function ChatInterface({
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value
-    setInputText(value)
-    setCharCount(value.length)
+    setInputText(e.target.value)
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -94,7 +91,6 @@ export function ChatInterface({
 
     onSendMessage(trimmed)
     setInputText('')
-    setCharCount(0)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -107,7 +103,7 @@ export function ChatInterface({
   // Welcome Screen - Claude style
   if (messages.length === 0) {
     return (
-      <div className="flex flex-col h-full bg-white dark:bg-[#0f0f0f]">
+      <div className="flex flex-col h-full bg-[#fafafa] dark:bg-[#0f0f0f] overflow-hidden">
         <div className="flex-1 flex items-center justify-center">
           <div className="max-w-2xl w-full text-center px-4">
             <div className="w-16 h-16 bg-[#ea580c] rounded-lg flex items-center justify-center mx-auto mb-6">
@@ -146,7 +142,7 @@ export function ChatInterface({
         </div>
 
         {/* Input Area - Claude style */}
-        <div className="border-t border-gray-200 dark:border-[#2a2a2a] bg-white dark:bg-[#1a1a1a]">
+        <div className="shrink-0 border-t border-gray-200 dark:border-[#2a2a2a] bg-[#fafafa] dark:bg-[#1a1a1a]">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
             <div className="relative rounded-xl border border-gray-300 dark:border-[#3a3a3a] bg-white dark:bg-[#212121] focus-within:border-gray-400 dark:focus-within:border-[#4a4a4a] transition-all">
               <textarea
@@ -159,18 +155,13 @@ export function ChatInterface({
                 maxLength={MAX_MESSAGE_LENGTH}
               />
 
-              <div className="absolute right-2 bottom-2 flex items-center space-x-1">
-                {charCount > 0 && (
-                  <span className={`text-xs mr-1 ${charCount > MAX_MESSAGE_LENGTH * 0.9 ? 'text-red-500 dark:text-red-400' : 'text-gray-400 dark:text-[#737373]'}`}>
-                    {charCount}
-                  </span>
-                )}
+              <div className="absolute right-2 bottom-2">
                 <button
                   onClick={handleSubmit}
                   disabled={!inputText.trim() || isLoading}
                   className={`p-2 rounded-lg transition-all ${
                     inputText.trim() && !isLoading
-                      ? 'bg-[#6366f1] hover:bg-[#4f46e5] text-white'
+                      ? 'bg-[#ea580c] hover:bg-[#dc4e04] text-white'
                       : 'bg-gray-100 dark:bg-[#2a2a2a] text-gray-400 dark:text-[#737373] cursor-not-allowed'
                   }`}
                 >
@@ -185,17 +176,17 @@ export function ChatInterface({
   }
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-[#0f0f0f] relative">
+    <div className="flex flex-col h-full bg-[#fafafa] dark:bg-[#0f0f0f] relative isolate">
       {/* Messages Area - Claude style */}
-      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto">
+      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto overscroll-contain min-h-0">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
           <div className="space-y-6 sm:space-y-8">
             {messages.map((msg) => (
               <div key={msg.id} className="group">
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  {/* Avatar - Claude style colors */}
+                  {/* Avatar */}
                   <div className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center ${
-                    msg.role === 'user' ? 'bg-[#6366f1]' : 'bg-[#ea580c]'
+                    msg.role === 'user' ? 'bg-[#DA7756]' : 'bg-[#ea580c]'
                   }`}>
                     {msg.role === 'user' ? (
                       <User size={16} className="text-white" />
@@ -266,7 +257,7 @@ export function ChatInterface({
         {showScrollButton && (
           <button
             onClick={scrollToBottom}
-            className="fixed bottom-24 right-6 bg-gray-100 dark:bg-[#2a2a2a] hover:bg-gray-200 dark:hover:bg-[#3a3a3a] text-gray-700 dark:text-[#e8e8e8] p-2.5 rounded-full shadow-md transition-colors z-20"
+            className="absolute bottom-24 right-6 bg-gray-100 dark:bg-[#2a2a2a] hover:bg-gray-200 dark:hover:bg-[#3a3a3a] text-gray-700 dark:text-[#e8e8e8] p-2.5 rounded-full shadow-md transition-colors z-20"
             aria-label="Ir al final"
           >
             <ChevronDown size={18} />
@@ -275,7 +266,7 @@ export function ChatInterface({
       </div>
 
       {/* Input Area - Claude style */}
-      <div className="border-t border-gray-200 dark:border-[#2a2a2a] bg-white dark:bg-[#1a1a1a]">
+      <div className="shrink-0 border-t border-gray-200 dark:border-[#2a2a2a] bg-[#fafafa] dark:bg-[#1a1a1a]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
           {/* Quick Actions - Claude style */}
           <div className="flex gap-2 mb-3 overflow-x-auto pb-1">
@@ -311,18 +302,13 @@ export function ChatInterface({
               maxLength={MAX_MESSAGE_LENGTH}
             />
 
-            <div className="absolute right-2 bottom-2 flex items-center space-x-1">
-              {charCount > 0 && (
-                <span className={`text-xs mr-1 ${charCount > MAX_MESSAGE_LENGTH * 0.9 ? 'text-red-500 dark:text-red-400' : 'text-gray-400 dark:text-[#737373]'}`}>
-                  {charCount}
-                </span>
-              )}
+            <div className="absolute right-2 bottom-2">
               <button
                 onClick={handleSubmit}
                 disabled={!inputText.trim() || isLoading}
                 className={`p-2 rounded-lg transition-all ${
                   inputText.trim() && !isLoading
-                    ? 'bg-[#6366f1] hover:bg-[#4f46e5] text-white'
+                    ? 'bg-[#ea580c] hover:bg-[#dc4e04] text-white'
                     : 'bg-gray-100 dark:bg-[#2a2a2a] text-gray-400 dark:text-[#737373] cursor-not-allowed'
                 }`}
               >

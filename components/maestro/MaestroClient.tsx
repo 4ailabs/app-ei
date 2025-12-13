@@ -8,8 +8,10 @@ import { getSystemPromptForDay } from '@/lib/maestro/prompts'
 import { ChatInterface } from '@/components/maestro/ChatInterface'
 import { DaySelector } from '@/components/maestro/DaySelector'
 import { LiveVoiceInterface } from '@/components/maestro/LiveVoiceInterface'
+import { useSidebar } from '@/components/providers/SidebarProvider'
 
 export function MaestroClient() {
+  const { isCollapsed } = useSidebar()
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [selectedDay, setSelectedDay] = useState<DayNumber>(1)
@@ -140,7 +142,9 @@ export function MaestroClient() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-white dark:bg-[#1A1A1A]">
+    <div className={`fixed inset-0 flex flex-col bg-white dark:bg-[#1A1A1A] z-40 transition-all duration-300 lg:top-0 top-16 ${
+      isCollapsed ? 'lg:left-0' : 'lg:left-80'
+    }`}>
       {/* Header */}
       <header className="h-14 border-b border-[#E5E4E0] dark:border-[#333333] bg-white dark:bg-[#1A1A1A] flex items-center justify-between px-4 shrink-0 z-20">
         <div className="flex items-center space-x-3">
@@ -176,7 +180,7 @@ export function MaestroClient() {
       </header>
 
       {/* Chat Interface */}
-      <main className="flex-1 overflow-hidden">
+      <main className="flex-1 overflow-hidden min-h-0">
         <ChatInterface
           messages={messages}
           onSendMessage={handleSendMessage}
