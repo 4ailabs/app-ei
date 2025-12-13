@@ -92,6 +92,34 @@ export const seminarioPasado: DiaSeminarioPasado[] = [
         audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%203.2%20Las%20cuatro%20palancas%202a%20pate%20R.wav",
         order: 8,
         description: "Segunda parte sobre las cuatro palancas de regulación"
+      },
+      {
+        id: "sp-d1-a9",
+        title: "Sufrimiento y Trauma (1ª Parte)",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%204.1%20Sufrimiento%20y%20trauma%201a%20parte%20R.wav",
+        order: 9,
+        description: "Primera parte sobre sufrimiento y trauma"
+      },
+      {
+        id: "sp-d1-a10",
+        title: "Sufrimiento y Trauma (2ª Parte)",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%204.1%20Sufrimiento%20y%20trauma%202a%20parte%20R.wav",
+        order: 10,
+        description: "Segunda parte sobre sufrimiento y trauma"
+      },
+      {
+        id: "sp-d1-a11",
+        title: "Patrones Antiguos",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%204.2%20Patrones%20antiguos%20R.wav",
+        order: 11,
+        description: "Exploración de los patrones antiguos de supervivencia"
+      },
+      {
+        id: "sp-d1-a12",
+        title: "Tu Nueva Historia",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%204.3%20Tu%20nueva%20historia%20R.wav",
+        order: 12,
+        description: "Construyendo tu nueva narrativa personal"
       }
     ]
   },
