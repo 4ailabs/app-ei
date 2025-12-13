@@ -37,7 +37,7 @@ export const seminarioOnline: DiaSeminarioOnline[] = [
       {
         id: "sp-v1-1",
         title: "Día 1 Módulo 1",
-        cloudflareStreamId: "e9d4fc13a2baa8b792331d2e3db6a4bd",
+        cloudflareStreamId: "aefa8bea28f24c1b5d7bf14d5d04c3ec",
         order: 1,
         description: "Primera parte del seminario"
       }
@@ -168,7 +168,57 @@ export const seminarioOnline: DiaSeminarioOnline[] = [
     day: 2,
     title: "Día 2 - Sesión 2",
     videos: [],
-    audios: []
+    audios: [
+      {
+        id: "sp-d2-a1",
+        title: "Regulación y Estado Óptimo",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Dia%202%20audios%20TRSB%20y%20PONS/Audios%20espan%CC%83ol%20dia%202%20TRSN%20y%20PONS/Audio%200%20Regulacion%20y%20estado%20optimo%20R.wav",
+        order: 1,
+        description: "Audio de regulación para alcanzar el estado óptimo"
+      },
+      {
+        id: "sp-d2-a2",
+        title: "TRSB 1.1 - Apertura",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Dia%202%20audios%20TRSB%20y%20PONS/Audios%20espan%CC%83ol%20dia%202%20TRSN%20y%20PONS/Audio%20TRSB%201.1%20Apertura%20R.wav",
+        order: 2,
+        description: "Apertura de la técnica TRSB"
+      },
+      {
+        id: "sp-d2-a3",
+        title: "Protocolo TRSB 1.2",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Dia%202%20audios%20TRSB%20y%20PONS/Audios%20espan%CC%83ol%20dia%202%20TRSN%20y%20PONS/Audio%20protocolo%20TRSB%201.2%20R.wav",
+        order: 3,
+        description: "Protocolo guiado de TRSB"
+      },
+      {
+        id: "sp-d2-a4",
+        title: "Práctica Grupal TRSB 1.3",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Dia%202%20audios%20TRSB%20y%20PONS/Audios%20espan%CC%83ol%20dia%202%20TRSN%20y%20PONS/Audio%20practica%20grupal%20TRSB%201.3%20R.wav",
+        order: 4,
+        description: "Práctica grupal guiada de TRSB"
+      },
+      {
+        id: "sp-d2-a5",
+        title: "PONS Fundamentos 1.4",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Dia%202%20audios%20TRSB%20y%20PONS/Audios%20espan%CC%83ol%20dia%202%20TRSN%20y%20PONS/Audio%20PONS%20fundamentos%201.4%20R.wav",
+        order: 5,
+        description: "Fundamentos de la técnica PONS"
+      },
+      {
+        id: "sp-d2-a6",
+        title: "PONS Protocolo 1.5",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Dia%202%20audios%20TRSB%20y%20PONS/Audios%20espan%CC%83ol%20dia%202%20TRSN%20y%20PONS/Audio%20PONS%20protocolo%201.5%20R.wav",
+        order: 6,
+        description: "Protocolo guiado de PONS"
+      },
+      {
+        id: "sp-d2-a7",
+        title: "PONS Cierre 1.6",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Dia%202%20audios%20TRSB%20y%20PONS/Audios%20espan%CC%83ol%20dia%202%20TRSN%20y%20PONS/Audio%20PONS%20cierre%201.6%20R.wav",
+        order: 7,
+        description: "Cierre de la sesión PONS"
+      }
+    ]
   },
   {
     day: 3,

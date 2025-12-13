@@ -1413,8 +1413,142 @@ export const sessions: Session[] = [
     day: 2,
     imageUrl: "/images/sessions/session-5.png",
     pdfUrl: "",
-    videos: [],
-    audios: [],
+    videos: [
+      {
+        id: "v5-1",
+        title: "Reprocesar Memorias",
+        cloudflareStreamId: "6127012ce947bc8a1d2486f425cc3e7d",
+        description: "Cómo reprocesar memorias con la técnica TRSB"
+      },
+      {
+        id: "v5-2",
+        title: "El Mensaje Somático",
+        cloudflareStreamId: "3cc17c711633d2e2debd3d0bc658b065",
+        description: "Entendiendo los mensajes del cuerpo durante el reprocesamiento"
+      },
+      {
+        id: "v5-3",
+        title: "Midiendo el Cambio Emocional",
+        cloudflareStreamId: "d7c99a8485e46dc61f0212147c4a956f",
+        description: "Cómo medir y evaluar los cambios emocionales durante el proceso TRSB"
+      },
+      {
+        id: "v5-4",
+        title: "El Lenguaje Somático del Cuerpo",
+        cloudflareStreamId: "d702292c14fff67fb02f0395f1dbab4d",
+        description: "Cómo interpretar las señales somáticas durante el procesamiento"
+      },
+      {
+        id: "v5-5",
+        title: "El Procesamiento Adaptativo",
+        cloudflareStreamId: "4f5b9f0f7477e435e4130546c67e1287",
+        description: "Técnicas de procesamiento adaptativo para diferentes situaciones"
+      },
+      {
+        id: "v5-6",
+        title: "El Abrazo de Mariposa",
+        cloudflareStreamId: "6e148b1712d829a27ceddaa1cdb5ead6",
+        description: "Técnica de estimulación bilateral con el abrazo de mariposa"
+      },
+      {
+        id: "v5-7",
+        title: "Las 8 Fases de TRSB",
+        cloudflareStreamId: "3efe181881684eeeabc780a36d11a564",
+        description: "Explicación detallada de las 8 fases del proceso TRSB"
+      },
+      {
+        id: "v5-8",
+        title: "La Tríada Cognitiva",
+        cloudflareStreamId: "440bd86dbdc4fd895510997a3b56e0a3",
+        description: "Trabajo con la tríada cognitiva en el proceso TRSB"
+      }
+    ],
+    audios: [
+      {
+        id: "a5-1",
+        title: "Preparación para Procesamiento",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A1%20%E2%80%94%20PREPARACIO%CC%81N%20PARA%20PROCESAMIENTO.wav",
+        description: "Audio guiado para preparar el sistema nervioso antes del procesamiento TRSB",
+        category: "regulacion"
+      },
+      {
+        id: "a5-2",
+        title: "Ciclo TRSB Guiado — Intensidad Baja (Parte 1)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A2%20%E2%80%94%20CICLO%20TRSB%20GUIADO%20%E2%80%94%20INTENSIDAD%20BAJA%20Parte%201%20%20.wav",
+        description: "Primera parte del ciclo TRSB con intensidad baja para principiantes",
+        category: "regulacion"
+      },
+      {
+        id: "a5-3",
+        title: "Ciclo TRSB Guiado — Intensidad Baja (Parte 2)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A3%20%E2%80%94%20CICLO%20TRSB%20GUIADO%20%E2%80%94%20INTENSIDAD%20BAJA%20Parte%202%20.wav",
+        description: "Segunda parte del ciclo TRSB con intensidad baja",
+        category: "regulacion"
+      },
+      {
+        id: "a5-4",
+        title: "Ciclo TRSB Guiado — Intensidad Media (Parte 1)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A3%20%E2%80%94%20CICLO%20TRSB%20GUIADO%20%E2%80%94%20INTENSIDAD%20MEDIA%20%20Parte%201.wav",
+        description: "Primera parte del ciclo TRSB con intensidad media",
+        category: "regulacion"
+      },
+      {
+        id: "a5-5",
+        title: "Ciclo TRSB Guiado — Intensidad Media (Parte 2)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A3%20%E2%80%94%20CICLO%20TRSB%20GUIADO%20%E2%80%94%20INTENSIDAD%20MEDIA%20Parte%202.wav",
+        description: "Segunda parte del ciclo TRSB con intensidad media",
+        category: "regulacion"
+      },
+      {
+        id: "a5-6",
+        title: "Ciclo TRSB Guiado — Intensidad Media (Parte 3)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A3%20%E2%80%94%20CICLO%20TRSB%20GUIADO%20%E2%80%94%20INTENSIDAD%20MEDIA%20Parte%203.wav",
+        description: "Tercera parte del ciclo TRSB con intensidad media",
+        category: "regulacion"
+      },
+      {
+        id: "a5-7",
+        title: "Ciclo TRSB Guiado — Intensidad Media (Parte 4)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A3%20%E2%80%94%20CICLO%20TRSB%20GUIADO%20%E2%80%94%20INTENSIDAD%20MEDIA%20Parte%204.wav",
+        description: "Cuarta parte del ciclo TRSB con intensidad media",
+        category: "regulacion"
+      },
+      {
+        id: "a5-8",
+        title: "Regulación Post-Procesamiento",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A6%20%E2%80%94%20REGULACIO%CC%81N%20POST-PROCESAMIENTO.wav",
+        description: "Audio para regular el sistema nervioso después del procesamiento TRSB",
+        category: "regulacion"
+      },
+      {
+        id: "a5-9",
+        title: "Integración Cuerpo-Mente Post-TRSB",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A13%20%E2%80%94%20INTEGRACIO%CC%81N%20CUERPO-MENTE%20POST-TRSB.wav",
+        description: "Práctica de integración somática después del trabajo de procesamiento",
+        category: "meditacion"
+      },
+      {
+        id: "a5-10",
+        title: "Cierre de Sesión de Procesamiento",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A15%20%E2%80%94%20CIERRE%20DE%20SESIO%CC%81N%20DE%20PROCESAMIENTO%20.wav",
+        description: "Audio guiado para cerrar de manera segura una sesión de procesamiento",
+        category: "regulacion"
+      },
+      {
+        id: "a5-11",
+        title: "Ritual Nocturno Post-Procesamiento (Parte 1)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A16%20%E2%80%94%20RITUAL%20NOCTURNO%20POST-PROCESAMIENTO%20Parte%201%20.wav",
+        description: "Primera parte del ritual nocturno para después de una sesión de procesamiento",
+        category: "ritual_nocturno"
+      },
+      {
+        id: "a5-12",
+        title: "Ritual Nocturno Post-Procesamiento (Parte 2)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/TRSB/A16%20%E2%80%94%20RITUAL%20NOCTURNO%20POST-PROCESAMIENTO%20Parte%202%20.wav",
+        description: "Segunda parte del ritual nocturno post-procesamiento",
+        category: "ritual_nocturno"
+      }
+    ],
     themes: [],
     protocols: [
       {
