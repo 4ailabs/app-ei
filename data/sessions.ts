@@ -62,6 +62,7 @@ export interface Video {
   title: string
   vimeoId?: string
   cloudflareStreamId?: string
+  audioUrl?: string // URL del audio cuando no hay video disponible
   duration?: string
   description?: string
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { Video } from "@/data/sessions"
-import { Play, Clock, CheckCircle2 } from "lucide-react"
+import { Play, Clock, CheckCircle2, Volume2 } from "lucide-react"
 import { useState } from "react"
 
 interface VideoCardProps {
@@ -20,6 +20,8 @@ function getThumbnailUrl(streamId: string): string {
 export function VideoCard({ video, index, onPlay, accentColor = "bg-[#DA7756]" }: VideoCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const hasVideo = !!video.cloudflareStreamId || !!video.vimeoId
+  const hasAudio = !!video.audioUrl && !hasVideo
+  const hasContent = hasVideo || hasAudio
   const thumbnailUrl = video.cloudflareStreamId ? getThumbnailUrl(video.cloudflareStreamId) : null
 
   return (
@@ -27,7 +29,7 @@ export function VideoCard({ video, index, onPlay, accentColor = "bg-[#DA7756]" }
       className="bg-white dark:bg-[#252525] rounded-lg sm:rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-[#E5E4E0] dark:border-[#333333] group cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => hasVideo && onPlay?.(video)}
+      onClick={() => hasContent && onPlay?.(video)}
     >
       {/* Thumbnail */}
       <div className="relative aspect-video bg-[#1A1915] dark:bg-black overflow-hidden">
@@ -44,6 +46,19 @@ export function VideoCard({ video, index, onPlay, accentColor = "bg-[#DA7756]" }
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
           </>
+        ) : hasAudio ? (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#1A1915] via-[#2A2925] to-[#1A1915] relative overflow-hidden">
+            {/* Ambient glow for audio */}
+            <div className="absolute inset-0 bg-gradient-radial from-[#DA7756]/20 via-transparent to-transparent" />
+            {/* Animated rings */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-[#DA7756]/20 animate-ping" style={{ animationDuration: '2s' }} />
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full border border-[#DA7756]/30" />
+            </div>
+            <Volume2 className="h-10 w-10 sm:h-14 sm:w-14 text-[#DA7756]/60 relative z-10" />
+          </div>
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#2F2F2F] to-[#1A1915]">
             <Play className="h-10 w-10 sm:h-16 sm:w-16 text-white/30" />
@@ -63,6 +78,19 @@ export function VideoCard({ video, index, onPlay, accentColor = "bg-[#DA7756]" }
           </div>
         )}
 
+        {/* Audio Play Button Overlay */}
+        {hasAudio && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div
+              className={`w-12 h-12 sm:w-16 sm:h-16 ${accentColor} rounded-full flex items-center justify-center shadow-lg transform transition-all duration-300 ${
+                isHovered ? "scale-110 opacity-100" : "scale-90 opacity-80"
+              }`}
+            >
+              <Volume2 className="h-5 w-5 sm:h-7 sm:w-7 text-white" />
+            </div>
+          </div>
+        )}
+
         {/* Video Number Badge */}
         <div className="absolute top-2 left-2 sm:top-3 sm:left-3">
           <div className={`w-8 h-8 sm:w-10 sm:h-10 ${accentColor} rounded-md sm:rounded-lg flex items-center justify-center font-bold text-white shadow-lg text-sm sm:text-base`}>
@@ -75,6 +103,16 @@ export function VideoCard({ video, index, onPlay, accentColor = "bg-[#DA7756]" }
           <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
             <div className="bg-[#2ca58d] rounded-full p-1 sm:p-1.5 shadow-lg">
               <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+            </div>
+          </div>
+        )}
+
+        {/* Audio Badge */}
+        {hasAudio && (
+          <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
+            <div className="bg-[#DA7756] rounded-full px-2 py-1 sm:px-2.5 sm:py-1 shadow-lg flex items-center gap-1">
+              <Volume2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
+              <span className="text-[10px] sm:text-xs font-medium text-white">Audio</span>
             </div>
           </div>
         )}

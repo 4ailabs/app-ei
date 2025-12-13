@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, ZoomIn, Download } from "lucide-react"
 import { ImageCategory } from "@/data/sessions"
 
 interface GalleryImage {
@@ -192,9 +192,20 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                   {selectedImage.description}
                 </p>
               )}
-              <p className="text-xs text-white/60 mt-1 sm:mt-2">
-                {selectedIndex + 1} de {allImages.length}
-              </p>
+              <div className="flex items-center justify-center gap-3 mt-2 sm:mt-3">
+                <p className="text-xs text-white/60">
+                  {selectedIndex + 1} de {allImages.length}
+                </p>
+                <a
+                  href={selectedImage.url}
+                  download={`${selectedImage.title}.png`}
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-xs text-white/80 hover:text-white"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">Descargar</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

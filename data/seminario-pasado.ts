@@ -4,119 +4,108 @@ export interface VideoSeminarioPasado {
   cloudflareStreamId?: string
   duration?: string
   description?: string
-  order: number // Orden dentro del día (1-4)
+  order: number // Orden dentro del día
 }
+
+export interface AudioSeminarioPasado {
+  id: string
+  title: string
+  audioUrl: string
+  backgroundVideoId?: string // ID de Cloudflare Stream para video de fondo
+  duration?: string
+  description?: string
+  order: number // Orden dentro del día
+}
+
+// Video de ambiente compartido para los audios del seminario
+export const SEMINARIO_BACKGROUND_VIDEO_ID = "cab0ffefc4cee4a08a7f4bf41a78b7bc"
 
 export interface DiaSeminarioPasado {
   day: number // 1, 2, o 3
   title: string // Ej: "Día 1: Introducción"
   date?: string // Fecha del seminario (opcional)
-  videos: VideoSeminarioPasado[]
+  videos: VideoSeminarioPasado[] // Videos recuperados
+  audios: AudioSeminarioPasado[] // Audios del seminario
 }
 
 export const seminarioPasado: DiaSeminarioPasado[] = [
   {
     day: 1,
     title: "Día 1 - Sesión 1",
-    date: undefined, // Puedes agregar la fecha si la tienes
+    date: undefined,
     videos: [
+      // Videos recuperados irán aquí cuando estén disponibles
+    ],
+    audios: [
       {
-        id: "sp-d1-v1",
-        title: "Video 1",
+        id: "sp-d1-a1",
+        title: "Bienvenida y Contrato",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%201.1%20Bienvenida%20y%20Contrato%20R.wav",
         order: 1,
-        duration: undefined,
-        description: undefined
+        description: "Audio de bienvenida al seminario y establecimiento del contrato"
       },
       {
-        id: "sp-d1-v2",
-        title: "Video 2",
+        id: "sp-d1-a2",
+        title: "Neurocepción y 3 Estados",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%201.2%20Neurocepcion%20y%203%20estados%20R.wav",
         order: 2,
-        duration: undefined,
-        description: undefined
+        description: "Introducción a la neurocepción y los tres estados del sistema nervioso"
       },
       {
-        id: "sp-d1-v3",
-        title: "Video 3",
+        id: "sp-d1-a3",
+        title: "La Ventana de Tolerancia",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%201.3%20La%20ventana%20de%20Tolerancia%20R.wav",
         order: 3,
-        duration: undefined,
-        description: undefined
+        description: "Concepto y aplicación de la ventana de tolerancia"
       },
       {
-        id: "sp-d1-v4",
-        title: "Video 4",
+        id: "sp-d1-a4",
+        title: "Herramientas de Regulación",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%201.4%20Herramientas%20de%20regulacion%20R.wav",
         order: 4,
-        duration: undefined,
-        description: undefined
+        description: "Técnicas y herramientas para la autorregulación"
+      },
+      {
+        id: "sp-d1-a5",
+        title: "La Arquitectura de la Supervivencia",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%202.1%20La%20arquitectura%20de%20la%20supervivencia%20R.wav",
+        order: 5,
+        description: "Cómo está diseñado nuestro sistema de supervivencia"
+      },
+      {
+        id: "sp-d1-a6",
+        title: "El Cóctel de la Supervivencia",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%202.2%20El%20coctel%20de%20la%20supervivencia%20R.wav",
+        order: 6,
+        description: "Los componentes químicos de la respuesta de supervivencia"
+      },
+      {
+        id: "sp-d1-a7",
+        title: "Las Cuatro Palancas (1ª Parte)",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%203.2%20Las%20cuatro%20palancas%201a%20parte%20R.wav",
+        order: 7,
+        description: "Primera parte sobre las cuatro palancas de regulación"
+      },
+      {
+        id: "sp-d1-a8",
+        title: "Las Cuatro Palancas (2ª Parte)",
+        audioUrl: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Seminario%20On%20line/Audio%203.2%20Las%20cuatro%20palancas%202a%20pate%20R.wav",
+        order: 8,
+        description: "Segunda parte sobre las cuatro palancas de regulación"
       }
     ]
   },
   {
     day: 2,
     title: "Día 2 - Sesión 2",
-    videos: [
-      {
-        id: "sp-d2-v1",
-        title: "Video 1",
-        order: 1,
-        duration: undefined,
-        description: undefined
-      },
-      {
-        id: "sp-d2-v2",
-        title: "Video 2",
-        order: 2,
-        duration: undefined,
-        description: undefined
-      },
-      {
-        id: "sp-d2-v3",
-        title: "Video 3",
-        order: 3,
-        duration: undefined,
-        description: undefined
-      },
-      {
-        id: "sp-d2-v4",
-        title: "Video 4",
-        order: 4,
-        duration: undefined,
-        description: undefined
-      }
-    ]
+    videos: [],
+    audios: []
   },
   {
     day: 3,
     title: "Día 3 - Sesión 3",
-    videos: [
-      {
-        id: "sp-d3-v1",
-        title: "Video 1",
-        order: 1,
-        duration: undefined,
-        description: undefined
-      },
-      {
-        id: "sp-d3-v2",
-        title: "Video 2",
-        order: 2,
-        duration: undefined,
-        description: undefined
-      },
-      {
-        id: "sp-d3-v3",
-        title: "Video 3",
-        order: 3,
-        duration: undefined,
-        description: undefined
-      },
-      {
-        id: "sp-d3-v4",
-        title: "Video 4",
-        order: 4,
-        duration: undefined,
-        description: undefined
-      }
-    ]
+    videos: [],
+    audios: []
   }
 ]
 

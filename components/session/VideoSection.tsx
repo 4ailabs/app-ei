@@ -3,6 +3,7 @@
 import { Video } from "@/data/sessions"
 import { Play, Clock, CheckCircle2 } from "lucide-react"
 import { useState } from "react"
+import { AudioVisualizer } from "./AudioVisualizer"
 
 // Helper function to get Cloudflare Stream embed URL
 function getCloudflareStreamUrl(streamId: string): string {
@@ -58,6 +59,14 @@ export function VideoSection({ videos }: VideoSectionProps) {
                 allow="fullscreen; picture-in-picture"
                 allowFullScreen
               />
+            ) : selectedVideo.audioUrl ? (
+              <div className="w-full h-full">
+                <AudioVisualizer
+                  audioUrl={selectedVideo.audioUrl}
+                  title={selectedVideo.title}
+                  description={selectedVideo.description}
+                />
+              </div>
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <div className="text-center text-white">
