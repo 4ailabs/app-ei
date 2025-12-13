@@ -1567,8 +1567,69 @@ export const sessions: Session[] = [
     day: 3,
     imageUrl: "/images/sessions/session-6.png",
     pdfUrl: "",
-    videos: [],
-    audios: [],
+    videos: [
+      {
+        id: "v6-1",
+        title: "Barrido Ocular – Guía Práctica",
+        cloudflareStreamId: "f34dcfb2e6305e6953a8b2c0d8e243f3",
+        description: "Guía práctica para realizar el barrido ocular en PONS"
+      },
+      {
+        id: "v6-2",
+        title: "PONS – Dónde Miras Cuando Sientes",
+        cloudflareStreamId: "00b46ad65b474ddcad5473a4652925d0",
+        description: "Conexión entre la mirada y las sensaciones en el procesamiento PONS"
+      },
+      {
+        id: "v6-3",
+        title: "PONS – Memoria Somática",
+        cloudflareStreamId: "7d83136c989fad0d1185ecb3481e40a7",
+        description: "Trabajo con la memoria somática en el método PONS"
+      },
+      {
+        id: "v6-4",
+        title: "Las 4 Fases de PONS",
+        cloudflareStreamId: "7b9ab96278a87f4d807694dc1490a222",
+        description: "Explicación de las 4 fases del procesamiento PONS"
+      }
+    ],
+    audios: [
+      {
+        id: "a6-1",
+        title: "PONS Autoguiado — Práctica Básica (Parte 1)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/PONS/A4%20%E2%80%94%20PONS%20AUTOGUIADO%20%E2%80%94%20PRA%CC%81CTICA%20BA%CC%81SICA%20%20Parte%201.wav",
+        description: "Primera parte de la práctica básica autoguiada de PONS",
+        category: "regulacion"
+      },
+      {
+        id: "a6-2",
+        title: "PONS Autoguiado — Práctica Básica (Parte 2)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/PONS/A4%20%E2%80%94%20PONS%20AUTOGUIADO%20%E2%80%94%20PRA%CC%81CTICA%20BA%CC%81SICA%20Parte%202.wav",
+        description: "Segunda parte de la práctica básica autoguiada de PONS",
+        category: "regulacion"
+      },
+      {
+        id: "a6-3",
+        title: "PONS Autoguiado — Práctica Extendida (Parte 1)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/PONS/A5%20%E2%80%94%20PONS%20AUTOGUIADO%20%E2%80%94%20PRA%CC%81CTICA%20EXTENDIDA%20Parte%201.wav",
+        description: "Primera parte de la práctica extendida autoguiada de PONS",
+        category: "regulacion"
+      },
+      {
+        id: "a6-4",
+        title: "PONS Autoguiado — Práctica Extendida (Parte 2)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/PONS/A5%20%E2%80%94%20PONS%20AUTOGUIADO%20%E2%80%94%20PRA%CC%81CTICA%20EXTENDIDA%20Parte%202.wav",
+        description: "Segunda parte de la práctica extendida autoguiada de PONS",
+        category: "regulacion"
+      },
+      {
+        id: "a6-5",
+        title: "PONS Autoguiado — Práctica Extendida (Parte 3)",
+        url: "https://pub-5117fbee94844f5a8a08f061ad7ff61c.r2.dev/Audios/PONS/A5%20%E2%80%94%20PONS%20AUTOGUIADO%20%E2%80%94%20PRA%CC%81CTICA%20EXTENDIDA%20Parte%203.wav",
+        description: "Tercera parte de la práctica extendida autoguiada de PONS",
+        category: "regulacion"
+      }
+    ],
     themes: [],
     protocols: [
       {
