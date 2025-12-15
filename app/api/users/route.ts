@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth-server"
+import { isAdmin } from "@/lib/admin"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
-
-const ADMIN_EMAIL = "admin@seminario.com"
 
 // GET - Listar todos los usuarios con estadísticas
 export async function GET(request: NextRequest) {
@@ -15,7 +14,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Solo el admin puede acceder
-    if (session.user?.email !== ADMIN_EMAIL) {
+    const userIsAdmin = await isAdmin(session)
+    if (!userIsAdmin) {
       return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 
@@ -44,6 +44,7 @@ export async function GET(request: NextRequest) {
           email: true,
           name: true,
           approved: true,
+          isAdmin: true,
           createdAt: true,
           updatedAt: true,
           _count: {
@@ -119,7 +120,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Solo el admin puede crear usuarios
-    if (session.user?.email !== ADMIN_EMAIL) {
+    const userIsAdmin = await isAdmin(session)
+    if (!userIsAdmin) {
       return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 

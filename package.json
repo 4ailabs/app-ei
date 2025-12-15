@@ -12,6 +12,7 @@
     "db:studio": "prisma studio",
     "postinstall": "prisma generate && bash scripts/fix-prisma.sh",
     "init-user": "tsx scripts/init-user.ts",
+    "make-admin": "tsx scripts/make-admin.ts",
     "check-user": "tsx scripts/check-and-approve-user.ts",
     "approve-user": "tsx scripts/approve-user.ts",
     "extract-video-id": "tsx scripts/extract-cloudflare-video-id.ts",

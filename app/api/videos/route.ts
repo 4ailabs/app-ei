@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth-server"
+import { isAdmin } from "@/lib/admin"
 import { listVideos, getVideoDetails, deleteVideo } from "@/lib/cloudflare-stream"
-
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@seminario.com"
 
 /**
  * GET /api/videos
@@ -17,7 +16,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Solo el admin puede listar videos
-    if (session.user?.email !== ADMIN_EMAIL) {
+    const userIsAdmin = await isAdmin(session)
+    if (!userIsAdmin) {
       return NextResponse.json({ error: "Acceso denegado. Solo administradores." }, { status: 403 })
     }
 
@@ -53,7 +53,8 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Solo el admin puede eliminar videos
-    if (session.user?.email !== ADMIN_EMAIL) {
+    const userIsAdmin = await isAdmin(session)
+    if (!userIsAdmin) {
       return NextResponse.json({ error: "Acceso denegado. Solo administradores." }, { status: 403 })
     }
 

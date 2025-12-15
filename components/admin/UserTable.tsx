@@ -9,6 +9,7 @@ interface UserData {
   email: string
   name: string | null
   approved: boolean
+  isAdmin?: boolean
   createdAt: string
   stats: {
     totalSessions: number
@@ -134,17 +135,24 @@ export function UserTable({
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {user.approved ? (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-[#2ca58d]/10 dark:bg-[#3FBE9F]/20 text-[#2ca58d] dark:text-[#3FBE9F]">
-                        <CheckCircle className="h-3 w-3" />
-                        Aprobado
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-[#DA7756]/10 dark:bg-[#DA7756]/20 text-[#DA7756] dark:text-[#E5E5E5]">
-                        <XCircle className="h-3 w-3" />
-                        Pendiente
-                      </span>
-                    )}
+                    <div className="flex flex-col gap-1">
+                      {user.isAdmin && (
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 w-fit">
+                          👑 Admin
+                        </span>
+                      )}
+                      {user.approved ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-[#2ca58d]/10 dark:bg-[#3FBE9F]/20 text-[#2ca58d] dark:text-[#3FBE9F]">
+                          <CheckCircle className="h-3 w-3" />
+                          Aprobado
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-[#DA7756]/10 dark:bg-[#DA7756]/20 text-[#DA7756] dark:text-[#E5E5E5]">
+                          <XCircle className="h-3 w-3" />
+                          Pendiente
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-2">

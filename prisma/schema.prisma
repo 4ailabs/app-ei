@@ -15,6 +15,7 @@ model User {
   password      String
   image         String?
   approved      Boolean   @default(false)
+  isAdmin       Boolean   @default(false)
   accounts      Account[]
   sessions      Session[]
   progress      Progress[]

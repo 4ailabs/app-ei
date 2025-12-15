@@ -10,6 +10,7 @@ interface UserFormProps {
     email: string
     name: string | null
     approved?: boolean
+    isAdmin?: boolean
   } | null
   onClose: () => void
   onSave: () => void
@@ -21,6 +22,7 @@ export function UserForm({ user, onClose, onSave }: UserFormProps) {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [approved, setApproved] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
@@ -31,6 +33,7 @@ export function UserForm({ user, onClose, onSave }: UserFormProps) {
       setEmail(user.email)
       setName(user.name || "")
       setApproved(user.approved ?? false)
+      setIsAdmin(user.isAdmin ?? false)
     }
   }, [user])
 
@@ -66,7 +69,10 @@ export function UserForm({ user, onClose, onSave }: UserFormProps) {
 
       const body: any = { email, name: name || null }
       if (password) body.password = password
-      if (isEdit) body.approved = approved
+      if (isEdit) {
+        body.approved = approved
+        body.isAdmin = isAdmin
+      }
 
       const response = await fetch(url, {
         method,
@@ -177,17 +183,31 @@ export function UserForm({ user, onClose, onSave }: UserFormProps) {
           )}
 
           {isEdit && (
-            <div className="flex items-center gap-3 p-4 bg-[#F5F4F0] dark:bg-[#2A2A2A] rounded-lg">
-              <input
-                type="checkbox"
-                id="approved"
-                checked={approved}
-                onChange={(e) => setApproved(e.target.checked)}
-                className="h-4 w-4 text-[#DA7756] dark:text-[#DA7756] border-[#E5E4E0] dark:border-[#333333] rounded focus:ring-[#DA7756] dark:focus:ring-[#DA7756]"
-              />
-              <label htmlFor="approved" className="text-sm font-medium text-[#1A1915] dark:text-[#E5E5E5] cursor-pointer">
-                Usuario aprobado (puede iniciar sesión)
-              </label>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 p-4 bg-[#F5F4F0] dark:bg-[#2A2A2A] rounded-lg">
+                <input
+                  type="checkbox"
+                  id="approved"
+                  checked={approved}
+                  onChange={(e) => setApproved(e.target.checked)}
+                  className="h-4 w-4 text-[#DA7756] dark:text-[#DA7756] border-[#E5E4E0] dark:border-[#333333] rounded focus:ring-[#DA7756] dark:focus:ring-[#DA7756]"
+                />
+                <label htmlFor="approved" className="text-sm font-medium text-[#1A1915] dark:text-[#E5E5E5] cursor-pointer">
+                  Usuario aprobado (puede iniciar sesión)
+                </label>
+              </div>
+              <div className="flex items-center gap-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                <input
+                  type="checkbox"
+                  id="isAdmin"
+                  checked={isAdmin}
+                  onChange={(e) => setIsAdmin(e.target.checked)}
+                  className="h-4 w-4 text-purple-600 dark:text-purple-400 border-[#E5E4E0] dark:border-[#333333] rounded focus:ring-purple-600 dark:focus:ring-purple-400"
+                />
+                <label htmlFor="isAdmin" className="text-sm font-medium text-[#1A1915] dark:text-[#E5E5E5] cursor-pointer">
+                  👑 Administrador (acceso completo al panel)
+                </label>
+              </div>
             </div>
           )}
 

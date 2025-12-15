@@ -7,12 +7,12 @@ import bcrypt from "bcryptjs"
 
 export async function POST(request: NextRequest) {
   try {
-    // Verificar si ya existe algún usuario aprobado
-    const approvedUserCount = await prisma.user.count({
-      where: { approved: true }
+    // Verificar si ya existe algún administrador
+    const adminCount = await prisma.user.count({
+      where: { isAdmin: true }
     })
 
-    if (approvedUserCount > 0) {
+    if (adminCount > 0) {
       return NextResponse.json(
         { error: "Ya existe al menos un administrador. Usa el panel de admin para gestionar usuarios." },
         { status: 403 }
@@ -56,26 +56,28 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 10)
 
     if (existingUser) {
-      // Actualizar usuario existente y aprobarlo
+      // Actualizar usuario existente y convertirlo en admin
       user = await prisma.user.update({
         where: { email },
         data: {
           password: hashedPassword,
           name: name || existingUser.name,
-          approved: true
+          approved: true,
+          isAdmin: true
         },
-        select: { id: true, email: true, name: true, approved: true }
+        select: { id: true, email: true, name: true, approved: true, isAdmin: true }
       })
     } else {
-      // Crear nuevo usuario aprobado
+      // Crear nuevo usuario como administrador
       user = await prisma.user.create({
         data: {
           email,
           password: hashedPassword,
           name: name || "Administrador",
-          approved: true
+          approved: true,
+          isAdmin: true
         },
-        select: { id: true, email: true, name: true, approved: true }
+        select: { id: true, email: true, name: true, approved: true, isAdmin: true }
       })
     }
 
@@ -95,13 +97,13 @@ export async function POST(request: NextRequest) {
 // GET para verificar el estado del setup
 export async function GET() {
   try {
-    const approvedUserCount = await prisma.user.count({
-      where: { approved: true }
+    const adminCount = await prisma.user.count({
+      where: { isAdmin: true }
     })
 
     return NextResponse.json({
-      needsSetup: approvedUserCount === 0,
-      message: approvedUserCount === 0
+      needsSetup: adminCount === 0,
+      message: adminCount === 0
         ? "No hay administradores. Usa POST /api/setup para crear el primero."
         : "El sistema ya tiene administradores configurados."
     })

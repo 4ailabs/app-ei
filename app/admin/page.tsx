@@ -1,9 +1,8 @@
 import { redirect } from "next/navigation"
 import { auth } from "@/lib/auth-server"
+import { isAdmin } from "@/lib/admin"
 import { AdminPanel } from "@/components/admin/AdminPanel"
 import { Navbar } from "@/components/Navbar"
-
-const ADMIN_EMAIL = "admin@seminario.com"
 
 export default async function AdminPage() {
   const session = await auth()
@@ -14,7 +13,8 @@ export default async function AdminPage() {
   }
 
   // Protección: solo el administrador puede acceder
-  if (session.user?.email !== ADMIN_EMAIL) {
+  const userIsAdmin = await isAdmin(session)
+  if (!userIsAdmin) {
     redirect("/")
   }
 

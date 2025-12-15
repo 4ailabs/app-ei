@@ -53,15 +53,13 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
   )
 }
 
-        const ADMIN_EMAIL = "admin@seminario.com"
-
         export function Sidebar() {
           const pathname = usePathname()
           const { data: session } = useSession()
           const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
           const { isCollapsed: isDesktopCollapsed, toggleCollapsed } = useSidebar()
 
-          const isAdmin = session?.user?.email === ADMIN_EMAIL
+          const isAdmin = session?.user?.isAdmin ?? false
 
           const closeMobileMenu = () => {
             setIsMobileMenuOpen(false)

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth-server"
+import { isAdmin } from "@/lib/admin"
 import { prisma } from "@/lib/prisma"
 
 // GET - Obtener estadísticas generales
@@ -9,6 +10,12 @@ export async function GET() {
     
     if (!session) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
+    }
+
+    // Solo el admin puede ver estadísticas
+    const userIsAdmin = await isAdmin(session)
+    if (!userIsAdmin) {
+      return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 
     // Obtener estadísticas en paralelo

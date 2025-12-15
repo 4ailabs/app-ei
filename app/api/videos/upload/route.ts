@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth-server"
+import { isAdmin } from "@/lib/admin"
 import { uploadVideoToStream, uploadVideoFromUrl } from "@/lib/cloudflare-stream"
-
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@seminario.com"
 
 /**
  * POST /api/videos/upload
@@ -21,7 +20,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Solo el admin puede subir videos
-    if (session.user?.email !== ADMIN_EMAIL) {
+    const userIsAdmin = await isAdmin(session)
+    if (!userIsAdmin) {
       return NextResponse.json({ error: "Acceso denegado. Solo administradores." }, { status: 403 })
     }
 

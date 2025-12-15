@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth-server"
+import { isAdmin } from "@/lib/admin"
 import { getVideoDetails } from "@/lib/cloudflare-stream"
-
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@seminario.com"
 
 /**
  * GET /api/videos/[uid]
@@ -20,7 +19,8 @@ export async function GET(
     }
 
     // Solo el admin puede ver detalles de videos
-    if (session.user?.email !== ADMIN_EMAIL) {
+    const userIsAdmin = await isAdmin(session)
+    if (!userIsAdmin) {
       return NextResponse.json({ error: "Acceso denegado. Solo administradores." }, { status: 403 })
     }
 

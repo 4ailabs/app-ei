@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth-server"
+import { isAdmin } from "@/lib/admin"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
-
-const ADMIN_EMAIL = "admin@seminario.com"
 
 // GET - Obtener un usuario específico
 export async function GET(
@@ -18,7 +17,8 @@ export async function GET(
     }
 
     // Solo el admin puede acceder
-    if (session.user?.email !== ADMIN_EMAIL) {
+    const userIsAdmin = await isAdmin(session)
+    if (!userIsAdmin) {
       return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 
@@ -88,7 +88,8 @@ export async function PUT(
     }
 
     // Solo el admin puede actualizar usuarios
-    if (session.user?.email !== ADMIN_EMAIL) {
+    const userIsAdmin = await isAdmin(session)
+    if (!userIsAdmin) {
       return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 
@@ -104,6 +105,7 @@ export async function PUT(
       updateData.password = await bcrypt.hash(password, 10)
     }
     if (approved !== undefined) updateData.approved = approved
+    if (body.isAdmin !== undefined) updateData.isAdmin = body.isAdmin
 
     const user = await prisma.user.update({
       where: { id },
@@ -113,6 +115,7 @@ export async function PUT(
         email: true,
         name: true,
         approved: true,
+        isAdmin: true,
         updatedAt: true,
       },
     })
@@ -148,7 +151,8 @@ export async function DELETE(
     }
 
     // Solo el admin puede eliminar usuarios
-    if (session.user?.email !== ADMIN_EMAIL) {
+    const userIsAdmin = await isAdmin(session)
+    if (!userIsAdmin) {
       return NextResponse.json({ error: "Acceso denegado" }, { status: 403 })
     }
 
