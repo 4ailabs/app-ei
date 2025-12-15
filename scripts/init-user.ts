@@ -1,5 +1,14 @@
-import { prisma } from '../lib/prisma'
+import { config } from 'dotenv'
+import { resolve } from 'path'
+import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
+
+// Cargar variables de entorno desde .env.local si existe
+config({ path: resolve(process.cwd(), '.env.local') })
+config() // También cargar .env si existe
+
+// Crear instancia de Prisma con las variables de entorno cargadas
+const prisma = new PrismaClient()
 
 async function main() {
   const email = process.argv[2] || 'admin@example.com'
