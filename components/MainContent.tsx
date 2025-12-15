@@ -8,7 +8,7 @@ export function MainContent({ children }: { children: ReactNode }) {
 
   return (
     <main
-      className={`flex-1 p-2 lg:p-8 lg:mt-0 mt-16 transition-all duration-300 overflow-x-hidden ${
+      className={`flex-1 p-2 lg:p-8 mt-header-safe transition-all duration-300 overflow-x-hidden ${
         isCollapsed ? 'lg:ml-0' : 'lg:ml-80'
       }`}
     >

@@ -92,7 +92,7 @@ export const LiveVoiceInterface: React.FC<LiveVoiceInterfaceProps> = ({
       <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a2e] to-[#0f0f0f] opacity-50"></div>
 
       {/* Header */}
-      <div className="relative z-10 p-6">
+      <div className="relative z-10 p-6 pt-safe">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold flex items-center">
             <Mic size={24} className="mr-2 text-[#ea580c]" /> Sesión de Voz
@@ -209,10 +209,10 @@ export const LiveVoiceInterface: React.FC<LiveVoiceInterfaceProps> = ({
       </div>
 
       {/* Controls */}
-      <div className="relative z-10 p-8 pb-12 flex justify-center">
+      <div className="relative z-10 p-8 pb-safe flex justify-center">
         <button
           onClick={handleClose}
-          className="bg-red-500 hover:bg-red-600 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95"
+          className="bg-red-500 hover:bg-red-600 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95 mb-4"
           title="Terminar llamada"
         >
           <PhoneOff size={32} />

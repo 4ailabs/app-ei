@@ -161,7 +161,7 @@ export function MaestroClient() {
   }
 
   return (
-    <div className={`fixed inset-0 flex flex-col bg-white dark:bg-[#1A1A1A] z-40 transition-all duration-300 lg:top-0 top-16 ${
+    <div className={`fixed inset-0 flex flex-col bg-white dark:bg-[#1A1A1A] z-40 transition-all duration-300 top-header-safe pb-safe ${
       isCollapsed ? 'lg:left-0' : 'lg:left-80'
     }`}>
       {/* Header */}

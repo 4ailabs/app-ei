@@ -150,7 +150,7 @@ export function ChatInterface({
         </div>
 
         {/* Input Area - Claude style */}
-        <div className="shrink-0 border-t border-gray-200 dark:border-[#2a2a2a] bg-[#fafafa] dark:bg-[#1a1a1a]">
+        <div className="shrink-0 border-t border-gray-200 dark:border-[#2a2a2a] bg-[#fafafa] dark:bg-[#1a1a1a] pb-safe">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
             <div className="relative rounded-xl border border-gray-300 dark:border-[#3a3a3a] bg-white dark:bg-[#212121] focus-within:border-gray-400 dark:focus-within:border-[#4a4a4a] transition-all">
               <textarea
@@ -274,7 +274,7 @@ export function ChatInterface({
       </div>
 
       {/* Input Area - Claude style */}
-      <div className="shrink-0 border-t border-gray-200 dark:border-[#2a2a2a] bg-[#fafafa] dark:bg-[#1a1a1a]">
+      <div className="shrink-0 border-t border-gray-200 dark:border-[#2a2a2a] bg-[#fafafa] dark:bg-[#1a1a1a] pb-safe">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
           {/* Rate Limit Indicator */}
           {rateLimit && (

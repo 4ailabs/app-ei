@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { SessionProvider } from "@/components/providers/SessionProvider"
@@ -17,6 +17,13 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Seminario Internacional - Inteligencia Energética",
   description: "Plataforma de aprendizaje para el Seminario Internacional de Inteligencia Energética",
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({

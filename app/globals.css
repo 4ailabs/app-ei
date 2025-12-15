@@ -309,3 +309,46 @@ input:focus {
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #5A5A5A;
 }
+
+/* iOS Safe Areas para iPhone con notch/Dynamic Island */
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 0.5rem);
+}
+
+.pt-safe {
+  padding-top: max(env(safe-area-inset-top, 0px), 1rem);
+}
+
+.px-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Altura mínima para el mobile header considerando safe area */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .min-h-header-safe {
+    min-height: calc(4rem + env(safe-area-inset-top, 0px));
+  }
+}
+
+/* Margen superior para contenido principal en móvil con safe area */
+.mt-header-safe {
+  margin-top: calc(4rem + env(safe-area-inset-top, 0px));
+}
+
+@media (min-width: 1024px) {
+  .mt-header-safe {
+    margin-top: 0;
+  }
+}
+
+/* Top offset para componentes fixed en móvil con safe area */
+.top-header-safe {
+  top: calc(4rem + env(safe-area-inset-top, 0px));
+}
+
+@media (min-width: 1024px) {
+  .top-header-safe {
+    top: 0;
+  }
+}

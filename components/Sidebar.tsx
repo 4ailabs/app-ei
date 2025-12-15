@@ -68,7 +68,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
           return (
             <>
               {/* Mobile Header */}
-              <div className="lg:hidden fixed top-0 left-0 right-0 bg-[#FAF9F7] dark:bg-[#1A1A1A] border-b border-[#E5E4E0] dark:border-[#333333] z-50 p-4">
+              <div className="lg:hidden fixed top-0 left-0 right-0 bg-[#FAF9F7] dark:bg-[#1A1A1A] border-b border-[#E5E4E0] dark:border-[#333333] z-50 p-4 pt-safe">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <div className="rounded-lg overflow-hidden">
