@@ -25,12 +25,15 @@ const nextConfig: NextConfig = {
         source: '/:path*',
         headers: [
           {
-            key: 'X-Frame-Options',
-            value: 'ALLOW-FROM https://inteligencia-energetica.com',
-          },
-          {
+            // Content-Security-Policy es el estándar moderno (X-Frame-Options está deprecado)
             key: 'Content-Security-Policy',
             value: "frame-ancestors 'self' https://inteligencia-energetica.com https://*.inteligencia-energetica.com;",
+          },
+          {
+            // Mantener X-Frame-Options para compatibilidad con navegadores antiguos
+            // Nota: SAMEORIGIN permite embedding desde el mismo origen, pero CSP tiene prioridad
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
           },
           {
             key: 'X-Content-Type-Options',
