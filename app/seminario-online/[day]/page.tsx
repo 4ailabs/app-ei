@@ -174,7 +174,7 @@ export default function DayPage() {
           {/* Sección de Audios */}
           {dia.audios.length > 0 && (
             <div className="mb-10">
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-[#DA7756] rounded-lg flex items-center justify-center">
                   <Volume2 className="h-5 w-5 text-white" />
                 </div>
@@ -182,6 +182,9 @@ export default function DayPage() {
                   Sesiones en Audio
                 </h2>
               </div>
+              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-6 ml-13">
+                El contenido esencial del seminario en formato portátil. Ideal para repasar los conceptos clave en tu día a día.
+              </p>
               <div className="flex flex-col gap-3">
                 {dia.audios.map((audio, index) => (
                   <div
