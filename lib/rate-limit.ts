@@ -3,9 +3,37 @@
  * Simple in-memory rate limiter (para producción, considerar usar Redis)
  */
 
+import { NextRequest } from 'next/server'
+
 interface RateLimitEntry {
   count: number
   resetTime: number
+}
+
+/**
+ * Obtener la IP del cliente desde la request
+ */
+export function getClientIP(request: NextRequest): string {
+  // Intentar obtener IP de headers comunes
+  const forwarded = request.headers.get('x-forwarded-for')
+  const realIP = request.headers.get('x-real-ip')
+  const cfConnectingIP = request.headers.get('cf-connecting-ip')
+  
+  if (forwarded) {
+    // x-forwarded-for puede tener múltiples IPs, tomar la primera
+    return forwarded.split(',')[0].trim()
+  }
+  
+  if (realIP) {
+    return realIP
+  }
+  
+  if (cfConnectingIP) {
+    return cfConnectingIP
+  }
+  
+  // Fallback: usar 'unknown' si no se puede determinar
+  return 'unknown'
 }
 
 const rateLimitStore = new Map<string, RateLimitEntry>()

@@ -6,15 +6,17 @@ export async function POST(request: NextRequest) {
   try {
     // Rate limiting: máximo 10 intentos por IP cada 5 minutos
     const clientIP = getClientIP(request)
-    const rateLimit = checkRateLimit(`diagnose:${clientIP}`, {
-      maxRequests: 10,
-      windowMs: 5 * 60 * 1000, // 5 minutos
-    })
+    const rateLimit = checkRateLimit(
+      `diagnose:${clientIP}`,
+      10, // máximo 10 requests
+      5 * 60 * 1000 // ventana de 5 minutos
+    )
 
-    if (!rateLimit.success) {
+    if (!rateLimit.allowed) {
+      const resetIn = Math.ceil((rateLimit.resetAt - Date.now()) / 1000)
       return NextResponse.json(
         {
-          error: `Demasiados intentos. Intenta de nuevo en ${rateLimit.resetIn} segundos.`
+          error: `Demasiados intentos. Intenta de nuevo en ${resetIn} segundos.`
         },
         { status: 429 }
       )
