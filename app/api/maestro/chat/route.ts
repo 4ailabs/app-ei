@@ -3,6 +3,10 @@ import { auth } from '@/lib/auth-server'
 import { GoogleGenAI } from '@google/genai'
 import { getSystemPromptForDay } from '@/lib/maestro/prompts'
 import { Message, DayNumber } from '@/lib/maestro/types'
+import { checkDailyRateLimit } from '@/lib/rate-limit'
+
+// Límite de mensajes por día por usuario
+const DAILY_MESSAGE_LIMIT = 15
 
 const getAiClient = () => {
   const apiKey = process.env.GOOGLE_GEMINI_API_KEY
@@ -17,12 +21,35 @@ export async function POST(request: NextRequest) {
     // Verificar autenticación
     const session = await auth()
     
-    if (!session) {
+    if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'No autorizado. Debes iniciar sesión.' },
         { status: 401 }
       )
     }
+
+    // Verificar límite diario de mensajes
+    const userId = session.user.id
+    const rateLimit = checkDailyRateLimit(`chat:${userId}`, DAILY_MESSAGE_LIMIT)
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        {
+          error: `Has alcanzado el límite de ${DAILY_MESSAGE_LIMIT} mensajes por día. Podrás enviar más mensajes mañana.`,
+          resetAt: rateLimit.resetAt,
+          remaining: 0
+        },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': DAILY_MESSAGE_LIMIT.toString(),
+            'X-RateLimit-Remaining': '0',
+            'X-RateLimit-Reset': rateLimit.resetAt.toString()
+          }
+        }
+      )
+    }
+
     const { message, history, day } = await request.json() as {
       message: string
       history: Message[]
@@ -70,7 +97,14 @@ export async function POST(request: NextRequest) {
 
     const responseText = response.text || 'Lo siento, tuve un problema pensando en esa respuesta. ¿Podrías intentar de nuevo?'
 
-    return NextResponse.json({ response: responseText })
+    return NextResponse.json({
+      response: responseText,
+      rateLimit: {
+        remaining: rateLimit.remaining,
+        limit: DAILY_MESSAGE_LIMIT,
+        resetAt: rateLimit.resetAt
+      }
+    })
   } catch (error: unknown) {
     console.error('Maestro API error:', error)
 

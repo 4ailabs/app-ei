@@ -10,12 +10,19 @@ import { DaySelector } from '@/components/maestro/DaySelector'
 import { LiveVoiceInterface } from '@/components/maestro/LiveVoiceInterface'
 import { useSidebar } from '@/components/providers/SidebarProvider'
 
+interface RateLimitInfo {
+  remaining: number
+  limit: number
+  resetAt: number
+}
+
 export function MaestroClient() {
   const { isCollapsed } = useSidebar()
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [selectedDay, setSelectedDay] = useState<DayNumber>(1)
   const [showVoiceMode, setShowVoiceMode] = useState(false)
+  const [rateLimit, setRateLimit] = useState<RateLimitInfo | null>(null)
 
   const handleSendMessage = useCallback(async (text: string) => {
     const trimmedText = text.trim()
@@ -45,7 +52,20 @@ export function MaestroClient() {
       const data = await response.json()
 
       if (!response.ok) {
+        // Si es error de rate limit, actualizar el estado
+        if (response.status === 429 && data.remaining !== undefined) {
+          setRateLimit({
+            remaining: 0,
+            limit: data.limit || 15,
+            resetAt: data.resetAt
+          })
+        }
         throw new Error(data.error || 'Error al enviar mensaje')
+      }
+
+      // Actualizar info de rate limit desde la respuesta
+      if (data.rateLimit) {
+        setRateLimit(data.rateLimit)
       }
 
       const aiMsg: Message = {
@@ -135,7 +155,6 @@ export function MaestroClient() {
     return (
       <LiveVoiceInterface
         onClose={handleCloseVoice}
-        selectedDay={selectedDay}
         systemPrompt={getSystemPromptForDay(selectedDay)}
       />
     )
@@ -188,6 +207,7 @@ export function MaestroClient() {
           onQuickAction={handleQuickAction}
           onRegenerateMessage={handleRegenerateMessage}
           selectedDay={selectedDay}
+          rateLimit={rateLimit}
         />
       </main>
     </div>

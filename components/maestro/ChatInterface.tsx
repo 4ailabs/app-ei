@@ -6,6 +6,12 @@ import { Message, DayNumber } from '@/lib/maestro/types'
 import { DAY_CONFIGS } from '@/lib/maestro/constants'
 import { FormattedText } from './FormattedText'
 
+interface RateLimitInfo {
+  remaining: number
+  limit: number
+  resetAt: number
+}
+
 interface ChatInterfaceProps {
   messages: Message[]
   onSendMessage: (text: string) => void
@@ -13,6 +19,7 @@ interface ChatInterfaceProps {
   onQuickAction: (action: string) => void
   onRegenerateMessage?: (messageId: string) => void
   selectedDay: DayNumber
+  rateLimit?: RateLimitInfo | null
 }
 
 export function ChatInterface({
@@ -21,7 +28,8 @@ export function ChatInterface({
   isLoading,
   onQuickAction,
   onRegenerateMessage,
-  selectedDay
+  selectedDay,
+  rateLimit
 }: ChatInterfaceProps) {
   const dayConfig = DAY_CONFIGS[selectedDay]
   const [inputText, setInputText] = useState('')
@@ -268,6 +276,29 @@ export function ChatInterface({
       {/* Input Area - Claude style */}
       <div className="shrink-0 border-t border-gray-200 dark:border-[#2a2a2a] bg-[#fafafa] dark:bg-[#1a1a1a]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
+          {/* Rate Limit Indicator */}
+          {rateLimit && (
+            <div className={`flex items-center justify-between text-xs mb-3 px-1 ${
+              rateLimit.remaining === 0
+                ? 'text-red-500 dark:text-red-400'
+                : rateLimit.remaining <= 3
+                  ? 'text-amber-500 dark:text-amber-400'
+                  : 'text-gray-500 dark:text-[#737373]'
+            }`}>
+              <span>
+                {rateLimit.remaining === 0
+                  ? '⚠️ Sin mensajes disponibles hoy'
+                  : `💬 ${rateLimit.remaining} de ${rateLimit.limit} mensajes restantes hoy`
+                }
+              </span>
+              {rateLimit.remaining === 0 && (
+                <span className="text-gray-400 dark:text-[#666]">
+                  Se reinicia a medianoche
+                </span>
+              )}
+            </div>
+          )}
+
           {/* Quick Actions - Claude style */}
           <div className="flex gap-2 mb-3 overflow-x-auto pb-1">
             <button

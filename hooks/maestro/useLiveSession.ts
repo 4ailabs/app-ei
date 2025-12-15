@@ -3,12 +3,21 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { createBlob, decode, decodeAudioData } from '@/lib/maestro/audioUtils';
 
+interface VoiceRateLimitInfo {
+  remaining: number;
+  limit: number;
+  resetAt: number;
+}
+
 export const useLiveSession = (systemPrompt: string) => {
   const [isConnected, setIsConnected] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<string>('');
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
+  const [maxDuration, setMaxDuration] = useState<number>(5 * 60); // 5 minutos por defecto
+  const [voiceRateLimit, setVoiceRateLimit] = useState<VoiceRateLimitInfo | null>(null);
+  const [timeRemaining, setTimeRemaining] = useState<number>(5 * 60);
 
   // Audio context refs
   const inputAudioContextRef = useRef<AudioContext | null>(null);
@@ -24,8 +33,22 @@ export const useLiveSession = (systemPrompt: string) => {
   const scriptProcessorRef = useRef<ScriptProcessorNode | null>(null);
   const sourceNodeRef = useRef<MediaStreamAudioSourceNode | null>(null);
 
+  // Timer ref para límite de duración
+  const durationTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const countdownTimerRef = useRef<NodeJS.Timeout | null>(null);
+
   const disconnect = useCallback(() => {
     setAnalyser(null);
+
+    // Limpiar timers de duración
+    if (durationTimerRef.current) {
+      clearTimeout(durationTimerRef.current);
+      durationTimerRef.current = null;
+    }
+    if (countdownTimerRef.current) {
+      clearInterval(countdownTimerRef.current);
+      countdownTimerRef.current = null;
+    }
 
     // Stop script processor
     if (scriptProcessorRef.current) {
@@ -115,15 +138,21 @@ export const useLiveSession = (systemPrompt: string) => {
         throw new Error(errorData.error || 'Error al obtener credenciales');
       }
 
-      const { apiKey, rateLimit } = await keyResponse.json();
+      const { apiKey, maxDurationSeconds, rateLimit } = await keyResponse.json();
 
       if (!apiKey) {
         throw new Error('API key not available');
       }
 
-      // Log rate limit info (para debugging)
+      // Configurar duración máxima desde el servidor
+      const sessionDuration = maxDurationSeconds || 5 * 60; // 5 min por defecto
+      setMaxDuration(sessionDuration);
+      setTimeRemaining(sessionDuration);
+
+      // Guardar info de rate limit
       if (rateLimit) {
-        console.log(`[Rate Limit] Requests restantes: ${rateLimit.remaining}, Reset: ${new Date(rateLimit.resetAt).toLocaleTimeString()}`);
+        setVoiceRateLimit(rateLimit);
+        console.log(`[Voice Session] Sesiones restantes: ${rateLimit.remaining}/${rateLimit.limit}`);
       }
 
       // Initialize GenAI Client
@@ -139,6 +168,26 @@ export const useLiveSession = (systemPrompt: string) => {
             setIsConnected(true);
             setIsConnecting(false);
             setConnectionStatus('Conectado');
+
+            // Iniciar timer de duración máxima
+            durationTimerRef.current = setTimeout(() => {
+              console.log('[Voice Session] Tiempo máximo alcanzado, desconectando...');
+              setConnectionStatus('Sesión finalizada (tiempo máximo)');
+              disconnect();
+            }, sessionDuration * 1000);
+
+            // Iniciar countdown para mostrar tiempo restante
+            let remaining = sessionDuration;
+            setTimeRemaining(remaining);
+            countdownTimerRef.current = setInterval(() => {
+              remaining -= 1;
+              setTimeRemaining(remaining);
+              if (remaining <= 0) {
+                if (countdownTimerRef.current) {
+                  clearInterval(countdownTimerRef.current);
+                }
+              }
+            }, 1000);
 
             // Process Input Audio
             const source = inputCtx.createMediaStreamSource(stream);
@@ -252,6 +301,9 @@ export const useLiveSession = (systemPrompt: string) => {
     isConnecting,
     isError,
     connectionStatus,
-    analyser
+    analyser,
+    timeRemaining,
+    maxDuration,
+    voiceRateLimit
   };
 };

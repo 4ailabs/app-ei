@@ -1,23 +1,28 @@
 "use client"
 
 import React, { useEffect, useState, useRef } from 'react';
-import { Mic, PhoneOff, AlertCircle, GraduationCap } from 'lucide-react';
+import { Mic, PhoneOff, AlertCircle, GraduationCap, Clock } from 'lucide-react';
 import { useLiveSession } from '@/hooks/maestro/useLiveSession';
-import { DayNumber } from '@/lib/maestro/types';
 
 interface LiveVoiceInterfaceProps {
   onClose: () => void;
-  selectedDay: DayNumber;
   systemPrompt: string;
 }
 
 export const LiveVoiceInterface: React.FC<LiveVoiceInterfaceProps> = ({
   onClose,
-  selectedDay,
   systemPrompt
 }) => {
-  const { connect, disconnect, isConnected, isConnecting, isError, connectionStatus, analyser } = useLiveSession(systemPrompt);
-  const [duration, setDuration] = useState(0);
+  const {
+    connect,
+    disconnect,
+    isConnected,
+    isError,
+    connectionStatus,
+    analyser,
+    timeRemaining,
+    voiceRateLimit
+  } = useLiveSession(systemPrompt);
   const [audioLevel, setAudioLevel] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const animationFrameRef = useRef<number | null>(null);
@@ -33,16 +38,6 @@ export const LiveVoiceInterface: React.FC<LiveVoiceInterfaceProps> = ({
       }
     };
   }, []);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isConnected) {
-      interval = setInterval(() => {
-        setDuration(prev => prev + 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isConnected]);
 
   // Analizar nivel de audio
   useEffect(() => {
@@ -102,10 +97,28 @@ export const LiveVoiceInterface: React.FC<LiveVoiceInterfaceProps> = ({
           <h2 className="text-xl font-bold flex items-center">
             <Mic size={24} className="mr-2 text-[#ea580c]" /> Sesión de Voz
           </h2>
-          <div className="bg-white/10 px-3 py-1 rounded-full text-sm font-mono">
-            {isConnected ? formatTime(duration) : (connectionStatus || 'Conectando...')}
+          <div className="flex items-center gap-3">
+            {/* Tiempo restante */}
+            {isConnected && (
+              <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-mono ${
+                timeRemaining <= 60 ? 'bg-red-500/20 text-red-400' : 'bg-white/10 text-white'
+              }`}>
+                <Clock size={14} />
+                <span>{formatTime(timeRemaining)}</span>
+              </div>
+            )}
+            {/* Estado de conexión */}
+            <div className="bg-white/10 px-3 py-1 rounded-full text-sm">
+              {isConnected ? 'Conectado' : (connectionStatus || 'Conectando...')}
+            </div>
           </div>
         </div>
+        {/* Indicador de sesiones restantes */}
+        {voiceRateLimit && (
+          <div className="mt-2 text-xs text-gray-400 text-right">
+            {voiceRateLimit.remaining} de {voiceRateLimit.limit} sesiones disponibles
+          </div>
+        )}
       </div>
 
       {/* Main Visualizer Area */}
