@@ -6,8 +6,12 @@ import { prisma } from "./prisma"
  * @param session - La sesión del usuario (opcional, se obtiene automáticamente si no se proporciona)
  * @returns true si el usuario es administrador, false en caso contrario
  */
-export async function isAdmin(session?: Awaited<ReturnType<typeof auth>>): Promise<boolean> {
-  const currentSession = session || await auth()
+export async function isAdmin(session?: any): Promise<boolean> {
+  let currentSession = session
+  
+  if (!currentSession) {
+    currentSession = await auth()
+  }
   
   if (!currentSession?.user?.id) {
     return false
