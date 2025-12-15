@@ -6,6 +6,8 @@ import { createBlob, decode, decodeAudioData } from '@/lib/maestro/audioUtils';
 export const useLiveSession = (systemPrompt: string) => {
   const [isConnected, setIsConnected] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState<string>('');
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
 
   // Audio context refs
@@ -74,13 +76,18 @@ export const useLiveSession = (systemPrompt: string) => {
   }, []);
 
   const connect = useCallback(async () => {
+    let connectionTimeout: NodeJS.Timeout | undefined;
     try {
       setIsError(false);
+      setIsConnecting(true);
+      setConnectionStatus('Inicializando...');
 
       // Dynamic import of @google/genai for client-side only
+      setConnectionStatus('Cargando módulos de IA...');
       const { GoogleGenAI, Modality } = await import('@google/genai');
 
       // Initialize Audio Contexts
+      setConnectionStatus('Configurando audio...');
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
       const inputCtx = new AudioContextClass({ sampleRate: 16000 });
       const outputCtx = new AudioContextClass({ sampleRate: 24000 });
@@ -90,10 +97,12 @@ export const useLiveSession = (systemPrompt: string) => {
       nextStartTimeRef.current = 0;
 
       // Get Microphone Stream
+      setConnectionStatus('Solicitando acceso al micrófono...');
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
 
       // Fetch API key from server
+      setConnectionStatus('Conectando con el servidor...');
       const keyResponse = await fetch('/api/maestro/key');
       const { apiKey } = await keyResponse.json();
 
@@ -102,15 +111,25 @@ export const useLiveSession = (systemPrompt: string) => {
       }
 
       // Initialize GenAI Client
+      setConnectionStatus('Estableciendo conexión con Gemini...');
       const ai = new GoogleGenAI({ apiKey });
 
-      // Setup Connection
+      // Setup Connection with timeout
+      const connectionTimeout = setTimeout(() => {
+        if (!isConnected) {
+          setConnectionStatus('La conexión está tardando más de lo esperado...');
+        }
+      }, 10000); // 10 segundos
+
       const sessionPromise = ai.live.connect({
         model: 'gemini-2.5-flash-preview-native-audio-dialog',
         callbacks: {
           onopen: () => {
             console.log('Live session opened');
+            clearTimeout(connectionTimeout);
             setIsConnected(true);
+            setIsConnecting(false);
+            setConnectionStatus('Conectado');
 
             // Process Input Audio
             const source = inputCtx.createMediaStreamSource(stream);
@@ -184,7 +203,10 @@ export const useLiveSession = (systemPrompt: string) => {
           },
           onerror: (err) => {
             console.error('Live session error:', err);
+            clearTimeout(connectionTimeout);
             setIsError(true);
+            setIsConnecting(false);
+            setConnectionStatus('Error de conexión');
             disconnect();
           }
         },
@@ -202,7 +224,14 @@ export const useLiveSession = (systemPrompt: string) => {
     } catch (error) {
       console.error('Failed to start session:', error);
       setIsError(true);
+      setIsConnecting(false);
+      setConnectionStatus('Error al conectar');
       disconnect();
+    } finally {
+      // Clear timeout if still pending
+      if (typeof connectionTimeout !== 'undefined') {
+        clearTimeout(connectionTimeout);
+      }
     }
   }, [disconnect, systemPrompt]);
 
@@ -217,7 +246,9 @@ export const useLiveSession = (systemPrompt: string) => {
     connect,
     disconnect,
     isConnected,
+    isConnecting,
     isError,
+    connectionStatus,
     analyser
   };
 };

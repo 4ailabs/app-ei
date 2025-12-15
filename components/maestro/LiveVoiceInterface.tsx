@@ -16,7 +16,7 @@ export const LiveVoiceInterface: React.FC<LiveVoiceInterfaceProps> = ({
   selectedDay,
   systemPrompt
 }) => {
-  const { connect, disconnect, isConnected, isError, analyser } = useLiveSession(systemPrompt);
+  const { connect, disconnect, isConnected, isConnecting, isError, connectionStatus, analyser } = useLiveSession(systemPrompt);
   const [duration, setDuration] = useState(0);
   const [audioLevel, setAudioLevel] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -103,7 +103,7 @@ export const LiveVoiceInterface: React.FC<LiveVoiceInterfaceProps> = ({
             <Mic size={24} className="mr-2 text-[#ea580c]" /> Sesión de Voz
           </h2>
           <div className="bg-white/10 px-3 py-1 rounded-full text-sm font-mono">
-            {isConnected ? formatTime(duration) : 'Conectando...'}
+            {isConnected ? formatTime(duration) : (connectionStatus || 'Conectando...')}
           </div>
         </div>
       </div>
@@ -157,7 +157,9 @@ export const LiveVoiceInterface: React.FC<LiveVoiceInterfaceProps> = ({
                 Maestro IA
               </h3>
               <p className="text-[#b4b4b4]">
-                {isConnected ? (isSpeaking ? 'Escuchando...' : 'Esperando...') : 'Estableciendo conexión segura...'}
+                {isConnected 
+                  ? (isSpeaking ? 'Escuchando...' : 'Esperando...') 
+                  : (connectionStatus || 'Estableciendo conexión segura...')}
               </p>
 
               {/* Audio Level Indicator */}
