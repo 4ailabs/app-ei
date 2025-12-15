@@ -62,10 +62,11 @@ export const authOptions: NextAuthConfig = {
       name: `next-auth.session-token`,
       options: {
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // "none" para iframes en producción
         path: "/",
-        secure: process.env.NODE_ENV === "production", // Solo HTTPS en producción
+        secure: process.env.NODE_ENV === "production", // Siempre true en producción (requerido para sameSite: "none")
         maxAge: 7 * 24 * 60 * 60, // 7 días
+        // No especificar domain para que funcione en múltiples dominios
       },
     },
   },
