@@ -76,7 +76,6 @@ export const useLiveSession = (systemPrompt: string) => {
   }, []);
 
   const connect = useCallback(async () => {
-    let connectionTimeout: NodeJS.Timeout | undefined;
     try {
       setIsError(false);
       setIsConnecting(true);
@@ -114,19 +113,12 @@ export const useLiveSession = (systemPrompt: string) => {
       setConnectionStatus('Estableciendo conexión con Gemini...');
       const ai = new GoogleGenAI({ apiKey });
 
-      // Setup Connection with timeout
-      const connectionTimeout = setTimeout(() => {
-        if (!isConnected) {
-          setConnectionStatus('La conexión está tardando más de lo esperado...');
-        }
-      }, 10000); // 10 segundos
-
+      // Setup Connection
       const sessionPromise = ai.live.connect({
         model: 'gemini-2.5-flash-preview-native-audio-dialog',
         callbacks: {
           onopen: () => {
             console.log('Live session opened');
-            clearTimeout(connectionTimeout);
             setIsConnected(true);
             setIsConnecting(false);
             setConnectionStatus('Conectado');
@@ -203,7 +195,6 @@ export const useLiveSession = (systemPrompt: string) => {
           },
           onerror: (err) => {
             console.error('Live session error:', err);
-            clearTimeout(connectionTimeout);
             setIsError(true);
             setIsConnecting(false);
             setConnectionStatus('Error de conexión');
@@ -227,11 +218,6 @@ export const useLiveSession = (systemPrompt: string) => {
       setIsConnecting(false);
       setConnectionStatus('Error al conectar');
       disconnect();
-    } finally {
-      // Clear timeout if still pending
-      if (typeof connectionTimeout !== 'undefined') {
-        clearTimeout(connectionTimeout);
-      }
     }
   }, [disconnect, systemPrompt]);
 
