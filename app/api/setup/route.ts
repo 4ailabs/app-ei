@@ -22,9 +22,18 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { email, password, name, setupKey } = body
 
-    // Verificar clave de setup (variable de entorno opcional para mayor seguridad)
-    const expectedKey = process.env.SETUP_KEY || "setup-admin-2024"
+    // Verificar clave de setup (REQUERIDA - no permitir valor por defecto)
+    const expectedKey = process.env.SETUP_KEY
+    if (!expectedKey) {
+      console.error('[SECURITY] SETUP_KEY no configurada en variables de entorno')
+      return NextResponse.json(
+        { error: "Setup no configurado. Contacta al administrador." },
+        { status: 503 }
+      )
+    }
+    
     if (setupKey !== expectedKey) {
+      console.warn(`[SECURITY] Intento de setup con clave inválida desde IP: ${request.headers.get('x-forwarded-for') || 'unknown'}`)
       return NextResponse.json(
         { error: "Clave de setup inválida" },
         { status: 401 }

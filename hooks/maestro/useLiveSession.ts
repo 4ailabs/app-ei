@@ -100,13 +100,30 @@ export const useLiveSession = (systemPrompt: string) => {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
 
-      // Fetch API key from server
+      // Fetch API key from server (con manejo de errores mejorado)
       setConnectionStatus('Conectando con el servidor...');
       const keyResponse = await fetch('/api/maestro/key');
-      const { apiKey } = await keyResponse.json();
+      
+      if (!keyResponse.ok) {
+        const errorData = await keyResponse.json().catch(() => ({}));
+        if (keyResponse.status === 429) {
+          throw new Error(`Límite de solicitudes excedido. ${errorData.retryAfter ? `Intenta de nuevo en ${errorData.retryAfter} segundos.` : 'Intenta de nuevo más tarde.'}`);
+        }
+        if (keyResponse.status === 401) {
+          throw new Error('No autorizado. Por favor inicia sesión.');
+        }
+        throw new Error(errorData.error || 'Error al obtener credenciales');
+      }
+
+      const { apiKey, rateLimit } = await keyResponse.json();
 
       if (!apiKey) {
         throw new Error('API key not available');
+      }
+
+      // Log rate limit info (para debugging)
+      if (rateLimit) {
+        console.log(`[Rate Limit] Requests restantes: ${rateLimit.remaining}, Reset: ${new Date(rateLimit.resetAt).toLocaleTimeString()}`);
       }
 
       // Initialize GenAI Client

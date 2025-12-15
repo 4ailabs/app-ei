@@ -1,84 +1,82 @@
-// Rate limiter simple en memoria para proteger contra ataques de fuerza bruta
-// Nota: En producción con múltiples instancias, usar Redis o Vercel KV
+/**
+ * Rate Limiting Utility
+ * Simple in-memory rate limiter (para producción, considerar usar Redis)
+ */
 
 interface RateLimitEntry {
   count: number
   resetTime: number
 }
 
-const rateLimitMap = new Map<string, RateLimitEntry>()
+const rateLimitStore = new Map<string, RateLimitEntry>()
 
-// Limpiar entradas expiradas cada 5 minutos
-setInterval(() => {
-  const now = Date.now()
-  for (const [key, entry] of rateLimitMap.entries()) {
-    if (now > entry.resetTime) {
-      rateLimitMap.delete(key)
-    }
-  }
-}, 5 * 60 * 1000)
-
-interface RateLimitConfig {
-  maxRequests: number // Número máximo de requests
-  windowMs: number // Ventana de tiempo en milisegundos
-}
-
-interface RateLimitResult {
-  success: boolean
-  remaining: number
-  resetIn: number // Segundos hasta reset
-}
-
+/**
+ * Rate limiter simple en memoria
+ * Para producción, usar Redis o un servicio dedicado
+ */
 export function checkRateLimit(
   identifier: string,
-  config: RateLimitConfig = { maxRequests: 5, windowMs: 60 * 1000 }
-): RateLimitResult {
+  maxRequests: number,
+  windowMs: number
+): { allowed: boolean; remaining: number; resetAt: number } {
   const now = Date.now()
-  const key = identifier
+  const entry = rateLimitStore.get(identifier)
 
-  const entry = rateLimitMap.get(key)
+  // Limpiar entradas expiradas periódicamente (cada 1000 requests)
+  if (rateLimitStore.size > 1000) {
+    for (const [key, value] of rateLimitStore.entries()) {
+      if (value.resetTime < now) {
+        rateLimitStore.delete(key)
+      }
+    }
+  }
 
-  // Si no hay entrada o expiró, crear nueva
-  if (!entry || now > entry.resetTime) {
-    rateLimitMap.set(key, {
+  if (!entry || entry.resetTime < now) {
+    // Nueva ventana de tiempo
+    const newEntry: RateLimitEntry = {
       count: 1,
-      resetTime: now + config.windowMs,
-    })
+      resetTime: now + windowMs,
+    }
+    rateLimitStore.set(identifier, newEntry)
     return {
-      success: true,
-      remaining: config.maxRequests - 1,
-      resetIn: Math.ceil(config.windowMs / 1000),
+      allowed: true,
+      remaining: maxRequests - 1,
+      resetAt: newEntry.resetTime,
+    }
+  }
+
+  if (entry.count >= maxRequests) {
+    return {
+      allowed: false,
+      remaining: 0,
+      resetAt: entry.resetTime,
     }
   }
 
   // Incrementar contador
   entry.count++
-
-  // Verificar límite
-  if (entry.count > config.maxRequests) {
-    return {
-      success: false,
-      remaining: 0,
-      resetIn: Math.ceil((entry.resetTime - now) / 1000),
-    }
-  }
+  rateLimitStore.set(identifier, entry)
 
   return {
-    success: true,
-    remaining: config.maxRequests - entry.count,
-    resetIn: Math.ceil((entry.resetTime - now) / 1000),
+    allowed: true,
+    remaining: maxRequests - entry.count,
+    resetAt: entry.resetTime,
   }
 }
 
-// Helper para obtener IP del request
-export function getClientIP(request: Request): string {
-  const forwarded = request.headers.get("x-forwarded-for")
-  if (forwarded) {
-    return forwarded.split(",")[0].trim()
+/**
+ * Limpiar entradas expiradas
+ */
+export function cleanupExpiredEntries() {
+  const now = Date.now()
+  for (const [key, value] of rateLimitStore.entries()) {
+    if (value.resetTime < now) {
+      rateLimitStore.delete(key)
+    }
   }
-  const realIP = request.headers.get("x-real-ip")
-  if (realIP) {
-    return realIP
-  }
-  return "unknown"
+}
+
+// Limpiar cada 5 minutos
+if (typeof setInterval !== 'undefined') {
+  setInterval(cleanupExpiredEntries, 5 * 60 * 1000)
 }
