@@ -132,7 +132,7 @@ export const useLiveSession = (systemPrompt: string) => {
 
       // Setup Connection
       const sessionPromise = ai.live.connect({
-        model: 'gemini-2.5-flash-preview-native-audio-dialog',
+        model: 'gemini-2.5-flash-native-audio-preview-12-2025',
         callbacks: {
           onopen: () => {
             console.log('Live session opened');
