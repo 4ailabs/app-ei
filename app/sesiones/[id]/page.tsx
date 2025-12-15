@@ -27,6 +27,33 @@ interface SessionPageProps {
   searchParams: Promise<{ tab?: string }>
 }
 
+// Content badge component that links to the correct tab
+function ContentBadge({
+  count,
+  icon: Icon,
+  label,
+  tabId,
+  sessionId
+}: {
+  count: number
+  icon: React.ElementType
+  label: string
+  tabId: string
+  sessionId: number
+}) {
+  if (count === 0) return null
+
+  return (
+    <Link
+      href={`/sesiones/${sessionId}?tab=${tabId}`}
+      className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-[#F5F4F0] dark:bg-[#333333] hover:bg-[#DA7756]/10 dark:hover:bg-[#DA7756]/20 rounded-lg sm:rounded-xl transition-colors group"
+    >
+      <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-[#DA7756]" />
+      <span className="text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-[#DA7756] font-medium text-xs sm:text-sm">{count} {label}</span>
+    </Link>
+  )
+}
+
 const sessionIcons = [Lightbulb, Settings, Rocket, Cpu, Leaf]
 
 export default async function SessionPage({ params, searchParams }: SessionPageProps) {
@@ -152,165 +179,14 @@ export default async function SessionPage({ params, searchParams }: SessionPageP
                   </span>
                 </div>
                 <div className="w-full sm:w-auto sm:ml-auto flex flex-wrap gap-2 sm:gap-3 lg:gap-4 mt-2 sm:mt-0">
-                  {contentCounts.pdf > 0 && (
-                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg sm:rounded-xl">
-                      <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600 dark:text-blue-400" />
-                      <span className="text-blue-700 dark:text-blue-400 font-medium text-xs sm:text-sm">{contentCounts.pdf}</span>
-                    </div>
-                  )}
-                  {contentCounts.videos > 0 && (
-                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg sm:rounded-xl">
-                      <Video className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-purple-600 dark:text-purple-400" />
-                      <span className="text-purple-700 dark:text-purple-400 font-medium text-xs sm:text-sm">{contentCounts.videos}</span>
-                    </div>
-                  )}
-                  {contentCounts.audios > 0 && (
-                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
-                      <Headphones className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#DA7756]" />
-                      <span className="text-[#DA7756] font-medium text-xs sm:text-sm">{contentCounts.audios}</span>
-                    </div>
-                  )}
-                  {contentCounts.themes > 0 && (
-                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg sm:rounded-xl">
-                      <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-orange-600 dark:text-orange-400" />
-                      <span className="text-orange-700 dark:text-orange-400 font-medium text-xs sm:text-sm">{contentCounts.themes}</span>
-                    </div>
-                  )}
-                  {contentCounts.protocols > 0 && (
-                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-red-50 dark:bg-red-900/20 rounded-lg sm:rounded-xl">
-                      <ClipboardList className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-600 dark:text-red-400" />
-                      <span className="text-red-700 dark:text-red-400 font-medium text-xs sm:text-sm">{contentCounts.protocols}</span>
-                    </div>
-                  )}
-                  {contentCounts.apps > 0 && (
-                    <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg sm:rounded-xl">
-                      <Smartphone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-cyan-600 dark:text-cyan-400" />
-                      <span className="text-cyan-700 dark:text-cyan-400 font-medium text-xs sm:text-sm">{contentCounts.apps}</span>
-                    </div>
-                  )}
+                  <ContentBadge count={contentCounts.pdf} icon={FileText} label="PDF" tabId="pdf" sessionId={sessionId} />
+                  <ContentBadge count={contentCounts.videos} icon={Video} label="Videos" tabId="videos" sessionId={sessionId} />
+                  <ContentBadge count={contentCounts.audios} icon={Headphones} label="Audios" tabId="audios" sessionId={sessionId} />
+                  <ContentBadge count={contentCounts.themes} icon={BookOpen} label="Temas" tabId="themes" sessionId={sessionId} />
+                  <ContentBadge count={contentCounts.protocols} icon={ClipboardList} label="Protocolos" tabId="protocols" sessionId={sessionId} />
+                  <ContentBadge count={contentCounts.apps} icon={Smartphone} label="Apps" tabId="apps" sessionId={sessionId} />
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* About This Module */}
-          <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
-            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-              <div className="p-2 sm:p-2.5 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg">
-                <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756]" />
-              </div>
-              <h2 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">
-                Acerca de este módulo
-              </h2>
-            </div>
-
-            {/* Main description */}
-            <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed mb-4">
-              {sessionData.description}
-            </p>
-
-            {/* Additional context */}
-            <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed">
-              Este módulo forma parte del <span className="font-semibold text-[#DA7756]">Bloque {sessionData.day}</span> del seminario.
-              Aquí encontrarás material teórico y práctico cuidadosamente seleccionado para facilitar tu aprendizaje.
-              Te recomendamos revisar primero el material en PDF, luego ver los videos explicativos,
-              y finalmente practicar con los audios y protocolos disponibles.
-            </p>
-
-            {/* What you'll learn */}
-            <div className="mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-[#E5E4E0] dark:border-[#333333]">
-              <h3 className="text-sm sm:text-base font-semibold text-[#1A1915] dark:text-[#E5E5E5] mb-4">
-                En este módulo encontrarás:
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                {contentCounts.pdf > 0 && (
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-blue-50 dark:bg-blue-900/10">
-                    <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium text-sm text-[#1A1915] dark:text-[#E5E5E5]">
-                        {contentCounts.pdf} {contentCounts.pdf === 1 ? 'Documento' : 'Documentos'}
-                      </span>
-                      <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-0.5">
-                        Material de lectura y guías de estudio
-                      </p>
-                    </div>
-                  </div>
-                )}
-                {contentCounts.videos > 0 && (
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-purple-50 dark:bg-purple-900/10">
-                    <Video className="h-5 w-5 text-purple-600 dark:text-purple-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium text-sm text-[#1A1915] dark:text-[#E5E5E5]">
-                        {contentCounts.videos} {contentCounts.videos === 1 ? 'Video' : 'Videos'}
-                      </span>
-                      <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-0.5">
-                        Explicaciones y demostraciones prácticas
-                      </p>
-                    </div>
-                  </div>
-                )}
-                {contentCounts.audios > 0 && (
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-[#DA7756]/10 dark:bg-[#DA7756]/10">
-                    <Headphones className="h-5 w-5 text-[#DA7756] mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium text-sm text-[#1A1915] dark:text-[#E5E5E5]">
-                        {contentCounts.audios} {contentCounts.audios === 1 ? 'Audio' : 'Audios'}
-                      </span>
-                      <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-0.5">
-                        Meditaciones y ejercicios guiados
-                      </p>
-                    </div>
-                  </div>
-                )}
-                {contentCounts.themes > 0 && (
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-orange-50 dark:bg-orange-900/10">
-                    <BookOpen className="h-5 w-5 text-orange-600 dark:text-orange-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium text-sm text-[#1A1915] dark:text-[#E5E5E5]">
-                        {contentCounts.themes} {contentCounts.themes === 1 ? 'Tema' : 'Temas'}
-                      </span>
-                      <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-0.5">
-                        Conceptos teóricos fundamentales
-                      </p>
-                    </div>
-                  </div>
-                )}
-                {contentCounts.protocols > 0 && (
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-red-50 dark:bg-red-900/10">
-                    <ClipboardList className="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium text-sm text-[#1A1915] dark:text-[#E5E5E5]">
-                        {contentCounts.protocols} {contentCounts.protocols === 1 ? 'Protocolo' : 'Protocolos'}
-                      </span>
-                      <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-0.5">
-                        Guías paso a paso para la práctica
-                      </p>
-                    </div>
-                  </div>
-                )}
-                {contentCounts.apps > 0 && (
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-cyan-50 dark:bg-cyan-900/10">
-                    <Smartphone className="h-5 w-5 text-cyan-600 dark:text-cyan-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium text-sm text-[#1A1915] dark:text-[#E5E5E5]">
-                        {contentCounts.apps} {contentCounts.apps === 1 ? 'App' : 'Apps'}
-                      </span>
-                      <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-0.5">
-                        Herramientas digitales complementarias
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Recommendation */}
-            <div className="mt-5 sm:mt-6 p-4 rounded-xl bg-[#FAF9F7] dark:bg-[#1A1A1A] border border-[#E5E4E0] dark:border-[#333333]">
-              <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0] italic">
-                <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5] not-italic">Sugerencia:</span> Para aprovechar al máximo este módulo,
-                dedica tiempo a cada sección sin prisas. Los conceptos se construyen progresivamente,
-                así que es importante completar el material en el orden sugerido antes de avanzar.
-              </p>
             </div>
           </div>
 

@@ -128,7 +128,7 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
-                  <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756] dark:text-[#DA7756]" />
+                  <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756]" />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Material Principal</h3>
@@ -144,8 +144,8 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           <TabsContent value="videos" className="mt-0">
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
-                <div className="p-2 sm:p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg sm:rounded-xl">
-                  <Video className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400" />
+                <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
+                  <Video className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756]" />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Videos de Formación</h3>
@@ -161,8 +161,8 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           <TabsContent value="protocols" className="mt-0">
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
-                <div className="p-2 sm:p-3 bg-red-50 dark:bg-red-900/20 rounded-lg sm:rounded-xl">
-                  <ClipboardList className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 dark:text-red-400" />
+                <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
+                  <ClipboardList className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756]" />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Protocolos y Herramientas</h3>
@@ -178,8 +178,8 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           <TabsContent value="themes" className="mt-0">
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
-                <div className="p-2 sm:p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg sm:rounded-xl">
-                  <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-orange-600 dark:text-orange-400" />
+                <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
+                  <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756]" />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Temas y Conceptos</h3>
@@ -212,8 +212,8 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           <TabsContent value="apps" className="mt-0">
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
-                <div className="p-2 sm:p-3 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg sm:rounded-xl">
-                  <Smartphone className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-600 dark:text-cyan-400" />
+                <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
+                  <Smartphone className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756]" />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Aplicaciones</h3>
@@ -229,8 +229,8 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           <TabsContent value="additionalResources" className="mt-0">
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
-                <div className="p-2 sm:p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg sm:rounded-xl">
-                  <FolderPlus className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 dark:text-amber-400" />
+                <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
+                  <FolderPlus className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756]" />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Recursos Adicionales</h3>

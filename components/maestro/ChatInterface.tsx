@@ -112,7 +112,7 @@ export function ChatInterface({
   if (messages.length === 0) {
     return (
       <div className="flex flex-col h-full bg-[#fafafa] dark:bg-[#0f0f0f] overflow-hidden">
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center pt-4">
           <div className="max-w-2xl w-full text-center px-4">
             <div className="w-16 h-16 bg-[#ea580c] rounded-lg flex items-center justify-center mx-auto mb-6">
               <GraduationCap size={32} className="text-white" />
@@ -187,7 +187,7 @@ export function ChatInterface({
     <div className="flex flex-col h-full bg-[#fafafa] dark:bg-[#0f0f0f] relative isolate">
       {/* Messages Area - Claude style */}
       <div ref={messagesContainerRef} className="flex-1 overflow-y-auto overscroll-contain min-h-0">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
           <div className="space-y-6 sm:space-y-8">
             {messages.map((msg) => (
               <div key={msg.id} className="group">
