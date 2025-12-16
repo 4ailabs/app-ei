@@ -78,19 +78,11 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
     router.push(`${pathname}?${params.toString()}`, { scroll: false })
   }
 
-  // Validar que el tab activo existe en el contenido disponible
-  const validTabs = [
-    contentCounts.videos > 0 ? 'videos' : null,
-    contentCounts.audios > 0 ? 'audios' : null,
-    contentCounts.themes > 0 ? 'themes' : null,
-    contentCounts.protocols > 0 ? 'protocols' : null,
-    contentCounts.pdf > 0 ? 'pdf' : null,
-    contentCounts.additionalResources > 0 ? 'additionalResources' : null,
-    contentCounts.apps > 0 ? 'apps' : null,
-  ].filter(Boolean) as string[]
-
+  // Todos los tabs posibles (siempre disponibles)
+  const allTabs = ['videos', 'audios', 'themes', 'protocols', 'pdf', 'additionalResources', 'apps']
+  
   // Si el tab activo no es válido, usar el default
-  const currentTab = validTabs.includes(activeTab) ? activeTab : defaultTab
+  const currentTab = allTabs.includes(activeTab) ? activeTab : defaultTab
 
   // If no content available
   const allCounts = Object.values(contentCounts)
@@ -110,64 +102,46 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
     <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-10 shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
       <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
         {/* Orden: Videos → Audios → Temas → Protocolos → Material → Recursos */}
-        <TabsList className={`grid w-full h-auto bg-[#F5F4F0] dark:bg-[#333333] p-1 sm:p-1.5 gap-1 sm:gap-1.5 mb-6 sm:mb-8 lg:mb-10 rounded-xl sm:rounded-2xl ${
-          contentCounts.additionalResources > 0 
-            ? "grid-cols-3 sm:grid-cols-4 lg:grid-cols-7" 
-            : "grid-cols-3 sm:grid-cols-3 lg:grid-cols-6"
-        }`}>
-          {contentCounts.videos > 0 && (
-            <TabsTrigger value="videos" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
-              <Video className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline">Videos</span>
-              <span className="sm:hidden text-[10px]">Video</span>
-            </TabsTrigger>
-          )}
-          {contentCounts.audios > 0 && (
-            <TabsTrigger value="audios" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
-              <Headphones className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline">Audios</span>
-              <span className="sm:hidden text-[10px]">Audio</span>
-            </TabsTrigger>
-          )}
-          {contentCounts.themes > 0 && (
-            <TabsTrigger value="themes" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
-              <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline">Temas</span>
-              <span className="sm:hidden text-[10px]">Temas</span>
-            </TabsTrigger>
-          )}
-          {contentCounts.protocols > 0 && (
-            <TabsTrigger value="protocols" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
-              <ClipboardList className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline">Protocolos</span>
-              <span className="sm:hidden text-[10px]">Prot.</span>
-            </TabsTrigger>
-          )}
-          {contentCounts.pdf > 0 && (
-            <TabsTrigger value="pdf" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
-              <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline">Material</span>
-              <span className="sm:hidden text-[10px]">PDF</span>
-            </TabsTrigger>
-          )}
-          {contentCounts.additionalResources > 0 && (
-            <TabsTrigger value="additionalResources" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
-              <FolderPlus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline">Recursos</span>
-              <span className="sm:hidden text-[10px]">Extra</span>
-            </TabsTrigger>
-          )}
-          {contentCounts.apps > 0 && (
-            <TabsTrigger value="apps" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
-              <Smartphone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline">Apps</span>
-              <span className="sm:hidden text-[10px]">Apps</span>
-            </TabsTrigger>
-          )}
+        <TabsList className="grid w-full h-auto bg-[#F5F4F0] dark:bg-[#333333] p-1 sm:p-1.5 gap-1 sm:gap-1.5 mb-6 sm:mb-8 lg:mb-10 rounded-xl sm:rounded-2xl grid-cols-3 sm:grid-cols-4 lg:grid-cols-7">
+          <TabsTrigger value="videos" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+            <Video className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">Videos</span>
+            <span className="sm:hidden text-[10px]">Video</span>
+          </TabsTrigger>
+          <TabsTrigger value="audios" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+            <Headphones className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">Audios</span>
+            <span className="sm:hidden text-[10px]">Audio</span>
+          </TabsTrigger>
+          <TabsTrigger value="themes" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+            <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">Temas</span>
+            <span className="sm:hidden text-[10px]">Temas</span>
+          </TabsTrigger>
+          <TabsTrigger value="protocols" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+            <ClipboardList className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">Protocolos</span>
+            <span className="sm:hidden text-[10px]">Prot.</span>
+          </TabsTrigger>
+          <TabsTrigger value="pdf" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+            <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">Material</span>
+            <span className="sm:hidden text-[10px]">PDF</span>
+          </TabsTrigger>
+          <TabsTrigger value="additionalResources" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+            <FolderPlus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">Recursos</span>
+            <span className="sm:hidden text-[10px]">Extra</span>
+          </TabsTrigger>
+          <TabsTrigger value="apps" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+            <Smartphone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">Apps</span>
+            <span className="sm:hidden text-[10px]">Apps</span>
+          </TabsTrigger>
         </TabsList>
 
-        {contentCounts.videos > 0 && (
-          <TabsContent value="videos" className="mt-0">
+        <TabsContent value="videos" className="mt-0">
+          {contentCounts.videos > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
@@ -180,11 +154,21 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
               </div>
               <VideoSection videos={sessionData.videos} />
             </div>
-          </TabsContent>
-        )}
+          ) : (
+            <div className="text-center py-12 sm:py-16">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+                <Video className="h-8 w-8 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#808080]" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">Videos próximamente</h3>
+              <p className="text-[#706F6C] dark:text-[#A0A0A0] text-sm sm:text-base max-w-md mx-auto">
+                Los videos de esta sección estarán disponibles próximamente.
+              </p>
+            </div>
+          )}
+        </TabsContent>
 
-        {contentCounts.audios > 0 && (
-          <TabsContent value="audios" className="mt-0">
+        <TabsContent value="audios" className="mt-0">
+          {contentCounts.audios > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
@@ -197,11 +181,21 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
               </div>
               <AudioSection audios={sessionData.audios} />
             </div>
-          </TabsContent>
-        )}
+          ) : (
+            <div className="text-center py-12 sm:py-16">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+                <Headphones className="h-8 w-8 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#808080]" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">Audios próximamente</h3>
+              <p className="text-[#706F6C] dark:text-[#A0A0A0] text-sm sm:text-base max-w-md mx-auto">
+                Los audios de esta sección estarán disponibles próximamente.
+              </p>
+            </div>
+          )}
+        </TabsContent>
 
-        {contentCounts.themes > 0 && (
-          <TabsContent value="themes" className="mt-0">
+        <TabsContent value="themes" className="mt-0">
+          {contentCounts.themes > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
@@ -214,11 +208,21 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
               </div>
               <ThemeExplorer themes={sessionData.themes} />
             </div>
-          </TabsContent>
-        )}
+          ) : (
+            <div className="text-center py-12 sm:py-16">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="h-8 w-8 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#808080]" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">Temas próximamente</h3>
+              <p className="text-[#706F6C] dark:text-[#A0A0A0] text-sm sm:text-base max-w-md mx-auto">
+                Los temas de esta sección estarán disponibles próximamente.
+              </p>
+            </div>
+          )}
+        </TabsContent>
 
-        {contentCounts.protocols > 0 && (
-          <TabsContent value="protocols" className="mt-0">
+        <TabsContent value="protocols" className="mt-0">
+          {contentCounts.protocols > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
@@ -231,11 +235,21 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
               </div>
               <ProtocolSection protocols={sessionData.protocols || []} moduleNumber={sessionData.moduleNumber} />
             </div>
-          </TabsContent>
-        )}
+          ) : (
+            <div className="text-center py-12 sm:py-16">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+                <ClipboardList className="h-8 w-8 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#808080]" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">Protocolos próximamente</h3>
+              <p className="text-[#706F6C] dark:text-[#A0A0A0] text-sm sm:text-base max-w-md mx-auto">
+                Los protocolos de esta sección estarán disponibles próximamente.
+              </p>
+            </div>
+          )}
+        </TabsContent>
 
-        {contentCounts.pdf > 0 && (
-          <TabsContent value="pdf" className="mt-0">
+        <TabsContent value="pdf" className="mt-0">
+          {contentCounts.pdf > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
@@ -248,28 +262,21 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
               </div>
               <PDFSection pdfUrl={sessionData.pdfUrl} pdfs={sessionData.pdfs} sessionId={sessionData.id} title="Manual de la Sesión" />
             </div>
-          </TabsContent>
-        )}
-
-        {contentCounts.apps > 0 && (
-          <TabsContent value="apps" className="mt-0">
-            <div className="space-y-5 sm:space-y-7 lg:space-y-8">
-              <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
-                <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
-                  <Smartphone className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756]" />
-                </div>
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Aplicaciones</h3>
-                  <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0]">{contentCounts.apps} apps</p>
-                </div>
+          ) : (
+            <div className="text-center py-12 sm:py-16">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+                <FileText className="h-8 w-8 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#808080]" />
               </div>
-              <AppSection apps={sessionData.apps || []} />
+              <h3 className="text-lg sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">Material próximamente</h3>
+              <p className="text-[#706F6C] dark:text-[#A0A0A0] text-sm sm:text-base max-w-md mx-auto">
+                El material de esta sección estará disponible próximamente.
+              </p>
             </div>
-          </TabsContent>
-        )}
+          )}
+        </TabsContent>
 
-        {contentCounts.additionalResources > 0 && (
-          <TabsContent value="additionalResources" className="mt-0">
+        <TabsContent value="additionalResources" className="mt-0">
+          {contentCounts.additionalResources > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
                 <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
@@ -289,8 +296,45 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
                 title="Recursos Adicionales"
               />
             </div>
-          </TabsContent>
-        )}
+          ) : (
+            <div className="text-center py-12 sm:py-16">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+                <FolderPlus className="h-8 w-8 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#808080]" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">Recursos próximamente</h3>
+              <p className="text-[#706F6C] dark:text-[#A0A0A0] text-sm sm:text-base max-w-md mx-auto">
+                Los recursos adicionales de esta sección estarán disponibles próximamente.
+              </p>
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="apps" className="mt-0">
+          {contentCounts.apps > 0 ? (
+            <div className="space-y-5 sm:space-y-7 lg:space-y-8">
+              <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
+                <div className="p-2 sm:p-3 bg-[#DA7756]/10 dark:bg-[#DA7756]/20 rounded-lg sm:rounded-xl">
+                  <Smartphone className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756]" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Aplicaciones</h3>
+                  <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0]">{contentCounts.apps} apps</p>
+                </div>
+              </div>
+              <AppSection apps={sessionData.apps || []} />
+            </div>
+          ) : (
+            <div className="text-center py-12 sm:py-16">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+                <Smartphone className="h-8 w-8 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#808080]" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">Apps próximamente</h3>
+              <p className="text-[#706F6C] dark:text-[#A0A0A0] text-sm sm:text-base max-w-md mx-auto">
+                Las aplicaciones de esta sección estarán disponibles próximamente.
+              </p>
+            </div>
+          )}
+        </TabsContent>
       </Tabs>
     </div>
   )
