@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useCallback } from 'react'
-import { ArrowLeft, GraduationCap, Mic } from 'lucide-react'
+import { useState, useCallback, useEffect } from 'react'
+import { ArrowLeft, GraduationCap, Mic, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { Message, DayNumber } from '@/lib/maestro/types'
 import { getSystemPromptForDay } from '@/lib/maestro/prompts'
@@ -16,6 +16,48 @@ interface RateLimitInfo {
   resetAt: number
 }
 
+// LocalStorage helpers
+const STORAGE_KEY = 'maestro-chat-history'
+const MAX_MESSAGES_PER_DAY = 100 // Limitar para no llenar el storage
+
+function loadMessagesFromStorage(day: DayNumber): Message[] {
+  if (typeof window === 'undefined') return []
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (!stored) return []
+    const allHistory = JSON.parse(stored) as Record<string, Message[]>
+    return allHistory[day.toString()] || []
+  } catch {
+    return []
+  }
+}
+
+function saveMessagesToStorage(day: DayNumber, messages: Message[]) {
+  if (typeof window === 'undefined') return
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    const allHistory = stored ? JSON.parse(stored) : {}
+    // Limitar mensajes por día
+    allHistory[day.toString()] = messages.slice(-MAX_MESSAGES_PER_DAY)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allHistory))
+  } catch (error) {
+    console.error('Error saving chat history:', error)
+  }
+}
+
+function clearMessagesFromStorage(day: DayNumber) {
+  if (typeof window === 'undefined') return
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (!stored) return
+    const allHistory = JSON.parse(stored)
+    delete allHistory[day.toString()]
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allHistory))
+  } catch (error) {
+    console.error('Error clearing chat history:', error)
+  }
+}
+
 export function MaestroClient() {
   const { isCollapsed } = useSidebar()
   const [messages, setMessages] = useState<Message[]>([])
@@ -23,6 +65,21 @@ export function MaestroClient() {
   const [selectedDay, setSelectedDay] = useState<DayNumber>(1)
   const [showVoiceMode, setShowVoiceMode] = useState(false)
   const [rateLimit, setRateLimit] = useState<RateLimitInfo | null>(null)
+  const [isHydrated, setIsHydrated] = useState(false)
+
+  // Cargar historial al montar y cuando cambia el día
+  useEffect(() => {
+    const savedMessages = loadMessagesFromStorage(selectedDay)
+    setMessages(savedMessages)
+    setIsHydrated(true)
+  }, [selectedDay])
+
+  // Guardar historial cuando cambian los mensajes
+  useEffect(() => {
+    if (isHydrated && messages.length > 0) {
+      saveMessagesToStorage(selectedDay, messages)
+    }
+  }, [messages, selectedDay, isHydrated])
 
   const handleSendMessage = useCallback(async (text: string) => {
     const trimmedText = text.trim()
@@ -139,8 +196,15 @@ export function MaestroClient() {
 
   const handleDayChange = useCallback((day: DayNumber) => {
     setSelectedDay(day)
-    setMessages([])
+    // Los mensajes se cargarán automáticamente por el useEffect
   }, [])
+
+  const handleClearHistory = useCallback(() => {
+    if (confirm('¿Estás seguro de que quieres borrar el historial de esta conversación?')) {
+      clearMessagesFromStorage(selectedDay)
+      setMessages([])
+    }
+  }, [selectedDay])
 
   const handleOpenVoice = useCallback(() => {
     setShowVoiceMode(true)
@@ -161,11 +225,12 @@ export function MaestroClient() {
   }
 
   return (
-    <div className={`fixed inset-0 flex flex-col bg-white dark:bg-[#1A1A1A] z-40 transition-all duration-300 top-header-safe pb-safe ${
+    <div className={`fixed inset-0 flex flex-col bg-white dark:bg-[#1A1A1A] z-50 transition-all duration-300 pb-safe ${
       isCollapsed ? 'lg:left-0' : 'lg:left-80'
     }`}>
-      {/* Header */}
-      <header className="h-14 border-b border-[#E5E4E0] dark:border-[#333333] bg-white dark:bg-[#1A1A1A] flex items-center justify-between px-4 shrink-0 z-20">
+      {/* Header - con pt-safe para respetar el notch en iOS */}
+      <header className="border-b border-[#E5E4E0] dark:border-[#333333] bg-white dark:bg-[#1A1A1A] shrink-0 z-20 pt-safe">
+        <div className="h-14 flex items-center justify-between px-4">
         <div className="flex items-center space-x-3">
           <Link
             href="/"
@@ -187,6 +252,15 @@ export function MaestroClient() {
 
         <div className="flex items-center space-x-2">
           <DaySelector selectedDay={selectedDay} onDayChange={handleDayChange} />
+          {messages.length > 0 && (
+            <button
+              onClick={handleClearHistory}
+              className="p-2 rounded-lg hover:bg-[#F5F4F0] dark:hover:bg-[#333333] transition-colors text-[#706F6C] dark:text-[#B4B4B4] hover:text-red-500 dark:hover:text-red-400"
+              title="Borrar historial"
+            >
+              <Trash2 size={18} />
+            </button>
+          )}
           <button
             onClick={handleOpenVoice}
             className="flex items-center gap-2 px-3 py-1.5 bg-[#ea580c] hover:bg-[#dc4e04] text-white text-sm font-medium rounded-lg transition-colors"
@@ -195,6 +269,7 @@ export function MaestroClient() {
             <Mic size={16} />
             <span className="hidden sm:inline">Voz</span>
           </button>
+        </div>
         </div>
       </header>
 
