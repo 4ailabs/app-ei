@@ -16,6 +16,7 @@
     "update-password": "tsx scripts/update-password.ts",
     "check-user": "tsx scripts/check-and-approve-user.ts",
     "approve-user": "tsx scripts/approve-user.ts",
+    "fix-local-admin": "tsx scripts/fix-local-admin.ts",
     "extract-video-id": "tsx scripts/extract-cloudflare-video-id.ts",
     "fix-prisma": "bash scripts/fix-prisma.sh"
   },

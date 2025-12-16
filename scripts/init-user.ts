@@ -14,7 +14,8 @@ async function main() {
   const email = process.argv[2] || 'admin@example.com'
   const password = process.argv[3] || 'admin123'
   const name = process.argv[4] || 'Admin User'
-  const makeAdmin = process.argv[5] === '--admin' || process.argv[4] === '--admin'
+  // Verificar si --admin está en cualquier argumento
+  const makeAdmin = process.argv.includes('--admin')
 
   const hashedPassword = await bcrypt.hash(password, 10)
 
