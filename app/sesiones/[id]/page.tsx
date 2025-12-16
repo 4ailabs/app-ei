@@ -13,7 +13,6 @@ import {
   Video,
   Headphones,
   BookOpen,
-  ClipboardList,
   Smartphone,
   FolderPlus,
   Calendar,
@@ -49,7 +48,7 @@ function ContentBadge({
       href={`/sesiones/${sessionId}?tab=${tabId}`}
       className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-[#F5F4F0] dark:bg-[#333333] hover:bg-[#DA7756]/10 dark:hover:bg-[#DA7756]/20 rounded-lg sm:rounded-xl transition-colors group"
     >
-      <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-[#DA7756]" />
+      <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-[#DA7756]" />
       <span className="text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-[#DA7756] font-medium text-xs sm:text-sm">{count} {label}</span>
     </Link>
   )
@@ -77,6 +76,7 @@ export default async function SessionPage({ params, searchParams }: SessionPageP
   const IconComponent = sessionIcons[index % sessionIcons.length]
 
   // Calculate content counts
+  // Para sesión 1 (Módulo 1), ocultamos additionalResources porque están en la página de recursos del Bloque 1
   const contentCounts = {
     pdf: sessionData.pdfs?.length || (sessionData.pdfUrl ? 1 : 0),
     videos: sessionData.videos.length,
@@ -84,7 +84,7 @@ export default async function SessionPage({ params, searchParams }: SessionPageP
     themes: sessionData.themes.length,
     protocols: sessionData.protocols?.length || 0,
     apps: sessionData.apps?.length || 0,
-    additionalResources: sessionData.additionalResources?.length || 0
+    additionalResources: sessionId === 1 ? 0 : (sessionData.additionalResources?.length || 0)
   }
 
   return (
@@ -184,7 +184,7 @@ export default async function SessionPage({ params, searchParams }: SessionPageP
                   <ContentBadge count={contentCounts.videos} icon={Video} label="Videos" tabId="videos" sessionId={sessionId} />
                   <ContentBadge count={contentCounts.audios} icon={Headphones} label="Audios" tabId="audios" sessionId={sessionId} />
                   <ContentBadge count={contentCounts.themes} icon={BookOpen} label="Temas" tabId="themes" sessionId={sessionId} />
-                  <ContentBadge count={contentCounts.protocols} icon={ClipboardList} label="Protocolos" tabId="protocols" sessionId={sessionId} />
+                  <ContentBadge count={contentCounts.protocols} icon={FileText} label="Protocolos" tabId="protocols" sessionId={sessionId} />
                   <ContentBadge count={contentCounts.pdf} icon={FileText} label="PDF" tabId="pdf" sessionId={sessionId} />
                   {contentCounts.additionalResources > 0 && (
                     <ContentBadge count={contentCounts.additionalResources} icon={FolderPlus} label="Recursos" tabId="additionalResources" sessionId={sessionId} />

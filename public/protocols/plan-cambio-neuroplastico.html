@@ -3,22 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan de Cambio Neuroplástico</title>
+    <title>Plan de Cambio Neuroplastico</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a1a2e;
-            --phase1: #DC2626;
-            --phase1-bg: #FEF2F2;
-            --phase2: #059669;
-            --phase2-bg: #ECFDF5;
-            --phase3: #2563EB;
-            --phase3-bg: #EFF6FF;
-            --accent: #B8860B;
-            --accent-bg: #FBF8F1;
-            --text: #2D3748;
-            --text-light: #718096;
-            --border: #E2E8F0;
+            --bg-primary: #FAF9F7;
+            --bg-card: #FFFFFF;
+            --bg-section: #F5F4F0;
+            --text-primary: #1A1915;
+            --text-secondary: #706F6C;
+            --text-muted: #9B9A97;
+            --border: #E5E4E0;
+            --accent: #DA7756;
         }
 
         * {
@@ -27,123 +23,91 @@
             box-sizing: border-box;
         }
 
-        @page {
-            size: letter;
-            margin: 0;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #FAFBFC;
-            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
-            padding: 12px;
+            padding: 16px;
             -webkit-font-smoothing: antialiased;
         }
 
         @media (min-width: 640px) {
-            body {
-                padding: 24px;
-            }
+            body { padding: 32px; }
         }
 
         .card {
             width: 100%;
             max-width: 900px;
             margin: 0 auto;
-            background: white;
+            background: var(--bg-card);
+            border-radius: 24px;
             border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
 
         /* Header */
         .card-header {
-            background: var(--primary);
-            padding: 16px 20px;
-            position: relative;
+            background: linear-gradient(135deg, #1A1915 0%, #2D2D2A 100%);
+            padding: 24px;
+            text-align: center;
         }
 
         @media (min-width: 640px) {
-            .card-header {
-                padding: 28px 40px;
-            }
+            .card-header { padding: 40px; }
         }
 
-        .card-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 20px;
-            right: 20px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--phase1) 33%, var(--phase2) 33%, var(--phase2) 66%, var(--phase3) 66%);
-        }
-
-        @media (min-width: 640px) {
-            .card-header::after {
-                left: 40px;
-                right: 40px;
-            }
-        }
-
-        .header-content {
+        .header-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--accent);
+            border-radius: 18px;
             display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
         }
 
-        .header-titles h1 {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 20px;
-            font-weight: 600;
+        .header-icon svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
             color: white;
             letter-spacing: -0.5px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         @media (min-width: 640px) {
-            .header-titles h1 {
-                font-size: 32px;
-            }
+            .header-title { font-size: 36px; }
         }
 
-        .header-titles .subtitle {
-            font-size: 10px;
+        .header-subtitle {
+            font-size: 14px;
             color: rgba(255,255,255,0.7);
-            font-weight: 400;
-            letter-spacing: 1px;
-            text-transform: uppercase;
         }
 
-        @media (min-width: 640px) {
-            .header-titles .subtitle {
-                font-size: 13px;
-                letter-spacing: 2px;
-            }
-        }
-
-        /* Intro Box */
+        /* Intro */
         .intro-section {
-            padding: 16px 20px;
+            padding: 24px;
             border-bottom: 1px solid var(--border);
-            background: var(--accent-bg);
+            background: var(--bg-section);
         }
 
         @media (min-width: 640px) {
-            .intro-section {
-                padding: 20px 40px;
-            }
+            .intro-section { padding: 28px 40px; }
         }
 
         .intro-section p {
-            font-size: 14px;
-            color: var(--text);
+            font-size: 15px;
+            color: var(--text-primary);
             line-height: 1.7;
-        }
-
-        @media (min-width: 640px) {
-            .intro-section p {
-                font-size: 16px;
-            }
+            margin-bottom: 20px;
         }
 
         .intro-section strong {
@@ -151,153 +115,162 @@
             font-weight: 600;
         }
 
-        .intro-components {
+        .components-row {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-top: 12px;
         }
 
         @media (min-width: 640px) {
-            .intro-components {
+            .components-row {
                 flex-direction: row;
-                gap: 24px;
+                gap: 16px;
             }
         }
 
-        .intro-component {
+        .component-chip {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: var(--text);
+            gap: 10px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
         }
 
-        .intro-component .num {
-            width: 22px;
-            height: 22px;
+        .component-chip .num {
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            font-size: 11px;
+            font-weight: 700;
+            font-size: 13px;
             color: white;
+            flex-shrink: 0;
+            background: var(--text-secondary);
         }
 
-        .intro-component.c1 .num { background: var(--phase1); }
-        .intro-component.c2 .num { background: var(--phase2); }
-        .intro-component.c3 .num { background: var(--phase3); }
+        .component-chip:nth-child(1) .num { background: var(--accent); }
+        .component-chip:nth-child(2) .num { background: var(--text-secondary); }
+        .component-chip:nth-child(3) .num { background: var(--text-primary); }
+
+        .component-chip span {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
 
         /* User Info */
         .user-info {
             display: grid;
             grid-template-columns: 1fr;
             gap: 16px;
-            padding: 16px 20px;
+            padding: 24px;
             border-bottom: 1px solid var(--border);
-            background: #FAFBFC;
         }
 
         @media (min-width: 640px) {
             .user-info {
                 grid-template-columns: 1fr 1fr;
-                gap: 20px;
-                padding: 16px 40px;
-            }
-        }
-
-        .user-field label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .user-field input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            font-size: 15px;
-            font-family: inherit;
-            background: white;
-        }
-
-        /* Phase Sections */
-        .phase-section {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            position: relative;
-        }
-
-        @media (min-width: 640px) {
-            .phase-section {
                 padding: 24px 40px;
             }
         }
 
-        .phase-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
+        .user-field label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 8px;
         }
 
-        .phase-section.phase1::before { background: var(--phase1); }
-        .phase-section.phase2::before { background: var(--phase2); }
-        .phase-section.phase3::before { background: var(--phase3); }
+        .user-field input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            background: var(--bg-section);
+            transition: border-color 0.2s;
+        }
+
+        .user-field input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Phase Sections */
+        .phase-section {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        @media (min-width: 640px) {
+            .phase-section { padding: 32px 40px; }
+        }
 
         .phase-header {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .phase-number {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 20px;
             color: white;
+            flex-shrink: 0;
+            background: var(--text-secondary);
         }
 
-        .phase1 .phase-number { background: var(--phase1); }
-        .phase2 .phase-number { background: var(--phase2); }
-        .phase3 .phase-number { background: var(--phase3); }
+        .phase-section:nth-of-type(3) .phase-number { background: var(--accent); }
+        .phase-section:nth-of-type(4) .phase-number { background: var(--text-secondary); }
+        .phase-section:nth-of-type(5) .phase-number { background: var(--text-primary); }
 
-        .phase-title-group h2 {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 2px;
+        .phase-title-group {
+            flex-grow: 1;
+        }
+
+        .phase-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+        }
+
+        .phase-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
         }
 
         @media (min-width: 640px) {
-            .phase-title-group h2 {
-                font-size: 20px;
-            }
+            .phase-title { font-size: 24px; }
         }
 
-        .phase-title-group .phase-subtitle {
-            font-size: 14px;
-            color: var(--text-light);
+        .phase-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
             font-style: italic;
         }
 
         .question-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .question-group:last-child {
@@ -307,56 +280,63 @@
         .question-group label {
             font-size: 14px;
             font-weight: 500;
-            color: var(--text);
+            color: var(--text-primary);
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             line-height: 1.5;
         }
 
         .question-group textarea {
             width: 100%;
-            padding: 12px;
+            padding: 14px 16px;
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: 12px;
             font-size: 14px;
             font-family: inherit;
-            background: white;
+            background: var(--bg-section);
             resize: none;
-            min-height: 50px;
+            min-height: 70px;
+            transition: border-color 0.2s;
+        }
+
+        .question-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
         }
 
         .question-group textarea.large {
-            min-height: 70px;
+            min-height: 90px;
         }
 
         .question-hint {
-            font-size: 13px;
-            color: var(--text-light);
+            font-size: 12px;
+            color: var(--text-secondary);
             font-style: italic;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         /* Tools Checklist */
         .tools-section {
-            background: var(--phase3-bg);
-            padding: 16px;
-            border-radius: 6px;
-            margin-top: 12px;
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 16px;
+            background: var(--bg-section);
+            border: 1px solid var(--border);
         }
 
         .tools-section h4 {
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--phase3);
-            margin-bottom: 12px;
+            color: var(--accent);
+            margin-bottom: 16px;
         }
 
         .tools-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 8px;
+            gap: 10px;
         }
 
         @media (min-width: 640px) {
@@ -368,30 +348,47 @@
         .tool-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--text);
+            gap: 10px;
+            padding: 12px 14px;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .tool-item:hover {
+            border-color: var(--accent);
         }
 
         .tool-item input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: var(--phase3);
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+            flex-shrink: 0;
         }
 
-        /* Time Commitment */
+        .tool-item span {
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        /* Commitment Section */
         .commitment-section {
-            padding: 20px 40px;
+            padding: 24px;
             border-bottom: 1px solid var(--border);
-            background: #FAFBFC;
+            background: var(--bg-section);
+        }
+
+        @media (min-width: 640px) {
+            .commitment-section { padding: 32px 40px; }
         }
 
         .commitment-header {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 18px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
             text-align: center;
         }
 
@@ -399,7 +396,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
         @media (min-width: 640px) {
@@ -409,44 +406,38 @@
         }
 
         .commitment-option {
-            padding: 14px;
+            padding: 20px;
             border: 2px solid var(--border);
-            border-radius: 6px;
+            border-radius: 16px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
+            background: white;
         }
 
         .commitment-option:hover {
-            border-color: var(--phase3);
-            background: var(--phase3-bg);
+            border-color: var(--accent);
+        }
+
+        .commitment-option:has(input:checked) {
+            border-color: var(--accent);
+            background: rgba(218, 119, 86, 0.05);
         }
 
         .commitment-option input {
             display: none;
         }
 
-        .commitment-option input:checked + .option-content {
-            color: var(--phase3);
-        }
-
-        .commitment-option:has(input:checked) {
-            border-color: var(--phase3);
-            background: var(--phase3-bg);
-        }
-
         .option-days {
-            font-size: 24px;
+            font-size: 36px;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--text-primary);
             margin-bottom: 4px;
         }
 
         .option-label {
-            font-size: 11px;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 12px;
+            color: var(--text-secondary);
         }
 
         .dates-row {
@@ -458,45 +449,54 @@
         @media (min-width: 640px) {
             .dates-row {
                 grid-template-columns: 1fr 1fr;
-                gap: 20px;
             }
         }
 
         /* Relapse Section */
         .relapse-section {
-            padding: 20px 40px;
+            padding: 24px;
             border-bottom: 1px solid var(--border);
+        }
+
+        @media (min-width: 640px) {
+            .relapse-section { padding: 32px 40px; }
         }
 
         .relapse-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 16px;
+            margin-bottom: 20px;
         }
 
         .relapse-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--phase1-bg);
+            width: 48px;
+            height: 48px;
+            background: var(--bg-section);
+            border: 1px solid var(--border);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .relapse-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-secondary);
         }
 
         .relapse-title {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 18px;
-            font-weight: 600;
-            color: var(--primary);
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
         .relapse-intro {
-            font-size: 13px;
-            color: var(--text);
-            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
             font-style: italic;
         }
 
@@ -508,42 +508,56 @@
         .relapse-item {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            font-size: 13px;
-            color: var(--text);
-            padding: 10px 12px;
-            background: #FAFBFC;
-            border-radius: 4px;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--bg-section);
+            border-radius: 12px;
+            border: 1px solid var(--border);
         }
 
         .relapse-item input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             margin-top: 2px;
-            accent-color: var(--phase1);
+            accent-color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .relapse-item span {
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.5;
         }
 
         /* Final Commitment */
         .final-commitment {
-            padding: 24px 40px;
-            background: var(--primary);
+            padding: 32px 24px;
+            background: #1A1915;
             text-align: center;
         }
 
+        @media (min-width: 640px) {
+            .final-commitment { padding: 40px; }
+        }
+
         .commitment-box {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 8px;
-            padding: 20px 24px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 28px;
             max-width: 700px;
             margin: 0 auto;
         }
 
         .commitment-text {
-            font-size: 14px;
+            font-size: 15px;
             color: rgba(255,255,255,0.9);
             line-height: 1.7;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+        }
+
+        .commitment-text strong {
+            color: var(--accent);
         }
 
         .signature-row {
@@ -555,7 +569,6 @@
         @media (min-width: 640px) {
             .signature-row {
                 grid-template-columns: 2fr 1fr;
-                gap: 20px;
             }
         }
 
@@ -563,34 +576,40 @@
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.5);
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .signature-field input {
             width: 100%;
-            padding: 10px 12px;
+            padding: 12px 16px;
             border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 4px;
-            font-size: 13px;
+            border-radius: 10px;
+            font-size: 14px;
             font-family: inherit;
             background: rgba(255,255,255,0.05);
             color: white;
+            transition: border-color 0.2s;
+        }
+
+        .signature-field input:focus {
+            outline: none;
+            border-color: var(--accent);
         }
 
         .signature-field input::placeholder {
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.3);
         }
 
         /* Footer */
         .card-footer {
-            padding: 12px 20px;
-            border-top: 1px solid var(--border);
+            padding: 20px 24px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            align-items: flex-start;
+            align-items: center;
+            text-align: center;
             background: white;
         }
 
@@ -598,93 +617,133 @@
             .card-footer {
                 flex-direction: row;
                 justify-content: space-between;
-                align-items: center;
-                padding: 16px 40px;
+                padding: 20px 40px;
+                text-align: left;
             }
         }
 
         .footer-left {
-            font-size: 11px;
-            color: var(--text-light);
+            font-size: 12px;
+            color: var(--text-secondary);
         }
 
         .footer-left strong {
-            color: var(--text);
+            color: var(--text-primary);
             font-weight: 600;
         }
 
         .footer-right {
-            font-size: 10px;
-            color: var(--text-light);
-            text-align: right;
+            font-size: 11px;
+            color: var(--text-muted);
         }
 
-        .footer-right .institute {
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
             font-weight: 600;
-            color: var(--text);
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            z-index: 100;
         }
 
-        /* Mobile optimizations */
-        @media (max-width: 639px) {
-            .card {
-                border-left: none;
-                border-right: none;
-            }
+        .print-button:hover {
+            background: #2D2D2A;
+            transform: translateY(-2px);
+        }
 
-            .question-group textarea {
-                font-size: 14px;
-            }
-
-            .form-label {
-                font-size: 11px;
-            }
-
-            .phase-header {
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-
-            .phase-number {
-                width: 28px;
-                height: 28px;
-                font-size: 12px;
-            }
+        .print-button svg {
+            width: 18px;
+            height: 18px;
         }
 
         @media print {
             body {
                 background: white;
                 padding: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
             .card {
                 border: none;
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .print-button {
+                display: none !important;
+            }
+            .section {
+                break-inside: avoid;
+            }
+            .final-commitment {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            input[type="text"],
+            input[type="date"],
+            .form-input {
+                border: none !important;
+                border-bottom: 1px solid #1A1915 !important;
+                border-radius: 0 !important;
+                background: transparent !important;
+            }
+            textarea {
+                border: 1px solid #1A1915 !important;
+                border-radius: 4px !important;
+                background: transparent !important;
+            }
+            .commitment-option {
+                border: 1px solid #1A1915 !important;
+            }
+            .relapse-item input[type="checkbox"] {
+                border: 1px solid #1A1915 !important;
             }
         }
     </style>
 </head>
 <body>
+    <button class="print-button" onclick="window.print()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        </svg>
+        Imprimir
+    </button>
+
     <div class="card">
         <div class="card-header">
-            <div class="header-content">
-                <div class="header-titles">
-                    <h1>Plan de Cambio Neuroplástico</h1>
-                    <p class="subtitle">Plantilla para Transformación de Patrones</p>
-                </div>
+            <div class="header-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
             </div>
+            <h1 class="header-title">Plan de Cambio Neuroplastico</h1>
+            <p class="header-subtitle">Plantilla para Transformacion de Patrones</p>
         </div>
 
         <div class="intro-section">
-            <p>El cambio neuroplástico tiene <strong>3 componentes esenciales</strong> que trabajan juntos. Mínimo <strong>66 días</strong> para patrones simples, <strong>100+ días</strong> para patrones arraigados.</p>
-            <div class="intro-components">
-                <div class="intro-component c1">
+            <p>El cambio neuroplastico tiene <strong>3 componentes esenciales</strong> que trabajan juntos. Minimo <strong>66 dias</strong> para patrones simples, <strong>100+ dias</strong> para patrones arraigados.</p>
+            <div class="components-row">
+                <div class="component-chip">
                     <span class="num">1</span>
-                    <span>Cesar patrón antiguo</span>
+                    <span>Cesar patron antiguo</span>
                 </div>
-                <div class="intro-component c2">
+                <div class="component-chip">
                     <span class="num">2</span>
-                    <span>Practicar patrón nuevo</span>
+                    <span>Practicar patron nuevo</span>
                 </div>
-                <div class="intro-component c3">
+                <div class="component-chip">
                     <span class="num">3</span>
                     <span>Repetir consistentemente</span>
                 </div>
@@ -694,99 +753,102 @@
         <div class="user-info">
             <div class="user-field">
                 <label>Nombre</label>
-                <input type="text" placeholder="">
+                <input type="text" placeholder="Tu nombre completo">
             </div>
             <div class="user-field">
                 <label>Fecha de Inicio</label>
-                <input type="date" placeholder="">
+                <input type="date">
             </div>
         </div>
 
-        <!-- Fase 1: Patrón Antiguo -->
-        <div class="phase-section phase1">
+        <!-- Fase 1: Patron Antiguo -->
+        <div class="phase-section">
             <div class="phase-header">
                 <div class="phase-number">1</div>
                 <div class="phase-title-group">
-                    <h2>El Patrón Que Quiero Cambiar</h2>
-                    <p class="phase-subtitle">Identificación del circuito neural a debilitar</p>
+                    <p class="phase-label">Fase 1</p>
+                    <h2 class="phase-title">El Patron Que Quiero Cambiar</h2>
+                    <p class="phase-subtitle">Identificacion del circuito neural a debilitar</p>
                 </div>
             </div>
 
             <div class="question-group">
-                <label>¿Cuál es el patrón/comportamiento/reacción que quiero cambiar?</label>
-                <textarea class="large" placeholder=""></textarea>
+                <label>¿Cual es el patron/comportamiento/reaccion que quiero cambiar?</label>
+                <textarea class="large" placeholder="Describe el patron especifico que deseas transformar..."></textarea>
             </div>
 
             <div class="question-group">
-                <label>¿Cuánto tiempo llevo con este patrón? (aproximado)</label>
-                <textarea placeholder=""></textarea>
+                <label>¿Cuanto tiempo llevo con este patron? (aproximado)</label>
+                <textarea placeholder="Meses, anos..."></textarea>
             </div>
 
             <div class="question-group">
-                <label>¿En qué situaciones aparece más frecuentemente?</label>
-                <textarea placeholder=""></textarea>
+                <label>¿En que situaciones aparece mas frecuentemente?</label>
+                <textarea placeholder="Contextos, personas, momentos del dia..."></textarea>
             </div>
 
             <div class="question-group">
-                <label>¿Qué función tuvo este patrón? ¿De qué me protegió originalmente?</label>
-                <textarea placeholder=""></textarea>
-                <p class="question-hint">Reconocer la función original permite soltar sin culpa</p>
+                <label>¿Que funcion tuvo este patron? ¿De que me protegio originalmente?</label>
+                <textarea placeholder="Piensa en el origen y proposito inicial..."></textarea>
+                <p class="question-hint">Reconocer la funcion original permite soltar sin culpa</p>
             </div>
 
             <div class="question-group">
-                <label>¿Cuál es el costo actual de mantener este patrón?</label>
-                <textarea placeholder=""></textarea>
+                <label>¿Cual es el costo actual de mantener este patron?</label>
+                <textarea placeholder="Impacto en tu vida, relaciones, bienestar..."></textarea>
             </div>
         </div>
 
-        <!-- Fase 2: Patrón Nuevo -->
-        <div class="phase-section phase2">
+        <!-- Fase 2: Patron Nuevo -->
+        <div class="phase-section">
             <div class="phase-header">
                 <div class="phase-number">2</div>
                 <div class="phase-title-group">
-                    <h2>El Patrón Nuevo Que Quiero Desarrollar</h2>
-                    <p class="phase-subtitle">Diseño del nuevo circuito neural</p>
+                    <p class="phase-label">Fase 2</p>
+                    <h2 class="phase-title">El Patron Nuevo Que Quiero Desarrollar</h2>
+                    <p class="phase-subtitle">Diseno del nuevo circuito neural</p>
                 </div>
             </div>
 
             <div class="question-group">
-                <label>¿Qué quiero hacer/sentir/pensar EN LUGAR del patrón antiguo?</label>
-                <textarea class="large" placeholder=""></textarea>
+                <label>¿Que quiero hacer/sentir/pensar EN LUGAR del patron antiguo?</label>
+                <textarea class="large" placeholder="Describe la nueva respuesta que deseas cultivar..."></textarea>
             </div>
 
             <div class="question-group">
-                <label>¿Cómo sabré que estoy usando el patrón nuevo? (señales observables)</label>
-                <textarea placeholder=""></textarea>
+                <label>¿Como sabre que estoy usando el patron nuevo? (senales observables)</label>
+                <textarea placeholder="Comportamientos, sensaciones, pensamientos especificos..."></textarea>
                 <p class="question-hint">Identifica indicadores concretos y medibles</p>
             </div>
         </div>
 
-        <!-- Fase 3: Plan de Práctica -->
-        <div class="phase-section phase3">
+        <!-- Fase 3: Plan de Practica -->
+        <div class="phase-section">
             <div class="phase-header">
                 <div class="phase-number">3</div>
                 <div class="phase-title-group">
-                    <h2>Mi Plan de Práctica</h2>
-                    <p class="phase-subtitle">Estrategia de repetición consistente</p>
+                    <p class="phase-label">Fase 3</p>
+                    <h2 class="phase-title">Mi Plan de Practica</h2>
+                    <p class="phase-subtitle">Estrategia de repeticion consistente</p>
                 </div>
             </div>
 
             <div class="question-group">
-                <label>¿CUÁNDO voy a practicar el patrón nuevo?</label>
-                <textarea placeholder=""></textarea>
-                <p class="question-hint">Sé específico: momento del día, situación, disparador</p>
+                <label>¿CUANDO voy a practicar el patron nuevo?</label>
+                <textarea placeholder="Momento del dia, situacion especifica, disparador..."></textarea>
+                <p class="question-hint">Se especifico: momento del dia, situacion, disparador</p>
             </div>
 
             <div class="tools-section">
-                <h4>¿Qué herramientas voy a usar?</h4>
+                <h4>¿Que herramientas voy a usar?</h4>
                 <div class="tools-grid">
                     <label class="tool-item">
                         <input type="checkbox">
-                        <span>Respiración 4-7-8</span>
+                        <span>Respiracion 4-7-8</span>
                     </label>
                     <label class="tool-item">
                         <input type="checkbox">
-                        <span>Reenfoque de atención (SRA)</span>
+                        <span>Reenfoque de atencion (SRA)</span>
                     </label>
                     <label class="tool-item">
                         <input type="checkbox">
@@ -794,7 +856,7 @@
                     </label>
                     <label class="tool-item">
                         <input type="checkbox">
-                        <span>Visualización</span>
+                        <span>Visualizacion</span>
                     </label>
                     <label class="tool-item">
                         <input type="checkbox">
@@ -807,9 +869,9 @@
                 </div>
             </div>
 
-            <div class="question-group" style="margin-top: 16px;">
-                <label>¿CÓMO voy a recordar practicar?</label>
-                <textarea placeholder=""></textarea>
+            <div class="question-group" style="margin-top: 20px;">
+                <label>¿COMO voy a recordar practicar?</label>
+                <textarea placeholder="Alarmas, notas, persona de apoyo, contexto ambiental..."></textarea>
                 <p class="question-hint">Alarmas, notas, persona de apoyo, contexto ambiental</p>
             </div>
         </div>
@@ -817,28 +879,22 @@
         <!-- Compromiso de Tiempo -->
         <div class="commitment-section">
             <h3 class="commitment-header">Mi Compromiso de Tiempo</h3>
-            
+
             <div class="commitment-grid">
                 <label class="commitment-option">
                     <input type="radio" name="duration" value="66">
-                    <div class="option-content">
-                        <div class="option-days">66</div>
-                        <div class="option-label">días · Patrones simples</div>
-                    </div>
+                    <div class="option-days">66</div>
+                    <div class="option-label">dias · Patrones simples</div>
                 </label>
                 <label class="commitment-option">
                     <input type="radio" name="duration" value="90">
-                    <div class="option-content">
-                        <div class="option-days">90</div>
-                        <div class="option-label">días · Patrones moderados</div>
-                    </div>
+                    <div class="option-days">90</div>
+                    <div class="option-label">dias · Patrones moderados</div>
                 </label>
                 <label class="commitment-option">
                     <input type="radio" name="duration" value="120">
-                    <div class="option-content">
-                        <div class="option-days">120</div>
-                        <div class="option-label">días · Patrones arraigados</div>
-                    </div>
+                    <div class="option-days">120</div>
+                    <div class="option-label">dias · Patrones arraigados</div>
                 </label>
             </div>
 
@@ -848,37 +904,41 @@
                     <input type="date">
                 </div>
                 <div class="user-field">
-                    <label>Fecha de Evaluación</label>
+                    <label>Fecha de Evaluacion</label>
                     <input type="date">
                 </div>
             </div>
         </div>
 
-        <!-- Manejo de Recaídas -->
+        <!-- Manejo de Recaidas -->
         <div class="relapse-section">
             <div class="relapse-header">
-                <div class="relapse-icon">↻</div>
-                <h3 class="relapse-title">Manejo de Recaídas</h3>
+                <div class="relapse-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                </div>
+                <h3 class="relapse-title">Manejo de Recaidas</h3>
             </div>
-            
-            <p class="relapse-intro">Cuando vuelva al patrón antiguo (porque pasará), voy a:</p>
-            
+
+            <p class="relapse-intro">Cuando vuelva al patron antiguo (porque pasara), voy a:</p>
+
             <div class="relapse-checklist">
                 <label class="relapse-item">
                     <input type="checkbox">
-                    <span>Reconocer sin juzgarme: "Noté que usé el patrón antiguo"</span>
+                    <span>Reconocer sin juzgarme: "Note que use el patron antiguo"</span>
                 </label>
                 <label class="relapse-item">
                     <input type="checkbox">
-                    <span>Recordar que es parte del proceso neuroplástico</span>
+                    <span>Recordar que es parte del proceso neuroplastico</span>
                 </label>
                 <label class="relapse-item">
                     <input type="checkbox">
-                    <span>Identificar qué disparó la recaída</span>
+                    <span>Identificar que disparo la recaida</span>
                 </label>
                 <label class="relapse-item">
                     <input type="checkbox">
-                    <span>Retomar la práctica al día siguiente</span>
+                    <span>Retomar la practica al dia siguiente</span>
                 </label>
                 <label class="relapse-item">
                     <input type="checkbox">
@@ -891,14 +951,14 @@
         <div class="final-commitment">
             <div class="commitment-box">
                 <p class="commitment-text">
-                    Me comprometo a practicar mi nuevo patrón por el tiempo establecido, 
-                    siendo <strong>compasivo/a</strong> conmigo cuando falle y <strong>persistente</strong> en retomar. 
+                    Me comprometo a practicar mi nuevo patron por el tiempo establecido,
+                    siendo <strong>compasivo/a</strong> conmigo cuando falle y <strong>persistente</strong> en retomar.
                     Entiendo que lo que fue construido puede ser reconstruido.
                 </p>
                 <div class="signature-row">
                     <div class="signature-field">
                         <label>Firma</label>
-                        <input type="text" placeholder="">
+                        <input type="text" placeholder="Tu firma">
                     </div>
                     <div class="signature-field">
                         <label>Fecha</label>
@@ -910,15 +970,12 @@
 
         <div class="card-footer">
             <div class="footer-left">
-                <strong>Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
+                <strong>Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energetica
             </div>
             <div class="footer-right">
-                <span class="institute">Instituto Centro Bioenergética</span><br>
                 inteligencia-energetica.com
             </div>
         </div>
     </div>
 </body>
 </html>
-
-

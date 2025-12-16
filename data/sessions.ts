@@ -525,35 +525,6 @@ export const sessions: Session[] = [
         category: "ritual_nocturno",
         type: "audio" as const
       },
-      {
-        id: "ar1-14",
-        title: "Sesión 1: Seguridad y Ventana de Tolerancia",
-        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion1_Seguridad_Ventana_Tolerancia.pptx.pdf",
-        description: "Presentación sobre seguridad y ventana de tolerancia",
-        type: "slide" as const
-      },
-      {
-        id: "ar1-15",
-        title: "Sesión 2: Cerebro Reactivo y Recursos",
-        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion2_Cerebro_Reactivo_Recursos.pptx.pdf",
-        description: "Presentación del módulo de cerebro reactivo y recursos",
-        type: "slide" as const
-      },
-      {
-        id: "ar1-16",
-        title: "Sesión 3: Estados Óptimos y Las 4 Palancas",
-        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion3_Estados_Optimos_4_Palancas.pptx.pdf",
-        description: "Presentación del módulo de estados óptimos y las 4 palancas",
-        type: "slide" as const
-      },
-      {
-        id: "ar1-17",
-        title: "Sesión 4: Sufrimiento, Patrones y Nueva Historia",
-        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion4_Sufrimiento_Patrones_Nueva_Historia.pptx.pdf",
-        description: "Presentación del módulo de transformación narrativa",
-        type: "slide" as const
-      },
-
       // =============================================
       // GALERÍA DE IMÁGENES - BLOQUE 1
       // Organizadas por tema para mejor comprensión
@@ -1385,19 +1356,19 @@ export const sessions: Session[] = [
         id: "p4-1",
         title: "Mi Nueva Historia (Guía de Escritura)",
         description: "Estructura para reescribir narrativa personal",
-        pdfUrl: "/protocols/workbooks-p6-p10.html#mi-nueva-historia"
+        pdfUrl: "/protocols/mi-nueva-historia.html"
       },
       {
         id: "p4-2",
         title: "Tracker de 90 Días",
         description: "Calendario de seguimiento con checkboxes",
-        pdfUrl: "/protocols/workbooks-p6-p10.html#tracker-90-dias"
+        pdfUrl: "/protocols/tracker-90-dias.html"
       },
       {
         id: "p4-3",
         title: "Diario de Regulación Semanal",
         description: "Formato para registrar práctica y observaciones",
-        pdfUrl: "/protocols/workbooks-p6-p10.html#diario-regulacion-semanal"
+        pdfUrl: "/protocols/diario-regulacion-semanal.html"
       }
     ],
     apps: []

@@ -7,16 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a1a2e;
-            --r1: #F59E0B;
-            --r1-bg: #FFFBEB;
-            --r2: #059669;
-            --r2-bg: #ECFDF5;
-            --r3: #7C3AED;
-            --r3-bg: #F5F3FF;
-            --text: #2D3748;
-            --text-light: #718096;
-            --border: #E2E8F0;
+            --bg-primary: #FAF9F7;
+            --bg-card: #FFFFFF;
+            --bg-section: #F5F4F0;
+            --text-primary: #1A1915;
+            --text-secondary: #706F6C;
+            --text-muted: #9B9A97;
+            --border: #E5E4E0;
+            --accent: #DA7756;
         }
 
         * {
@@ -25,69 +23,44 @@
             box-sizing: border-box;
         }
 
-        @page {
-            size: letter;
-            margin: 0;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #FAFBFC;
-            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
-            padding: 12px;
+            padding: 16px;
             -webkit-font-smoothing: antialiased;
         }
 
         @media (min-width: 640px) {
-            body {
-                padding: 20px;
-            }
+            body { padding: 32px; }
         }
 
         .card {
             width: 100%;
             max-width: 900px;
             margin: 0 auto;
-            background: white;
+            background: var(--bg-card);
+            border-radius: 24px;
             border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
 
         /* Header */
         .card-header {
-            background: var(--primary);
-            padding: 16px 20px;
-            position: relative;
+            background: var(--text-primary);
+            padding: 24px;
         }
 
         @media (min-width: 640px) {
-            .card-header {
-                padding: 24px 36px;
-            }
-        }
-
-        .card-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 20px;
-            right: 20px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--r1) 33%, var(--r2) 33%, var(--r2) 66%, var(--r3) 66%);
-        }
-
-        @media (min-width: 640px) {
-            .card-header::after {
-                left: 36px;
-                right: 36px;
-            }
+            .card-header { padding: 40px; }
         }
 
         .header-content {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            align-items: flex-start;
+            gap: 16px;
         }
 
         @media (min-width: 640px) {
@@ -98,34 +71,21 @@
             }
         }
 
-        .header-titles h1 {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 18px;
-            font-weight: 600;
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
             color: white;
             letter-spacing: -0.5px;
             margin-bottom: 4px;
         }
 
         @media (min-width: 640px) {
-            .header-titles h1 {
-                font-size: 30px;
-            }
+            .header-title { font-size: 32px; }
         }
 
-        .header-titles .subtitle {
-            font-size: 12px;
-            color: rgba(255,255,255,0.7);
-            font-weight: 400;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        @media (min-width: 640px) {
-            .header-titles .subtitle {
-                font-size: 14px;
-                letter-spacing: 2px;
-            }
+        .header-subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
         }
 
         .header-time {
@@ -133,68 +93,49 @@
         }
 
         @media (min-width: 640px) {
-            .header-time {
-                text-align: right;
-            }
+            .header-time { text-align: right; }
         }
 
         .header-time .total {
-            font-size: 20px;
+            font-size: 32px;
             font-weight: 700;
-            color: white;
+            color: var(--accent);
         }
 
         @media (min-width: 640px) {
-            .header-time .total {
-                font-size: 28px;
-            }
+            .header-time .total { font-size: 40px; }
         }
 
         .header-time .label {
-            font-size: 9px;
-            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        @media (min-width: 640px) {
-            .header-time .label {
-                font-size: 10px;
-                letter-spacing: 1px;
-            }
+            letter-spacing: 1px;
         }
 
         /* Intro */
         .intro-section {
-            padding: 12px 20px;
+            padding: 24px;
             border-bottom: 1px solid var(--border);
-            background: #FAFBFC;
+            background: var(--bg-section);
         }
 
         @media (min-width: 640px) {
-            .intro-section {
-                padding: 16px 36px;
-            }
+            .intro-section { padding: 28px 40px; }
         }
 
         .intro-section p {
-            font-size: 14px;
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        @media (min-width: 640px) {
-            .intro-section p {
-                font-size: 15px;
-            }
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 1.7;
         }
 
         .intro-section strong {
-            color: var(--primary);
+            color: var(--accent);
             font-weight: 600;
         }
 
-        /* Rituals */
+        /* Ritual Section */
         .ritual-section {
             border-bottom: 1px solid var(--border);
         }
@@ -202,88 +143,64 @@
         .ritual-header {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            padding: 14px 20px;
-            position: relative;
+            gap: 16px;
+            padding: 20px 24px;
         }
 
         @media (min-width: 640px) {
             .ritual-header {
                 flex-direction: row;
                 align-items: center;
-                gap: 16px;
-                padding: 18px 36px;
+                gap: 20px;
+                padding: 24px 40px;
             }
         }
 
-        .ritual-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-        }
-
-        .ritual-section.r1 .ritual-header::before { background: var(--r1); }
-        .ritual-section.r2 .ritual-header::before { background: var(--r2); }
-        .ritual-section.r3 .ritual-header::before { background: var(--r3); }
-
-        .ritual-section.r1 .ritual-header { background: var(--r1-bg); }
-        .ritual-section.r2 .ritual-header { background: var(--r2-bg); }
-        .ritual-section.r3 .ritual-header { background: var(--r3-bg); }
-
         .ritual-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            color: white;
             flex-shrink: 0;
+            background: var(--bg-section);
+            border: 1px solid var(--border);
         }
 
-        @media (min-width: 640px) {
-            .ritual-icon {
-                width: 44px;
-                height: 44px;
-                font-size: 20px;
-            }
+        .ritual-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-secondary);
         }
-
-        .ritual-section.r1 .ritual-icon { background: var(--r1); }
-        .ritual-section.r2 .ritual-icon { background: var(--r2); }
-        .ritual-section.r3 .ritual-icon { background: var(--r3); }
 
         .ritual-title-group {
             flex-grow: 1;
         }
 
+        .ritual-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+        }
+
         .ritual-name {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 2px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
         }
 
         @media (min-width: 640px) {
-            .ritual-name {
-                font-size: 20px;
-            }
+            .ritual-name { font-size: 22px; }
         }
 
         .ritual-purpose {
-            font-size: 11px;
-            color: var(--text-light);
-        }
-
-        @media (min-width: 640px) {
-            .ritual-purpose {
-                font-size: 12px;
-            }
+            font-size: 13px;
+            color: var(--text-secondary);
         }
 
         .ritual-meta {
@@ -291,340 +208,224 @@
         }
 
         @media (min-width: 640px) {
-            .ritual-meta {
-                text-align: right;
-            }
+            .ritual-meta { text-align: right; }
         }
 
         .ritual-duration {
-            font-size: 16px;
+            font-size: 24px;
             font-weight: 700;
+            color: var(--accent);
         }
-
-        @media (min-width: 640px) {
-            .ritual-duration {
-                font-size: 20px;
-            }
-        }
-
-        .ritual-section.r1 .ritual-duration { color: var(--r1); }
-        .ritual-section.r2 .ritual-duration { color: var(--r2); }
-        .ritual-section.r3 .ritual-duration { color: var(--r3); }
 
         .ritual-timing {
-            font-size: 11px;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        @media (min-width: 640px) {
-            .ritual-timing {
-                font-size: 12px;
-            }
+            font-size: 12px;
+            color: var(--text-secondary);
         }
 
         /* Steps */
         .ritual-steps {
-            padding: 12px 20px 16px;
+            padding: 0 24px 24px;
             display: grid;
-            gap: 10px;
+            gap: 12px;
         }
 
         @media (min-width: 640px) {
-            .ritual-steps {
-                padding: 16px 36px 20px;
-            }
+            .ritual-steps { padding: 0 40px 28px; }
         }
 
         .step-item {
             display: grid;
             grid-template-columns: 60px 1fr;
-            gap: 10px;
+            gap: 16px;
             align-items: start;
-        }
-
-        @media (min-width: 640px) {
-            .step-item {
-                grid-template-columns: 70px 1fr;
-                gap: 12px;
-            }
+            padding: 16px;
+            background: var(--bg-section);
+            border-radius: 12px;
         }
 
         .step-time {
             font-size: 12px;
             font-weight: 600;
-            padding: 5px 8px;
-            border-radius: 4px;
+            padding: 6px 10px;
+            border-radius: 8px;
             text-align: center;
+            background: white;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
         }
-
-        @media (min-width: 640px) {
-            .step-time {
-                font-size: 13px;
-                padding: 6px 10px;
-            }
-        }
-
-        .ritual-section.r1 .step-time { background: var(--r1-bg); color: var(--r1); }
-        .ritual-section.r2 .step-time { background: var(--r2-bg); color: var(--r2); }
-        .ritual-section.r3 .step-time { background: var(--r3-bg); color: var(--r3); }
 
         .step-content h4 {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 3px;
-        }
-
-        @media (min-width: 640px) {
-            .step-content h4 {
-                font-size: 13px;
-            }
+            color: var(--text-primary);
+            margin-bottom: 4px;
         }
 
         .step-content p {
             font-size: 13px;
-            color: var(--text);
+            color: var(--text-primary);
             line-height: 1.5;
-        }
-
-        @media (min-width: 640px) {
-            .step-content p {
-                font-size: 14px;
-            }
+            margin-bottom: 6px;
         }
 
         .step-content .neuro-note {
             font-size: 12px;
-            color: var(--text-light);
+            color: var(--text-secondary);
             font-style: italic;
-            margin-top: 4px;
-        }
-
-        @media (min-width: 640px) {
-            .step-content .neuro-note {
-                font-size: 13px;
-            }
         }
 
         /* Summary Section */
         .summary-section {
-            background: var(--primary);
-            padding: 16px 20px;
+            padding: 28px 24px;
+            background: var(--text-primary);
         }
 
         @media (min-width: 640px) {
-            .summary-section {
-                padding: 20px 36px;
-            }
+            .summary-section { padding: 32px 40px; }
         }
 
         .summary-section h3 {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 14px;
             font-weight: 600;
-            color: white;
-            margin-bottom: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 20px;
             text-align: center;
-        }
-
-        @media (min-width: 640px) {
-            .summary-section h3 {
-                font-size: 16px;
-                margin-bottom: 14px;
-            }
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .summary-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 12px;
         }
 
         @media (min-width: 640px) {
-            .summary-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px;
-            }
+            .summary-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
         .summary-item {
-            padding: 12px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 6px;
-            border-left: 3px solid;
+            padding: 20px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 16px;
             text-align: center;
         }
 
-        @media (min-width: 640px) {
-            .summary-item {
-                padding: 14px;
-            }
-        }
-
-        .summary-item.s1 { border-left-color: var(--r1); }
-        .summary-item.s2 { border-left-color: var(--r2); }
-        .summary-item.s3 { border-left-color: var(--r3); }
-
         .summary-item .ritual-label {
-            font-size: 11px;
-            color: rgba(255,255,255,0.6);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-        }
-
-        @media (min-width: 640px) {
-            .summary-item .ritual-label {
-                font-size: 12px;
-                letter-spacing: 1px;
-            }
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 8px;
         }
 
         .summary-item .ritual-time {
-            font-size: 16px;
+            font-size: 28px;
             font-weight: 700;
             color: white;
             margin-bottom: 4px;
         }
 
-        @media (min-width: 640px) {
-            .summary-item .ritual-time {
-                font-size: 18px;
-            }
-        }
-
         .summary-item .ritual-when {
             font-size: 12px;
-            color: rgba(255,255,255,0.8);
-        }
-
-        @media (min-width: 640px) {
-            .summary-item .ritual-when {
-                font-size: 13px;
-            }
+            color: rgba(255,255,255,0.6);
         }
 
         /* Principle Quote */
         .principle-section {
-            padding: 14px 20px;
-            background: #FAFBFC;
+            padding: 28px 24px;
+            background: var(--bg-section);
             border-bottom: 1px solid var(--border);
             text-align: center;
         }
 
         @media (min-width: 640px) {
-            .principle-section {
-                padding: 18px 36px;
-            }
+            .principle-section { padding: 36px 40px; }
         }
 
         .principle-quote {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
-            color: var(--primary);
+            color: var(--text-primary);
             font-style: italic;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         @media (min-width: 640px) {
-            .principle-quote {
-                font-size: 16px;
-            }
+            .principle-quote { font-size: 17px; }
         }
 
         /* Architecture Section */
         .architecture-section {
-            padding: 14px 20px;
+            padding: 24px;
             border-bottom: 1px solid var(--border);
         }
 
         @media (min-width: 640px) {
-            .architecture-section {
-                padding: 18px 36px;
-            }
+            .architecture-section { padding: 32px 40px; }
         }
 
         .architecture-header {
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-light);
-            margin-bottom: 12px;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
             text-align: center;
-        }
-
-        @media (min-width: 640px) {
-            .architecture-header {
-                font-size: 13px;
-                letter-spacing: 1.5px;
-            }
         }
 
         .architecture-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 12px;
         }
 
         @media (min-width: 640px) {
-            .architecture-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px;
-            }
+            .architecture-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
         .architecture-item {
-            padding: 12px;
-            background: #F8FAFC;
-            border-radius: 6px;
+            padding: 20px;
+            background: var(--bg-section);
+            border-radius: 16px;
             text-align: center;
         }
 
-        @media (min-width: 640px) {
-            .architecture-item {
-                padding: 14px;
-            }
+        .architecture-item .number {
+            width: 28px;
+            height: 28px;
+            background: var(--text-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            margin: 0 auto 12px;
         }
 
         .architecture-item .component {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-
-        @media (min-width: 640px) {
-            .architecture-item .component {
-                font-size: 13px;
-            }
+            color: var(--text-primary);
+            margin-bottom: 8px;
         }
 
         .architecture-item .example {
-            font-size: 12px;
-            color: var(--text-light);
-            line-height: 1.4;
-        }
-
-        @media (min-width: 640px) {
-            .architecture-item .example {
-                font-size: 13px;
-            }
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
         }
 
         /* Footer */
         .card-footer {
-            padding: 12px 20px;
-            border-top: 1px solid var(--border);
+            padding: 20px 24px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            align-items: flex-start;
+            align-items: center;
+            text-align: center;
             background: white;
         }
 
@@ -632,75 +433,80 @@
             .card-footer {
                 flex-direction: row;
                 justify-content: space-between;
-                align-items: center;
-                padding: 14px 36px;
+                padding: 20px 40px;
+                text-align: left;
             }
         }
 
         .footer-left {
             font-size: 12px;
-            color: var(--text-light);
-        }
-
-        @media (min-width: 640px) {
-            .footer-left {
-                font-size: 13px;
-            }
+            color: var(--text-secondary);
         }
 
         .footer-left strong {
-            color: var(--text);
+            color: var(--text-primary);
             font-weight: 600;
         }
 
         .footer-right {
             font-size: 11px;
-            color: var(--text-light);
-            text-align: left;
+            color: var(--text-muted);
         }
 
-        @media (min-width: 640px) {
-            .footer-right {
-                font-size: 12px;
-                text-align: right;
-            }
-        }
-
-        .footer-right .institute {
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
             font-weight: 600;
-            color: var(--text);
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            z-index: 100;
         }
 
-        /* Mobile optimizations */
-        @media (max-width: 639px) {
-            .card {
-                border-left: none;
-                border-right: none;
-            }
+        .print-button:hover {
+            background: #2D2D2A;
+            transform: translateY(-2px);
+        }
 
-            .ritual-header {
-                flex-wrap: wrap;
-            }
+        .print-button svg {
+            width: 18px;
+            height: 18px;
         }
 
         @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            .card {
-                border: none;
-            }
+            body { background: white; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .card { border: none; box-shadow: none; max-width: 100%; }
+            .print-button { display: none !important; }
+            .ritual-card { break-inside: avoid; }
         }
     </style>
 </head>
 <body>
+    <button class="print-button" onclick="window.print()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        </svg>
+        Imprimir
+    </button>
+
     <div class="card">
         <div class="card-header">
             <div class="header-content">
-                <div class="header-titles">
-                    <h1>Los Rituales de Consolidación</h1>
-                    <p class="subtitle">Sistema de Transformación Neurobiológica</p>
+                <div>
+                    <h1 class="header-title">Los Rituales de Consolidación</h1>
+                    <p class="header-subtitle">Transforma las otras 23 horas y 35 minutos del día</p>
                 </div>
                 <div class="header-time">
                     <div class="total">25 min</div>
@@ -714,11 +520,24 @@
         </div>
 
         <!-- Ritual 1 -->
-        <div class="ritual-section r1">
+        <div class="ritual-section">
             <div class="ritual-header">
-                <div class="ritual-icon">☀️</div>
+                <div class="ritual-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                </div>
                 <div class="ritual-title-group">
-                    <h2 class="ritual-name">Ritual #1: Priming de Regulación</h2>
+                    <p class="ritual-label">Ritual 1</p>
+                    <h2 class="ritual-name">Priming de Regulación</h2>
                     <p class="ritual-purpose">Prepara tu sistema nervioso para empezar regulado, no reactivo</p>
                 </div>
                 <div class="ritual-meta">
@@ -755,11 +574,16 @@
         </div>
 
         <!-- Ritual 2 -->
-        <div class="ritual-section r2">
+        <div class="ritual-section">
             <div class="ritual-header">
-                <div class="ritual-icon">⚡</div>
+                <div class="ritual-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                </div>
                 <div class="ritual-title-group">
-                    <h2 class="ritual-name">Ritual #2: Priming de Recursos</h2>
+                    <p class="ritual-label">Ritual 2</p>
+                    <h2 class="ritual-name">Priming de Recursos</h2>
                     <p class="ritual-purpose">Activa recursos antes de que lleguen los disparadores</p>
                 </div>
                 <div class="ritual-meta">
@@ -804,11 +628,16 @@
         </div>
 
         <!-- Ritual 3 -->
-        <div class="ritual-section r3">
+        <div class="ritual-section">
             <div class="ritual-header">
-                <div class="ritual-icon">🌙</div>
+                <div class="ritual-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </div>
                 <div class="ritual-title-group">
-                    <h2 class="ritual-name">Ritual #3: Priming de Consolidación</h2>
+                    <p class="ritual-label">Ritual 3</p>
+                    <h2 class="ritual-name">Priming de Consolidación</h2>
                     <p class="ritual-purpose">Consolida aprendizaje del día y prepara cerebro para mañana</p>
                 </div>
                 <div class="ritual-meta">
@@ -856,17 +685,17 @@
         <div class="summary-section">
             <h3>Resumen de los 3 Rituales</h3>
             <div class="summary-grid">
-                <div class="summary-item s1">
+                <div class="summary-item">
                     <p class="ritual-label">Ritual 1</p>
                     <p class="ritual-time">5 min</p>
                     <p class="ritual-when">Mañana · En cama</p>
                 </div>
-                <div class="summary-item s2">
+                <div class="summary-item">
                     <p class="ritual-label">Ritual 2</p>
                     <p class="ritual-time">10 min</p>
                     <p class="ritual-when">Mañana · Después de levantarte</p>
                 </div>
-                <div class="summary-item s3">
+                <div class="summary-item">
                     <p class="ritual-label">Ritual 3</p>
                     <p class="ritual-time">10 min</p>
                     <p class="ritual-when">Noche · 1h antes de dormir</p>
@@ -884,15 +713,18 @@
             <p class="architecture-header">Arquitectura de Rituales Efectivos</p>
             <div class="architecture-grid">
                 <div class="architecture-item">
-                    <p class="component">1. Señal</p>
+                    <div class="number">1</div>
+                    <p class="component">Señal</p>
                     <p class="example">Disparador claro: tiempo, ubicación, acción previa, estado emocional</p>
                 </div>
                 <div class="architecture-item">
-                    <p class="component">2. Rutina</p>
+                    <div class="number">2</div>
+                    <p class="component">Rutina</p>
                     <p class="example">Específica, medible, breve al inicio (menos de 5 min primeras semanas)</p>
                 </div>
                 <div class="architecture-item">
-                    <p class="component">3. Recompensa</p>
+                    <div class="number">3</div>
+                    <p class="component">Recompensa</p>
                     <p class="example">Inmediata: sensación física, emocional o tangible</p>
                 </div>
             </div>
@@ -903,12 +735,9 @@
                 <strong>Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
             </div>
             <div class="footer-right">
-                <span class="institute">Instituto Centro Bioenergética</span><br>
                 inteligencia-energetica.com
             </div>
         </div>
     </div>
 </body>
 </html>
-
-

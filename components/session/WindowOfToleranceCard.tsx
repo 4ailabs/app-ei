@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { ChevronDown, ChevronUp, Download } from "lucide-react"
+import { ChevronDown, ChevronUp, Download, TrendingUp, TrendingDown, Minus } from "lucide-react"
 import { toPng } from "html-to-image"
 
 interface WindowOfToleranceCardProps {
@@ -21,7 +21,6 @@ export function WindowOfToleranceCard({ accentColor = "#B8860B" }: WindowOfToler
 
     setIsDownloading(true)
     try {
-      // Asegurar que la tarjeta esté expandida antes de capturar
       const wasExpanded = isExpanded
       if (!isExpanded) {
         setIsExpanded(true)
@@ -37,7 +36,6 @@ export function WindowOfToleranceCard({ accentColor = "#B8860B" }: WindowOfToler
           transformOrigin: 'top left',
         },
         filter: (node) => {
-          // Excluir botones de la captura
           if (node instanceof HTMLElement) {
             const isButton = node.tagName === 'BUTTON'
             const isInHeader = node.closest?.('[data-header-buttons]')
@@ -63,326 +61,282 @@ export function WindowOfToleranceCard({ accentColor = "#B8860B" }: WindowOfToler
     }
   }
 
+  const zones = [
+    {
+      id: "hiper",
+      name: "Hiperactivación",
+      subtitle: "Simpático",
+      icon: TrendingUp,
+      color: "#D97706",
+      bgClass: "bg-amber-50 dark:bg-amber-950/20",
+      borderClass: "border-amber-200 dark:border-amber-800",
+      symptoms: ["Ansiedad, pánico, ira, agitación", "Pensamientos acelerados", '"Demasiado encendido"']
+    },
+    {
+      id: "ventana",
+      name: "Ventana de Tolerancia",
+      subtitle: "Zona Óptima",
+      icon: Minus,
+      color: "#1B6B4A",
+      bgClass: "bg-emerald-50 dark:bg-emerald-950/20",
+      borderClass: "border-emerald-200 dark:border-emerald-800",
+      symptoms: ["Capacidad de pensar, sentir y actuar con flexibilidad", "Presencia y conexión con el momento", "Manejo adecuado del estrés moderado"]
+    },
+    {
+      id: "hipo",
+      name: "Hipoactivación",
+      subtitle: "Dorsal Vagal",
+      icon: TrendingDown,
+      color: "#64748B",
+      bgClass: "bg-slate-50 dark:bg-slate-950/20",
+      borderClass: "border-slate-200 dark:border-slate-700",
+      symptoms: ["Entumecimiento, desconexión, colapso", "Desesperanza, sensación de apagado", '"Demasiado apagado"']
+    }
+  ]
+
+  const expandFactors = [
+    "Sueño reparador",
+    "Ejercicio regular",
+    "Conexión social segura",
+    "Prácticas de regulación",
+    "Alimentación balanceada",
+    "Tiempo en naturaleza"
+  ]
+
+  const contractFactors = [
+    "Privación de sueño",
+    "Estrés crónico",
+    "Aislamiento social",
+    "Trauma no procesado",
+    "Exceso de estimulantes",
+    "Sedentarismo"
+  ]
+
   return (
-    <div ref={cardRef} className="w-full bg-white dark:bg-[#252525] overflow-hidden border border-[#E5E4E0] dark:border-[#333333] rounded-xl">
+    <div ref={cardRef} className="w-full bg-white dark:bg-[#252525] rounded-2xl border border-[#E5E4E0] dark:border-[#333333] overflow-hidden shadow-sm">
       {/* Header */}
-      <div className="relative px-4 sm:px-6 md:px-10 py-4 sm:py-6 md:py-8 rounded-t-xl" style={{ backgroundColor: accentColor, borderBottom: `3px solid ${accentColor}` }}>
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-3 sm:mb-4 gap-3 sm:gap-0">
-          <div className="flex-1 min-w-0">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-1.5 font-serif tracking-tight">
-              Mi Ventana de Tolerancia
-            </h1>
-            <p className="text-[10px] sm:text-xs text-white/70 uppercase tracking-widest">Diagrama y Ejercicio de Autodiagnóstico</p>
+      <div
+        className="px-5 sm:px-6 py-4 sm:py-5 cursor-pointer hover:bg-[#FAFAF9] dark:hover:bg-[#2A2A2A] transition-colors"
+        data-header-buttons
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
+              style={{ backgroundColor: `${accentColor}15` }}
+            >
+              <div className="flex flex-col gap-0.5 items-center">
+                <div className="w-4 h-0.5 bg-amber-500 rounded"></div>
+                <div className="w-6 h-1 bg-emerald-500 rounded"></div>
+                <div className="w-4 h-0.5 bg-slate-500 rounded"></div>
+              </div>
+            </div>
+            <div>
+              <h2 className="text-base sm:text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">
+                Mi Ventana de Tolerancia
+              </h2>
+              <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0]">
+                Diagrama y Ejercicio de Autodiagnóstico
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <div className="flex items-center gap-2">
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 handleDownload()
               }}
               disabled={isDownloading}
-              className="px-2 sm:px-4 py-1.5 sm:py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-[10px] sm:text-xs font-medium transition-colors flex items-center gap-1 sm:gap-2 disabled:opacity-50"
+              className="p-2 hover:bg-[#F5F4F0] dark:hover:bg-[#333333] rounded-lg transition-colors disabled:opacity-50"
               title="Descargar como imagen"
             >
-              <Download className="h-3 w-3 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline">{isDownloading ? 'Descargando...' : 'Descargar'}</span>
+              <Download className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
             </button>
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 setIsExpanded(!isExpanded)
               }}
-              className="p-1.5 sm:p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
-              title={isExpanded ? "Colapsar" : "Expandir"}
+              className="p-2 hover:bg-[#F5F4F0] dark:hover:bg-[#333333] rounded-lg transition-colors"
             >
               {isExpanded ? (
-                <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
               ) : (
-                <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0]" />
               )}
             </button>
           </div>
         </div>
-        {/* Gradient line */}
-        <div className="absolute bottom-0 left-4 sm:left-6 md:left-10 right-4 sm:right-6 md:right-10 h-[3px]">
-          <div className="w-full h-full" style={{
-            background: 'linear-gradient(90deg, #B8860B 33%, #1B6B4A 33%, #1B6B4A 66%, #4A5568 66%)'
-          }}></div>
-        </div>
-        <p className="text-[10px] sm:text-xs text-white/50 uppercase tracking-wide text-right mt-2">Material de Referencia</p>
       </div>
 
+      {/* Expanded Content */}
       {isExpanded && (
-        <div className="flex-1 flex flex-col overflow-x-hidden">
-          {/* Intro Section */}
-          <div className="px-4 sm:px-6 md:px-10 py-4 sm:py-6 border-b border-[#E5E4E0] dark:border-[#333333] bg-[#FAF9F7] dark:bg-[#1A1A1A]">
-            <p className="text-sm sm:text-[15px] text-[#1A1915] dark:text-[#E5E5E5] leading-relaxed max-w-4xl">
-              La Ventana de Tolerancia es el rango de activación fisiológica donde puedes funcionar de manera óptima: ni en hiperactivación ni en hipoactivación. <strong className="text-[#1a1a2e] dark:text-white font-semibold">Tu ventana puede expandirse con práctica sistemática.</strong>
+        <div className="border-t border-[#E5E4E0] dark:border-[#333333]">
+          {/* Intro */}
+          <div className="px-5 sm:px-6 py-4 bg-[#FAFAF9] dark:bg-[#1F1F1F]">
+            <p className="text-sm text-[#1A1915] dark:text-[#E5E5E5] leading-relaxed">
+              La Ventana de Tolerancia es el rango de activación fisiológica donde puedes funcionar de manera óptima. <strong className="font-semibold">Tu ventana puede expandirse con práctica sistemática.</strong>
             </p>
           </div>
 
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2">
+          {/* Main Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-[#E5E4E0] dark:divide-[#333333]">
             {/* Diagram Section */}
-            <div className="px-4 sm:px-6 md:px-10 py-4 sm:py-6 md:py-8 border-r-0 lg:border-r border-[#E5E4E0] dark:border-[#333333] border-b lg:border-b-0">
-              <h3 className="text-lg font-semibold text-[#1a1a2e] dark:text-white mb-5 pb-2.5 border-b border-[#E5E4E0] dark:border-[#333333] font-serif">
+            <div className="px-5 sm:px-6 py-5 sm:py-6">
+              <h3 className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5] mb-4">
                 Modelo de Zonas de Activación
               </h3>
 
-              <div className="space-y-0">
-                {/* Arrow container */}
-                <div className="flex justify-between px-5 py-3 bg-white dark:bg-[#1A1A1A]">
-                  <span className="text-[11px] text-[#706F6C] dark:text-[#A0A0A0] flex items-center gap-1.5">
-                    <span className="text-sm">↑</span> Hiperactivación
-                  </span>
-                  <span className="text-[11px] text-[#706F6C] dark:text-[#A0A0A0] flex items-center gap-1.5">
-                    Hipoactivación <span className="text-sm">↓</span>
-                  </span>
-                </div>
-
-                {/* Hiperactivación Zone */}
-                <div className="px-5 py-4 bg-[#FBF8F1] dark:bg-[#3A3320] border-l-4 border-[#B8860B]">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-[#B8860B] mb-1.5">Zona Superior</p>
-                  <h4 className="text-base font-semibold text-[#1a1a2e] dark:text-white mb-2 font-serif">Hiperactivación (Simpático)</h4>
-                  <div className="text-xs text-[#1A1915] dark:text-[#E5E5E5] leading-normal">
-                    <ul className="mt-1.5 space-y-0.5">
-                      <li className="pl-3.5 relative">
-                        <span className="absolute left-1 font-bold">·</span> Ansiedad, pánico, ira, agitación
-                      </li>
-                      <li className="pl-3.5 relative">
-                        <span className="absolute left-1 font-bold">·</span> Pensamientos acelerados
-                      </li>
-                      <li className="pl-3.5 relative">
-                        <span className="absolute left-1 font-bold">·</span> "Demasiado encendido"
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Ventana de Tolerancia Zone */}
-                <div className="px-5 py-6 bg-[#F0F7F4] dark:bg-[#1A3325] border-l-4 border-[#1B6B4A]">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-[#1B6B4A] mb-1.5">Zona Óptima</p>
-                  <h4 className="text-base font-semibold text-[#1a1a2e] dark:text-white mb-2 font-serif">Ventana de Tolerancia</h4>
-                  <div className="text-xs text-[#1A1915] dark:text-[#E5E5E5] leading-normal">
-                    <ul className="mt-1.5 space-y-0.5">
-                      <li className="pl-3.5 relative">
-                        <span className="absolute left-1 font-bold">·</span> Capacidad de pensar, sentir y actuar con flexibilidad
-                      </li>
-                      <li className="pl-3.5 relative">
-                        <span className="absolute left-1 font-bold">·</span> Presencia y conexión con el momento
-                      </li>
-                      <li className="pl-3.5 relative">
-                        <span className="absolute left-1 font-bold">·</span> Manejo adecuado del estrés moderado
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Hipoactivación Zone */}
-                <div className="px-5 py-4 bg-[#F7F8F9] dark:bg-[#2A2A2A] border-l-4 border-[#4A5568]">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-[#4A5568] mb-1.5">Zona Inferior</p>
-                  <h4 className="text-base font-semibold text-[#1a1a2e] dark:text-white mb-2 font-serif">Hipoactivación (Dorsal Vagal)</h4>
-                  <div className="text-xs text-[#1A1915] dark:text-[#E5E5E5] leading-normal">
-                    <ul className="mt-1.5 space-y-0.5">
-                      <li className="pl-3.5 relative">
-                        <span className="absolute left-1 font-bold">·</span> Entumecimiento, desconexión, colapso
-                      </li>
-                      <li className="pl-3.5 relative">
-                        <span className="absolute left-1 font-bold">·</span> Desesperanza, sensación de apagado
-                      </li>
-                      <li className="pl-3.5 relative">
-                        <span className="absolute left-1 font-bold">·</span> "Demasiado apagado"
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+              {/* Visual Diagram */}
+              <div className="space-y-2">
+                {zones.map((zone) => {
+                  const Icon = zone.icon
+                  return (
+                    <div
+                      key={zone.id}
+                      className={`p-4 rounded-xl ${zone.bgClass} border ${zone.borderClass}`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                          style={{ backgroundColor: zone.color }}
+                        >
+                          <Icon className="w-4 h-4 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h4 className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5]">
+                              {zone.name}
+                            </h4>
+                            <span
+                              className="text-[10px] font-medium px-1.5 py-0.5 rounded"
+                              style={{ backgroundColor: `${zone.color}15`, color: zone.color }}
+                            >
+                              {zone.subtitle}
+                            </span>
+                          </div>
+                          <ul className="space-y-0.5">
+                            {zone.symptoms.map((symptom, i) => (
+                              <li key={i} className="text-xs text-[#706F6C] dark:text-[#A0A0A0] flex items-start gap-1.5">
+                                <span className="text-[10px]" style={{ color: zone.color }}>•</span>
+                                {symptom}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
 
-              {/* Metaphor Box */}
-              <div className="mt-6 p-5 bg-[#F5F4F0] dark:bg-[#2A2A2A] border border-[#E5E4E0] dark:border-[#333333] rounded-md">
-                <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-3">Metáfora de la Temperatura</h4>
-                <div className="space-y-2.5">
-                  <div className="flex items-start gap-3 text-[13px]">
-                    <div className="w-2 h-2 rounded-full bg-[#B8860B] mt-1.5 flex-shrink-0"></div>
-                    <div className="text-[#1A1915] dark:text-[#E5E5E5]">
-                      <strong className="font-semibold">Agua muy caliente</strong> = Hiperactivación. Te quemas, saltas, necesitas salir.
-                    </div>
+              {/* Metaphor */}
+              <div className="mt-4 p-4 bg-[#F5F4F0] dark:bg-[#1A1A1A] rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+                <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+                  Metáfora de la Temperatura
+                </h4>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-xs text-[#1A1915] dark:text-[#E5E5E5]">
+                    <span className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0"></span>
+                    <span><strong>Agua muy caliente</strong> = Te quemas, necesitas salir</span>
                   </div>
-                  <div className="flex items-start gap-3 text-[13px]">
-                    <div className="w-2 h-2 rounded-full bg-[#4A5568] mt-1.5 flex-shrink-0"></div>
-                    <div className="text-[#1A1915] dark:text-[#E5E5E5]">
-                      <strong className="font-semibold">Agua muy fría</strong> = Hipoactivación. Te congelas, te entumeces, no puedes moverte.
-                    </div>
+                  <div className="flex items-center gap-2 text-xs text-[#1A1915] dark:text-[#E5E5E5]">
+                    <span className="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0"></span>
+                    <span><strong>Temperatura perfecta</strong> = Puedes quedarte, funcionar bien</span>
                   </div>
-                  <div className="flex items-start gap-3 text-[13px]">
-                    <div className="w-2 h-2 rounded-full bg-[#1B6B4A] mt-1.5 flex-shrink-0"></div>
-                    <div className="text-[#1A1915] dark:text-[#E5E5E5]">
-                      <strong className="font-semibold">Temperatura perfecta</strong> = Ventana de Tolerancia. Puedes quedarte, funcionar bien.
-                    </div>
+                  <div className="flex items-center gap-2 text-xs text-[#1A1915] dark:text-[#E5E5E5]">
+                    <span className="w-3 h-3 rounded-full bg-slate-500 flex-shrink-0"></span>
+                    <span><strong>Agua muy fría</strong> = Te congelas, no puedes moverte</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Exercise Section */}
-            <div className="px-4 sm:px-6 md:px-10 py-4 sm:py-6 md:py-8">
-              <h3 className="text-base sm:text-lg font-semibold text-[#1a1a2e] dark:text-white mb-4 sm:mb-5 pb-2 sm:pb-2.5 border-b border-[#E5E4E0] dark:border-[#333333] font-serif">
-                Ejercicio de Autodiagnóstico
+            {/* Factors Section */}
+            <div className="px-5 sm:px-6 py-5 sm:py-6">
+              <h3 className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5] mb-4">
+                Factores que Afectan tu Ventana
               </h3>
 
-              <div className="space-y-4 sm:space-y-6">
-                {/* Exercise 1 */}
-                <div>
-                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-2">1. Amplitud actual de mi ventana</h4>
-                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mb-2">¿Qué tanta intensidad emocional puedo manejar sin perder claridad cognitiva?</p>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="flex-1 h-2 bg-gradient-to-r from-[#4A5568] via-[#1B6B4A] to-[#B8860B] rounded"></div>
+              <div className="grid grid-cols-2 gap-4">
+                {/* Expand Column */}
+                <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800">
+                  <h4 className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-1.5">
+                    <span className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-white text-[10px] font-bold">+</span>
+                    Expanden
+                  </h4>
+                  <ul className="space-y-1.5">
+                    {expandFactors.map((factor, i) => (
+                      <li key={i} className="text-xs text-[#1A1915] dark:text-[#E5E5E5] flex items-center gap-1.5">
+                        <span className="text-emerald-500 text-[10px]">+</span>
+                        {factor}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Contract Column */}
+                <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800">
+                  <h4 className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-1.5">
+                    <span className="w-4 h-4 rounded-full bg-amber-500 flex items-center justify-center text-white text-[10px] font-bold">−</span>
+                    Estrechan
+                  </h4>
+                  <ul className="space-y-1.5">
+                    {contractFactors.map((factor, i) => (
+                      <li key={i} className="text-xs text-[#1A1915] dark:text-[#E5E5E5] flex items-center gap-1.5">
+                        <span className="text-amber-500 text-[10px]">−</span>
+                        {factor}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Action Plan */}
+              <div className="mt-4 p-4 bg-[#F5F4F0] dark:bg-[#1A1A1A] rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+                <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+                  Mi Plan de Expansión
+                </h4>
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-xs text-[#706F6C] dark:text-[#A0A0A0] block mb-1.5">
+                      Una cosa que voy a AUMENTAR esta semana:
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-3 py-2 border border-[#E5E4E0] dark:border-[#333333] rounded-lg bg-white dark:bg-[#252525] text-sm text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97]"
+                      placeholder="Ej: Caminar 20 minutos al día"
+                    />
                   </div>
-                  <div className="flex justify-between text-[10px] text-[#706F6C] dark:text-[#A0A0A0] mb-2">
-                    <span>1 — Muy estrecha</span>
-                    <span>10 — Muy amplia</span>
-                  </div>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2.5 border border-[#E5E4E0] dark:border-[#333333] rounded bg-[#FAF9F7] dark:bg-[#1A1A1A] text-[13px] mt-2 text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97] dark:placeholder:text-[#666666]"
-                    placeholder="Mi número: ___"
-                  />
-                </div>
-
-                {/* Exercise 2 */}
-                <div>
-                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-2">2. Disparadores hacia hiperactivación</h4>
-                  <textarea
-                    className="w-full px-3 py-2.5 border border-[#E5E4E0] dark:border-[#333333] rounded bg-[#FAF9F7] dark:bg-[#1A1A1A] text-[13px] min-h-[60px] resize-y mt-2 text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97] dark:placeholder:text-[#666666]"
-                    placeholder="Situaciones que me aceleran / estresan / enojan..."
-                  />
-                </div>
-
-                {/* Exercise 3 */}
-                <div>
-                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-2">3. Disparadores hacia hipoactivación</h4>
-                  <textarea
-                    className="w-full px-3 py-2.5 border border-[#E5E4E0] dark:border-[#333333] rounded bg-[#FAF9F7] dark:bg-[#1A1A1A] text-[13px] min-h-[60px] resize-y mt-2 text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97] dark:placeholder:text-[#666666]"
-                    placeholder="Situaciones que me apagan / desconectan / colapsan..."
-                  />
-                </div>
-
-                {/* Exercise 4 */}
-                <div>
-                  <h4 className="text-[11px] font-semibold uppercase tracking-wide text-[#706F6C] dark:text-[#A0A0A0] mb-3">4. Factores que afectan mi ventana</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    {/* Expand Column */}
-                    <div>
-                      <h5 className="text-[11px] font-semibold mb-2.5 flex items-center gap-1.5 text-[#1B6B4A]">
-                        Expanden (agrandan)
-                      </h5>
-                      <ul className="space-y-1">
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Sueño reparador
-                        </li>
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Ejercicio regular
-                        </li>
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Conexión social segura
-                        </li>
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Prácticas de regulación
-                        </li>
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Alimentación balanceada
-                        </li>
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#1B6B4A] font-semibold">+</span> Tiempo en naturaleza
-                        </li>
-                      </ul>
-                    </div>
-
-                    {/* Contract Column */}
-                    <div>
-                      <h5 className="text-[11px] font-semibold mb-2.5 flex items-center gap-1.5 text-[#B8860B]">
-                        Estrechan (reducen)
-                      </h5>
-                      <ul className="space-y-1">
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Privación de sueño
-                        </li>
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Estrés crónico
-                        </li>
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Aislamiento social
-                        </li>
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Trauma no procesado
-                        </li>
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Exceso de estimulantes
-                        </li>
-                        <li className="text-xs pl-[18px] relative text-[#1A1915] dark:text-[#E5E5E5]">
-                          <span className="absolute left-0 text-[12px] text-[#B8860B] font-semibold">−</span> Sedentarismo
-                        </li>
-                      </ul>
-                    </div>
+                  <div>
+                    <label className="text-xs text-[#706F6C] dark:text-[#A0A0A0] block mb-1.5">
+                      Una cosa que voy a REDUCIR esta semana:
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-3 py-2 border border-[#E5E4E0] dark:border-[#333333] rounded-lg bg-white dark:bg-[#252525] text-sm text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97]"
+                      placeholder="Ej: Uso de redes sociales antes de dormir"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Key Concept Box */}
-          <div className="bg-[#1a1a2e] dark:bg-[#1a1a2e] px-4 sm:px-6 md:px-10 py-4 sm:py-5 text-center">
-            <p className="text-xs sm:text-sm text-white/90 dark:text-white/90 leading-relaxed max-w-3xl mx-auto">
-              El objetivo no es nunca salir de la ventana — eso es imposible. <strong className="text-white font-semibold">El objetivo es regresar más rápido cuando sales.</strong> Cada vez que te regulas conscientemente, le enseñas a tu sistema nervioso que puede manejar más.
+          {/* Key Concept */}
+          <div className="px-5 sm:px-6 py-4 bg-[#1A1915] dark:bg-[#0F0F0F]">
+            <p className="text-sm text-white/90 text-center leading-relaxed">
+              El objetivo no es nunca salir de la ventana — eso es imposible. <strong className="text-white font-semibold">El objetivo es regresar más rápido cuando sales.</strong>
             </p>
           </div>
 
-          {/* Action Plan */}
-          <div className="px-4 sm:px-6 md:px-10 py-4 sm:py-6 bg-[#FAF9F7] dark:bg-[#1A1A1A] border-t border-[#E5E4E0] dark:border-[#333333]">
-            <h3 className="text-sm sm:text-base font-semibold text-[#1a1a2e] dark:text-white mb-3 sm:mb-4 text-center font-serif">
-              Mi Plan de Expansión
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-              <div className="flex gap-3">
-                <div className="w-6 h-6 rounded-full bg-[#1B6B4A] flex items-center justify-center text-xs font-semibold text-white flex-shrink-0">
-                  +
-                </div>
-                <div className="flex-1">
-                  <label className="text-xs font-semibold text-[#1A1915] dark:text-[#E5E5E5] block mb-1.5">
-                    Una cosa que voy a AUMENTAR esta semana:
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-2.5 py-2 border border-[#E5E4E0] dark:border-[#333333] rounded bg-white dark:bg-[#252525] text-[13px] text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97] dark:placeholder:text-[#666666]"
-                    placeholder=""
-                  />
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <div className="w-6 h-6 rounded-full bg-[#B8860B] flex items-center justify-center text-xs font-semibold text-white flex-shrink-0">
-                  −
-                </div>
-                <div className="flex-1">
-                  <label className="text-xs font-semibold text-[#1A1915] dark:text-[#E5E5E5] block mb-1.5">
-                    Una cosa que voy a REDUCIR esta semana:
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-2.5 py-2 border border-[#E5E4E0] dark:border-[#333333] rounded bg-white dark:bg-[#252525] text-[13px] text-[#1A1915] dark:text-[#E5E5E5] placeholder:text-[#9B9A97] dark:placeholder:text-[#666666]"
-                    placeholder=""
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Footer */}
-          <div className="px-4 sm:px-6 md:px-10 py-3 sm:py-4 border-t border-[#E5E4E0] dark:border-[#333333] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 bg-white dark:bg-[#252525]">
-            <div className="text-[10px] sm:text-[11px] text-[#706F6C] dark:text-[#A0A0A0]">
-              <strong className="text-[#1A1915] dark:text-[#E5E5E5] font-semibold">Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
+          <div className="px-5 sm:px-6 py-3 border-t border-[#E5E4E0] dark:border-[#333333] bg-[#FAFAF9] dark:bg-[#1F1F1F] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div className="text-[11px] text-[#706F6C] dark:text-[#A0A0A0]">
+              <strong className="text-[#1A1915] dark:text-[#E5E5E5]">Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
             </div>
-            <div className="text-[9px] sm:text-[10px] text-[#706F6C] dark:text-[#A0A0A0] text-left sm:text-right">
-              <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Instituto Centro Bioenergética</span><br />
+            <div className="text-[10px] text-[#706F6C] dark:text-[#A0A0A0]">
               inteligencia-energetica.com
             </div>
           </div>
@@ -391,4 +345,3 @@ export function WindowOfToleranceCard({ accentColor = "#B8860B" }: WindowOfToler
     </div>
   )
 }
-

@@ -7,20 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a1a2e;
-            --neural: #7C3AED;
-            --neural-bg: #F5F3FF;
-            --evidence: #059669;
-            --evidence-bg: #ECFDF5;
-            --mechanism: #2563EB;
-            --mechanism-bg: #EFF6FF;
-            --warning: #DC2626;
-            --warning-bg: #FEF2F2;
-            --gold: #B8860B;
-            --gold-bg: #FBF8F1;
-            --text: #2D3748;
-            --text-light: #718096;
-            --border: #E2E8F0;
+            --bg-primary: #FAF9F7;
+            --bg-card: #FFFFFF;
+            --bg-section: #F5F4F0;
+            --text-primary: #1A1915;
+            --text-secondary: #706F6C;
+            --text-muted: #9B9A97;
+            --border: #E5E4E0;
+            --accent: #DA7756;
         }
 
         * {
@@ -29,115 +23,107 @@
             box-sizing: border-box;
         }
 
-        @page {
-            size: letter;
-            margin: 0;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #FAFBFC;
-            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
-            padding: 12px;
+            padding: 16px;
             -webkit-font-smoothing: antialiased;
         }
 
         @media (min-width: 640px) {
-            body {
-                padding: 24px;
-            }
+            body { padding: 32px; }
         }
 
         .card {
             width: 100%;
             max-width: 900px;
             margin: 0 auto;
-            background: white;
+            background: var(--bg-card);
+            border-radius: 24px;
             border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
 
         /* Header */
         .card-header {
-            background: var(--primary);
-            padding: 16px 20px;
-            position: relative;
-        }
-
-        @media (min-width: 640px) {
-            .card-header {
-                padding: 32px 40px;
-            }
-        }
-
-        .card-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 20px;
-            right: 20px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--neural) 25%, var(--evidence) 25%, var(--evidence) 50%, var(--mechanism) 50%, var(--mechanism) 75%, var(--gold) 75%);
-        }
-
-        @media (min-width: 640px) {
-            .card-header::after {
-                left: 40px;
-                right: 40px;
-            }
-        }
-
-        .header-content {
+            background: linear-gradient(135deg, #1A1915 0%, #2D2D2A 100%);
+            padding: 24px;
             text-align: center;
         }
 
-        .header-titles h1 {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 22px;
-            font-weight: 600;
+        @media (min-width: 640px) {
+            .card-header { padding: 48px 40px; }
+        }
+
+        .header-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .header-icon svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+        }
+
+        .header-title {
+            font-size: 32px;
+            font-weight: 700;
             color: white;
             letter-spacing: -0.5px;
             margin-bottom: 8px;
         }
 
         @media (min-width: 640px) {
-            .header-titles h1 {
-                font-size: 36px;
-            }
+            .header-title { font-size: 42px; }
         }
 
-        .header-titles .subtitle {
+        .header-subtitle {
             font-size: 14px;
             color: rgba(255,255,255,0.7);
-            font-weight: 400;
-            letter-spacing: 3px;
             text-transform: uppercase;
+            letter-spacing: 3px;
         }
 
-        /* Definition Box */
+        /* Definition */
         .definition-section {
-            padding: 16px 20px;
+            padding: 24px;
             border-bottom: 1px solid var(--border);
-            background: var(--neural-bg);
+            background: var(--bg-section);
         }
 
         @media (min-width: 640px) {
-            .definition-section {
-                padding: 24px 40px;
-            }
+            .definition-section { padding: 32px 40px; }
         }
 
         .definition-box {
             display: flex;
-            align-items: flex-start;
-            gap: 20px;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .definition-box {
+                flex-direction: row;
+                gap: 24px;
+                align-items: flex-start;
+            }
         }
 
         .definition-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--neural);
-            border-radius: 12px;
+            width: 56px;
+            height: 56px;
+            background: var(--accent);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -147,37 +133,28 @@
         .definition-icon svg {
             width: 28px;
             height: 28px;
-            fill: white;
+            color: white;
         }
 
         .definition-content h2 {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
 
         @media (min-width: 640px) {
-            .definition-content h2 {
-                font-size: 20px;
-            }
+            .definition-content h2 { font-size: 22px; }
         }
 
         .definition-content p {
             font-size: 15px;
-            color: var(--text);
+            color: var(--text-primary);
             line-height: 1.7;
         }
 
-        @media (min-width: 640px) {
-            .definition-content p {
-                font-size: 16px;
-            }
-        }
-
         .definition-content strong {
-            color: var(--neural);
+            color: var(--accent);
             font-weight: 600;
         }
 
@@ -194,48 +171,71 @@
         }
 
         .paradigm-box {
-            padding: 24px 28px;
+            padding: 24px;
             position: relative;
         }
 
+        @media (min-width: 640px) {
+            .paradigm-box { padding: 32px; }
+        }
+
         .paradigm-box.old {
-            background: #FEF2F2;
-            border-right: 1px solid var(--border);
+            background: var(--bg-section);
+            border-bottom: 1px solid var(--border);
+        }
+
+        @media (min-width: 640px) {
+            .paradigm-box.old {
+                border-right: 1px solid var(--border);
+                border-bottom: none;
+            }
         }
 
         .paradigm-box.new {
-            background: var(--evidence-bg);
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
         }
 
-        .paradigm-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
+        .paradigm-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
-        .paradigm-box.old::before { background: var(--warning); }
-        .paradigm-box.new::before { background: var(--evidence); }
+        .paradigm-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .paradigm-box.old .paradigm-icon { background: var(--text-muted); }
+        .paradigm-box.new .paradigm-icon { background: var(--accent); }
+
+        .paradigm-icon svg {
+            width: 20px;
+            height: 20px;
+        }
 
         .paradigm-label {
             font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 1.5px;
+            font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 8px;
+            letter-spacing: 1.5px;
         }
 
-        .paradigm-box.old .paradigm-label { color: var(--warning); }
-        .paradigm-box.new .paradigm-label { color: var(--evidence); }
+        .paradigm-box.old .paradigm-label { color: var(--text-muted); }
+        .paradigm-box.new .paradigm-label { color: var(--accent); }
 
         .paradigm-title {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 18px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
         }
 
         .paradigm-list {
@@ -243,323 +243,334 @@
         }
 
         .paradigm-list li {
-            font-size: 14px;
-            color: var(--text);
-            padding: 6px 0;
-            padding-left: 20px;
+            font-size: 13px;
+            color: var(--text-primary);
+            padding: 8px 0;
+            padding-left: 24px;
             position: relative;
             line-height: 1.5;
         }
 
         .paradigm-list li::before {
-            content: '×';
             position: absolute;
             left: 0;
             font-weight: 700;
             font-size: 14px;
         }
 
-        .paradigm-box.old .paradigm-list li::before { 
+        .paradigm-box.old .paradigm-list li::before {
             content: '×';
-            color: var(--warning); 
+            color: var(--text-muted);
         }
-        .paradigm-box.new .paradigm-list li::before { 
+
+        .paradigm-box.new .paradigm-list li::before {
             content: '✓';
-            color: var(--evidence); 
+            color: var(--accent);
         }
 
         /* Evidence Section */
         .evidence-section {
-            padding: 16px 20px;
+            padding: 24px;
             border-bottom: 1px solid var(--border);
         }
 
         @media (min-width: 640px) {
-            .evidence-section {
-                padding: 24px 40px;
-            }
+            .evidence-section { padding: 32px 40px; }
         }
 
         .section-header {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .section-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            background: var(--bg-section);
+            border: 1px solid var(--border);
         }
 
-        .section-icon.evidence { background: var(--evidence-bg); color: var(--evidence); }
-        .section-icon.mechanism { background: var(--mechanism-bg); color: var(--mechanism); }
-        .section-icon.warning { background: var(--warning-bg); color: var(--warning); }
+        .section-icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--text-secondary);
+        }
 
         .section-title {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 20px;
-            font-weight: 600;
-            color: var(--primary);
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
         .evidence-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 12px;
+            gap: 16px;
         }
 
         @media (min-width: 640px) {
             .evidence-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 16px;
             }
         }
 
         .evidence-card {
-            padding: 16px;
-            background: #FAFBFC;
+            padding: 20px;
+            background: var(--bg-section);
+            border-radius: 16px;
             border: 1px solid var(--border);
-            border-radius: 8px;
-            border-top: 3px solid var(--evidence);
         }
 
         .evidence-subject {
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--evidence);
-            margin-bottom: 8px;
+            color: var(--accent);
+            margin-bottom: 12px;
         }
 
         .evidence-finding {
-            font-size: 15px;
-            color: var(--text);
+            font-size: 14px;
+            color: var(--text-primary);
             line-height: 1.6;
-            margin-bottom: 10px;
+            margin-bottom: 16px;
         }
 
         .evidence-source {
-            font-size: 10px;
-            color: var(--text-light);
+            font-size: 11px;
+            color: var(--text-secondary);
             font-style: italic;
-            padding-top: 8px;
+            padding-top: 12px;
             border-top: 1px solid var(--border);
         }
 
         /* Mechanism Section */
         .mechanism-section {
-            padding: 16px 20px;
+            padding: 24px;
+            background: var(--bg-section);
             border-bottom: 1px solid var(--border);
-            background: var(--mechanism-bg);
         }
 
         @media (min-width: 640px) {
-            .mechanism-section {
-                padding: 24px 40px;
-            }
+            .mechanism-section { padding: 32px 40px; }
         }
 
         .mechanism-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 12px;
+            gap: 16px;
         }
 
         @media (min-width: 640px) {
             .mechanism-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 16px;
+                gap: 24px;
             }
         }
 
         .mechanism-card {
-            padding: 20px;
+            padding: 24px;
             background: white;
-            border-radius: 8px;
+            border-radius: 16px;
             text-align: center;
             position: relative;
-        }
-
-        .mechanism-card::after {
-            content: '→';
-            position: absolute;
-            right: -12px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 20px;
-            color: var(--mechanism);
-            font-weight: bold;
-        }
-
-        .mechanism-card:last-child::after {
-            display: none;
+            border: 1px solid var(--border);
         }
 
         .mechanism-number {
-            width: 32px;
-            height: 32px;
-            background: var(--mechanism);
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 14px;
-            margin: 0 auto 12px;
+            font-size: 16px;
+            margin: 0 auto 16px;
         }
 
         .mechanism-title {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--primary);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
 
         .mechanism-desc {
-            font-size: 12px;
-            color: var(--text);
-            line-height: 1.5;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .mechanism-arrow {
+            display: none;
+            position: absolute;
+            right: -16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        @media (min-width: 640px) {
+            .mechanism-card:not(:last-child) .mechanism-arrow {
+                display: block;
+            }
         }
 
         /* Warning Section */
         .warning-section {
-            padding: 16px 20px;
+            padding: 24px;
+            background: var(--bg-card);
             border-bottom: 1px solid var(--border);
-            background: var(--warning-bg);
         }
 
         @media (min-width: 640px) {
-            .warning-section {
-                padding: 20px 40px;
-            }
+            .warning-section { padding: 32px 40px; }
         }
 
         .warning-box {
             display: flex;
-            align-items: flex-start;
+            flex-direction: column;
             gap: 16px;
         }
 
+        @media (min-width: 640px) {
+            .warning-box {
+                flex-direction: row;
+                gap: 20px;
+                align-items: flex-start;
+            }
+        }
+
         .warning-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--warning);
+            width: 48px;
+            height: 48px;
+            background: var(--text-muted);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 20px;
-            font-weight: bold;
             flex-shrink: 0;
         }
 
+        .warning-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
         .warning-content h3 {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 16px;
-            font-weight: 600;
-            color: var(--warning);
+            font-weight: 700;
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
 
-        .warning-content p {
-            font-size: 13px;
-            color: var(--text);
+        .warning-content > p {
+            font-size: 14px;
+            color: var(--text-primary);
             line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .warning-content strong {
+            font-weight: 600;
         }
 
         .warning-examples {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 8px;
-            margin-top: 12px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
         }
 
         @media (min-width: 640px) {
             .warning-examples {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 10px;
             }
         }
 
         .warning-example {
-            font-size: 11px;
-            padding: 8px 10px;
-            background: white;
-            border-radius: 4px;
-            color: var(--text);
+            font-size: 12px;
+            padding: 12px;
+            background: var(--bg-section);
+            border-radius: 10px;
             text-align: center;
+            border: 1px solid var(--border);
         }
 
         .warning-example strong {
             display: block;
-            color: var(--warning);
-            margin-bottom: 2px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .warning-example span {
+            color: var(--text-secondary);
+            font-size: 11px;
         }
 
         /* Key Insight */
         .insight-section {
-            padding: 16px 20px;
-            background: var(--primary);
+            padding: 32px 24px;
+            background: #1A1915;
             text-align: center;
         }
 
         @media (min-width: 640px) {
-            .insight-section {
-                padding: 24px 40px;
-            }
+            .insight-section { padding: 48px 40px; }
         }
 
-        .insight-box {
+        .insight-quote {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        @media (min-width: 640px) {
+            .insight-quote { font-size: 28px; }
+        }
+
+        .insight-explanation {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.7;
             max-width: 700px;
             margin: 0 auto;
         }
 
-        .insight-quote {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 22px;
-            font-weight: 500;
-            color: white;
-            line-height: 1.5;
-            margin-bottom: 16px;
-            font-style: italic;
-        }
-
-        .insight-explanation {
-            font-size: 13px;
-            color: rgba(255,255,255,0.8);
-            line-height: 1.7;
-        }
-
-        /* References Section */
+        /* References */
         .references-section {
-            padding: 16px 20px;
-            background: #FAFBFC;
+            padding: 24px;
+            background: var(--bg-section);
             border-bottom: 1px solid var(--border);
         }
 
         @media (min-width: 640px) {
-            .references-section {
-                padding: 20px 40px;
-            }
+            .references-section { padding: 24px 40px; }
         }
 
         .references-header {
-            font-size: 11px;
-            font-weight: 600;
+            font-size: 10px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: var(--text-light);
-            margin-bottom: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
         }
 
         .references-grid {
@@ -571,15 +582,15 @@
         @media (min-width: 640px) {
             .references-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 8px 24px;
+                gap: 8px 32px;
             }
         }
 
         .reference-item {
-            font-size: 11px;
-            color: var(--text);
+            font-size: 12px;
+            color: var(--text-primary);
             line-height: 1.5;
-            padding-left: 12px;
+            padding-left: 16px;
             position: relative;
         }
 
@@ -587,17 +598,18 @@
             content: '•';
             position: absolute;
             left: 0;
-            color: var(--neural);
+            color: var(--accent);
+            font-weight: 700;
         }
 
         /* Footer */
         .card-footer {
-            padding: 12px 20px;
-            border-top: 1px solid var(--border);
+            padding: 20px 24px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            align-items: flex-start;
+            align-items: center;
+            text-align: center;
             background: white;
         }
 
@@ -605,114 +617,112 @@
             .card-footer {
                 flex-direction: row;
                 justify-content: space-between;
-                align-items: center;
-                padding: 16px 40px;
+                padding: 20px 40px;
+                text-align: left;
             }
         }
 
         .footer-left {
-            font-size: 11px;
-            color: var(--text-light);
+            font-size: 12px;
+            color: var(--text-secondary);
         }
 
         .footer-left strong {
-            color: var(--text);
+            color: var(--text-primary);
             font-weight: 600;
         }
 
         .footer-right {
-            font-size: 10px;
-            color: var(--text-light);
-            text-align: right;
+            font-size: 11px;
+            color: var(--text-muted);
         }
 
-        .footer-right .institute {
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
             font-weight: 600;
-            color: var(--text);
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            z-index: 100;
         }
 
-        /* Mobile optimizations */
-        @media (max-width: 639px) {
-            .card {
-                border-left: none;
-                border-right: none;
-            }
-
-            .definition-box {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .definition-icon {
-                width: 40px;
-                height: 40px;
-            }
-
-            .section-header {
-                flex-wrap: wrap;
-            }
-
-            .mechanism-card::after {
-                display: none;
-            }
+        .print-button:hover {
+            background: #2D2D2A;
+            transform: translateY(-2px);
         }
 
-        /* Mobile optimizations */
-        @media (max-width: 639px) {
-            .card {
-                border-left: none;
-                border-right: none;
-            }
-
-            .definition-box {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .definition-icon {
-                width: 40px;
-                height: 40px;
-            }
-
-            .section-header {
-                flex-wrap: wrap;
-            }
-
-            .mechanism-card::after {
-                display: none;
-            }
+        .print-button svg {
+            width: 18px;
+            height: 18px;
         }
 
         @media print {
             body {
                 background: white;
                 padding: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
             .card {
                 border: none;
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .print-button {
+                display: none !important;
+            }
+            .evidence-card {
+                break-inside: avoid;
+            }
+            .insight-section {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
         }
     </style>
 </head>
 <body>
+    <button class="print-button" onclick="window.print()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        </svg>
+        Imprimir
+    </button>
+
     <div class="card">
         <div class="card-header">
-            <div class="header-content">
-                <div class="header-titles">
-                    <h1>Neuroplasticidad</h1>
-                    <p class="subtitle">La Ciencia del Cambio</p>
-                </div>
+            <div class="header-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
             </div>
+            <h1 class="header-title">Neuroplasticidad</h1>
+            <p class="header-subtitle">La Ciencia del Cambio</p>
         </div>
 
         <div class="definition-section">
             <div class="definition-box">
                 <div class="definition-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                 </div>
                 <div class="definition-content">
-                    <h2>¿Qué es la Neuroplasticidad?</h2>
-                    <p>La capacidad del cerebro de <strong>reorganizar sus conexiones sinápticas</strong> en respuesta a la experiencia, el aprendizaje y el ambiente. El cerebro no es un órgano estático: <strong>cambia físicamente</strong> según lo que practicamos consistentemente.</p>
+                    <h2>¿Que es la Neuroplasticidad?</h2>
+                    <p>La capacidad del cerebro de <strong>reorganizar sus conexiones sinapticas</strong> en respuesta a la experiencia, el aprendizaje y el ambiente. El cerebro no es un organo estatico: <strong>cambia fisicamente</strong> segun lo que practicamos consistentemente.</p>
                 </div>
             </div>
         </div>
@@ -720,23 +730,41 @@
         <!-- Paradigm Shift -->
         <div class="paradigm-section">
             <div class="paradigm-box old">
-                <p class="paradigm-label">Paradigma Anterior (Siglo XX)</p>
-                <h3 class="paradigm-title">El Cerebro Estático</h3>
+                <div class="paradigm-header">
+                    <div class="paradigm-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="paradigm-label">Paradigma Anterior (Siglo XX)</p>
+                    </div>
+                </div>
+                <h3 class="paradigm-title">El Cerebro Estatico</h3>
                 <ul class="paradigm-list">
-                    <li>Número de neuronas fijo desde el nacimiento</li>
-                    <li>Conexiones sinápticas permanentes después del desarrollo</li>
-                    <li>Daño neurológico irreversible</li>
-                    <li>Trauma temprano = limitación permanente</li>
+                    <li>Numero de neuronas fijo desde el nacimiento</li>
+                    <li>Conexiones sinapticas permanentes despues del desarrollo</li>
+                    <li>Dano neurologico irreversible</li>
+                    <li>Trauma temprano = limitacion permanente</li>
                     <li>Patrones defensivos son rasgos fijos</li>
                 </ul>
             </div>
             <div class="paradigm-box new">
-                <p class="paradigm-label">Paradigma Actual (Neurociencia)</p>
-                <h3 class="paradigm-title">El Cerebro Plástico</h3>
+                <div class="paradigm-header">
+                    <div class="paradigm-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="paradigm-label">Paradigma Actual (Neurociencia)</p>
+                    </div>
+                </div>
+                <h3 class="paradigm-title">El Cerebro Plastico</h3>
                 <ul class="paradigm-list">
-                    <li>Neurogénesis ocurre durante toda la vida</li>
-                    <li>Sinapsis se fortalecen o debilitan según uso</li>
-                    <li>Reorganización funcional es posible</li>
+                    <li>Neurogenesis ocurre durante toda la vida</li>
+                    <li>Sinapsis se fortalecen o debilitan segun uso</li>
+                    <li>Reorganizacion funcional es posible</li>
                     <li>Circuitos pueden ser reconstruidos</li>
                     <li>Lo que fue aprendido puede ser desaprendido</li>
                 </ul>
@@ -746,25 +774,29 @@
         <!-- Evidence Section -->
         <div class="evidence-section">
             <div class="section-header">
-                <div class="section-icon evidence">📊</div>
-                <h2 class="section-title">Evidencia Científica</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
+                <h2 class="section-title">Evidencia Cientifica</h2>
             </div>
 
             <div class="evidence-grid">
                 <div class="evidence-card">
                     <p class="evidence-subject">Taxistas de Londres</p>
-                    <p class="evidence-finding">Hipocampo posterior significativamente más grande que controles. Magnitud correlacionada con años de experiencia.</p>
+                    <p class="evidence-finding">Hipocampo posterior significativamente mas grande que controles. Magnitud correlacionada con anos de experiencia.</p>
                     <p class="evidence-source">Maguire et al. (2000), PNAS</p>
                 </div>
                 <div class="evidence-card">
-                    <p class="evidence-subject">Músicos Profesionales</p>
-                    <p class="evidence-finding">Corteza auditiva y motora expandida. Desarrollo correlacionado con horas de práctica desde infancia.</p>
+                    <p class="evidence-subject">Musicos Profesionales</p>
+                    <p class="evidence-finding">Corteza auditiva y motora expandida. Desarrollo correlacionado con horas de practica desde infancia.</p>
                     <p class="evidence-source">Schlaug et al. (1995), Science</p>
                 </div>
                 <div class="evidence-card">
                     <p class="evidence-subject">Meditadores</p>
-                    <p class="evidence-finding">Corteza prefrontal más gruesa, ínsula desarrollada, amígdala reducida. Cambios observados tras 8 semanas de práctica.</p>
-                    <p class="evidence-source">Hölzel et al. (2011), Psychiatry Research</p>
+                    <p class="evidence-finding">Corteza prefrontal mas gruesa, insula desarrollada, amigdala reducida. Cambios observados tras 8 semanas de practica.</p>
+                    <p class="evidence-source">Holzel et al. (2011), Psychiatry Research</p>
                 </div>
             </div>
         </div>
@@ -772,25 +804,32 @@
         <!-- Mechanism Section -->
         <div class="mechanism-section">
             <div class="section-header">
-                <div class="section-icon mechanism">⚙️</div>
-                <h2 class="section-title">Los 3 Componentes del Cambio Neuroplástico</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+                <h2 class="section-title">Los 3 Componentes del Cambio Neuroplastico</h2>
             </div>
 
             <div class="mechanism-grid">
                 <div class="mechanism-card">
                     <div class="mechanism-number">1</div>
-                    <h3 class="mechanism-title">Cesar Patrón Antiguo</h3>
-                    <p class="mechanism-desc">Sin activación consistente, las sinapsis no reciben químicos que las refuerzan. Se vuelven candidatas para poda sináptica.</p>
+                    <h3 class="mechanism-title">Cesar Patron Antiguo</h3>
+                    <p class="mechanism-desc">Sin activacion consistente, las sinapsis no reciben quimicos que las refuerzan. Se vuelven candidatas para poda sinaptica.</p>
+                    <span class="mechanism-arrow">→</span>
                 </div>
                 <div class="mechanism-card">
                     <div class="mechanism-number">2</div>
-                    <h3 class="mechanism-title">Activar Patrón Nuevo</h3>
-                    <p class="mechanism-desc">Cada práctica libera neurotransmisores, activa cascadas intracelulares y expresa proteínas estructurales.</p>
+                    <h3 class="mechanism-title">Activar Patron Nuevo</h3>
+                    <p class="mechanism-desc">Cada practica libera neurotransmisores, activa cascadas intracelulares y expresa proteinas estructurales.</p>
+                    <span class="mechanism-arrow">→</span>
                 </div>
                 <div class="mechanism-card">
                     <div class="mechanism-number">3</div>
-                    <h3 class="mechanism-title">Duración Suficiente</h3>
-                    <p class="mechanism-desc">Mínimo 66 días (patrones simples), 90-120 días (patrones arraigados). La mielinización requiere repetición sostenida.</p>
+                    <h3 class="mechanism-title">Duracion Suficiente</h3>
+                    <p class="mechanism-desc">Minimo 66 dias (patrones simples), 90-120 dias (patrones arraigados). La mielinizacion requiere repeticion sostenida.</p>
                 </div>
             </div>
         </div>
@@ -798,27 +837,31 @@
         <!-- Warning Section -->
         <div class="warning-section">
             <div class="warning-box">
-                <div class="warning-icon">!</div>
+                <div class="warning-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
                 <div class="warning-content">
-                    <h3>Advertencia Crítica: La Neuroplasticidad es Neutra</h3>
-                    <p>El cerebro NO discrimina entre cambios adaptativos y desadaptativos. <strong>Simplemente fortalece lo que practicas.</strong> Lo que has practicado durante años ha creado circuitos eficientes—pero esos circuitos fueron construidos, y lo que fue construido puede ser reconstruido.</p>
-                    
+                    <h3>Advertencia Critica: La Neuroplasticidad es Neutra</h3>
+                    <p>El cerebro NO discrimina entre cambios adaptativos y desadaptativos. <strong>Simplemente fortalece lo que practicas.</strong> Lo que has practicado durante anos ha creado circuitos eficientes—pero esos circuitos fueron construidos, y lo que fue construido puede ser reconstruido.</p>
+
                     <div class="warning-examples">
                         <div class="warning-example">
-                            <strong>Adicción</strong>
-                            Circuitos de recompensa alterados
+                            <strong>Adiccion</strong>
+                            <span>Circuitos de recompensa alterados</span>
                         </div>
                         <div class="warning-example">
-                            <strong>Rumiación</strong>
-                            Circuitos de preocupación fortalecidos
+                            <strong>Rumiacion</strong>
+                            <span>Circuitos de preocupacion fortalecidos</span>
                         </div>
                         <div class="warning-example">
-                            <strong>Autocrítica</strong>
-                            Circuitos de vergüenza automatizados
+                            <strong>Autocritica</strong>
+                            <span>Circuitos de verguenza automatizados</span>
                         </div>
                         <div class="warning-example">
                             <strong>Hipervigilancia</strong>
-                            Circuitos de amenaza potenciados
+                            <span>Circuitos de amenaza potenciados</span>
                         </div>
                     </div>
                 </div>
@@ -827,15 +870,13 @@
 
         <!-- Key Insight -->
         <div class="insight-section">
-            <div class="insight-box">
-                <p class="insight-quote">"Lo que fue construido puede ser reconstruido.<br>Lo que fue practicado puede ser despracticado."</p>
-                <p class="insight-explanation">El hecho de que haya practicado preocupación, autocrítica o defensa hipervigilante durante años NO significa que está condenado. Significa que ha construido circuitos sofisticados para esos patrones—y esos mismos mecanismos de plasticidad pueden construir circuitos nuevos.</p>
-            </div>
+            <p class="insight-quote">"Lo que fue construido puede ser reconstruido.<br>Lo que fue practicado puede ser despracticado."</p>
+            <p class="insight-explanation">El hecho de que haya practicado preocupacion, autocritica o defensa hipervigilante durante anos NO significa que esta condenado. Significa que ha construido circuitos sofisticados para esos patrones—y esos mismos mecanismos de plasticidad pueden construir circuitos nuevos.</p>
         </div>
 
         <!-- References -->
         <div class="references-section">
-            <p class="references-header">Referencias Científicas</p>
+            <p class="references-header">Referencias Cientificas</p>
             <div class="references-grid">
                 <p class="reference-item">Doidge, N. (2007). The Brain That Changes Itself. Viking Press.</p>
                 <p class="reference-item">Porges, S.W. (2011). The Polyvagal Theory. W.W. Norton.</p>
@@ -848,15 +889,12 @@
 
         <div class="card-footer">
             <div class="footer-left">
-                <strong>Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energética
+                <strong>Dr. Miguel Ojeda Rios</strong> · Seminario Internacional de Inteligencia Energetica
             </div>
             <div class="footer-right">
-                <span class="institute">Instituto Centro Bioenergética</span><br>
                 inteligencia-energetica.com
             </div>
         </div>
     </div>
 </body>
 </html>
-
-

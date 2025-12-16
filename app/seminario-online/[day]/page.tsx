@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react"
 import { useRouter, useParams } from "next/navigation"
 import { seminarioOnline, AudioSeminarioOnline, SEMINARIO_BACKGROUND_VIDEO_ID } from "@/data/seminario-online"
 import { VideoSection } from "@/components/session/VideoSection"
-import { Calendar, Video as VideoIcon, ArrowLeft, Home, Play, X, Volume2 } from "lucide-react"
+import { Calendar, Video as VideoIcon, ArrowLeft, Home, Play, X, Volume2, FileText } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Video } from "@/data/sessions"
@@ -130,25 +130,38 @@ export default function DayPage() {
                 
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
                   {dia.videos.length > 0 && (
-                    <div className="flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-lg border border-white/20">
+                    <button
+                      onClick={() => document.getElementById('section-videos')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-lg border border-white/20 hover:bg-white/30 transition-colors cursor-pointer"
+                    >
                       <VideoIcon className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                       <span className="font-semibold text-white">
                         {videosConStreamId.length} / {dia.videos.length} videos
                       </span>
-                    </div>
+                    </button>
                   )}
                   {dia.audios.length > 0 && (
-                    <div className="flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-lg border border-white/20">
+                    <button
+                      onClick={() => document.getElementById('section-audios')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-lg border border-white/20 hover:bg-white/30 transition-colors cursor-pointer"
+                    >
                       <Volume2 className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                       <span className="font-semibold text-white">
                         {dia.audios.length} audios
                       </span>
-                    </div>
+                    </button>
                   )}
-                  <div className="hidden sm:flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2.5 rounded-lg border border-white/20">
-                    <Play className="h-5 w-5 text-white" />
-                    <span className="font-semibold text-white">Haz clic para reproducir</span>
-                  </div>
+                  {dia.slides && dia.slides.length > 0 && (
+                    <button
+                      onClick={() => document.getElementById('section-slides')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-lg border border-white/20 hover:bg-white/30 transition-colors cursor-pointer"
+                    >
+                      <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                      <span className="font-semibold text-white">
+                        {dia.slides.length} slides
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -156,7 +169,7 @@ export default function DayPage() {
 
           {/* Sección de Videos - Reproductor embebido */}
           {dia.videos.length > 0 && (
-            <div className="mb-10">
+            <div id="section-videos" className="mb-10 scroll-mt-4">
               <div className="flex items-center gap-3 mb-6">
                 <div className={`w-10 h-10 ${colors.accent} rounded-lg flex items-center justify-center`}>
                   <VideoIcon className="h-5 w-5 text-white" />
@@ -173,7 +186,7 @@ export default function DayPage() {
 
           {/* Sección de Audios */}
           {dia.audios.length > 0 && (
-            <div className="mb-10">
+            <div id="section-audios" className="mb-10 scroll-mt-4">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-[#DA7756] rounded-lg flex items-center justify-center">
                   <Volume2 className="h-5 w-5 text-white" />
@@ -221,8 +234,62 @@ export default function DayPage() {
             </div>
           )}
 
+          {/* Sección de Slides */}
+          {dia.slides && dia.slides.length > 0 && (
+            <div id="section-slides" className="mb-10 scroll-mt-4">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-[#DA7756] rounded-lg flex items-center justify-center">
+                  <FileText className="h-5 w-5 text-white" />
+                </div>
+                <h2 className="text-xl sm:text-2xl font-bold text-[#1A1915] dark:text-[#E5E5E5]">
+                  Slides de las Sesiones
+                </h2>
+              </div>
+              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-6 ml-13">
+                Material visual de apoyo para cada sesión. Descarga o visualiza las presentaciones.
+              </p>
+              <div className="flex flex-col gap-3">
+                {dia.slides
+                  .sort((a, b) => a.order - b.order)
+                  .map((slide, index) => (
+                  <a
+                    key={slide.id}
+                    href={slide.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl border border-[#E5E4E0] dark:border-[#333333] hover:border-[#DA7756]/30 dark:hover:border-[#DA7756]/30 hover:shadow-md transition-all duration-200"
+                  >
+                    {/* Número */}
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-[#F5F4F0] dark:bg-[#333333] group-hover:bg-[#DA7756]/10 dark:group-hover:bg-[#DA7756]/20 flex items-center justify-center transition-colors">
+                      <span className="font-bold text-sm sm:text-base text-[#DA7756]">
+                        {index + 1}
+                      </span>
+                    </div>
+
+                    {/* Contenido */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-sm sm:text-base text-[#1A1915] dark:text-[#E5E5E5] group-hover:text-[#DA7756] transition-colors line-clamp-1">
+                        {slide.title}
+                      </h3>
+                      {slide.description && (
+                        <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0] line-clamp-1 mt-0.5">
+                          {slide.description}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Icono de PDF */}
+                    <div className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F5F4F0] dark:bg-[#333333] group-hover:bg-[#DA7756] flex items-center justify-center transition-all duration-200">
+                      <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-white transition-colors" />
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Mensaje si no hay contenido */}
-          {dia.videos.length === 0 && dia.audios.length === 0 && (
+          {dia.videos.length === 0 && dia.audios.length === 0 && (!dia.slides || dia.slides.length === 0) && (
             <div className="text-center py-12">
               <div className="w-16 h-16 bg-[#F5F4F0] dark:bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
                 <Play className="h-8 w-8 text-[#9B9A97] dark:text-[#808080]" />

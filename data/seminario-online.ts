@@ -17,6 +17,14 @@ export interface AudioSeminarioOnline {
   order: number // Orden dentro del día
 }
 
+export interface SlideSeminarioOnline {
+  id: string
+  title: string
+  url: string
+  description?: string
+  order: number
+}
+
 // Video de ambiente compartido para los audios del seminario
 export const SEMINARIO_BACKGROUND_VIDEO_ID = "cab0ffefc4cee4a08a7f4bf41a78b7bc"
 
@@ -26,6 +34,7 @@ export interface DiaSeminarioOnline {
   date?: string // Fecha del seminario (opcional)
   videos: VideoSeminarioOnline[] // Videos recuperados
   audios: AudioSeminarioOnline[] // Audios del seminario
+  slides?: SlideSeminarioOnline[] // Slides/presentaciones del día
 }
 
 export const seminarioOnline: DiaSeminarioOnline[] = [
@@ -40,6 +49,36 @@ export const seminarioOnline: DiaSeminarioOnline[] = [
         cloudflareStreamId: "aefa8bea28f24c1b5d7bf14d5d04c3ec",
         order: 1,
         description: "Primera parte del seminario"
+      }
+    ],
+    slides: [
+      {
+        id: "sp-s1-1",
+        title: "Sesión 1: Seguridad y Ventana de Tolerancia",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion1_Seguridad_Ventana_Tolerancia.pptx.pdf",
+        description: "Presentación sobre seguridad y ventana de tolerancia",
+        order: 1
+      },
+      {
+        id: "sp-s1-2",
+        title: "Sesión 2: Cerebro Reactivo y Recursos",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion2_Cerebro_Reactivo_Recursos.pptx.pdf",
+        description: "Presentación del módulo de cerebro reactivo y recursos",
+        order: 2
+      },
+      {
+        id: "sp-s1-3",
+        title: "Sesión 3: Estados Óptimos y Las 4 Palancas",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion3_Estados_Optimos_4_Palancas.pptx.pdf",
+        description: "Presentación del módulo de estados óptimos y las 4 palancas",
+        order: 3
+      },
+      {
+        id: "sp-s1-4",
+        title: "Sesión 4: Sufrimiento, Patrones y Nueva Historia",
+        url: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Pdfs%20dia%201/Sesion4_Sufrimiento_Patrones_Nueva_Historia.pptx.pdf",
+        description: "Presentación del módulo de transformación narrativa",
+        order: 4
       }
     ],
     audios: [
