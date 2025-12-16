@@ -1,5 +1,7 @@
 "use client"
 
+import { useState, useEffect } from "react"
+import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { Session } from "@/data/sessions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
@@ -48,7 +50,47 @@ function getDefaultTab(contentCounts: ContentCounts): string {
 }
 
 export function SessionContentTabs({ sessionData, contentCounts, defaultTab: propDefaultTab }: SessionContentTabsProps) {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+  const tabFromUrl = searchParams.get('tab')
   const defaultTab = propDefaultTab || getDefaultTab(contentCounts)
+  
+  // Estado controlado del tab activo
+  const [activeTab, setActiveTab] = useState<string>(tabFromUrl || defaultTab)
+
+  // Sincronizar con la URL cuando cambie el parámetro tab
+  useEffect(() => {
+    const urlTab = searchParams.get('tab')
+    if (urlTab && urlTab !== activeTab) {
+      setActiveTab(urlTab)
+    } else if (!urlTab && activeTab !== defaultTab) {
+      setActiveTab(defaultTab)
+    }
+  }, [searchParams, activeTab, defaultTab])
+
+  // Función para manejar el cambio de tab
+  const handleTabChange = (value: string) => {
+    setActiveTab(value)
+    // Actualizar la URL sin recargar la página
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('tab', value)
+    router.push(`${pathname}?${params.toString()}`, { scroll: false })
+  }
+
+  // Validar que el tab activo existe en el contenido disponible
+  const validTabs = [
+    contentCounts.videos > 0 ? 'videos' : null,
+    contentCounts.audios > 0 ? 'audios' : null,
+    contentCounts.themes > 0 ? 'themes' : null,
+    contentCounts.protocols > 0 ? 'protocols' : null,
+    contentCounts.pdf > 0 ? 'pdf' : null,
+    contentCounts.additionalResources > 0 ? 'additionalResources' : null,
+    contentCounts.apps > 0 ? 'apps' : null,
+  ].filter(Boolean) as string[]
+
+  // Si el tab activo no es válido, usar el default
+  const currentTab = validTabs.includes(activeTab) ? activeTab : defaultTab
 
   // If no content available
   const allCounts = Object.values(contentCounts)
@@ -66,7 +108,7 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
 
   return (
     <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-10 shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
-      <Tabs defaultValue={defaultTab} className="w-full">
+      <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
         {/* Orden: Videos → Audios → Temas → Protocolos → Material → Recursos */}
         <TabsList className={`grid w-full h-auto bg-[#F5F4F0] dark:bg-[#333333] p-1 sm:p-1.5 gap-1 sm:gap-1.5 mb-6 sm:mb-8 lg:mb-10 rounded-xl sm:rounded-2xl ${
           contentCounts.additionalResources > 0 
