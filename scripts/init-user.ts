@@ -3,9 +3,19 @@ import { resolve } from 'path'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
-// Cargar variables de entorno desde .env.local si existe
+// Cargar variables de entorno - .env.local tiene prioridad
 config({ path: resolve(process.cwd(), '.env.local') })
-config() // También cargar .env si existe
+config({ path: resolve(process.cwd(), '.env') })
+
+// Verificar que DATABASE_URL esté cargado
+if (!process.env.DATABASE_URL) {
+  console.error('❌ Error: DATABASE_URL no está configurado')
+  console.error('💡 Verifica que .env.local tenga DATABASE_URL configurado')
+  console.error('💡 Ejecuta: export DATABASE_URL="tu-url-aqui" antes del script')
+  process.exit(1)
+}
+
+console.log('✅ DATABASE_URL cargado:', process.env.DATABASE_URL.substring(0, 30) + '...')
 
 // Crear instancia de Prisma con las variables de entorno cargadas
 const prisma = new PrismaClient()
