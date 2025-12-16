@@ -15,6 +15,7 @@ import {
   BookOpen,
   ClipboardList,
   Smartphone,
+  FolderPlus,
   Calendar,
   Clock,
   CheckCircle2
@@ -179,11 +180,15 @@ export default async function SessionPage({ params, searchParams }: SessionPageP
                   </span>
                 </div>
                 <div className="w-full sm:w-auto sm:ml-auto flex flex-wrap gap-2 sm:gap-3 lg:gap-4 mt-2 sm:mt-0">
-                  <ContentBadge count={contentCounts.pdf} icon={FileText} label="PDF" tabId="pdf" sessionId={sessionId} />
+                  {/* Orden: Videos → Audios → Temas → Protocolos → Material → Recursos */}
                   <ContentBadge count={contentCounts.videos} icon={Video} label="Videos" tabId="videos" sessionId={sessionId} />
                   <ContentBadge count={contentCounts.audios} icon={Headphones} label="Audios" tabId="audios" sessionId={sessionId} />
                   <ContentBadge count={contentCounts.themes} icon={BookOpen} label="Temas" tabId="themes" sessionId={sessionId} />
                   <ContentBadge count={contentCounts.protocols} icon={ClipboardList} label="Protocolos" tabId="protocols" sessionId={sessionId} />
+                  <ContentBadge count={contentCounts.pdf} icon={FileText} label="PDF" tabId="pdf" sessionId={sessionId} />
+                  {contentCounts.additionalResources > 0 && (
+                    <ContentBadge count={contentCounts.additionalResources} icon={FolderPlus} label="Recursos" tabId="additionalResources" sessionId={sessionId} />
+                  )}
                   <ContentBadge count={contentCounts.apps} icon={Smartphone} label="Apps" tabId="apps" sessionId={sessionId} />
                 </div>
               </div>
