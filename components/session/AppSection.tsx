@@ -1,7 +1,5 @@
 import { AppLink } from "@/data/sessions"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Activity, Radio, Smartphone, Zap, Heart } from "lucide-react"
+import { Play, Activity, Radio, Smartphone, Zap, Heart, Sparkles } from "lucide-react"
 import Link from "next/link"
 
 interface AppSectionProps {
@@ -16,6 +14,35 @@ const iconMap: Record<string, any> = {
     Heart
 }
 
+// Colores por tipo de app - consistente con el estilo de la app
+const appStyles: Record<string, { color: string; bgLight: string; bgDark: string }> = {
+    Heart: {
+        color: "#7C3AED",
+        bgLight: "bg-violet-50",
+        bgDark: "dark:bg-violet-950/20"
+    },
+    Activity: {
+        color: "#10B981",
+        bgLight: "bg-emerald-50",
+        bgDark: "dark:bg-emerald-950/20"
+    },
+    Radio: {
+        color: "#3B82F6",
+        bgLight: "bg-blue-50",
+        bgDark: "dark:bg-blue-950/20"
+    },
+    Zap: {
+        color: "#F59E0B",
+        bgLight: "bg-amber-50",
+        bgDark: "dark:bg-amber-950/20"
+    },
+    default: {
+        color: "#706F6C",
+        bgLight: "bg-gray-50",
+        bgDark: "dark:bg-gray-950/20"
+    }
+}
+
 export function AppSection({ apps }: AppSectionProps) {
     if (!apps || apps.length === 0) {
         return (
@@ -28,35 +55,55 @@ export function AppSection({ apps }: AppSectionProps) {
     }
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
             {apps.map((app) => {
                 const IconComponent = iconMap[app.iconName] || Smartphone
+                const styles = appStyles[app.iconName] || appStyles.default
 
                 return (
-                    <Card key={app.id} className="overflow-hidden border-0 shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col h-full bg-white dark:bg-[#393939] rounded-lg sm:rounded-xl">
-                        <div className="p-4 sm:p-6 lg:p-8 flex-1 flex flex-col items-center text-center">
-                            <div className="mb-3 sm:mb-4 lg:mb-6 p-3 sm:p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl sm:rounded-2xl text-purple-600 dark:text-purple-400 group-hover:bg-purple-600 dark:group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 transform group-hover:scale-110 shadow-sm">
-                                <IconComponent className="h-6 w-6 sm:h-8 sm:w-8" />
+                    <div
+                        key={app.id}
+                        className="bg-white dark:bg-[#252525] rounded-2xl border border-[#E5E4E0] dark:border-[#333333] overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 group"
+                    >
+                        <div className="p-5 sm:p-6">
+                            {/* Header con icono y badge */}
+                            <div className="flex items-start justify-between mb-4">
+                                <div
+                                    className={`p-3 sm:p-3.5 rounded-xl ${styles.bgLight} ${styles.bgDark} transition-transform duration-200 group-hover:scale-105`}
+                                >
+                                    <IconComponent
+                                        className="h-6 w-6 sm:h-7 sm:w-7"
+                                        style={{ color: styles.color }}
+                                        strokeWidth={1.5}
+                                    />
+                                </div>
+                                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-medium bg-[#F5F4F0] dark:bg-[#333333] text-[#706F6C] dark:text-[#A0A0A0]">
+                                    <Sparkles className="h-2.5 w-2.5" />
+                                    Interactivo
+                                </span>
                             </div>
 
-                            <h3 className="text-base sm:text-lg lg:text-xl font-bold text-[#1A1915] dark:text-[#ECECEC] mb-2 sm:mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-                                {app.name}
-                            </h3>
+                            {/* Contenido */}
+                            <div className="mb-5">
+                                <h3 className="text-base sm:text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5] mb-1.5">
+                                    {app.name}
+                                </h3>
+                                <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed">
+                                    {app.description}
+                                </p>
+                            </div>
 
-                            <p className="text-[#706F6C] dark:text-[#B4B4B4] mb-4 sm:mb-6 leading-relaxed text-xs sm:text-sm">
-                                {app.description}
-                            </p>
-                        </div>
-
-                        <div className="p-3 sm:p-4 lg:p-6 pt-0 mt-auto">
-                            <Link href={app.url} target="_blank" className="block w-full">
-                                <Button className="w-full bg-white dark:bg-[#2F2F2F] border-2 border-[#E5E4E0] dark:border-[#4A4A4A] hover:border-purple-600 dark:hover:border-purple-500 hover:bg-purple-50 dark:hover:bg-purple-900/20 text-[#1A1915] dark:text-[#ECECEC] hover:text-purple-700 dark:hover:text-purple-400 rounded-lg sm:rounded-xl py-4 sm:py-5 lg:py-6 h-auto transition-all duration-300 font-semibold text-sm sm:text-base">
-                                    <ExternalLink className="mr-2 h-4 w-4" />
-                                    Abrir Aplicación
-                                </Button>
+                            {/* Botón de acción */}
+                            <Link href={app.url} target="_blank" className="block">
+                                <button
+                                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#F5F4F0] dark:bg-[#333333] text-[#1A1915] dark:text-[#E5E5E5] font-medium text-sm transition-all duration-200 hover:bg-[#E5E4E0] dark:hover:bg-[#404040] active:scale-[0.98]"
+                                >
+                                    <Play className="h-4 w-4" style={{ color: styles.color }} fill="currentColor" />
+                                    <span>Iniciar Práctica</span>
+                                </button>
                             </Link>
                         </div>
-                    </Card>
+                    </div>
                 )
             })}
         </div>

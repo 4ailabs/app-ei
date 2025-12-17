@@ -1426,6 +1426,12 @@
         var focusPhraseContainer = document.getElementById('focus-phrase-container');
         var focusPhraseText = document.getElementById('focus-phrase-text');
 
+        // Detectar iOS (no soporta vibración en web)
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        }
+
         // Verificar onboarding
         function checkOnboarding() {
             try {
@@ -1439,13 +1445,48 @@
             }
         }
 
-        // Reproducir tono
+        // Ocultar controles de vibración en iOS (no soportado)
+        function hideVibrationOnIOS() {
+            if (isIOS()) {
+                // Ocultar botón de vibración en la barra inferior
+                elements.vibrationBtn.style.display = 'none';
+                // Ocultar opción de vibración en configuración
+                var vibrationRow = document.getElementById('toggle-vibration').closest('.setting-row');
+                if (vibrationRow) {
+                    vibrationRow.style.display = 'none';
+                }
+                // Desactivar vibración en el estado
+                state.settings.vibration = false;
+            }
+        }
+
+        // Inicializar AudioContext (necesario para iOS)
+        function initAudioContext() {
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    console.log('AudioContext no soportado');
+                    return false;
+                }
+            }
+            // iOS requiere resume() después de una interacción del usuario
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            return true;
+        }
+
+        // Reproducir tono (compatible con iOS)
         function playTone(frequency, duration) {
             if (!state.settings.sound) return;
 
             try {
-                if (!audioContext) {
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                if (!initAudioContext()) return;
+
+                // Asegurar que el contexto está activo
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume();
                 }
 
                 var oscillator = audioContext.createOscillator();
@@ -1457,13 +1498,32 @@
                 oscillator.frequency.value = frequency || 440;
                 oscillator.type = 'sine';
 
-                gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + (duration || 50) / 1000);
+                var now = audioContext.currentTime;
+                gainNode.gain.setValueAtTime(0.1, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + (duration || 50) / 1000);
 
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + (duration || 50) / 1000);
+                oscillator.start(now);
+                oscillator.stop(now + (duration || 50) / 1000);
             } catch (e) {
-                // Audio no soportado
+                console.log('Error reproduciendo tono:', e);
+            }
+        }
+
+        // Desbloquear audio en iOS al primer toque
+        function unlockAudioiOS() {
+            if (initAudioContext() && audioContext.state === 'running') {
+                // Ya desbloqueado
+                return;
+            }
+            // Crear un sonido silencioso para desbloquear
+            try {
+                var buffer = audioContext.createBuffer(1, 1, 22050);
+                var source = audioContext.createBufferSource();
+                source.buffer = buffer;
+                source.connect(audioContext.destination);
+                source.start(0);
+            } catch (e) {
+                // Ignorar errores
             }
         }
 
@@ -1711,6 +1771,9 @@
 
         // Event Listeners
         document.getElementById('start-onboarding').addEventListener('click', function() {
+            // Desbloquear audio en iOS desde la primera interacción
+            unlockAudioiOS();
+
             elements.onboarding.classList.add('hidden');
             state.hasSeenOnboarding = true;
             try {
@@ -1719,6 +1782,9 @@
         });
 
         elements.mainBtn.addEventListener('click', function() {
+            // Desbloquear audio en iOS al primer click
+            unlockAudioiOS();
+
             if (state.isRunning) {
                 pauseSession();
             } else if (state.isPaused) {
@@ -1792,10 +1858,16 @@
         });
 
         document.getElementById('toggle-sound').addEventListener('click', function() {
+            // Desbloquear audio en iOS
+            unlockAudioiOS();
+
             this.classList.toggle('active');
             state.settings.sound = this.classList.contains('active');
             if (state.settings.sound) {
-                playTone(440, 80);
+                // Dar tiempo para que iOS desbloquee el audio
+                setTimeout(function() {
+                    playTone(440, 80);
+                }, 50);
             }
         });
 
@@ -1813,11 +1885,12 @@
 
         // Inicializar
         checkOnboarding();
+        hideVibrationOnIOS();
         updateTimerDisplay();
         updateProgress();
         updateTapCount();
 
-        console.log('Abrazo de Mariposa App v2.0 - Ready');
+        console.log('Abrazo de Mariposa App v2.1 - Ready');
     </script>
 </body>
 </html>
