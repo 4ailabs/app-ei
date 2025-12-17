@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#FAF9F7">
+    <title>Abrazo de Mariposa | TRSB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --safe-area-top: env(safe-area-inset-top, 0px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+
+            /* Colores de la app principal */
+            --background: #FAF9F7;
+            --foreground: #1A1915;
+            --primary: #DA7756;
+            --primary-dark: #C4684A;
+            --primary-light: #E89A7F;
+            --card-bg: #FFFFFF;
+            --sidebar-bg: #F5F4F0;
+            --border-color: #E5E4E0;
+            --text-secondary: #706F6C;
+            --text-muted: #9B9A97;
+            --success: #2ca58d;
+            --success-light: #E8F5F1;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Container */
+        .app {
+            display: flex;
+            flex-direction: column;
+            height: 100dvh;
+            padding-top: var(--safe-area-top);
+        }
+
+        /* Header profesional */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--sidebar-bg);
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+
+        .back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .header-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--foreground);
+            letter-spacing: -0.3px;
+        }
+
+        .header-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .settings-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .settings-btn:hover {
+            background: var(--sidebar-bg);
+        }
+
+        .settings-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            gap: 24px;
+            overflow-y: auto;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--sidebar-bg);
+            border-radius: 100px;
+            border: 1px solid var(--border-color);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .status-badge.active .status-dot {
+            background: var(--success);
+            box-shadow: 0 0 0 3px rgba(44, 165, 141, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(44, 165, 141, 0.2); }
+            50% { box-shadow: 0 0 0 6px rgba(44, 165, 141, 0.1); }
+        }
+
+        .status-text {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* Visualization Container */
+        .visualization-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 400px) {
+            .visualization-container {
+                width: 320px;
+                height: 320px;
+            }
+        }
+
+        /* Anillo de progreso SVG */
+        .progress-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-bg {
+            fill: none;
+            stroke: var(--border-color);
+            stroke-width: 4;
+        }
+
+        .progress-ring-fill {
+            fill: none;
+            stroke: url(#progressGradient);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 879.6;
+            stroke-dashoffset: 879.6;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        /* Manos animadas - Estilo profesional */
+        .hands-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        @media (min-width: 400px) {
+            .hands-container {
+                width: 240px;
+                height: 240px;
+            }
+        }
+
+        .hand {
+            position: absolute;
+            width: 72px;
+            height: 96px;
+            border-radius: 36px 36px 20px 20px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        @media (min-width: 400px) {
+            .hand {
+                width: 88px;
+                height: 116px;
+                border-radius: 44px 44px 24px 24px;
+            }
+        }
+
+        .hand-left {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-12deg);
+            background: linear-gradient(145deg, #F5F4F0, #E5E4E0);
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+
+        .hand-right {
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(12deg);
+            background: linear-gradient(145deg, #F5F4F0, #E5E4E0);
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+
+        .hand.active {
+            border-color: var(--primary);
+            background: linear-gradient(145deg, var(--primary-light), var(--primary));
+            box-shadow: 0 8px 24px rgba(218, 119, 86, 0.3);
+        }
+
+        .hand-left.active {
+            transform: translateY(-50%) rotate(-12deg) scale(1.08) translateX(-4px);
+        }
+
+        .hand-right.active {
+            transform: translateY(-50%) rotate(12deg) scale(1.08) translateX(4px);
+        }
+
+        .hand-icon {
+            width: 28px;
+            height: 28px;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .hand.active .hand-icon {
+            color: white;
+        }
+
+        .hand-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        .hand.active .hand-label {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Centro - Timer circular */
+        .center-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+        }
+
+        @media (min-width: 400px) {
+            .center-display {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        .timer-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--foreground);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .timer-label {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* Frases de enfoque - aparecen solo al inicio (15 segundos) */
+        .focus-phrase-container {
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+            min-height: 40px;
+        }
+
+        .focus-phrase-container.visible {
+            opacity: 1;
+        }
+
+        .focus-phrase {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            padding: 8px 16px;
+            background: var(--sidebar-bg);
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        @media (min-width: 400px) {
+            .focus-phrase {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+
+        /* Control de velocidad */
+        .speed-control {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .speed-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .speed-header svg {
+            width: 14px;
+            height: 14px;
+            color: var(--text-muted);
+        }
+
+        .speed-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .speed-buttons {
+            display: flex;
+            gap: 6px;
+            background: var(--card-bg);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .speed-btn {
+            flex: 1;
+            padding: 10px 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .speed-btn:active {
+            transform: scale(0.98);
+        }
+
+        .speed-btn.active {
+            background: var(--sidebar-bg);
+            color: var(--foreground);
+            font-weight: 600;
+        }
+
+        /* Hint de velocidad */
+        .speed-hint {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.4;
+            padding: 0 8px;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Contador de taps */
+        .tap-counter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+        }
+
+        .tap-counter svg {
+            width: 14px;
+            height: 14px;
+            color: var(--primary);
+        }
+
+        .tap-count {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--foreground);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .tap-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Barra de controles inferior */
+        .controls-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 20px;
+            padding-bottom: calc(16px + var(--safe-area-bottom));
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .control-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .control-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .control-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Boton principal - CTA */
+        .main-action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 32px;
+            height: 56px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 16px rgba(218, 119, 86, 0.3);
+            min-width: 160px;
+        }
+
+        .main-action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .main-action-btn.running {
+            background: linear-gradient(135deg, var(--success), #259078);
+            box-shadow: 0 4px 16px rgba(44, 165, 141, 0.3);
+        }
+
+        .main-action-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Panel de configuracion */
+        .settings-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .settings-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .settings-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: 24px 24px 0 0;
+            z-index: 100;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: var(--safe-area-bottom);
+        }
+
+        .settings-panel.open {
+            transform: translateY(0);
+        }
+
+        .settings-handle {
+            display: flex;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .settings-handle-bar {
+            width: 36px;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .settings-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--foreground);
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--sidebar-bg);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .close-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .settings-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .setting-section {
+            margin-bottom: 24px;
+        }
+
+        .setting-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .duration-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .duration-btn {
+            padding: 14px 8px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .duration-btn.active {
+            border-color: var(--primary);
+            background: rgba(218, 119, 86, 0.08);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: var(--sidebar-bg);
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .setting-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .setting-info {
+            flex: 1;
+        }
+
+        .setting-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--foreground);
+        }
+
+        .setting-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Toggle moderno */
+        .toggle {
+            width: 48px;
+            height: 28px;
+            background: var(--border-color);
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .toggle.active {
+            background: var(--success);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .toggle.active::after {
+            transform: translateX(20px);
+        }
+
+        /* Pantalla de finalizacion */
+        .completion-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--background);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .completion-screen.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .completion-check {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--success), #259078);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(44, 165, 141, 0.25);
+            animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .completion-check svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+            stroke-width: 3;
+        }
+
+        .completion-title {
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--foreground);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .completion-message {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .completion-stats {
+            display: flex;
+            gap: 32px;
+            padding: 20px 32px;
+            background: var(--sidebar-bg);
+            border-radius: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+
+        .completion-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-outline {
+            padding: 14px 28px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            border-radius: 100px;
+            color: var(--foreground);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline:hover {
+            background: var(--sidebar-bg);
+        }
+
+        .btn-filled {
+            padding: 14px 28px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 100px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(218, 119, 86, 0.25);
+        }
+
+        /* Onboarding overlay */
+        .onboarding-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 25, 21, 0.95);
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .onboarding-overlay.hidden {
+            display: none;
+        }
+
+        .onboarding-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .onboarding-icon svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        .onboarding-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .onboarding-text {
+            font-size: 15px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            max-width: 300px;
+            margin-bottom: 32px;
+        }
+
+        .onboarding-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .onboarding-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 14px;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.5;
+            padding-top: 4px;
+        }
+
+        .onboarding-btn {
+            padding: 16px 48px;
+            background: white;
+            border: none;
+            border-radius: 100px;
+            color: var(--foreground);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Optimizaciones para pantallas muy pequeñas */
+        @media (max-width: 360px) {
+            .visualization-container {
+                width: 240px;
+                height: 240px;
+            }
+
+            .hands-container {
+                width: 180px;
+                height: 180px;
+            }
+
+            .hand {
+                width: 60px;
+                height: 80px;
+            }
+
+            .center-display {
+                width: 75px;
+                height: 75px;
+            }
+
+            .timer-value {
+                font-size: 20px;
+            }
+
+            .focus-phrase {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
+            .main-content {
+                padding: 12px;
+                gap: 16px;
+            }
+
+            .speed-control {
+                max-width: 260px;
+            }
+
+            .speed-btn {
+                padding: 8px 8px;
+                font-size: 11px;
+            }
+
+            .main-action-btn {
+                height: 50px;
+                padding: 0 24px;
+                min-width: 140px;
+                font-size: 14px;
+            }
+
+            .control-btn {
+                width: 42px;
+                height: 42px;
+            }
+
+            .header {
+                padding: 10px 12px;
+            }
+
+            .header-title {
+                font-size: 14px;
+            }
+        }
+
+        /* Pantallas con altura limitada (landscape o pantallas cortas) */
+        @media (max-height: 650px) {
+            .main-content {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .visualization-container {
+                width: 220px;
+                height: 220px;
+            }
+
+            .hands-container {
+                width: 160px;
+                height: 160px;
+            }
+
+            .hand {
+                width: 56px;
+                height: 72px;
+            }
+
+            .center-display {
+                width: 70px;
+                height: 70px;
+            }
+
+            .timer-value {
+                font-size: 18px;
+            }
+
+            .status-badge {
+                padding: 6px 12px;
+            }
+
+            .status-text {
+                font-size: 12px;
+            }
+
+            .speed-header {
+                margin-bottom: 6px;
+            }
+
+            .speed-hint {
+                margin-top: 6px;
+                font-size: 11px;
+            }
+
+            .controls-bar {
+                padding: 12px 16px;
+                padding-bottom: calc(12px + var(--safe-area-bottom));
+            }
+        }
+
+        /* Mejoras de interacción táctil */
+        .speed-btn,
+        .duration-btn,
+        .control-btn,
+        .main-action-btn,
+        .back-btn,
+        .settings-btn,
+        .toggle {
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Onboarding overlay -->
+    <div class="onboarding-overlay" id="onboarding">
+        <div class="onboarding-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+        </div>
+        <h1 class="onboarding-title">Abrazo de Mariposa</h1>
+        <p class="onboarding-text">Tecnica de estimulacion bilateral para autorregulacion emocional</p>
+        <div class="onboarding-steps">
+            <div class="onboarding-step">
+                <span class="step-number">1</span>
+                <span class="step-text">Cruza los brazos sobre el pecho con las manos en los hombros</span>
+            </div>
+            <div class="onboarding-step">
+                <span class="step-number">2</span>
+                <span class="step-text">Alterna suaves golpecitos siguiendo el ritmo de la app</span>
+            </div>
+            <div class="onboarding-step">
+                <span class="step-number">3</span>
+                <span class="step-text">Respira profundamente y enfocate en las sensaciones</span>
+            </div>
+        </div>
+        <button class="onboarding-btn" id="start-onboarding">Comenzar</button>
+    </div>
+
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <button class="back-btn" id="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <div class="header-center">
+                <span class="header-title">Abrazo de Mariposa</span>
+                <span class="header-subtitle">Estimulacion Bilateral</span>
+            </div>
+            <button class="settings-btn" id="settings-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Status Badge -->
+            <div class="status-badge" id="status-badge">
+                <span class="status-dot"></span>
+                <span class="status-text" id="status-text">Listo para comenzar</span>
+            </div>
+
+            <!-- Visualization -->
+            <div class="visualization-container">
+                <svg class="progress-ring" viewBox="0 0 280 280">
+                    <defs>
+                        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#E89A7F"/>
+                            <stop offset="100%" style="stop-color:#C4684A"/>
+                        </linearGradient>
+                    </defs>
+                    <circle class="progress-ring-bg" cx="140" cy="140" r="134"/>
+                    <circle class="progress-ring-fill" id="progress-fill" cx="140" cy="140" r="134"/>
+                </svg>
+                <div class="hands-container">
+                    <div class="hand hand-left" id="hand-left">
+                        <svg class="hand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v0"/>
+                            <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v6"/>
+                            <path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/>
+                            <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+                        </svg>
+                        <span class="hand-label">Izq</span>
+                    </div>
+                    <div class="hand hand-right" id="hand-right">
+                        <svg class="hand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M6 11V6a2 2 0 0 1 2-2a2 2 0 0 1 2 2v0"/>
+                            <path d="M10 10V4a2 2 0 0 1 2-2a2 2 0 0 1 2 2v6"/>
+                            <path d="M14 10.5V6a2 2 0 0 1 2-2a2 2 0 0 1 2 2v8"/>
+                            <path d="M6 8a2 2 0 1 0-4 0v6a8 8 0 0 0 8 8h2c2.8 0 4.5-.86 5.99-2.34l3.6-3.6a2 2 0 0 0-2.83-2.82L17 15"/>
+                        </svg>
+                        <span class="hand-label">Der</span>
+                    </div>
+                    <div class="center-display">
+                        <span class="timer-value" id="timer-value">3:00</span>
+                        <span class="timer-label">min</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frases de enfoque - debajo de la visualización -->
+            <div class="focus-phrase-container" id="focus-phrase-container">
+                <div class="focus-phrase" id="focus-phrase-text">
+                    Observa lo que surge...
+                </div>
+            </div>
+
+            <!-- Speed Control -->
+            <div class="speed-control">
+                <div class="speed-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                    </svg>
+                    <span class="speed-label">Velocidad</span>
+                </div>
+                <div class="speed-buttons">
+                    <button class="speed-btn" data-speed="slow">Lento</button>
+                    <button class="speed-btn active" data-speed="medium">Normal</button>
+                    <button class="speed-btn" data-speed="fast">Rapido</button>
+                </div>
+                <div class="speed-hint" id="speed-hint">
+                    Ritmo estándar para el reprocesamiento
+                </div>
+            </div>
+
+            <!-- Tap Counter -->
+            <div class="tap-counter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+                <span class="tap-count" id="tap-count">0</span>
+                <span class="tap-label">taps</span>
+            </div>
+        </main>
+
+        <!-- Controls Bar -->
+        <div class="controls-bar">
+            <button class="control-btn" id="reset-btn" title="Reiniciar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                </svg>
+            </button>
+            <button class="main-action-btn" id="main-btn">
+                <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="6,4 20,12 6,20"/>
+                </svg>
+                <svg id="pause-icon" class="hidden" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="4" width="4" height="16" rx="1"/>
+                    <rect x="14" y="4" width="4" height="16" rx="1"/>
+                </svg>
+                <span id="btn-text">Iniciar</span>
+            </button>
+            <button class="control-btn" id="vibration-btn" title="Vibracion">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/>
+                    <path d="M6 8v8M18 8v8"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Settings Overlay -->
+    <div class="settings-overlay" id="settings-overlay"></div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settings-panel">
+        <div class="settings-handle">
+            <div class="settings-handle-bar"></div>
+        </div>
+        <div class="settings-header">
+            <span class="settings-title">Configuracion</span>
+            <button class="close-btn" id="close-settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="settings-content">
+            <div class="setting-section">
+                <div class="section-title">Duracion de la sesion</div>
+                <div class="duration-grid">
+                    <button class="duration-btn" data-duration="60">1 min</button>
+                    <button class="duration-btn active" data-duration="180">3 min</button>
+                    <button class="duration-btn" data-duration="300">5 min</button>
+                    <button class="duration-btn" data-duration="600">10 min</button>
+                    <button class="duration-btn" data-duration="900">15 min</button>
+                    <button class="duration-btn" data-duration="0">Libre</button>
+                </div>
+            </div>
+
+            <div class="setting-section">
+                <div class="section-title">Retroalimentacion</div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <div class="setting-name">Vibracion bilateral</div>
+                        <div class="setting-desc">Vibra alternadamente izq-der</div>
+                    </div>
+                    <div class="toggle active" id="toggle-vibration"></div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <div class="setting-name">Sonido de guia</div>
+                        <div class="setting-desc">Tono suave en cada tap</div>
+                    </div>
+                    <div class="toggle" id="toggle-sound"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completion Screen -->
+    <div class="completion-screen" id="completion-screen">
+        <div class="completion-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg>
+        </div>
+        <h2 class="completion-title">Sesion completada</h2>
+        <p class="completion-message">Excelente trabajo. Toma un momento para notar como te sientes ahora.</p>
+        <div class="completion-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="stat-duration">3:00</div>
+                <div class="stat-label">Duracion</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="stat-taps">0</div>
+                <div class="stat-label">Taps</div>
+            </div>
+        </div>
+        <div class="completion-actions">
+            <button class="btn-outline" id="repeat-btn">Repetir</button>
+            <button class="btn-filled" id="done-btn">Finalizar</button>
+        </div>
+    </div>
+
+    <script>
+        // Estado de la app
+        var state = {
+            isRunning: false,
+            isPaused: false,
+            duration: 180,
+            timeRemaining: 180,
+            speed: 'medium',
+            currentHand: 'left',
+            tapCount: 0,
+            settings: {
+                vibration: true,
+                sound: false
+            },
+            hasSeenOnboarding: false,
+            currentPhraseIndex: 0
+        };
+
+        // Frases de enfoque para el reprocesamiento
+        var focusPhrases = [
+            "Tu cerebro está reprocesando",
+            "Observa lo que surge...",
+            "Solo observa, sin juzgar",
+            "Confía en el proceso",
+            "Nota las sensaciones corporales",
+            "Simplemente sigue el movimiento",
+            "Respira profundo y continúa",
+            "Tu mente busca el equilibrio"
+        ];
+
+        // Velocidades en ms
+        var speeds = {
+            slow: 900,
+            medium: 600,
+            fast: 350
+        };
+
+        // Descripciones de velocidad para guiar al usuario
+        var speedHints = {
+            slow: "Útil si te sientes muy activado o abrumado",
+            medium: "Ritmo estándar para el reprocesamiento",
+            fast: "Puede ayudar si el proceso se siente estancado"
+        };
+
+        // Elementos del DOM
+        var elements = {
+            onboarding: document.getElementById('onboarding'),
+            statusBadge: document.getElementById('status-badge'),
+            statusText: document.getElementById('status-text'),
+            timerValue: document.getElementById('timer-value'),
+            progressFill: document.getElementById('progress-fill'),
+            handLeft: document.getElementById('hand-left'),
+            handRight: document.getElementById('hand-right'),
+            tapCount: document.getElementById('tap-count'),
+            mainBtn: document.getElementById('main-btn'),
+            playIcon: document.getElementById('play-icon'),
+            pauseIcon: document.getElementById('pause-icon'),
+            btnText: document.getElementById('btn-text'),
+            resetBtn: document.getElementById('reset-btn'),
+            vibrationBtn: document.getElementById('vibration-btn'),
+            settingsOverlay: document.getElementById('settings-overlay'),
+            settingsPanel: document.getElementById('settings-panel'),
+            completionScreen: document.getElementById('completion-screen'),
+            statDuration: document.getElementById('stat-duration'),
+            statTaps: document.getElementById('stat-taps'),
+            speedHint: document.getElementById('speed-hint')
+        };
+
+        var tapInterval = null;
+        var timerInterval = null;
+        var phraseInterval = null;
+        var phraseTimeout = null;
+        var audioContext = null;
+
+        // Elementos de frases
+        var focusPhraseContainer = document.getElementById('focus-phrase-container');
+        var focusPhraseText = document.getElementById('focus-phrase-text');
+
+        // Verificar onboarding
+        function checkOnboarding() {
+            try {
+                var seen = localStorage.getItem('abrazo-mariposa-onboarding');
+                if (seen) {
+                    elements.onboarding.classList.add('hidden');
+                    state.hasSeenOnboarding = true;
+                }
+            } catch (e) {
+                elements.onboarding.classList.add('hidden');
+            }
+        }
+
+        // Reproducir tono
+        function playTone(frequency, duration) {
+            if (!state.settings.sound) return;
+
+            try {
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+
+                var oscillator = audioContext.createOscillator();
+                var gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                oscillator.frequency.value = frequency || 440;
+                oscillator.type = 'sine';
+
+                gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + (duration || 50) / 1000);
+
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + (duration || 50) / 1000);
+            } catch (e) {
+                // Audio no soportado
+            }
+        }
+
+        // Vibracion
+        function vibrate(pattern) {
+            if (!state.settings.vibration) return;
+            try {
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(pattern);
+                }
+            } catch (e) {
+                // Vibracion no soportada
+            }
+        }
+
+        // Formatear tiempo
+        function formatTime(seconds) {
+            if (seconds === Infinity || (seconds === 0 && state.duration === 0)) {
+                return '--:--';
+            }
+            var m = Math.floor(seconds / 60);
+            var s = seconds % 60;
+            return m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        // Actualizar display del timer
+        function updateTimerDisplay() {
+            if (state.duration === 0) {
+                var elapsed = Math.floor(state.tapCount * (speeds[state.speed] / 1000) / 2);
+                elements.timerValue.textContent = formatTime(elapsed);
+            } else {
+                elements.timerValue.textContent = formatTime(state.timeRemaining);
+            }
+        }
+
+        // Actualizar anillo de progreso
+        function updateProgress() {
+            var circumference = 2 * Math.PI * 134;
+            if (state.duration === 0) {
+                elements.progressFill.style.strokeDashoffset = circumference * 0.5;
+                return;
+            }
+            var progress = 1 - (state.timeRemaining / state.duration);
+            var offset = circumference * (1 - progress);
+            elements.progressFill.style.strokeDashoffset = offset;
+        }
+
+        // Actualizar contador de taps
+        function updateTapCount() {
+            elements.tapCount.textContent = state.tapCount;
+        }
+
+        // Actualizar frase de enfoque
+        function updateFocusPhrase() {
+            var phrase = focusPhrases[state.currentPhraseIndex];
+
+            // Animar salida
+            focusPhraseContainer.style.opacity = '0';
+
+            setTimeout(function() {
+                focusPhraseText.textContent = phrase;
+                focusPhraseContainer.style.opacity = '1';
+            }, 300);
+
+            // Avanzar al siguiente indice (circular)
+            state.currentPhraseIndex = (state.currentPhraseIndex + 1) % focusPhrases.length;
+        }
+
+        // Mostrar frases - solo durante los primeros 15 segundos como orientación
+        function showFocusPhrases() {
+            focusPhraseContainer.classList.add('visible');
+            updateFocusPhrase();
+            // Cambiar frase una vez a los 8 segundos
+            phraseInterval = setTimeout(updateFocusPhrase, 8000);
+
+            // Ocultar las frases después de 15 segundos
+            phraseTimeout = setTimeout(function() {
+                hideFocusPhrases();
+            }, 15000);
+        }
+
+        // Ocultar frases
+        function hideFocusPhrases() {
+            focusPhraseContainer.classList.remove('visible');
+            if (phraseInterval) {
+                clearTimeout(phraseInterval);
+                phraseInterval = null;
+            }
+            if (phraseTimeout) {
+                clearTimeout(phraseTimeout);
+                phraseTimeout = null;
+            }
+        }
+
+        // Animacion de tap
+        function tap() {
+            var isLeft = state.currentHand === 'left';
+
+            elements.handLeft.classList.remove('active');
+            elements.handRight.classList.remove('active');
+
+            if (isLeft) {
+                elements.handLeft.classList.add('active');
+                vibrate([60]);
+                playTone(330, 40);
+            } else {
+                elements.handRight.classList.add('active');
+                vibrate([60]);
+                playTone(440, 40);
+            }
+
+            state.tapCount++;
+            updateTapCount();
+            state.currentHand = isLeft ? 'right' : 'left';
+        }
+
+        // Iniciar sesion
+        function startSession() {
+            state.isRunning = true;
+            state.isPaused = false;
+
+            elements.statusBadge.classList.add('active');
+            elements.statusText.textContent = 'En progreso';
+            elements.playIcon.classList.add('hidden');
+            elements.pauseIcon.classList.remove('hidden');
+            elements.btnText.textContent = 'Pausar';
+            elements.mainBtn.classList.add('running');
+
+            // Mostrar frases de enfoque
+            showFocusPhrases();
+
+            tap();
+            tapInterval = setInterval(tap, speeds[state.speed]);
+
+            if (state.duration > 0) {
+                timerInterval = setInterval(function() {
+                    state.timeRemaining--;
+                    updateTimerDisplay();
+                    updateProgress();
+
+                    if (state.timeRemaining <= 0) {
+                        completeSession();
+                    }
+                }, 1000);
+            }
+        }
+
+        // Pausar sesion
+        function pauseSession() {
+            state.isPaused = true;
+            state.isRunning = false;
+
+            clearInterval(tapInterval);
+            clearInterval(timerInterval);
+
+            // Ocultar frases
+            hideFocusPhrases();
+
+            elements.handLeft.classList.remove('active');
+            elements.handRight.classList.remove('active');
+            elements.statusBadge.classList.remove('active');
+            elements.statusText.textContent = 'Pausado';
+            elements.playIcon.classList.remove('hidden');
+            elements.pauseIcon.classList.add('hidden');
+            elements.btnText.textContent = 'Continuar';
+            elements.mainBtn.classList.remove('running');
+        }
+
+        // Reanudar sesion
+        function resumeSession() {
+            startSession();
+        }
+
+        // Completar sesion
+        function completeSession() {
+            clearInterval(tapInterval);
+            clearInterval(timerInterval);
+
+            // Ocultar frases
+            hideFocusPhrases();
+
+            state.isRunning = false;
+            state.isPaused = false;
+
+            elements.handLeft.classList.remove('active');
+            elements.handRight.classList.remove('active');
+
+            vibrate([150, 80, 150]);
+
+            showCompletion();
+        }
+
+        // Mostrar pantalla de finalizacion
+        function showCompletion() {
+            var durationUsed = state.duration > 0
+                ? state.duration - state.timeRemaining
+                : Math.floor(state.tapCount * speeds[state.speed] / 1000 / 2);
+
+            elements.statDuration.textContent = formatTime(durationUsed);
+            elements.statTaps.textContent = state.tapCount;
+
+            elements.completionScreen.classList.add('active');
+        }
+
+        // Reiniciar sesion
+        function resetSession() {
+            clearInterval(tapInterval);
+            clearInterval(timerInterval);
+
+            // Ocultar frases y resetear indice
+            hideFocusPhrases();
+            state.currentPhraseIndex = 0;
+
+            state.isRunning = false;
+            state.isPaused = false;
+            state.timeRemaining = state.duration || 180;
+            state.tapCount = 0;
+            state.currentHand = 'left';
+
+            elements.handLeft.classList.remove('active');
+            elements.handRight.classList.remove('active');
+            elements.statusBadge.classList.remove('active');
+            elements.statusText.textContent = 'Listo para comenzar';
+            elements.playIcon.classList.remove('hidden');
+            elements.pauseIcon.classList.add('hidden');
+            elements.btnText.textContent = 'Iniciar';
+            elements.mainBtn.classList.remove('running');
+
+            updateTimerDisplay();
+            updateProgress();
+            updateTapCount();
+        }
+
+        // Abrir configuracion
+        function openSettings() {
+            elements.settingsOverlay.classList.add('open');
+            elements.settingsPanel.classList.add('open');
+        }
+
+        // Cerrar configuracion
+        function closeSettings() {
+            elements.settingsOverlay.classList.remove('open');
+            elements.settingsPanel.classList.remove('open');
+        }
+
+        // Event Listeners
+        document.getElementById('start-onboarding').addEventListener('click', function() {
+            elements.onboarding.classList.add('hidden');
+            state.hasSeenOnboarding = true;
+            try {
+                localStorage.setItem('abrazo-mariposa-onboarding', 'true');
+            } catch (e) {}
+        });
+
+        elements.mainBtn.addEventListener('click', function() {
+            if (state.isRunning) {
+                pauseSession();
+            } else if (state.isPaused) {
+                resumeSession();
+            } else {
+                startSession();
+            }
+        });
+
+        elements.resetBtn.addEventListener('click', resetSession);
+
+        elements.vibrationBtn.addEventListener('click', function() {
+            state.settings.vibration = !state.settings.vibration;
+            this.classList.toggle('active', state.settings.vibration);
+            document.getElementById('toggle-vibration').classList.toggle('active', state.settings.vibration);
+            if (state.settings.vibration) {
+                vibrate([40]);
+            }
+        });
+
+        document.getElementById('back-btn').addEventListener('click', function() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.close();
+            }
+        });
+
+        document.getElementById('settings-btn').addEventListener('click', openSettings);
+        document.getElementById('close-settings').addEventListener('click', closeSettings);
+        elements.settingsOverlay.addEventListener('click', closeSettings);
+
+        // Velocidad
+        document.querySelectorAll('.speed-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.speed-btn').forEach(function(b) {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                state.speed = btn.dataset.speed;
+
+                // Actualizar el hint de velocidad
+                elements.speedHint.textContent = speedHints[state.speed];
+
+                if (state.isRunning) {
+                    clearInterval(tapInterval);
+                    tapInterval = setInterval(tap, speeds[state.speed]);
+                }
+            });
+        });
+
+        // Duracion
+        document.querySelectorAll('.duration-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.duration-btn').forEach(function(b) {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                state.duration = parseInt(btn.dataset.duration);
+                state.timeRemaining = state.duration || 0;
+                updateTimerDisplay();
+                updateProgress();
+            });
+        });
+
+        // Toggles
+        document.getElementById('toggle-vibration').addEventListener('click', function() {
+            this.classList.toggle('active');
+            state.settings.vibration = this.classList.contains('active');
+            elements.vibrationBtn.classList.toggle('active', state.settings.vibration);
+        });
+
+        document.getElementById('toggle-sound').addEventListener('click', function() {
+            this.classList.toggle('active');
+            state.settings.sound = this.classList.contains('active');
+            if (state.settings.sound) {
+                playTone(440, 80);
+            }
+        });
+
+        // Pantalla de finalizacion
+        document.getElementById('done-btn').addEventListener('click', function() {
+            elements.completionScreen.classList.remove('active');
+            resetSession();
+        });
+
+        document.getElementById('repeat-btn').addEventListener('click', function() {
+            elements.completionScreen.classList.remove('active');
+            resetSession();
+            setTimeout(startSession, 300);
+        });
+
+        // Inicializar
+        checkOnboarding();
+        updateTimerDisplay();
+        updateProgress();
+        updateTapCount();
+
+        console.log('Abrazo de Mariposa App v2.0 - Ready');
+    </script>
+</body>
+</html>

@@ -1520,16 +1520,171 @@ export const sessions: Session[] = [
         category: "ritual_nocturno"
       }
     ],
-    themes: [],
+    themes: [
+      {
+        id: "t5-1",
+        title: "Fundamentos de TRSB",
+        content: "TRSB (Técnica de Reprocesamiento Somato-Cognitivo Bilateral) es una técnica avanzada para procesar traumas y bloqueos emocionales a través de la integración de cuerpo, mente y estimulación bilateral.",
+        subtopics: [
+          {
+            id: "t5-1-1",
+            title: "¿Qué es el Reprocesamiento?",
+            content: "El reprocesamiento es la capacidad del cerebro de tomar memorias disfuncionales almacenadas y procesarlas hacia una resolución adaptativa. Las memorias traumáticas se almacenan de forma fragmentada y desorganizada; el reprocesamiento las integra de forma coherente."
+          },
+          {
+            id: "t5-1-2",
+            title: "El Mensaje Somático",
+            content: "El cuerpo guarda la puntuación del trauma. Las sensaciones físicas son la puerta de entrada al procesamiento. Aprender a \"leer\" el cuerpo permite acceder a información que la mente consciente ha bloqueado."
+          },
+          {
+            id: "t5-1-3",
+            title: "Estimulación Bilateral",
+            content: "La estimulación alternada de ambos hemisferios cerebrales facilita la integración de memorias. Puede ser visual (movimientos oculares), auditiva (sonidos alternados) o táctil (tapping o abrazo de mariposa)."
+          },
+          {
+            id: "t5-1-4",
+            title: "Escalas NEA y NCI",
+            content: "NEA (Nivel de Estrés Actual): Mide la activación actual del sistema nervioso de 0-10. NCI (Nivel de Creencia Inicial): Mide cuánto cree la persona en la cognición negativa de 0-10. Ambas se usan para monitorear el progreso durante la sesión."
+          }
+        ]
+      },
+      {
+        id: "t5-2",
+        title: "Las 8 Fases de TRSB",
+        content: "El proceso TRSB sigue una estructura de 8 fases que garantizan un procesamiento seguro y efectivo. Cada fase tiene un objetivo específico y criterios de completitud.",
+        subtopics: [
+          {
+            id: "t5-2-1",
+            title: "Fase 1: Preparación",
+            content: "Objetivo: Establecer seguridad y recursos. Se explica el proceso, se identifican recursos de regulación, y se practica la técnica de parada segura. Duración recomendada: 5-10 minutos."
+          },
+          {
+            id: "t5-2-2",
+            title: "Fase 2: Identificación del Blanco",
+            content: "Objetivo: Seleccionar la memoria o situación a procesar. Se identifica la imagen más perturbadora, la cognición negativa asociada, las emociones presentes y las sensaciones corporales. Se toma el NEA inicial."
+          },
+          {
+            id: "t5-2-3",
+            title: "Fase 3: Activación",
+            content: "Objetivo: Activar la red de memoria. El cliente trae a la mente la imagen, la cognición negativa, la emoción y nota dónde lo siente en el cuerpo. Se mantiene una activación moderada (NEA 5-7)."
+          },
+          {
+            id: "t5-2-4",
+            title: "Fase 4: Procesamiento",
+            content: "Objetivo: Procesar el material activado. Se aplica estimulación bilateral mientras el cliente observa lo que emerge sin juzgar. Sets de 30-60 segundos con pausas para reportar. Esta es la fase más larga del proceso."
+          },
+          {
+            id: "t5-2-5",
+            title: "Fase 5: Instalación de Recurso",
+            content: "Objetivo: Fortalecer la cognición positiva. Se identifica una creencia positiva deseada y se instala con estimulación bilateral. Se busca que el NCI de la cognición positiva llegue a 6-7 o más."
+          },
+          {
+            id: "t5-2-6",
+            title: "Fase 6: Escaneo Corporal",
+            content: "Objetivo: Verificar integración somática. Se escanea el cuerpo en busca de tensiones residuales. Si aparece malestar, se procesa con sets adicionales hasta lograr neutralidad corporal."
+          },
+          {
+            id: "t5-2-7",
+            title: "Fase 7: Cierre",
+            content: "Objetivo: Estabilizar y cerrar la sesión. Se guía al cliente de vuelta al presente, se utilizan técnicas de grounding, y se revisa el estado actual. Si el procesamiento está incompleto, se contiene de forma segura."
+          },
+          {
+            id: "t5-2-8",
+            title: "Fase 8: Reevaluación",
+            content: "Objetivo: Evaluar el trabajo realizado. Se revisa el blanco original al inicio de la siguiente sesión. Se verifica si se mantienen los cambios y si es necesario procesamiento adicional."
+          }
+        ]
+      },
+      {
+        id: "t5-3",
+        title: "El Abrazo de Mariposa",
+        content: "Técnica de auto-estimulación bilateral desarrollada por Lucina Artigas. Permite al cliente aplicar estimulación bilateral de forma autónoma.",
+        subtopics: [
+          {
+            id: "t5-3-1",
+            title: "La Técnica",
+            content: "Cruzar los brazos sobre el pecho, con las manos sobre los hombros opuestos. Alternar el tapping derecha-izquierda a un ritmo constante y cómodo. Mantener los ojos cerrados o con mirada suave hacia abajo."
+          },
+          {
+            id: "t5-3-2",
+            title: "Cuándo Usarlo",
+            content: "Durante el procesamiento como forma de estimulación bilateral. Como técnica de auto-regulación entre sesiones. En momentos de activación emocional intensa para volver a la ventana de tolerancia."
+          },
+          {
+            id: "t5-3-3",
+            title: "Precauciones",
+            content: "No usar cuando la activación es demasiado alta (NEA > 8). No usar como forma de evitar sentir emociones. Si aparece material muy intenso, detenerse y usar técnicas de grounding primero."
+          }
+        ]
+      },
+      {
+        id: "t5-4",
+        title: "La Tríada Cognitiva",
+        content: "En TRSB trabajamos con tres elementos cognitivos interconectados que sostienen el trauma y que se transforman durante el procesamiento.",
+        subtopics: [
+          {
+            id: "t5-4-1",
+            title: "Cognición Negativa",
+            content: "La creencia disfuncional sobre uno mismo que se formó durante el trauma. Ejemplos: \"Soy impotente\", \"No soy suficiente\", \"Estoy en peligro\", \"Soy culpable\". Siempre comienza con \"Yo soy...\" o \"Yo estoy...\""
+          },
+          {
+            id: "t5-4-2",
+            title: "Cognición Positiva",
+            content: "La creencia adaptativa deseada que reemplazará a la negativa. Debe ser realista y alcanzable. Ejemplos: \"Tengo opciones\", \"Soy suficiente tal como soy\", \"Estoy seguro ahora\", \"Hice lo mejor que pude\"."
+          },
+          {
+            id: "t5-4-3",
+            title: "El Puente Afectivo",
+            content: "La conexión emocional y somática entre la cognición negativa y las experiencias que la crearon. Permite acceder a memorias relacionadas que comparten la misma creencia disfuncional."
+          }
+        ]
+      },
+      {
+        id: "t5-5",
+        title: "Monitoreo y Seguridad",
+        content: "El monitoreo constante durante TRSB es esencial para mantener la seguridad del proceso y guiar las intervenciones.",
+        subtopics: [
+          {
+            id: "t5-5-1",
+            title: "Señales de Progreso",
+            content: "NEA disminuye gradualmente. Aparecen asociaciones nuevas y conexiones inesperadas. El cliente reporta cambios en la imagen o la emoción. Surge material adaptativo espontáneamente."
+          },
+          {
+            id: "t5-5-2",
+            title: "Señales de Alerta",
+            content: "NEA se mantiene muy alto (>8) por varios sets. El cliente se disocia o se desconecta. Aparece material abrumador sin procesamiento. El cliente no puede seguir las instrucciones."
+          },
+          {
+            id: "t5-5-3",
+            title: "Intervenciones de Seguridad",
+            content: "Técnica de parada segura: detenerse y regresar al recurso. Grounding: 5-4-3-2-1 o contacto con el presente. Contención: imaginar guardar el material en un contenedor seguro. Regulación: respiración, orientación al ambiente."
+          }
+        ]
+      }
+    ],
     protocols: [
       {
         id: "p5-1",
-        title: "Protocolo TRSB Completo",
-        description: "Guía paso a paso para aplicar la técnica TRSB.",
-        pdfUrl: ""
+        title: "Manual Profesional TRSB Completo",
+        description: "Manual completo con la guía paso a paso para aplicar la técnica TRSB.",
+        pdfUrl: "https://pub-f760be6c1ddb422a99ca68e9b005fd5e.r2.dev/Dia%202/TRSB/Manual_Profesional_TRSB_Completo.docx.pdf"
+      },
+      {
+        id: "p5-2",
+        title: "Dashboard de Sesión TRSB",
+        description: "Panel interactivo con las 8 fases de TRSB para guiar sesiones de procesamiento.",
+        pdfUrl: "/protocols/trsb-session-dashboard.html"
       }
     ],
-    apps: []
+    apps: [
+      {
+        id: "app5-1",
+        name: "Abrazo de Mariposa",
+        description: "Práctica guiada de estimulación bilateral con vibración, timer y registro de NEA.",
+        url: "/protocols/abrazo-mariposa-app.html",
+        iconName: "Heart"
+      }
+    ]
   },
   {
     id: 6,
