@@ -711,7 +711,15 @@ export const sessions: Session[] = [
       },
 
     ],
-    apps: []
+    apps: [
+      {
+        id: "app1-1",
+        name: "Respiración Guiada",
+        description: "Patrones de respiración para regular el sistema nervioso: 4-7-8, Box Breathing y más.",
+        url: "/protocols/respiracion-guiada-app.html",
+        iconName: "Activity"
+      }
+    ]
   },
 
   // ========================================

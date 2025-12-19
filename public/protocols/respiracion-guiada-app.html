@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#FAF9F7">
+    <title>Respiración Guiada | TRSB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --safe-area-top: env(safe-area-inset-top, 0px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+
+            /* Colores de la app principal - Estilo Claude/Anthropic */
+            --background: #FAF9F7;
+            --foreground: #1A1915;
+            --primary: #DA7756;
+            --primary-dark: #C4684A;
+            --primary-light: #E89A7F;
+            --card-bg: #FFFFFF;
+            --sidebar-bg: #F5F4F0;
+            --border-color: #E5E4E0;
+            --text-secondary: #706F6C;
+            --text-muted: #9B9A97;
+            --success: #2ca58d;
+            --success-light: #E8F5F1;
+
+            /* Colores específicos para respiración */
+            --breath-inhale: #3B82F6;
+            --breath-hold: #8B5CF6;
+            --breath-exhale: #10B981;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            height: 100dvh;
+            padding-top: var(--safe-area-top);
+        }
+
+        /* Header - igual que Abrazo Mariposa */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .back-btn, .info-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover, .info-btn:hover {
+            background: var(--sidebar-bg);
+        }
+
+        .back-btn:active, .info-btn:active {
+            transform: scale(0.95);
+        }
+
+        .back-btn svg, .info-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .header-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--foreground);
+            letter-spacing: -0.3px;
+        }
+
+        .header-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            gap: 24px;
+            overflow: hidden;
+        }
+
+        /* Status Badge - igual que Abrazo Mariposa */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--sidebar-bg);
+            border-radius: 100px;
+            border: 1px solid var(--border-color);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .status-badge.active .status-dot {
+            background: var(--success);
+            box-shadow: 0 0 0 3px rgba(44, 165, 141, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(44, 165, 141, 0.2); }
+            50% { box-shadow: 0 0 0 6px rgba(44, 165, 141, 0.1); }
+        }
+
+        .status-text {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* Breath Container - Diseño limpio sin anillos confusos */
+        .breath-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 400px) {
+            .breath-container {
+                width: 280px;
+                height: 280px;
+            }
+        }
+
+        /* Círculo exterior decorativo - sutil y elegante */
+        .breath-outer-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            opacity: 0.5;
+        }
+
+        /* Círculo de respiración principal - borde muy difuminado */
+        .breath-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow:
+                0 0 60px rgba(0,0,0,0.04),
+                0 0 100px rgba(0,0,0,0.02),
+                0 20px 60px rgba(0,0,0,0.03);
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 400px) {
+            .breath-circle {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        /* Estado: Inhalando - círculo crece con glow muy suave */
+        .breath-circle.inhale {
+            transform: scale(1.25);
+            background: linear-gradient(145deg, rgba(255, 250, 248, 0.8), var(--card-bg));
+            box-shadow:
+                0 0 60px rgba(218, 119, 86, 0.08),
+                0 0 100px rgba(218, 119, 86, 0.05),
+                0 0 140px rgba(218, 119, 86, 0.03),
+                0 20px 80px rgba(218, 119, 86, 0.06);
+        }
+
+        /* Estado: Reteniendo - círculo expandido, glow neutro muy suave */
+        .breath-circle.hold {
+            transform: scale(1.25);
+            background: linear-gradient(145deg, rgba(250, 248, 255, 0.6), var(--card-bg));
+            box-shadow:
+                0 0 50px rgba(0,0,0,0.03),
+                0 0 90px rgba(0,0,0,0.02),
+                0 0 130px rgba(0,0,0,0.01),
+                0 20px 70px rgba(0,0,0,0.04);
+        }
+
+        /* Estado: Exhalando - círculo se contrae con glow verde muy suave */
+        .breath-circle.exhale {
+            transform: scale(1);
+            background: linear-gradient(145deg, rgba(245, 255, 252, 0.7), var(--card-bg));
+            box-shadow:
+                0 0 50px rgba(44, 165, 141, 0.06),
+                0 0 90px rgba(44, 165, 141, 0.04),
+                0 0 130px rgba(44, 165, 141, 0.02),
+                0 16px 60px rgba(44, 165, 141, 0.05);
+        }
+
+        /* Texto de instrucción */
+        .instruction-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .breath-circle.inhale .instruction-text {
+            color: var(--primary);
+        }
+
+        .breath-circle.hold .instruction-text {
+            color: var(--text-secondary);
+        }
+
+        .breath-circle.exhale .instruction-text {
+            color: var(--success);
+        }
+
+        /* Contador grande */
+        .instruction-counter {
+            font-size: 48px;
+            font-weight: 300;
+            color: var(--foreground);
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        @media (min-width: 400px) {
+            .instruction-counter {
+                font-size: 56px;
+            }
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 20px;
+            padding: 14px 20px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--foreground);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* Pattern Selector */
+        .pattern-selector {
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .pattern-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .pattern-buttons {
+            display: flex;
+            gap: 6px;
+            background: var(--card-bg);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .pattern-btn {
+            flex: 1;
+            padding: 12px 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .pattern-btn:active {
+            transform: scale(0.98);
+        }
+
+        .pattern-btn.active {
+            background: var(--sidebar-bg);
+            color: var(--foreground);
+            font-weight: 600;
+        }
+
+        .pattern-btn .pattern-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .pattern-btn .pattern-desc {
+            font-size: 9px;
+            opacity: 0.7;
+        }
+
+        /* Bottom Controls - igual que Abrazo Mariposa */
+        .controls-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 20px;
+            padding-bottom: calc(16px + var(--safe-area-bottom));
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .control-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .control-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .control-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Main Action Button */
+        .main-action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 32px;
+            height: 56px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 16px rgba(218, 119, 86, 0.3);
+            min-width: 160px;
+        }
+
+        .main-action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .main-action-btn.running {
+            background: linear-gradient(135deg, var(--success), #259078);
+            box-shadow: 0 4px 16px rgba(44, 165, 141, 0.3);
+        }
+
+        .main-action-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Info Panel */
+        .info-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .info-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .info-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: 24px 24px 0 0;
+            z-index: 100;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: var(--safe-area-bottom);
+        }
+
+        .info-panel.open {
+            transform: translateY(0);
+        }
+
+        .info-handle {
+            display: flex;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .info-handle-bar {
+            width: 36px;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--foreground);
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--sidebar-bg);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .close-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .info-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .info-section {
+            margin-bottom: 24px;
+        }
+
+        .info-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-section-title {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .info-card {
+            background: var(--sidebar-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .info-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .info-card-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Completion Screen */
+        .completion-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--background);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .completion-screen.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .completion-check {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--success), #259078);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(44, 165, 141, 0.25);
+            animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .completion-check svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+            stroke-width: 3;
+        }
+
+        .completion-title {
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--foreground);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .completion-message {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .completion-stats {
+            display: flex;
+            gap: 32px;
+            padding: 20px 32px;
+            background: var(--sidebar-bg);
+            border-radius: 16px;
+            margin-bottom: 32px;
+        }
+
+        .completion-stat {
+            text-align: center;
+        }
+
+        .completion-stat-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .completion-stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+
+        .completion-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-outline {
+            padding: 14px 28px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            border-radius: 100px;
+            color: var(--foreground);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline:hover {
+            background: var(--sidebar-bg);
+        }
+
+        .btn-filled {
+            padding: 14px 28px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 100px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(218, 119, 86, 0.25);
+        }
+
+        /* Onboarding */
+        .onboarding-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 25, 21, 0.95);
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .onboarding-overlay.hidden {
+            display: none;
+        }
+
+        .onboarding-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            animation: breatheDemo 4s ease-in-out infinite;
+        }
+
+        @keyframes breatheDemo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        .onboarding-icon svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        .onboarding-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .onboarding-text {
+            font-size: 15px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            max-width: 300px;
+            margin-bottom: 32px;
+        }
+
+        .onboarding-patterns {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .onboarding-pattern {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .pattern-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .pattern-icon.relax { background: var(--breath-inhale); }
+        .pattern-icon.balance { background: var(--breath-hold); }
+        .pattern-icon.energy { background: var(--breath-exhale); }
+
+        .pattern-info {
+            flex: 1;
+        }
+
+        .pattern-info-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .pattern-info-desc {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .onboarding-btn {
+            padding: 16px 48px;
+            background: white;
+            border: none;
+            border-radius: 100px;
+            color: var(--foreground);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-height: 650px) {
+            .main-content {
+                gap: 16px;
+                padding: 12px;
+            }
+
+            .breath-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .breath-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .instruction-counter {
+                font-size: 40px;
+            }
+
+            .stats-bar {
+                padding: 10px 16px;
+                gap: 16px;
+            }
+
+            .controls-bar {
+                padding: 12px 16px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .pattern-btn .pattern-name {
+                font-size: 11px;
+            }
+
+            .pattern-btn .pattern-desc {
+                font-size: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Onboarding -->
+    <div class="onboarding-overlay" id="onboarding">
+        <div class="onboarding-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+            </svg>
+        </div>
+        <h1 class="onboarding-title">Respiración Guiada</h1>
+        <p class="onboarding-text">Regula tu sistema nervioso con patrones de respiración científicamente validados.</p>
+        <div class="onboarding-patterns">
+            <div class="onboarding-pattern">
+                <div class="pattern-icon relax">4-7-8</div>
+                <div class="pattern-info">
+                    <div class="pattern-info-name">Relajación</div>
+                    <div class="pattern-info-desc">Reduce ansiedad y activa el parasimpático</div>
+                </div>
+            </div>
+            <div class="onboarding-pattern">
+                <div class="pattern-icon balance">4-4-4</div>
+                <div class="pattern-info">
+                    <div class="pattern-info-name">Equilibrio</div>
+                    <div class="pattern-info-desc">Box breathing para calma bajo presión</div>
+                </div>
+            </div>
+            <div class="onboarding-pattern">
+                <div class="pattern-icon energy">4-0-4</div>
+                <div class="pattern-info">
+                    <div class="pattern-info-name">Energía</div>
+                    <div class="pattern-info-desc">Aumenta oxigenación y claridad mental</div>
+                </div>
+            </div>
+        </div>
+        <button class="onboarding-btn" id="start-btn">Comenzar</button>
+    </div>
+
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <button class="back-btn" id="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <div class="header-center">
+                <span class="header-title">Respiración Guiada</span>
+                <span class="header-subtitle">Regulación Vagal</span>
+            </div>
+            <button class="info-btn" id="info-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 16v-4M12 8h.01"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Status Badge -->
+            <div class="status-badge" id="status-badge">
+                <span class="status-dot"></span>
+                <span class="status-text" id="status-text">Listo para comenzar</span>
+            </div>
+
+            <!-- Breath Visualization - Diseño limpio y minimalista -->
+            <div class="breath-container">
+                <div class="breath-outer-ring"></div>
+                <div class="breath-circle" id="breath-circle">
+                    <span class="instruction-text" id="instruction-text">Preparado</span>
+                    <span class="instruction-counter" id="instruction-counter">—</span>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-time">0:00</div>
+                    <div class="stat-label">Tiempo</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-cycles">0</div>
+                    <div class="stat-label">Ciclos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-breaths">0</div>
+                    <div class="stat-label">Resp.</div>
+                </div>
+            </div>
+
+            <!-- Pattern Selector -->
+            <div class="pattern-selector">
+                <div class="pattern-label">Patrón de respiración</div>
+                <div class="pattern-buttons">
+                    <button class="pattern-btn" data-pattern="relax">
+                        <span class="pattern-name">4-7-8</span>
+                        <span class="pattern-desc">Relajar</span>
+                    </button>
+                    <button class="pattern-btn active" data-pattern="balance">
+                        <span class="pattern-name">4-4-4-4</span>
+                        <span class="pattern-desc">Equilibrar</span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="energize">
+                        <span class="pattern-name">4-0-4</span>
+                        <span class="pattern-desc">Energizar</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Controls Bar -->
+        <div class="controls-bar">
+            <button class="control-btn" id="sound-btn" title="Sonido">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                </svg>
+            </button>
+            <button class="main-action-btn" id="main-btn">
+                <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="6,4 20,12 6,20"/>
+                </svg>
+                <svg id="pause-icon" class="hidden" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="4" width="4" height="16" rx="1"/>
+                    <rect x="14" y="4" width="4" height="16" rx="1"/>
+                </svg>
+                <span id="btn-text">Iniciar</span>
+            </button>
+            <button class="control-btn" id="reset-btn" title="Reiniciar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="info-overlay" id="info-overlay"></div>
+    <div class="info-panel" id="info-panel">
+        <div class="info-handle">
+            <div class="info-handle-bar"></div>
+        </div>
+        <div class="info-header">
+            <span class="info-title">Patrones de Respiración</span>
+            <button class="close-btn" id="close-info">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="info-content">
+            <div class="info-section">
+                <div class="info-section-title">Patrones disponibles</div>
+                <div class="info-card">
+                    <div class="info-card-title">4-7-8 (Relajación)</div>
+                    <div class="info-card-text">Inhala 4s, retén 7s, exhala 8s. Activa el sistema nervioso parasimpático. Ideal para ansiedad, insomnio o alta activación.</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-title">4-4-4-4 (Box Breathing)</div>
+                    <div class="info-card-text">Cuatro fases iguales de 4 segundos. Equilibra el sistema nervioso. Usado por Navy SEALs para mantener calma bajo presión.</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-title">4-0-4 (Energizante)</div>
+                    <div class="info-card-text">Inhala 4s, exhala 4s sin retención. Aumenta oxigenación y energía. Útil para despertar o antes de actividad física.</div>
+                </div>
+            </div>
+            <div class="info-section">
+                <div class="info-section-title">Uso terapéutico</div>
+                <div class="info-card">
+                    <div class="info-card-title">Regulación vagal</div>
+                    <div class="info-card-text">La respiración lenta y profunda estimula el nervio vago, reduciendo la frecuencia cardíaca y promoviendo un estado de calma. Use antes o después del procesamiento.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completion Screen -->
+    <div class="completion-screen" id="completion-screen">
+        <div class="completion-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg>
+        </div>
+        <h2 class="completion-title">Sesión completada</h2>
+        <p class="completion-message">Tu sistema nervioso está más regulado. Observa cómo te sientes.</p>
+        <div class="completion-stats">
+            <div class="completion-stat">
+                <div class="completion-stat-value" id="final-time">0:00</div>
+                <div class="completion-stat-label">Duración</div>
+            </div>
+            <div class="completion-stat">
+                <div class="completion-stat-value" id="final-cycles">0</div>
+                <div class="completion-stat-label">Ciclos</div>
+            </div>
+        </div>
+        <div class="completion-actions">
+            <button class="btn-outline" id="done-btn">Finalizar</button>
+            <button class="btn-filled" id="repeat-btn">Repetir</button>
+        </div>
+    </div>
+
+    <script>
+        // Patrones de respiración (en segundos)
+        var patterns = {
+            relax: {
+                name: '4-7-8',
+                phases: [
+                    { action: 'inhale', duration: 4, label: 'Inhala' },
+                    { action: 'hold', duration: 7, label: 'Retén' },
+                    { action: 'exhale', duration: 8, label: 'Exhala' }
+                ]
+            },
+            balance: {
+                name: '4-4-4-4',
+                phases: [
+                    { action: 'inhale', duration: 4, label: 'Inhala' },
+                    { action: 'hold', duration: 4, label: 'Retén' },
+                    { action: 'exhale', duration: 4, label: 'Exhala' },
+                    { action: 'hold', duration: 4, label: 'Retén' }
+                ]
+            },
+            energize: {
+                name: '4-0-4',
+                phases: [
+                    { action: 'inhale', duration: 4, label: 'Inhala' },
+                    { action: 'exhale', duration: 4, label: 'Exhala' }
+                ]
+            }
+        };
+
+        // Estado
+        var state = {
+            isRunning: false,
+            currentPattern: 'balance',
+            currentPhaseIndex: 0,
+            phaseTimeRemaining: 0,
+            totalSeconds: 0,
+            cycles: 0,
+            breaths: 0,
+            soundEnabled: false,
+            hasSeenOnboarding: false
+        };
+
+        // Audio
+        var audioContext = null;
+
+        // Elementos DOM
+        var elements = {
+            onboarding: document.getElementById('onboarding'),
+            statusBadge: document.getElementById('status-badge'),
+            statusText: document.getElementById('status-text'),
+            breathCircle: document.getElementById('breath-circle'),
+            instructionText: document.getElementById('instruction-text'),
+            instructionCounter: document.getElementById('instruction-counter'),
+            statTime: document.getElementById('stat-time'),
+            statCycles: document.getElementById('stat-cycles'),
+            statBreaths: document.getElementById('stat-breaths'),
+            mainBtn: document.getElementById('main-btn'),
+            playIcon: document.getElementById('play-icon'),
+            pauseIcon: document.getElementById('pause-icon'),
+            btnText: document.getElementById('btn-text'),
+            soundBtn: document.getElementById('sound-btn'),
+            resetBtn: document.getElementById('reset-btn'),
+            infoOverlay: document.getElementById('info-overlay'),
+            infoPanel: document.getElementById('info-panel'),
+            completionScreen: document.getElementById('completion-screen'),
+            finalTime: document.getElementById('final-time'),
+            finalCycles: document.getElementById('final-cycles')
+        };
+
+        var breathInterval = null;
+        var timerInterval = null;
+
+        // Verificar onboarding
+        function checkOnboarding() {
+            try {
+                if (localStorage.getItem('respiracion-onboarding')) {
+                    elements.onboarding.classList.add('hidden');
+                    state.hasSeenOnboarding = true;
+                }
+            } catch (e) {
+                elements.onboarding.classList.add('hidden');
+            }
+        }
+
+        // Inicializar audio (compatible con iOS)
+        function initAudio() {
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    return false;
+                }
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            return true;
+        }
+
+        // Desbloquear audio en iOS
+        function unlockAudioiOS() {
+            if (initAudio() && audioContext.state === 'running') return;
+            try {
+                var buffer = audioContext.createBuffer(1, 1, 22050);
+                var source = audioContext.createBufferSource();
+                source.buffer = buffer;
+                source.connect(audioContext.destination);
+                source.start(0);
+            } catch (e) {}
+        }
+
+        // Reproducir tono
+        function playTone(frequency, duration) {
+            if (!state.soundEnabled || !initAudio()) return;
+            if (audioContext.state === 'suspended') audioContext.resume();
+
+            try {
+                var oscillator = audioContext.createOscillator();
+                var gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                oscillator.frequency.value = frequency;
+                oscillator.type = 'sine';
+
+                var now = audioContext.currentTime;
+                gainNode.gain.setValueAtTime(0.12, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + duration / 1000);
+
+                oscillator.start(now);
+                oscillator.stop(now + duration / 1000);
+            } catch (e) {}
+        }
+
+        // Formatear tiempo
+        function formatTime(seconds) {
+            var m = Math.floor(seconds / 60);
+            var s = seconds % 60;
+            return m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        // Actualizar stats
+        function updateStats() {
+            elements.statTime.textContent = formatTime(state.totalSeconds);
+            elements.statCycles.textContent = state.cycles;
+            elements.statBreaths.textContent = state.breaths;
+        }
+
+        // Obtener patrón y fase actual
+        function getCurrentPattern() {
+            return patterns[state.currentPattern];
+        }
+
+        function getCurrentPhase() {
+            return getCurrentPattern().phases[state.currentPhaseIndex];
+        }
+
+        // Configurar transición del círculo
+        function setCircleTransition(duration) {
+            elements.breathCircle.style.transitionDuration = duration + 's';
+        }
+
+        // Iniciar fase
+        function startPhase() {
+            var phase = getCurrentPhase();
+            state.phaseTimeRemaining = phase.duration;
+
+            // Actualizar UI
+            elements.instructionText.textContent = phase.label;
+            elements.instructionCounter.textContent = phase.duration;
+
+            // Actualizar clase del círculo
+            elements.breathCircle.className = 'breath-circle ' + phase.action;
+
+            // Configurar transición
+            setCircleTransition(phase.duration);
+
+            // Sonido
+            if (phase.action === 'inhale') {
+                playTone(440, 120);
+            } else if (phase.action === 'exhale') {
+                playTone(330, 120);
+            } else {
+                playTone(380, 60);
+            }
+
+            // Contar respiraciones
+            if (phase.action === 'inhale') {
+                state.breaths++;
+            }
+        }
+
+        // Tick de respiración
+        function breathTick() {
+            state.phaseTimeRemaining--;
+            elements.instructionCounter.textContent = state.phaseTimeRemaining > 0 ? state.phaseTimeRemaining : '—';
+
+            if (state.phaseTimeRemaining <= 0) {
+                state.currentPhaseIndex++;
+
+                var pattern = getCurrentPattern();
+                if (state.currentPhaseIndex >= pattern.phases.length) {
+                    state.currentPhaseIndex = 0;
+                    state.cycles++;
+                    updateStats();
+                }
+
+                startPhase();
+            }
+        }
+
+        // Timer tick
+        function timerTick() {
+            state.totalSeconds++;
+            updateStats();
+        }
+
+        // Iniciar sesión
+        function startSession() {
+            state.isRunning = true;
+            state.currentPhaseIndex = 0;
+
+            elements.statusBadge.classList.add('active');
+            elements.statusText.textContent = 'En progreso';
+            elements.playIcon.classList.add('hidden');
+            elements.pauseIcon.classList.remove('hidden');
+            elements.btnText.textContent = 'Pausar';
+            elements.mainBtn.classList.add('running');
+
+            startPhase();
+
+            breathInterval = setInterval(breathTick, 1000);
+            timerInterval = setInterval(timerTick, 1000);
+        }
+
+        // Pausar sesión
+        function pauseSession() {
+            state.isRunning = false;
+
+            clearInterval(breathInterval);
+            clearInterval(timerInterval);
+
+            elements.statusBadge.classList.remove('active');
+            elements.statusText.textContent = 'Pausado';
+            elements.playIcon.classList.remove('hidden');
+            elements.pauseIcon.classList.add('hidden');
+            elements.btnText.textContent = 'Continuar';
+            elements.mainBtn.classList.remove('running');
+
+            elements.breathCircle.className = 'breath-circle';
+            setCircleTransition(0.5);
+        }
+
+        // Reiniciar sesión
+        function resetSession() {
+            pauseSession();
+
+            state.currentPhaseIndex = 0;
+            state.phaseTimeRemaining = 0;
+            state.totalSeconds = 0;
+            state.cycles = 0;
+            state.breaths = 0;
+
+            elements.statusText.textContent = 'Listo para comenzar';
+            elements.instructionText.textContent = 'Preparado';
+            elements.instructionCounter.textContent = '—';
+            elements.btnText.textContent = 'Iniciar';
+
+            updateStats();
+        }
+
+        // Abrir/cerrar info
+        function openInfo() {
+            elements.infoOverlay.classList.add('open');
+            elements.infoPanel.classList.add('open');
+        }
+
+        function closeInfo() {
+            elements.infoOverlay.classList.remove('open');
+            elements.infoPanel.classList.remove('open');
+        }
+
+        // Mostrar completado
+        function showCompletion() {
+            pauseSession();
+            elements.finalTime.textContent = formatTime(state.totalSeconds);
+            elements.finalCycles.textContent = state.cycles;
+            elements.completionScreen.classList.add('active');
+        }
+
+        // Event Listeners
+        document.getElementById('start-btn').addEventListener('click', function() {
+            unlockAudioiOS();
+            elements.onboarding.classList.add('hidden');
+            try {
+                localStorage.setItem('respiracion-onboarding', 'true');
+            } catch (e) {}
+        });
+
+        elements.mainBtn.addEventListener('click', function() {
+            unlockAudioiOS();
+            if (state.isRunning) {
+                pauseSession();
+            } else {
+                startSession();
+            }
+        });
+
+        elements.resetBtn.addEventListener('click', resetSession);
+
+        elements.soundBtn.addEventListener('click', function() {
+            unlockAudioiOS();
+            state.soundEnabled = !state.soundEnabled;
+            this.classList.toggle('active', state.soundEnabled);
+            if (state.soundEnabled) {
+                playTone(440, 80);
+            }
+        });
+
+        document.getElementById('back-btn').addEventListener('click', function() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.close();
+            }
+        });
+
+        document.getElementById('info-btn').addEventListener('click', openInfo);
+        document.getElementById('close-info').addEventListener('click', closeInfo);
+        elements.infoOverlay.addEventListener('click', closeInfo);
+
+        // Pattern buttons
+        document.querySelectorAll('.pattern-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.pattern-btn').forEach(function(b) {
+                    b.classList.remove('active');
+                });
+                this.classList.add('active');
+                state.currentPattern = this.dataset.pattern;
+
+                if (state.isRunning) {
+                    state.currentPhaseIndex = 0;
+                    startPhase();
+                }
+            });
+        });
+
+        // Completion actions
+        document.getElementById('done-btn').addEventListener('click', function() {
+            elements.completionScreen.classList.remove('active');
+            resetSession();
+        });
+
+        document.getElementById('repeat-btn').addEventListener('click', function() {
+            elements.completionScreen.classList.remove('active');
+            resetSession();
+            setTimeout(startSession, 300);
+        });
+
+        // Inicializar
+        checkOnboarding();
+        updateStats();
+
+        console.log('Respiración Guiada App v3.0 - Ready');
+    </script>
+</body>
+</html>
