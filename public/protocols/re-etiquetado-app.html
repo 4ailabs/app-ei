@@ -23,6 +23,8 @@
             --new-phrase-light: rgba(16, 185, 129, 0.1);
             --purple: #8B5CF6;
             --purple-light: rgba(139, 92, 246, 0.1);
+            --blue: #3B82F6;
+            --blue-light: rgba(59, 130, 246, 0.1);
         }
 
         * {
@@ -209,6 +211,310 @@
         .start-btn svg {
             width: 20px;
             height: 20px;
+        }
+
+        /* Mode Selection Screen */
+        .mode-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+        }
+
+        .mode-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .mode-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .mode-header p {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .mode-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .mode-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .mode-card:active {
+            transform: scale(0.98);
+        }
+
+        .mode-card:hover {
+            border-color: var(--accent);
+        }
+
+        .mode-card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+
+        .mode-card-icon.predefined {
+            background: var(--purple-light);
+        }
+
+        .mode-card-icon.predefined svg {
+            width: 28px;
+            height: 28px;
+            color: var(--purple);
+        }
+
+        .mode-card-icon.custom {
+            background: var(--blue-light);
+        }
+
+        .mode-card-icon.custom svg {
+            width: 28px;
+            height: 28px;
+            color: var(--blue);
+        }
+
+        .mode-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .mode-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .mode-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .mode-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .mode-badge.ai {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+
+        /* Custom Screen */
+        .custom-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+        }
+
+        .custom-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .custom-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .custom-header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .custom-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: none;
+            min-height: 100px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+        }
+
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .rate-limit-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .rate-limit-info svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-secondary);
+        }
+
+        .rate-limit-info span {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .generate-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px;
+            background: var(--blue);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+            transition: all 0.2s;
+        }
+
+        .generate-btn:active {
+            transform: scale(0.98);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .generate-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding: 40px 20px;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-state p {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .error-message {
+            padding: 16px;
+            background: var(--old-phrase-light);
+            border: 1px solid var(--old-phrase);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .error-message p {
+            font-size: 14px;
+            color: var(--old-phrase);
+            text-align: center;
+        }
+
+        .login-prompt {
+            text-align: center;
+            padding: 32px 20px;
+        }
+
+        .login-prompt p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .login-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
         }
 
         /* Practice Screen */
@@ -815,12 +1121,111 @@
                 </div>
             </div>
 
-            <button class="start-btn" onclick="startPractice()">
+            <button class="start-btn" onclick="showModeSelection()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="5 3 19 12 5 21 5 3"/>
                 </svg>
                 Comenzar Práctica
             </button>
+        </div>
+    </div>
+
+    <!-- Mode Selection Screen -->
+    <div class="screen" id="modeScreen">
+        <div class="mode-screen">
+            <div class="mode-header">
+                <h2>¿Cómo quieres practicar?</h2>
+                <p>Elige el modo que prefieras</p>
+            </div>
+
+            <div class="mode-cards">
+                <button class="mode-card" onclick="startPredefined()">
+                    <div class="mode-card-icon predefined">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                        </svg>
+                    </div>
+                    <h3>Frases Predefinidas</h3>
+                    <p>13 transformaciones organizadas por categoría: Estado, Capacidad, Identidad, Situación y Obligación.</p>
+                    <span class="mode-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Listo para usar
+                    </span>
+                </button>
+
+                <button class="mode-card" onclick="showCustomScreen()">
+                    <div class="mode-card-icon custom">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                            <path d="M19 3v4"/>
+                            <path d="M21 5h-4"/>
+                        </svg>
+                    </div>
+                    <h3>Crear Mi Transformación</h3>
+                    <p>Escribe tu propia frase limitante y la IA generará una transformación personalizada para ti.</p>
+                    <span class="mode-badge ai">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                        </svg>
+                        Con IA · Requiere login
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Transformation Screen -->
+    <div class="screen" id="customScreen">
+        <div class="custom-screen">
+            <div class="custom-header">
+                <h2>Crea tu Transformación</h2>
+                <p>Escribe una frase limitante que uses frecuentemente</p>
+            </div>
+
+            <div class="custom-form" id="customForm">
+                <div class="form-group">
+                    <label for="customPhrase">Tu frase limitante:</label>
+                    <textarea id="customPhrase" placeholder='Ej: "Nunca voy a poder hacerlo bien"'></textarea>
+                </div>
+
+                <div class="rate-limit-info" id="rateLimitInfo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                    <span id="rateLimitText">Cargando...</span>
+                </div>
+
+                <div class="error-message hidden" id="errorMessage">
+                    <p id="errorText"></p>
+                </div>
+
+                <button class="generate-btn" id="generateBtn" onclick="generateCustom()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                        <path d="M19 3v4"/>
+                        <path d="M21 5h-4"/>
+                    </svg>
+                    Generar Transformación
+                </button>
+            </div>
+
+            <div class="loading-state hidden" id="loadingState">
+                <div class="loading-spinner"></div>
+                <p>Generando tu transformación...</p>
+            </div>
+
+            <div class="login-prompt hidden" id="loginPrompt">
+                <p>Necesitas iniciar sesión para usar la generación con IA</p>
+                <a href="/login" class="login-btn">
+                    Iniciar Sesión
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -860,63 +1265,139 @@
     </div>
 
     <script>
-        // Transformations data - each with required repetitions
-        const transformations = [
+        // Expanded transformations - 13 phrases organized by category
+        const allTransformations = [
+            // Estados Emocionales (4)
             {
                 id: 1,
                 category: 'Estado',
                 old: 'Estoy estresado',
                 new: 'Mi cuerpo está activado para esto',
-                effect: 'Interpretas la activación como preparación, no amenaza. Tu cortisol se estabiliza cuando no percibes peligro.',
+                effect: 'Interpretas la activación como preparación, no amenaza. Tu cortisol se estabiliza.',
                 requiredReps: 3
             },
             {
                 id: 2,
-                category: 'Capacidad',
-                old: 'No puedo',
-                new: 'Todavía no encontré cómo',
-                effect: 'Temporal, permeable, abre posibilidades. Tu cerebro cambia de "cerrado" a modo búsqueda activa.',
-                requiredReps: 3
-            },
-            {
-                id: 3,
-                category: 'Identidad',
+                category: 'Estado',
                 old: 'Soy ansioso',
                 new: 'Practico ansiedad y puedo practicar calma',
                 effect: 'De identidad fija a comportamiento modificable. Abre la puerta a la neuroplasticidad.',
                 requiredReps: 3
             },
             {
-                id: 4,
-                category: 'Situación',
-                old: 'Es un problema',
-                new: 'Es un desafío nuevo',
-                effect: 'De amenaza sin solución a situación navegable. Expande tu campo de opciones disponibles.',
+                id: 3,
+                category: 'Estado',
+                old: 'Tengo miedo',
+                new: 'Mi sistema está alertándome',
+                effect: 'Reconoces la función protectora del miedo en lugar de rechazarlo.',
                 requiredReps: 3
             },
             {
+                id: 4,
+                category: 'Estado',
+                old: 'Me siento abrumado',
+                new: 'Tengo muchas cosas importantes',
+                effect: 'Reencuadras la sobrecarga como abundancia de prioridades.',
+                requiredReps: 3
+            },
+            // Capacidad (4)
+            {
                 id: 5,
+                category: 'Capacidad',
+                old: 'No puedo',
+                new: 'Todavía no encontré cómo',
+                effect: 'Temporal, abre posibilidades. Tu cerebro cambia a modo búsqueda activa.',
+                requiredReps: 3
+            },
+            {
+                id: 6,
+                category: 'Capacidad',
+                old: 'Esto es imposible',
+                new: 'Esto es nuevo. Necesito aprender el proceso',
+                effect: 'De bloqueo permanente a curva de aprendizaje navegable.',
+                requiredReps: 3
+            },
+            {
+                id: 7,
+                category: 'Capacidad',
+                old: 'Siempre me pasa lo mismo',
+                new: 'He notado este patrón antes',
+                effect: 'De victimización a observación consciente del patrón.',
+                requiredReps: 3
+            },
+            {
+                id: 8,
+                category: 'Capacidad',
+                old: 'Es un problema',
+                new: 'Es un desafío nuevo',
+                effect: 'De amenaza sin solución a situación navegable.',
+                requiredReps: 3
+            },
+            // Identidad (3)
+            {
+                id: 9,
+                category: 'Identidad',
+                old: 'Soy un fracaso',
+                new: 'Obtuve un resultado diferente. ¿Qué aprendí?',
+                effect: 'De identidad global negativa a evento específico con aprendizaje.',
+                requiredReps: 3
+            },
+            {
+                id: 10,
+                category: 'Identidad',
+                old: 'Soy depresivo',
+                new: 'Experimento depresión',
+                effect: 'Separa la experiencia temporal de tu identidad permanente.',
+                requiredReps: 3
+            },
+            {
+                id: 11,
+                category: 'Identidad',
+                old: 'Tengo un problema',
+                new: 'Tengo un desafío',
+                effect: 'Cambia la carga emocional y activa recursos internos.',
+                requiredReps: 3
+            },
+            // Obligación (2)
+            {
+                id: 12,
                 category: 'Obligación',
                 old: 'Tengo que',
                 new: 'Elijo',
-                effect: 'De víctima a protagonista. Activa tu corteza prefrontal y sensación de control.',
+                effect: 'De víctima a protagonista. Activa tu corteza prefrontal.',
+                requiredReps: 3
+            },
+            {
+                id: 13,
+                category: 'Obligación',
+                old: 'Debería',
+                new: 'Podría considerar',
+                effect: 'Reduce la presión interna y abre opciones sin juicio.',
                 requiredReps: 3
             }
         ];
 
         // State
+        let transformations = [];
         let currentIndex = 0;
         let practiceData = {};
         let totalReps = 0;
+        let isCustomMode = false;
+        let userSession = null;
 
-        // Initialize practice data
-        function initPracticeData() {
-            practiceData = {};
-            transformations.forEach(t => {
-                practiceData[t.id] = { reps: 0, completed: false };
-            });
-            totalReps = 0;
+        // Check user session
+        async function checkSession() {
+            try {
+                const response = await fetch('/api/auth/session');
+                const data = await response.json();
+                userSession = data?.user ? data : null;
+            } catch (e) {
+                userSession = null;
+            }
         }
+
+        // Initialize
+        checkSession();
 
         // Functions
         function showScreen(screenId) {
@@ -924,11 +1405,117 @@
             document.getElementById(screenId).classList.add('active');
         }
 
-        function startPractice() {
+        function showModeSelection() {
+            showScreen('modeScreen');
+        }
+
+        function startPredefined() {
+            transformations = [...allTransformations];
+            isCustomMode = false;
             currentIndex = 0;
             initPracticeData();
             showScreen('practiceScreen');
             renderTransform();
+        }
+
+        async function showCustomScreen() {
+            await checkSession();
+
+            if (!userSession) {
+                showScreen('customScreen');
+                document.getElementById('customForm').classList.add('hidden');
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('loginPrompt').classList.remove('hidden');
+                return;
+            }
+
+            showScreen('customScreen');
+            document.getElementById('customForm').classList.remove('hidden');
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('loginPrompt').classList.add('hidden');
+            document.getElementById('errorMessage').classList.add('hidden');
+            document.getElementById('customPhrase').value = '';
+
+            // Update rate limit info
+            document.getElementById('rateLimitText').textContent = '5 transformaciones disponibles por día';
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            document.getElementById('errorText').textContent = message;
+            errorEl.classList.remove('hidden');
+        }
+
+        function hideError() {
+            document.getElementById('errorMessage').classList.add('hidden');
+        }
+
+        function showLoading(show) {
+            document.getElementById('customForm').classList.toggle('hidden', show);
+            document.getElementById('loadingState').classList.toggle('hidden', !show);
+        }
+
+        async function generateCustom() {
+            const phrase = document.getElementById('customPhrase').value.trim();
+
+            if (!phrase) {
+                showError('Por favor escribe una frase');
+                return;
+            }
+
+            if (phrase.length > 200) {
+                showError('La frase es muy larga. Máximo 200 caracteres.');
+                return;
+            }
+
+            hideError();
+            showLoading(true);
+
+            try {
+                const response = await fetch('/api/reetiquetado/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phrase })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        showLoading(false);
+                        document.getElementById('customForm').classList.add('hidden');
+                        document.getElementById('loginPrompt').classList.remove('hidden');
+                        return;
+                    }
+                    throw new Error(data.error || 'Error al generar');
+                }
+
+                // Update rate limit display
+                if (data.rateLimit) {
+                    document.getElementById('rateLimitText').textContent =
+                        `Te quedan ${data.rateLimit.remaining} transformaciones hoy`;
+                }
+
+                // Start practice with the custom transformation
+                transformations = [data.transformation];
+                isCustomMode = true;
+                currentIndex = 0;
+                initPracticeData();
+                showScreen('practiceScreen');
+                renderTransform();
+
+            } catch (error) {
+                showLoading(false);
+                showError(error.message || 'Error al generar. Intenta de nuevo.');
+            }
+        }
+
+        function initPracticeData() {
+            practiceData = {};
+            transformations.forEach(t => {
+                practiceData[t.id] = { reps: 0, completed: false };
+            });
+            totalReps = 0;
         }
 
         function renderTransform() {
@@ -1028,17 +1615,14 @@
             data.reps++;
             totalReps++;
 
-            // Vibrate if available
             if (navigator.vibrate) {
                 navigator.vibrate(50);
             }
 
-            // Animate the new phrase box
             const newPhraseBox = document.getElementById('newPhraseBox');
             newPhraseBox.classList.add('pulse');
             setTimeout(() => newPhraseBox.classList.remove('pulse'), 300);
 
-            // Update counter dots
             const dots = document.querySelectorAll('.counter-dot');
             dots.forEach((dot, i) => {
                 dot.classList.remove('active', 'completed');
@@ -1049,7 +1633,6 @@
                 }
             });
 
-            // Check if completed
             if (data.reps >= t.requiredReps) {
                 data.completed = true;
 
@@ -1202,19 +1785,23 @@
         }
 
         function resetPractice() {
-            currentIndex = 0;
-            initPracticeData();
-            showScreen('practiceScreen');
-            renderTransform();
+            if (isCustomMode) {
+                showCustomScreen();
+            } else {
+                currentIndex = 0;
+                initPracticeData();
+                showScreen('practiceScreen');
+                renderTransform();
+            }
         }
 
         function saveAndClose() {
-            // Save to localStorage
             const session = {
                 practiceData,
                 totalReps,
                 completedCount: Object.values(practiceData).filter(d => d.completed).length,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                isCustom: isCustomMode
             };
 
             let history = JSON.parse(localStorage.getItem('reetiquetado_history') || '[]');
@@ -1222,7 +1809,7 @@
             if (history.length > 20) history = history.slice(0, 20);
             localStorage.setItem('reetiquetado_history', JSON.stringify(history));
 
-            handleBack();
+            goToApps();
         }
 
         function handleBack() {
@@ -1230,41 +1817,26 @@
 
             if (activeScreen === 'practiceScreen') {
                 if (currentIndex === 0) {
-                    showScreen('startScreen');
+                    showScreen('modeScreen');
                 } else {
                     prevTransform();
                 }
             } else if (activeScreen === 'resultScreen') {
+                showScreen('modeScreen');
+            } else if (activeScreen === 'modeScreen') {
                 showScreen('startScreen');
+            } else if (activeScreen === 'customScreen') {
+                showScreen('modeScreen');
             } else if (activeScreen === 'startScreen') {
-                // En la pantalla inicial, usar history.back() con fallback
                 goToApps();
             }
         }
 
         function goToApps() {
-            // Si la página fue abierta en una nueva pestaña (opener existe),
-            // intentamos cerrar la pestaña
-            if (window.opener) {
-                window.close();
-                // Fallback: si no se puede cerrar, navegar
-                setTimeout(function() {
-                    window.location.href = '/apps';
-                }, 100);
-            } else if (window.history.length > 1) {
-                // Si hay historial, intentar ir atrás
-                window.history.back();
-                // Fallback por si back() no funciona
-                setTimeout(function() {
-                    window.location.href = '/apps';
-                }, 300);
-            } else {
-                // Navegación directa
-                window.location.href = '/apps';
-            }
+            window.location.href = '/apps';
         }
 
-        console.log('Re-etiquetado App v2.0 - Con práctica activa de repetición');
+        console.log('Re-etiquetado App v3.0 - Con 13 frases y generación IA');
     </script>
 </body>
 </html>
