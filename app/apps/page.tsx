@@ -94,10 +94,10 @@ export default async function AppsPage() {
         {/* Header */}
         <div className="mb-8 sm:mb-12">
           <h1 className="text-2xl sm:text-3xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-3">
-            Apps de Regulación
+            Apps Interactivas
           </h1>
           <p className="text-[#706F6C] dark:text-[#A0A0A0] text-base sm:text-lg">
-            Herramientas interactivas para regular tu sistema nervioso y practicar las técnicas del programa.
+            Herramientas para practicar las técnicas del programa.
           </p>
         </div>
 
