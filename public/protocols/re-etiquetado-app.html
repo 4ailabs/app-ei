@@ -1080,6 +1080,69 @@
             animation: celebrate 0.5s ease;
         }
 
+        /* Animación de click en botón */
+        @keyframes buttonPop {
+            0% { transform: scale(1); }
+            30% { transform: scale(0.95); }
+            60% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .button-pop {
+            animation: buttonPop 0.4s ease;
+        }
+
+        /* Toast de feedback */
+        .rep-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            background: var(--purple);
+            color: white;
+            padding: 20px 32px;
+            border-radius: 20px;
+            font-size: 24px;
+            font-weight: 700;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .rep-toast.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .rep-toast.completed {
+            background: var(--success);
+            box-shadow: 0 10px 40px rgba(44, 165, 141, 0.4);
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: rippleEffect 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .speak-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
         .hidden {
             display: none !important;
         }
@@ -1263,6 +1326,9 @@
             <!-- Dynamic content -->
         </div>
     </div>
+
+    <!-- Toast de feedback -->
+    <div class="rep-toast" id="repToast"></div>
 
     <script>
         // Expanded transformations - 13 phrases organized by category
@@ -1558,7 +1624,7 @@
                         <p class="action-instruction">Presiona cada vez que digas la frase</p>
                         <p class="action-sub">Decirlo en voz alta activa las redes neuronales del cambio</p>
 
-                        <button class="speak-btn ${data.completed ? 'completed' : ''}" id="speakBtn" onclick="countRep()">
+                        <button class="speak-btn ${data.completed ? 'completed' : ''}" id="speakBtn" onclick="countRep(event)">
                             ${data.completed ? `
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
@@ -1606,7 +1672,80 @@
             updateNavButtons();
         }
 
-        function countRep() {
+        // Mensajes de ánimo por repetición
+        const encourageMessages = [
+            '¡Bien! 1/3',
+            '¡Excelente! 2/3',
+            '¡Perfecto! ✓'
+        ];
+
+        // Sonido de feedback (usando Web Audio API)
+        function playFeedbackSound(isComplete = false) {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                oscillator.type = 'sine';
+
+                if (isComplete) {
+                    // Sonido de completado (tono ascendente)
+                    oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+                    oscillator.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+                    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                    oscillator.start(audioCtx.currentTime);
+                    oscillator.stop(audioCtx.currentTime + 0.4);
+                } else {
+                    // Sonido simple de click
+                    oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+                    gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                    oscillator.start(audioCtx.currentTime);
+                    oscillator.stop(audioCtx.currentTime + 0.08);
+                }
+            } catch (e) {
+                // Audio no disponible, ignorar
+            }
+        }
+
+        // Mostrar toast de feedback
+        function showRepToast(message, isComplete = false) {
+            const toast = document.getElementById('repToast');
+            toast.textContent = message;
+            toast.classList.remove('completed');
+            if (isComplete) {
+                toast.classList.add('completed');
+            }
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, isComplete ? 1200 : 800);
+        }
+
+        // Crear efecto ripple en botón
+        function createRipple(event, button) {
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+            ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+
+            button.appendChild(ripple);
+
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        function countRep(event) {
             const t = transformations[currentIndex];
             const data = practiceData[t.id];
 
@@ -1615,14 +1754,28 @@
             data.reps++;
             totalReps++;
 
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
+            const speakBtn = document.getElementById('speakBtn');
+
+            // Efecto ripple
+            if (event) {
+                createRipple(event, speakBtn);
             }
 
+            // Vibración
+            if (navigator.vibrate) {
+                navigator.vibrate(data.reps >= t.requiredReps ? [50, 50, 100] : 50);
+            }
+
+            // Animación del botón
+            speakBtn.classList.add('button-pop');
+            setTimeout(() => speakBtn.classList.remove('button-pop'), 400);
+
+            // Animación de la frase
             const newPhraseBox = document.getElementById('newPhraseBox');
             newPhraseBox.classList.add('pulse');
             setTimeout(() => newPhraseBox.classList.remove('pulse'), 300);
 
+            // Actualizar dots
             const dots = document.querySelectorAll('.counter-dot');
             dots.forEach((dot, i) => {
                 dot.classList.remove('active', 'completed');
@@ -1633,10 +1786,17 @@
                 }
             });
 
-            if (data.reps >= t.requiredReps) {
+            // Mostrar toast con mensaje de ánimo
+            const message = encourageMessages[Math.min(data.reps - 1, encourageMessages.length - 1)];
+            const isComplete = data.reps >= t.requiredReps;
+            showRepToast(isComplete ? '¡Completado! 🎉' : message, isComplete);
+
+            // Sonido
+            playFeedbackSound(isComplete);
+
+            if (isComplete) {
                 data.completed = true;
 
-                const speakBtn = document.getElementById('speakBtn');
                 speakBtn.classList.add('completed', 'celebrate');
                 speakBtn.innerHTML = `
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1836,7 +1996,7 @@
             window.location.href = '/apps';
         }
 
-        console.log('Re-etiquetado App v3.0 - Con 13 frases y generación IA');
+        console.log('Re-etiquetado App v3.1 - Con feedback mejorado');
     </script>
 </body>
 </html>
