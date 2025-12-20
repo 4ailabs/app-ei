@@ -115,9 +115,12 @@ function getFallbackTransformation(phrase: string): {
 }
 
 export async function POST(request: NextRequest) {
+  console.log('[Reetiquetado] 🚀 Request received')
+
   try {
     // Verificar autenticación
     const session = await auth()
+    console.log('[Reetiquetado] 👤 Session:', session?.user?.id ? 'authenticated' : 'no session')
 
     if (!session?.user?.id) {
       return NextResponse.json(
@@ -173,7 +176,12 @@ export async function POST(request: NextRequest) {
     let usedAI = true
 
     try {
+      console.log('[Reetiquetado] 🤖 Attempting AI generation...')
+      console.log('[Reetiquetado] 📝 Phrase:', phrase.trim())
+      console.log('[Reetiquetado] 🔑 API Key configured:', !!process.env.GOOGLE_GEMINI_API_KEY)
+
       const ai = getAiClient()
+      console.log('[Reetiquetado] ✅ AI client created')
 
       const response = await ai.models.generateContent({
         model: MODEL_NAME,
@@ -184,26 +192,33 @@ export async function POST(request: NextRequest) {
           maxOutputTokens: 300,
         },
       })
+      console.log('[Reetiquetado] 📨 AI response received')
 
       const responseText = response.text || ''
+      console.log('[Reetiquetado] 📄 Response text:', responseText.substring(0, 200))
 
       // Parsear respuesta JSON
       const jsonMatch = responseText.match(/\{[\s\S]*\}/)
       if (jsonMatch) {
         transformation = JSON.parse(jsonMatch[0])
+        console.log('[Reetiquetado] ✅ JSON parsed successfully')
 
         // Validar estructura
         if (!transformation.category || !transformation.old || !transformation.new || !transformation.effect) {
           throw new Error('Respuesta incompleta')
         }
+        console.log('[Reetiquetado] ✅ AI transformation complete:', transformation.new)
       } else {
         throw new Error('No JSON found in response')
       }
     } catch (aiError) {
-      console.error('AI generation failed, using fallback:', aiError)
+      console.error('[Reetiquetado] ❌ AI generation failed:', aiError instanceof Error ? aiError.message : aiError)
+      console.log('[Reetiquetado] 🔄 Using fallback transformation')
       transformation = getFallbackTransformation(phrase.trim())
       usedAI = false
     }
+
+    console.log('[Reetiquetado] 🎉 Returning response, usedAI:', usedAI)
 
     return NextResponse.json({
       transformation: {
