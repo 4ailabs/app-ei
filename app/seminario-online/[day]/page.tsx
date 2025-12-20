@@ -255,8 +255,6 @@ export default function DayPage() {
                   <a
                     key={slide.id}
                     href={slide.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl border border-[#E5E4E0] dark:border-[#333333] hover:border-[#DA7756]/30 dark:hover:border-[#DA7756]/30 hover:shadow-md transition-all duration-200"
                   >
                     {/* Número */}

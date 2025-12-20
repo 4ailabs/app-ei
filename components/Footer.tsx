@@ -31,7 +31,7 @@ export function Footer() {
           {/* Right Section - Links */}
           <div className="flex items-center space-x-4 text-xs text-[#706F6C] dark:text-[#A0A0A0]">
             <a
-              href="mailto:contacto@seminario.com"
+              href="mailto:soporte@institutocentrobioenergetica.com"
               className="hover:text-[#1A1915] dark:hover:text-[#E5E5E5] transition-colors flex items-center space-x-1"
             >
               <Mail className="w-3 h-3" />

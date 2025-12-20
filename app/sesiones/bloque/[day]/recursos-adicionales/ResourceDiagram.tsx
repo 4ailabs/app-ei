@@ -27,7 +27,7 @@ export function ResourceDiagram({ title, url, description }: ResourceDiagramProp
       {url && (
         <div className="flex flex-col sm:flex-row gap-2">
           <Button
-            onClick={() => window.open(url, "_blank")}
+            onClick={() => window.location.href = url}
             variant="outline"
             className="flex-1 text-xs sm:text-sm px-3 sm:px-4 py-2"
           >

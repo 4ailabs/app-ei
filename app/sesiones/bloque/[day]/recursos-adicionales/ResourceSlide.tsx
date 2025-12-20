@@ -77,7 +77,7 @@ export function ResourceSlide({ title, url, description }: ResourceSlideProps) {
               </Button>
             )}
             <Button
-              onClick={() => window.open(url, "_blank")}
+              onClick={() => window.location.href = url}
               variant="outline"
               className="flex-1 text-xs sm:text-sm px-3 sm:px-4 py-2"
             >

@@ -38,7 +38,7 @@ export function ResourceImage({ title, url, description }: ResourceImageProps) {
       )}
       {url && (
         <Button
-          onClick={() => window.open(url, "_blank")}
+          onClick={() => window.location.href = url}
           variant="outline"
           className="w-full sm:w-auto text-xs sm:text-sm px-3 sm:px-4 py-2"
         >

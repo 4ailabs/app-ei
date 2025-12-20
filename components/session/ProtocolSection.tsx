@@ -191,7 +191,7 @@ export function ProtocolSection({ protocols, moduleNumber }: ProtocolSectionProp
                                                     {/* Action Button */}
                                                     {hasUrl && (
                                                         <button
-                                                            onClick={() => window.open(protocol.pdfUrl, '_blank')}
+                                                            onClick={() => window.location.href = protocol.pdfUrl!}
                                                             className="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 flex-shrink-0 bg-[#F5F4F0] dark:bg-[#333333] text-[#1A1915] dark:text-[#E5E5E5] hover:bg-[#E5E4E0] dark:hover:bg-[#404040]"
                                                         >
                                                             <span className="hidden sm:inline">Ver</span>

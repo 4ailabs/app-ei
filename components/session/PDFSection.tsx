@@ -134,8 +134,8 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
                       )}
                       <Button
                         onClick={() => {
-                          window.open(pdf.url, "_blank")
                           setViewed(true)
+                          window.location.href = pdf.url!
                         }}
                         variant="outline"
                         size="default"
@@ -191,8 +191,8 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
 
   const handleDownload = () => {
     if (pdfUrl) {
-      window.open(pdfUrl, "_blank")
       setViewed(true)
+      window.location.href = pdfUrl
     }
   }
 
