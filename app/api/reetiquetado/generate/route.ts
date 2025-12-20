@@ -199,25 +199,11 @@ export async function POST(request: NextRequest) {
         },
       })
       console.log('[Reetiquetado] 📨 AI response received')
-      console.log('[Reetiquetado] 📦 Response object:', JSON.stringify(response, null, 2).substring(0, 500))
 
-      // Acceder al texto de la respuesta
-      let responseText = ''
-      if (typeof response.text === 'function') {
-        responseText = await response.text()
-      } else if (typeof response.text === 'string') {
-        responseText = response.text
-      } else if (response.candidates && response.candidates[0]?.content?.parts) {
-        // Formato alternativo de respuesta
-        responseText = response.candidates[0].content.parts
-          .map((part: any) => part.text || '')
-          .join('')
-      } else {
-        console.error('[Reetiquetado] ❌ Unexpected response format:', response)
-        throw new Error('Formato de respuesta inesperado de la API')
-      }
-
-      console.log('[Reetiquetado] 📄 Response text:', responseText.substring(0, 200))
+      // Acceder al texto de la respuesta (igual que en el endpoint del maestro)
+      const responseText = response.text || ''
+      console.log('[Reetiquetado] 📄 Response text length:', responseText.length)
+      console.log('[Reetiquetado] 📄 Response text preview:', responseText.substring(0, 200))
 
       if (!responseText || responseText.trim().length === 0) {
         throw new Error('Respuesta vacía de la API')
