@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth-server"
 import { redirect } from "next/navigation"
 import { Wind, Heart, Shield, ScanLine, Gauge, SlidersHorizontal, MessageSquare } from "lucide-react"
+import { AppLink } from "@/components/apps/AppLink"
 
 interface AppCard {
   id: string
@@ -105,7 +106,7 @@ export default async function AppsPage() {
           {apps.map((app) => {
             const IconComponent = iconMap[app.iconName]
             return (
-              <a
+              <AppLink
                 key={app.id}
                 href={app.url}
                 className="group block bg-white dark:bg-[#1A1A1A] rounded-2xl p-6 border border-[#E5E4E0] dark:border-[#333333] hover:border-[#DA7756] dark:hover:border-[#DA7756] transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
@@ -119,7 +120,7 @@ export default async function AppsPage() {
                 <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed">
                   {app.description}
                 </p>
-              </a>
+              </AppLink>
             )
           })}
         </div>
