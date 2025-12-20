@@ -6,8 +6,8 @@ import { checkDailyRateLimit } from '@/lib/rate-limit'
 // Límite: 5 transformaciones personalizadas por día por usuario
 const DAILY_GENERATION_LIMIT = 5
 
-// Modelo a usar (gemini-2.5-flash es el más nuevo y barato)
-const MODEL_NAME = 'gemini-2.5-flash-preview-05-20'
+// Modelo a usar (igual que el maestro para consistencia)
+const MODEL_NAME = 'gemini-2.0-flash'
 
 const SYSTEM_PROMPT = `Eres un experto en neurociencia del lenguaje y psicología cognitiva. Tu tarea es transformar frases limitantes en frases empoderadoras usando la técnica de re-etiquetado.
 
@@ -183,9 +183,15 @@ export async function POST(request: NextRequest) {
       const ai = getAiClient()
       console.log('[Reetiquetado] ✅ AI client created')
 
+      // Construir contenido en el formato correcto
+      const contents = [{
+        role: 'user' as const,
+        parts: [{ text: `Frase limitante: "${phrase.trim()}"` }],
+      }]
+
       const response = await ai.models.generateContent({
         model: MODEL_NAME,
-        contents: [{ role: 'user', parts: [{ text: `Frase limitante: "${phrase.trim()}"` }] }],
+        contents: contents,
         config: {
           systemInstruction: SYSTEM_PROMPT,
           temperature: 0.7,
@@ -193,26 +199,51 @@ export async function POST(request: NextRequest) {
         },
       })
       console.log('[Reetiquetado] 📨 AI response received')
+      console.log('[Reetiquetado] 📦 Response object:', JSON.stringify(response, null, 2).substring(0, 500))
 
-      const responseText = response.text || ''
+      // Acceder al texto de la respuesta
+      let responseText = ''
+      if (typeof response.text === 'function') {
+        responseText = await response.text()
+      } else if (typeof response.text === 'string') {
+        responseText = response.text
+      } else if (response.candidates && response.candidates[0]?.content?.parts) {
+        // Formato alternativo de respuesta
+        responseText = response.candidates[0].content.parts
+          .map((part: any) => part.text || '')
+          .join('')
+      } else {
+        console.error('[Reetiquetado] ❌ Unexpected response format:', response)
+        throw new Error('Formato de respuesta inesperado de la API')
+      }
+
       console.log('[Reetiquetado] 📄 Response text:', responseText.substring(0, 200))
+
+      if (!responseText || responseText.trim().length === 0) {
+        throw new Error('Respuesta vacía de la API')
+      }
 
       // Parsear respuesta JSON
       const jsonMatch = responseText.match(/\{[\s\S]*\}/)
       if (jsonMatch) {
         transformation = JSON.parse(jsonMatch[0])
-        console.log('[Reetiquetado] ✅ JSON parsed successfully')
+        console.log('[Reetiquetado] ✅ JSON parsed successfully:', transformation)
 
         // Validar estructura
         if (!transformation.category || !transformation.old || !transformation.new || !transformation.effect) {
+          console.error('[Reetiquetado] ❌ Missing required fields:', transformation)
           throw new Error('Respuesta incompleta')
         }
         console.log('[Reetiquetado] ✅ AI transformation complete:', transformation.new)
       } else {
+        console.error('[Reetiquetado] ❌ No JSON found in response. Full text:', responseText)
         throw new Error('No JSON found in response')
       }
     } catch (aiError) {
-      console.error('[Reetiquetado] ❌ AI generation failed:', aiError instanceof Error ? aiError.message : aiError)
+      console.error('[Reetiquetado] ❌ AI generation failed')
+      console.error('[Reetiquetado] Error type:', aiError?.constructor?.name)
+      console.error('[Reetiquetado] Error message:', aiError instanceof Error ? aiError.message : String(aiError))
+      console.error('[Reetiquetado] Error stack:', aiError instanceof Error ? aiError.stack : 'No stack')
       console.log('[Reetiquetado] 🔄 Using fallback transformation')
       transformation = getFallbackTransformation(phrase.trim())
       usedAI = false
