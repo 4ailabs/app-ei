@@ -1,6 +1,5 @@
 import { AppLink } from "@/data/sessions"
 import { Play, Activity, Radio, Smartphone, Zap, Heart, Sparkles, Gauge, SlidersHorizontal, MessageSquare } from "lucide-react"
-import Link from "next/link"
 
 interface AppSectionProps {
     apps: AppLink[]
@@ -111,15 +110,15 @@ export function AppSection({ apps }: AppSectionProps) {
                                 </p>
                             </div>
 
-                            {/* Botón de acción */}
-                            <Link href={app.url} className="block">
+                            {/* Botón de acción - usar <a> para archivos HTML estáticos */}
+                            <a href={app.url} className="block">
                                 <button
                                     className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#F5F4F0] dark:bg-[#333333] text-[#1A1915] dark:text-[#E5E5E5] font-medium text-sm transition-all duration-200 hover:bg-[#E5E4E0] dark:hover:bg-[#404040] active:scale-[0.98]"
                                 >
                                     <Play className="h-4 w-4" style={{ color: styles.color }} fill="currentColor" />
                                     <span>Iniciar Práctica</span>
                                 </button>
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 )
