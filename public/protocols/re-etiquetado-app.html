@@ -1674,9 +1674,9 @@
 
         // Mensajes de ánimo por repetición
         const encourageMessages = [
-            '¡Bien! 1/3',
-            '¡Excelente! 2/3',
-            '¡Perfecto! ✓'
+            '1 de 3',
+            '2 de 3',
+            '3 de 3'
         ];
 
         // Sonido de feedback (usando Web Audio API)
@@ -1789,7 +1789,7 @@
             // Mostrar toast con mensaje de ánimo
             const message = encourageMessages[Math.min(data.reps - 1, encourageMessages.length - 1)];
             const isComplete = data.reps >= t.requiredReps;
-            showRepToast(isComplete ? '¡Completado! 🎉' : message, isComplete);
+            showRepToast(isComplete ? 'Completado' : message, isComplete);
 
             // Sonido
             playFeedbackSound(isComplete);
