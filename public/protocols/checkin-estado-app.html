@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Check-in de Estado - Sistema Nervioso</title>
+    <style>
+        :root {
+            --bg-primary: #FAF9F7;
+            --bg-secondary: #F5F4F0;
+            --text-primary: #1A1915;
+            --text-secondary: #706F6C;
+            --text-muted: #9B9A97;
+            --border-color: #E5E4E0;
+            --card-bg: #FFFFFF;
+            --accent: #DA7756;
+            --accent-light: rgba(218, 119, 86, 0.1);
+            --success: #2ca58d;
+            --success-light: rgba(44, 165, 141, 0.1);
+            --ventral: #2ca58d;
+            --ventral-light: rgba(44, 165, 141, 0.15);
+            --simpatico: #E8A54B;
+            --simpatico-light: rgba(232, 165, 75, 0.15);
+            --dorsal: #7B8794;
+            --dorsal-light: rgba(123, 135, 148, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .history-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .history-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Screens */
+        .screen {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* Start Screen */
+        .start-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .start-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--ventral-light), var(--simpatico-light), var(--dorsal-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+            position: relative;
+        }
+
+        .start-icon::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            background: var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .start-icon svg {
+            width: 48px;
+            height: 48px;
+            color: var(--accent);
+            position: relative;
+            z-index: 1;
+        }
+
+        .start-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .start-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 320px;
+            margin-bottom: 36px;
+        }
+
+        .states-preview {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .state-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .state-chip.ventral {
+            background: var(--ventral-light);
+            color: var(--ventral);
+        }
+
+        .state-chip.simpatico {
+            background: var(--simpatico-light);
+            color: var(--simpatico);
+        }
+
+        .state-chip.dorsal {
+            background: var(--dorsal-light);
+            color: var(--dorsal);
+        }
+
+        .state-chip .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .start-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 48px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(218, 119, 86, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .start-btn:active {
+            transform: scale(0.98);
+        }
+
+        .start-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Assessment Screen */
+        .assessment-screen {
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .step-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .step-dot.active {
+            background: var(--accent);
+            width: 28px;
+            border-radius: 5px;
+        }
+
+        .step-dot.completed {
+            background: var(--success);
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .question-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .question-icon.body { background: var(--ventral-light); color: var(--ventral); }
+        .question-icon.mind { background: var(--simpatico-light); color: var(--simpatico); }
+        .question-icon.energy { background: var(--accent-light); color: var(--accent); }
+        .question-icon.connection { background: var(--dorsal-light); color: var(--dorsal); }
+
+        .question-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .question-text {
+            flex: 1;
+        }
+
+        .question-text h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .question-text p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Slider */
+        .slider-container {
+            padding: 0 4px;
+        }
+
+        .slider-track {
+            position: relative;
+            height: 56px;
+            background: linear-gradient(90deg,
+                var(--dorsal) 0%,
+                var(--dorsal) 20%,
+                var(--simpatico) 40%,
+                var(--ventral) 60%,
+                var(--ventral) 80%,
+                var(--simpatico) 100%
+            );
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+        }
+
+        .slider-track-inner {
+            position: absolute;
+            inset: 4px;
+            background: var(--card-bg);
+            border-radius: 24px;
+        }
+
+        .slider-input {
+            width: 100%;
+            height: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .slider-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15), 0 0 0 3px var(--accent);
+            cursor: grab;
+            transition: box-shadow 0.2s;
+        }
+
+        .slider-input::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2), 0 0 0 4px var(--accent);
+        }
+
+        .slider-input::-moz-range-thumb {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15), 0 0 0 3px var(--accent);
+            cursor: grab;
+            border: none;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            padding: 0 8px;
+        }
+
+        .slider-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 80px;
+        }
+
+        .slider-value {
+            text-align: center;
+            margin-top: 16px;
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .slider-value-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Options Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .option-btn {
+            padding: 14px 12px;
+            background: var(--bg-secondary);
+            border: 2px solid transparent;
+            border-radius: 14px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .option-btn:hover {
+            background: var(--card-bg);
+            border-color: var(--border-color);
+        }
+
+        .option-btn.selected {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Sensations Checklist */
+        .sensations-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .sensation-chip {
+            padding: 10px 16px;
+            background: var(--bg-secondary);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sensation-chip.selected {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 12px;
+            padding: 16px 20px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .nav-btn.secondary {
+            background: var(--bg-secondary);
+            border: none;
+            color: var(--text-secondary);
+        }
+
+        .nav-btn.primary {
+            background: var(--accent);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 16px rgba(218, 119, 86, 0.3);
+        }
+
+        .nav-btn.primary:active {
+            transform: scale(0.98);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            padding: 24px;
+            padding-bottom: 100px;
+        }
+
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 28px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .result-state-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .result-state-icon.ventral { background: var(--ventral-light); }
+        .result-state-icon.simpatico { background: var(--simpatico-light); }
+        .result-state-icon.dorsal { background: var(--dorsal-light); }
+
+        .result-state-icon svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .result-state-icon.ventral svg { color: var(--ventral); }
+        .result-state-icon.simpatico svg { color: var(--simpatico); }
+        .result-state-icon.dorsal svg { color: var(--dorsal); }
+
+        .result-state-name {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .result-state-name.ventral { color: var(--ventral); }
+        .result-state-name.simpatico { color: var(--simpatico); }
+        .result-state-name.dorsal { color: var(--dorsal); }
+
+        .result-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* State Meter */
+        .state-meter {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+        }
+
+        .meter-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            width: 60px;
+            text-align: center;
+        }
+
+        .meter-track {
+            flex: 1;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meter-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .meter-fill.ventral { background: var(--ventral); }
+        .meter-fill.simpatico { background: var(--simpatico); }
+        .meter-fill.dorsal { background: var(--dorsal); }
+
+        .meter-indicator {
+            position: absolute;
+            top: -6px;
+            width: 20px;
+            height: 20px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transform: translateX(-50%);
+            transition: left 0.5s ease;
+        }
+
+        /* Details Section */
+        .details-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .details-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .details-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .details-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .details-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .details-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .detail-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Recommendations */
+        .recommendations {
+            background: var(--accent-light);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .recommendations h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .recommendations h4 svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .rec-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .rec-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            background: var(--card-bg);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .rec-item:active {
+            transform: scale(0.98);
+        }
+
+        .rec-item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .rec-item-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .rec-item-text {
+            flex: 1;
+        }
+
+        .rec-item-text strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .rec-item-text span {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .rec-item-arrow {
+            color: var(--text-muted);
+        }
+
+        .rec-item-arrow svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* History Screen */
+        .history-screen {
+            padding: 20px;
+        }
+
+        .history-header {
+            margin-bottom: 20px;
+        }
+
+        .history-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .history-header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .history-chart {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 120px;
+            gap: 8px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .chart-bar-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+
+        .chart-bar {
+            width: 100%;
+            max-width: 32px;
+            border-radius: 6px 6px 0 0;
+            transition: height 0.3s ease;
+        }
+
+        .chart-bar.ventral { background: var(--ventral); }
+        .chart-bar.simpatico { background: var(--simpatico); }
+        .chart-bar.dorsal { background: var(--dorsal); }
+
+        .chart-day {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .history-item-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .history-item-icon.ventral { background: var(--ventral-light); color: var(--ventral); }
+        .history-item-icon.simpatico { background: var(--simpatico-light); color: var(--simpatico); }
+        .history-item-icon.dorsal { background: var(--dorsal-light); color: var(--dorsal); }
+
+        .history-item-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .history-item-content {
+            flex: 1;
+        }
+
+        .history-item-state {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .history-item-state.ventral { color: var(--ventral); }
+        .history-item-state.simpatico { color: var(--simpatico); }
+        .history-item-state.dorsal { color: var(--dorsal); }
+
+        .history-item-date {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .history-item-score {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .empty-history {
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        .empty-history svg {
+            width: 64px;
+            height: 64px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-history h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .empty-history p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .action-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .action-btn.primary {
+            background: var(--accent);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 16px rgba(218, 119, 86, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: var(--bg-secondary);
+            border: none;
+            color: var(--text-secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" onclick="handleBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            <span>Volver</span>
+        </button>
+        <span class="header-title">Check-in de Estado</span>
+        <button class="history-btn" onclick="showHistory()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 8v4l3 3"/>
+                <circle cx="12" cy="12" r="10"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Start Screen -->
+    <div class="screen active" id="startScreen">
+        <div class="start-screen">
+            <div class="start-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Lucide Gauge icon -->
+                    <path d="m12 14 4-4"/>
+                    <path d="M3.34 19a10 10 0 1 1 17.32 0"/>
+                </svg>
+            </div>
+            <h1 class="start-title">Check-in de Estado</h1>
+            <p class="start-description">
+                Identifica en qué estado se encuentra tu sistema nervioso ahora mismo para saber qué necesitas.
+            </p>
+
+            <div class="states-preview">
+                <div class="state-chip ventral">
+                    <span class="dot"></span>
+                    Ventral
+                </div>
+                <div class="state-chip simpatico">
+                    <span class="dot"></span>
+                    Simpático
+                </div>
+                <div class="state-chip dorsal">
+                    <span class="dot"></span>
+                    Dorsal
+                </div>
+            </div>
+
+            <button class="start-btn" onclick="startAssessment()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+                Comenzar Check-in
+            </button>
+        </div>
+    </div>
+
+    <!-- Assessment Screen -->
+    <div class="screen" id="assessmentScreen">
+        <div class="assessment-screen">
+            <div class="progress-steps" id="progressSteps">
+                <div class="step-dot active"></div>
+                <div class="step-dot"></div>
+                <div class="step-dot"></div>
+                <div class="step-dot"></div>
+            </div>
+
+            <!-- Question Container -->
+            <div id="questionContainer"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn secondary" id="prevBtn" onclick="prevQuestion()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+                Anterior
+            </button>
+            <button class="nav-btn primary" id="nextBtn" onclick="nextQuestion()">
+                Siguiente
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div class="screen" id="resultScreen">
+        <div class="result-screen">
+            <div class="result-card fade-in" id="resultCard">
+                <!-- Dynamic content -->
+            </div>
+
+            <div class="details-section fade-in" id="signalsSection" style="animation-delay: 0.1s">
+                <!-- Dynamic content -->
+            </div>
+
+            <div class="recommendations fade-in" id="recommendationsSection" style="animation-delay: 0.2s">
+                <!-- Dynamic content -->
+            </div>
+
+            <div class="action-buttons fade-in" style="animation-delay: 0.3s">
+                <button class="action-btn secondary" onclick="resetToStart()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    Nuevo Check-in
+                </button>
+                <button class="action-btn primary" onclick="saveAndClose()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Screen -->
+    <div class="screen" id="historyScreen">
+        <div class="history-screen">
+            <div class="history-header">
+                <h2>Tu Historial</h2>
+                <p>Observa cómo ha variado tu estado</p>
+            </div>
+
+            <div class="history-chart" id="historyChart">
+                <div class="chart-title">Últimos 7 días</div>
+                <div class="chart-bars" id="chartBars">
+                    <!-- Dynamic bars -->
+                </div>
+            </div>
+
+            <div class="history-list" id="historyList">
+                <!-- Dynamic list -->
+            </div>
+
+            <div class="action-buttons" style="margin-top: 24px;">
+                <button class="action-btn primary" onclick="showStart()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14"/>
+                        <path d="M5 12h14"/>
+                    </svg>
+                    Nuevo Check-in
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions data
+        const questions = [
+            {
+                id: 'body',
+                icon: 'body',
+                title: '¿Cómo sientes tu cuerpo?',
+                description: 'Observa las sensaciones físicas en este momento',
+                type: 'slider',
+                labels: ['Muy tenso / Agitado', 'Equilibrado', 'Pesado / Sin energía'],
+                valueLabels: [
+                    'Muy tenso o agitado',
+                    'Algo tenso',
+                    'Neutral',
+                    'Algo relajado',
+                    'Relajado y presente',
+                    'Algo pesado',
+                    'Muy pesado o apagado'
+                ]
+            },
+            {
+                id: 'mind',
+                icon: 'mind',
+                title: '¿Cómo está tu mente?',
+                description: 'Observa tus pensamientos y nivel de alerta',
+                type: 'options',
+                options: [
+                    { value: 'racing', label: 'Pensamientos acelerados', state: 'simpatico' },
+                    { value: 'worried', label: 'Preocupado / ansioso', state: 'simpatico' },
+                    { value: 'clear', label: 'Claro y enfocado', state: 'ventral' },
+                    { value: 'calm', label: 'Tranquilo y presente', state: 'ventral' },
+                    { value: 'foggy', label: 'Confuso / niebla mental', state: 'dorsal' },
+                    { value: 'blank', label: 'En blanco / vacío', state: 'dorsal' }
+                ]
+            },
+            {
+                id: 'energy',
+                icon: 'energy',
+                title: '¿Cuál es tu nivel de energía?',
+                description: 'Evalúa qué tan activo o cansado te sientes',
+                type: 'slider',
+                labels: ['Muy alta / Agitación', 'Óptima', 'Muy baja / Agotado'],
+                valueLabels: [
+                    'Energía muy alta, difícil de controlar',
+                    'Energía alta',
+                    'Energía moderada-alta',
+                    'Energía equilibrada',
+                    'Energía moderada-baja',
+                    'Poca energía',
+                    'Muy poca o sin energía'
+                ]
+            },
+            {
+                id: 'sensations',
+                icon: 'connection',
+                title: '¿Qué sensaciones notas?',
+                description: 'Selecciona las que apliquen a tu estado actual',
+                type: 'multiselect',
+                options: [
+                    { value: 'heart_fast', label: 'Corazón acelerado', state: 'simpatico' },
+                    { value: 'chest_tight', label: 'Pecho apretado', state: 'simpatico' },
+                    { value: 'shoulders_tense', label: 'Hombros tensos', state: 'simpatico' },
+                    { value: 'jaw_clenched', label: 'Mandíbula apretada', state: 'simpatico' },
+                    { value: 'breath_shallow', label: 'Respiración corta', state: 'simpatico' },
+                    { value: 'restless', label: 'Inquietud / nerviosismo', state: 'simpatico' },
+                    { value: 'calm_breath', label: 'Respiración tranquila', state: 'ventral' },
+                    { value: 'relaxed_body', label: 'Cuerpo relajado', state: 'ventral' },
+                    { value: 'present', label: 'Sensación de presencia', state: 'ventral' },
+                    { value: 'open_chest', label: 'Pecho abierto', state: 'ventral' },
+                    { value: 'heavy_limbs', label: 'Extremidades pesadas', state: 'dorsal' },
+                    { value: 'numb', label: 'Entumecimiento', state: 'dorsal' },
+                    { value: 'disconnected', label: 'Desconexión del cuerpo', state: 'dorsal' },
+                    { value: 'fatigue', label: 'Fatiga profunda', state: 'dorsal' }
+                ]
+            }
+        ];
+
+        // State data
+        const stateData = {
+            ventral: {
+                name: 'Ventral Vagal',
+                subtitle: 'Estado de Seguridad y Conexión',
+                color: 'ventral',
+                icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                    <line x1="9" y1="9" x2="9.01" y2="9"/>
+                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                </svg>`,
+                signals: [
+                    'Respiración profunda y regular',
+                    'Sensación de calma y seguridad',
+                    'Capacidad de conectar con otros',
+                    'Pensamientos claros y organizados',
+                    'Cuerpo relajado pero alerta'
+                ],
+                recommendations: [
+                    { name: 'Mantén este estado', desc: 'Practica la gratitud', icon: 'heart', url: null },
+                    { name: 'Profundiza', desc: 'Meditación o Lugar Seguro', icon: 'shield', url: '/protocols/lugar-seguro-app.html' },
+                    { name: 'Conecta', desc: 'Es buen momento para relaciones', icon: 'users', url: null }
+                ]
+            },
+            simpatico: {
+                name: 'Simpático',
+                subtitle: 'Estado de Activación / Alerta',
+                color: 'simpatico',
+                icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>`,
+                signals: [
+                    'Ritmo cardíaco elevado',
+                    'Respiración rápida o superficial',
+                    'Tensión muscular (hombros, mandíbula)',
+                    'Pensamientos acelerados o preocupación',
+                    'Sensación de urgencia o inquietud'
+                ],
+                recommendations: [
+                    { name: 'Respiración 4-7-8', desc: 'Activa el nervio vago', icon: 'wind', url: '/protocols/respiracion-guiada-app.html' },
+                    { name: 'Abrazo de Mariposa', desc: 'Estimulación bilateral', icon: 'heart', url: '/protocols/abrazo-mariposa-app.html' },
+                    { name: 'Grounding 5-4-3-2-1', desc: 'Ancla al presente', icon: 'anchor', url: null }
+                ]
+            },
+            dorsal: {
+                name: 'Dorsal Vagal',
+                subtitle: 'Estado de Conservación / Apagado',
+                color: 'dorsal',
+                icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="8" y1="15" x2="16" y2="15"/>
+                    <line x1="9" y1="9" x2="9.01" y2="9"/>
+                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                </svg>`,
+                signals: [
+                    'Fatiga o pesadez extrema',
+                    'Sensación de desconexión',
+                    'Dificultad para moverse o actuar',
+                    'Mente en blanco o niebla mental',
+                    'Entumecimiento emocional o físico'
+                ],
+                recommendations: [
+                    { name: 'Movimiento suave', desc: 'Caminar, estirar', icon: 'activity', url: null },
+                    { name: 'Escáner Corporal', desc: 'Reconecta con tu cuerpo', icon: 'scan', url: '/protocols/escaner-corporal-app.html' },
+                    { name: 'Orientación sensorial', desc: 'Mira alrededor, nombra objetos', icon: 'eye', url: null }
+                ]
+            }
+        };
+
+        // App state
+        let currentQuestion = 0;
+        let answers = {};
+        let history = JSON.parse(localStorage.getItem('checkin_history') || '[]');
+
+        // Icons
+        const icons = {
+            body: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="5" r="3"/>
+                <path d="M12 8v8"/>
+                <path d="M8 12h8"/>
+                <path d="M9 21l3-5 3 5"/>
+            </svg>`,
+            mind: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2a8 8 0 0 1 8 8c0 2.5-1 4.5-2.5 6L12 22l-5.5-6C5 14.5 4 12.5 4 10a8 8 0 0 1 8-8z"/>
+                <circle cx="12" cy="10" r="3"/>
+            </svg>`,
+            energy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>`,
+            connection: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+            </svg>`,
+            heart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>`,
+            shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>`,
+            users: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>`,
+            wind: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
+            </svg>`,
+            anchor: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="5" r="3"/>
+                <line x1="12" y1="22" x2="12" y2="8"/>
+                <path d="M5 12H2a10 10 0 0 0 20 0h-3"/>
+            </svg>`,
+            activity: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>`,
+            scan: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                <line x1="7" y1="12" x2="17" y2="12"/>
+            </svg>`,
+            eye: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>`,
+            check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg>`
+        };
+
+        // Functions
+        function startAssessment() {
+            currentQuestion = 0;
+            answers = {};
+            showScreen('assessmentScreen');
+            renderQuestion();
+            updateNavButtons();
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function showStart() {
+            showScreen('startScreen');
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+
+            let html = `
+                <div class="question-card fade-in">
+                    <div class="question-header">
+                        <div class="question-icon ${q.icon}">
+                            ${icons[q.icon]}
+                        </div>
+                        <div class="question-text">
+                            <h3>${q.title}</h3>
+                            <p>${q.description}</p>
+                        </div>
+                    </div>
+            `;
+
+            if (q.type === 'slider') {
+                const value = answers[q.id] !== undefined ? answers[q.id] : 3;
+                html += `
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <div class="slider-track-inner"></div>
+                            <input type="range" class="slider-input" min="0" max="6" value="${value}"
+                                   onchange="updateSlider('${q.id}', this.value)"
+                                   oninput="updateSliderLabel('${q.id}', this.value)">
+                        </div>
+                        <div class="slider-labels">
+                            <span class="slider-label">${q.labels[0]}</span>
+                            <span class="slider-label">${q.labels[1]}</span>
+                            <span class="slider-label">${q.labels[2]}</span>
+                        </div>
+                        <div class="slider-value">
+                            <span class="slider-value-text" id="sliderLabel_${q.id}">${q.valueLabels[value]}</span>
+                        </div>
+                    </div>
+                `;
+            } else if (q.type === 'options') {
+                html += `<div class="options-grid">`;
+                q.options.forEach(opt => {
+                    const selected = answers[q.id] === opt.value ? 'selected' : '';
+                    html += `
+                        <button class="option-btn ${selected}" onclick="selectOption('${q.id}', '${opt.value}', '${opt.state}', this)">
+                            ${opt.label}
+                        </button>
+                    `;
+                });
+                html += `</div>`;
+            } else if (q.type === 'multiselect') {
+                html += `<div class="sensations-grid">`;
+                const selected = answers[q.id] || [];
+                q.options.forEach(opt => {
+                    const isSelected = selected.some(s => s.value === opt.value) ? 'selected' : '';
+                    html += `
+                        <button class="sensation-chip ${isSelected}" onclick="toggleSensation('${q.id}', '${opt.value}', '${opt.state}', this)">
+                            ${opt.label}
+                        </button>
+                    `;
+                });
+                html += `</div>`;
+            }
+
+            html += `</div>`;
+            container.innerHTML = html;
+
+            // Update progress
+            updateProgress();
+        }
+
+        function updateSlider(id, value) {
+            answers[id] = parseInt(value);
+        }
+
+        function updateSliderLabel(id, value) {
+            const q = questions.find(q => q.id === id);
+            document.getElementById(`sliderLabel_${id}`).textContent = q.valueLabels[parseInt(value)];
+            answers[id] = parseInt(value);
+        }
+
+        function selectOption(id, value, state, btn) {
+            answers[id] = { value, state };
+            document.querySelectorAll('.options-grid .option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        function toggleSensation(id, value, state, btn) {
+            if (!answers[id]) answers[id] = [];
+            const idx = answers[id].findIndex(s => s.value === value);
+            if (idx > -1) {
+                answers[id].splice(idx, 1);
+                btn.classList.remove('selected');
+            } else {
+                answers[id].push({ value, state });
+                btn.classList.add('selected');
+            }
+        }
+
+        function updateProgress() {
+            const steps = document.querySelectorAll('.step-dot');
+            steps.forEach((step, i) => {
+                step.classList.remove('active', 'completed');
+                if (i < currentQuestion) step.classList.add('completed');
+                if (i === currentQuestion) step.classList.add('active');
+            });
+        }
+
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            prevBtn.style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.innerHTML = `Ver Resultado <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+            } else {
+                nextBtn.innerHTML = `Siguiente <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>`;
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+                updateNavButtons();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+                updateNavButtons();
+            } else {
+                calculateResult();
+            }
+        }
+
+        function calculateResult() {
+            let scores = { ventral: 0, simpatico: 0, dorsal: 0 };
+
+            // Body slider (0-6): 0-1 = simpatico, 2-4 = ventral, 5-6 = dorsal
+            const bodyVal = answers.body !== undefined ? answers.body : 3;
+            if (bodyVal <= 1) scores.simpatico += 2;
+            else if (bodyVal <= 4) scores.ventral += 2;
+            else scores.dorsal += 2;
+
+            // Energy slider (0-6): 0-1 = simpatico, 2-4 = ventral, 5-6 = dorsal
+            const energyVal = answers.energy !== undefined ? answers.energy : 3;
+            if (energyVal <= 1) scores.simpatico += 2;
+            else if (energyVal <= 4) scores.ventral += 2;
+            else scores.dorsal += 2;
+
+            // Mind options
+            if (answers.mind && answers.mind.state) {
+                scores[answers.mind.state] += 3;
+            }
+
+            // Sensations (multiselect)
+            if (answers.sensations && answers.sensations.length > 0) {
+                answers.sensations.forEach(s => {
+                    scores[s.state] += 1;
+                });
+            }
+
+            // Determine dominant state
+            const maxScore = Math.max(scores.ventral, scores.simpatico, scores.dorsal);
+            let state = 'ventral';
+            if (scores.simpatico === maxScore) state = 'simpatico';
+            else if (scores.dorsal === maxScore) state = 'dorsal';
+
+            // Calculate percentages
+            const total = scores.ventral + scores.simpatico + scores.dorsal;
+            const percentages = {
+                ventral: Math.round((scores.ventral / total) * 100),
+                simpatico: Math.round((scores.simpatico / total) * 100),
+                dorsal: Math.round((scores.dorsal / total) * 100)
+            };
+
+            showResult(state, percentages, scores);
+        }
+
+        function showResult(state, percentages, scores) {
+            const data = stateData[state];
+
+            // Result card
+            const resultCard = document.getElementById('resultCard');
+            resultCard.innerHTML = `
+                <div class="result-state-icon ${state}">
+                    ${data.icon}
+                </div>
+                <h2 class="result-state-name ${state}">${data.name}</h2>
+                <p class="result-subtitle">${data.subtitle}</p>
+
+                <div class="state-meter">
+                    <span class="meter-label">Dorsal</span>
+                    <div class="meter-track">
+                        <div class="meter-fill dorsal" style="width: ${percentages.dorsal}%"></div>
+                        <div class="meter-fill simpatico" style="width: ${percentages.dorsal + percentages.simpatico}%; left: 0;"></div>
+                        <div class="meter-fill ventral" style="width: ${percentages.dorsal + percentages.simpatico + percentages.ventral}%; left: 0;"></div>
+                        <div class="meter-indicator" style="left: ${getIndicatorPosition(state, percentages)}%"></div>
+                    </div>
+                    <span class="meter-label">Simpático</span>
+                </div>
+            `;
+
+            // Signals section
+            const signalsSection = document.getElementById('signalsSection');
+            signalsSection.innerHTML = `
+                <div class="details-header">
+                    <div class="details-icon" style="background: var(--${state}-light); color: var(--${state})">
+                        ${icons.check}
+                    </div>
+                    <span class="details-title">Señales de este estado</span>
+                </div>
+                <div class="details-list">
+                    ${data.signals.map(s => `
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--${state})" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 8v4"/>
+                                <path d="M12 16h.01"/>
+                            </svg>
+                            <span>${s}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Recommendations section
+            const recSection = document.getElementById('recommendationsSection');
+            recSection.innerHTML = `
+                <h4>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    ¿Qué puedes hacer?
+                </h4>
+                <div class="rec-list">
+                    ${data.recommendations.map(r => `
+                        <div class="rec-item" ${r.url ? `onclick="window.location.href='${r.url}'"` : ''}>
+                            <div class="rec-item-icon">
+                                ${icons[r.icon]}
+                            </div>
+                            <div class="rec-item-text">
+                                <strong>${r.name}</strong>
+                                <span>${r.desc}</span>
+                            </div>
+                            ${r.url ? `<div class="rec-item-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Save to temp (will be saved on button click)
+            window.pendingResult = {
+                state,
+                percentages,
+                timestamp: new Date().toISOString()
+            };
+
+            showScreen('resultScreen');
+        }
+
+        function getIndicatorPosition(state, percentages) {
+            if (state === 'dorsal') return 15;
+            if (state === 'simpatico') return 85;
+            return 50;
+        }
+
+        function saveAndClose() {
+            if (window.pendingResult) {
+                history.unshift(window.pendingResult);
+                if (history.length > 30) history = history.slice(0, 30);
+                localStorage.setItem('checkin_history', JSON.stringify(history));
+            }
+            handleBack();
+        }
+
+        function resetToStart() {
+            if (window.pendingResult) {
+                history.unshift(window.pendingResult);
+                if (history.length > 30) history = history.slice(0, 30);
+                localStorage.setItem('checkin_history', JSON.stringify(history));
+            }
+            showScreen('startScreen');
+        }
+
+        function showHistory() {
+            renderHistory();
+            showScreen('historyScreen');
+        }
+
+        function renderHistory() {
+            const chartBars = document.getElementById('chartBars');
+            const historyList = document.getElementById('historyList');
+
+            if (history.length === 0) {
+                chartBars.innerHTML = '';
+                historyList.innerHTML = `
+                    <div class="empty-history">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 8v4l3 3"/>
+                            <circle cx="12" cy="12" r="10"/>
+                        </svg>
+                        <h3>Sin historial</h3>
+                        <p>Tus check-ins aparecerán aquí</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Chart (last 7 days)
+            const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+            const today = new Date();
+            let chartHTML = '';
+
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dayName = days[date.getDay()];
+
+                const dayCheckins = history.filter(h => {
+                    const hDate = new Date(h.timestamp);
+                    return hDate.toDateString() === date.toDateString();
+                });
+
+                let barHeight = 10;
+                let barState = 'ventral';
+
+                if (dayCheckins.length > 0) {
+                    const latest = dayCheckins[0];
+                    barState = latest.state;
+                    barHeight = 30 + Math.random() * 60;
+                }
+
+                chartHTML += `
+                    <div class="chart-bar-container">
+                        <div class="chart-bar ${barState}" style="height: ${dayCheckins.length > 0 ? barHeight : 10}%; opacity: ${dayCheckins.length > 0 ? 1 : 0.3}"></div>
+                        <span class="chart-day">${dayName}</span>
+                    </div>
+                `;
+            }
+            chartBars.innerHTML = chartHTML;
+
+            // List (last 10)
+            const recentHistory = history.slice(0, 10);
+            historyList.innerHTML = recentHistory.map(h => {
+                const date = new Date(h.timestamp);
+                const dateStr = date.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+                const timeStr = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+                const data = stateData[h.state];
+
+                return `
+                    <div class="history-item">
+                        <div class="history-item-icon ${h.state}">
+                            ${data.icon}
+                        </div>
+                        <div class="history-item-content">
+                            <div class="history-item-state ${h.state}">${data.name}</div>
+                            <div class="history-item-date">${dateStr} · ${timeStr}</div>
+                        </div>
+                        <div class="history-item-score">${h.percentages[h.state]}%</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleBack() {
+            const currentScreen = document.querySelector('.screen.active').id;
+            if (currentScreen === 'historyScreen') {
+                showScreen('startScreen');
+            } else if (currentScreen === 'assessmentScreen' || currentScreen === 'resultScreen') {
+                showScreen('startScreen');
+            } else {
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    window.location.href = '/apps';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

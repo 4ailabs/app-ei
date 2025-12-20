@@ -718,6 +718,13 @@ export const sessions: Session[] = [
         description: "Patrones de respiración para regular el sistema nervioso: 4-7-8, Box Breathing y más.",
         url: "/protocols/respiracion-guiada-app.html",
         iconName: "Activity"
+      },
+      {
+        id: "app1-2",
+        name: "Check-in de Estado",
+        description: "Identifica si estás en Ventral, Simpático o Dorsal y recibe recomendaciones personalizadas.",
+        url: "/protocols/checkin-estado-app.html",
+        iconName: "Gauge"
       }
     ]
   },

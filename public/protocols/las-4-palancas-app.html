@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Las 4 Palancas - Guía Interactiva</title>
+    <style>
+        :root {
+            --bg-primary: #FAF9F7;
+            --bg-secondary: #F5F4F0;
+            --text-primary: #1A1915;
+            --text-secondary: #706F6C;
+            --text-muted: #9B9A97;
+            --border-color: #E5E4E0;
+            --card-bg: #FFFFFF;
+            --accent: #DA7756;
+            --accent-light: rgba(218, 119, 86, 0.1);
+            --success: #2ca58d;
+            --success-light: rgba(44, 165, 141, 0.15);
+            --palanca-1: #DA7756;
+            --palanca-2: #3B82F6;
+            --palanca-3: #8B5CF6;
+            --palanca-4: #10B981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .header-spacer {
+            width: 60px;
+        }
+
+        /* Screens */
+        .screen {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* Start Screen */
+        .start-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .start-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--palanca-1), var(--palanca-2), var(--palanca-3), var(--palanca-4));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+            position: relative;
+        }
+
+        .start-icon::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            background: var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .start-icon svg {
+            width: 48px;
+            height: 48px;
+            color: var(--accent);
+            position: relative;
+            z-index: 1;
+        }
+
+        .start-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .start-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 320px;
+            margin-bottom: 32px;
+        }
+
+        .palancas-preview {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .palanca-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .palanca-chip .num {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .palanca-chip:nth-child(1) .num { background: var(--palanca-1); }
+        .palanca-chip:nth-child(2) .num { background: var(--palanca-2); }
+        .palanca-chip:nth-child(3) .num { background: var(--palanca-3); }
+        .palanca-chip:nth-child(4) .num { background: var(--palanca-4); }
+
+        .start-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 48px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(218, 119, 86, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .start-btn:active {
+            transform: scale(0.98);
+        }
+
+        .start-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Situation Screen */
+        .situation-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            padding-bottom: 100px;
+        }
+
+        .situation-intro {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .situation-intro h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .situation-intro p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .situation-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .situation-option {
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            font-size: 15px;
+            color: var(--text-primary);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .situation-option:hover {
+            border-color: var(--accent);
+        }
+
+        .situation-option.selected {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .custom-situation {
+            margin-top: 16px;
+        }
+
+        .custom-situation label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .action-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--bg-secondary);
+            resize: none;
+            min-height: 60px;
+            transition: border-color 0.2s;
+        }
+
+        .action-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--card-bg);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 4px;
+            background: var(--border-color);
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--palanca-1), var(--palanca-2), var(--palanca-3), var(--palanca-4));
+            transition: width 0.3s ease;
+        }
+
+        /* Palanca Practice Screen */
+        .palanca-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .situation-header {
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .situation-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .situation-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .palanca-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            padding-bottom: 120px;
+        }
+
+        .palanca-header-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .palanca-header-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .palanca-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .palanca-number.p1 { background: var(--palanca-1); }
+        .palanca-number.p2 { background: var(--palanca-2); }
+        .palanca-number.p3 { background: var(--palanca-3); }
+        .palanca-number.p4 { background: var(--palanca-4); }
+
+        .palanca-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .palanca-info p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .mechanism-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 14px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+        }
+
+        /* Practice Area - The Active Part */
+        .practice-area {
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .practice-header {
+            padding: 16px 20px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .practice-header svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+        }
+
+        .practice-header span {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .practice-body {
+            padding: 20px;
+        }
+
+        /* Breathing Exercise (Palanca 1) */
+        .breathing-exercise {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .breathing-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--palanca-1), #E8936F);
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: transform 4s ease-in-out;
+        }
+
+        .breathing-circle.inhale {
+            transform: scale(1.15);
+        }
+
+        .breathing-circle.exhale {
+            transform: scale(0.85);
+        }
+
+        .breathing-circle.hold {
+            transform: scale(1);
+        }
+
+        .breathing-circle::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            background: var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .breathing-text {
+            position: relative;
+            z-index: 1;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--palanca-1);
+        }
+
+        .breathing-timer {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .breathing-instruction {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .breathing-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .breath-btn {
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .breath-btn.primary {
+            background: var(--palanca-1);
+            color: white;
+            box-shadow: 0 4px 16px rgba(218, 119, 86, 0.3);
+        }
+
+        .breath-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .breath-btn:active {
+            transform: scale(0.98);
+        }
+
+        .breath-completed {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--success-light);
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .breath-completed svg {
+            width: 20px;
+            height: 20px;
+            color: var(--success);
+        }
+
+        .breath-completed span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        /* Focus Exercise (Palanca 2) */
+        .focus-exercise {
+            padding: 10px 0;
+        }
+
+        .focus-prompt {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        .focus-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .focus-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border: 2px solid transparent;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .focus-option:hover {
+            background: var(--card-bg);
+            border-color: var(--border-color);
+        }
+
+        .focus-option.selected {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--palanca-2);
+        }
+
+        .focus-option-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .focus-option-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--palanca-2);
+        }
+
+        .focus-option-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .focus-custom {
+            margin-top: 16px;
+        }
+
+        .focus-custom label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        /* Language Exercise (Palanca 3) */
+        .language-exercise {
+            padding: 10px 0;
+        }
+
+        .language-transform {
+            margin-bottom: 24px;
+        }
+
+        .transform-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .transform-box {
+            flex: 1;
+            padding: 16px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .transform-box.old {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px dashed #EF4444;
+        }
+
+        .transform-box.new {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid #10B981;
+        }
+
+        .transform-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .transform-box.old .transform-label { color: #EF4444; }
+        .transform-box.new .transform-label { color: #10B981; }
+
+        .transform-text {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .transform-box.old .transform-text {
+            color: #EF4444;
+            text-decoration: line-through;
+        }
+
+        .transform-box.new .transform-text {
+            color: #10B981;
+        }
+
+        .transform-arrow {
+            color: var(--palanca-3);
+            flex-shrink: 0;
+        }
+
+        .transform-arrow svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .speak-section {
+            background: var(--bg-secondary);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .speak-instruction {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .speak-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            background: var(--palanca-3);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .speak-btn:active {
+            transform: scale(0.98);
+        }
+
+        .speak-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .speak-counter {
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .speak-counter strong {
+            color: var(--palanca-3);
+        }
+
+        /* Visualization Exercise (Palanca 4) */
+        .visualization-exercise {
+            padding: 10px 0;
+        }
+
+        .viz-timer-section {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .viz-circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: conic-gradient(var(--palanca-4) 0%, var(--border-color) 0%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .viz-circle::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            background: var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .viz-timer-text {
+            position: relative;
+            z-index: 1;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--palanca-4);
+        }
+
+        .viz-instruction {
+            font-size: 16px;
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .viz-sub {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .viz-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .viz-btn {
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .viz-btn.primary {
+            background: var(--palanca-4);
+            color: white;
+        }
+
+        .viz-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .error-rehearsal {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .error-rehearsal h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--palanca-4);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .error-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .error-item label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .error-item input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--card-bg);
+        }
+
+        .error-item input:focus {
+            outline: none;
+            border-color: var(--palanca-4);
+        }
+
+        .error-recovery-label {
+            color: var(--palanca-4) !important;
+            margin-top: 10px;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 12px;
+            padding: 16px 20px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .nav-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .nav-btn.primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 16px rgba(218, 119, 86, 0.3);
+        }
+
+        .nav-btn.primary:active {
+            transform: scale(0.98);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Result Screen */
+        .result-screen {
+            padding: 24px;
+            padding-bottom: 100px;
+        }
+
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 28px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .result-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-light);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-icon svg {
+            width: 40px;
+            height: 40px;
+            color: var(--success);
+        }
+
+        .result-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .result-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .summary-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .summary-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .summary-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: white;
+        }
+
+        .summary-icon.p1 { background: var(--palanca-1); }
+        .summary-icon.p2 { background: var(--palanca-2); }
+        .summary-icon.p3 { background: var(--palanca-3); }
+        .summary-icon.p4 { background: var(--palanca-4); }
+
+        .summary-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .summary-content {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .summary-content p {
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .summary-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--success-light);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--success);
+            margin-top: 10px;
+        }
+
+        .summary-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.2s;
+            border: none;
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .action-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .action-btn.primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 16px rgba(218, 119, 86, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .pulse {
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" onclick="handleBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            <span>Volver</span>
+        </button>
+        <span class="header-title">Las 4 Palancas</span>
+        <div class="header-spacer"></div>
+    </header>
+
+    <!-- Start Screen -->
+    <div class="screen active" id="startScreen">
+        <div class="start-screen">
+            <div class="start-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" x2="4" y1="21" y2="14"/>
+                    <line x1="4" x2="4" y1="10" y2="3"/>
+                    <line x1="12" x2="12" y1="21" y2="12"/>
+                    <line x1="12" x2="12" y1="8" y2="3"/>
+                    <line x1="20" x2="20" y1="21" y2="16"/>
+                    <line x1="20" x2="20" y1="12" y2="3"/>
+                    <line x1="2" x2="6" y1="14" y2="14"/>
+                    <line x1="10" x2="14" y1="8" y2="8"/>
+                    <line x1="18" x2="22" y1="16" y2="16"/>
+                </svg>
+            </div>
+            <h1 class="start-title">Las 4 Palancas</h1>
+            <p class="start-description">
+                Práctica guiada para cambiar tu estado. Cada palanca incluye una acción real que harás ahora mismo.
+            </p>
+
+            <div class="palancas-preview">
+                <div class="palanca-chip">
+                    <span class="num">I</span>
+                    Respiración
+                </div>
+                <div class="palanca-chip">
+                    <span class="num">II</span>
+                    Enfoque
+                </div>
+                <div class="palanca-chip">
+                    <span class="num">III</span>
+                    Lenguaje
+                </div>
+                <div class="palanca-chip">
+                    <span class="num">IV</span>
+                    Visualización
+                </div>
+            </div>
+
+            <button class="start-btn" onclick="startSession()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                Comenzar Práctica
+            </button>
+        </div>
+    </div>
+
+    <!-- Situation Screen -->
+    <div class="screen" id="situationScreen">
+        <div class="situation-screen">
+            <div class="situation-intro">
+                <h2>¿Qué situación enfrentas?</h2>
+                <p>Selecciona o describe la situación para la cual quieres prepararte.</p>
+            </div>
+
+            <div class="situation-options" id="situationOptions">
+                <button class="situation-option" data-situation="Presentación o hablar en público">
+                    Presentación o hablar en público
+                </button>
+                <button class="situation-option" data-situation="Conversación difícil">
+                    Conversación difícil
+                </button>
+                <button class="situation-option" data-situation="Momento de estrés o ansiedad">
+                    Momento de estrés o ansiedad
+                </button>
+                <button class="situation-option" data-situation="Decisión importante">
+                    Decisión importante
+                </button>
+            </div>
+
+            <div class="custom-situation">
+                <label>O describe tu situación:</label>
+                <textarea class="action-input" id="customSituation" placeholder="Ej: Reunión con el jefe..."></textarea>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn secondary" onclick="showStart()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+                Atrás
+            </button>
+            <button class="nav-btn primary" onclick="startPalancas()">
+                Comenzar
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Palanca Screen -->
+    <div class="screen" id="palancaScreen">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 25%"></div>
+        </div>
+
+        <div class="situation-header">
+            <p class="situation-label">Tu situación</p>
+            <p class="situation-text" id="situationDisplay">-</p>
+        </div>
+
+        <div class="palanca-content" id="palancaContent">
+            <!-- Dynamic content -->
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn secondary" id="palancaPrevBtn" onclick="prevPalanca()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+                Anterior
+            </button>
+            <button class="nav-btn primary" id="palancaNextBtn" onclick="nextPalanca()">
+                Siguiente
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div class="screen" id="resultScreen">
+        <div class="result-screen" id="resultContent">
+            <!-- Dynamic content -->
+        </div>
+    </div>
+
+    <script>
+        // State
+        let currentSituation = '';
+        let currentPalanca = 0;
+        let practiceData = {
+            breathing: { completed: false, cycles: 0 },
+            focus: { selected: '', custom: '' },
+            language: { speakCount: 0, currentTransform: 0 },
+            visualization: { completed: false, seconds: 0, errors: [] }
+        };
+
+        // Breathing state
+        let breathingInterval = null;
+        let breathingPhase = 'ready'; // ready, inhale, hold, exhale
+        let breathingSeconds = 0;
+
+        // Visualization state
+        let vizInterval = null;
+        let vizSeconds = 0;
+        let vizRunning = false;
+
+        // Language transforms
+        const languageTransforms = [
+            { old: 'Estoy nervioso', new: 'Mi cuerpo está activado para esto' },
+            { old: 'No puedo', new: 'Todavía no encontré cómo' },
+            { old: 'Es un problema', new: 'Es un desafío nuevo' }
+        ];
+
+        // Focus options
+        const focusOptions = [
+            { id: 'opportunities', text: 'Las oportunidades en esta situación', icon: 'target' },
+            { id: 'resources', text: 'Los recursos que tengo disponibles', icon: 'box' },
+            { id: 'control', text: 'Lo que sí puedo controlar', icon: 'sliders' },
+            { id: 'learn', text: 'Lo que puedo aprender de esto', icon: 'book' }
+        ];
+
+        // Functions
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function showStart() {
+            showScreen('startScreen');
+        }
+
+        function startSession() {
+            showScreen('situationScreen');
+            setupSituationOptions();
+        }
+
+        function setupSituationOptions() {
+            document.querySelectorAll('.situation-option').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.situation-option').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    currentSituation = this.dataset.situation;
+                    document.getElementById('customSituation').value = '';
+                });
+            });
+
+            document.getElementById('customSituation').addEventListener('input', function() {
+                if (this.value.trim()) {
+                    document.querySelectorAll('.situation-option').forEach(b => b.classList.remove('selected'));
+                    currentSituation = this.value.trim();
+                }
+            });
+        }
+
+        function startPalancas() {
+            if (!currentSituation) {
+                currentSituation = document.getElementById('customSituation').value.trim() || 'Mi situación actual';
+            }
+            currentPalanca = 0;
+            practiceData = {
+                breathing: { completed: false, cycles: 0 },
+                focus: { selected: '', custom: '' },
+                language: { speakCount: 0, currentTransform: 0 },
+                visualization: { completed: false, seconds: 0, errors: [] }
+            };
+            showScreen('palancaScreen');
+            renderPalanca();
+        }
+
+        function renderPalanca() {
+            // Update progress
+            document.getElementById('progressFill').style.width = `${((currentPalanca + 1) / 4) * 100}%`;
+            document.getElementById('situationDisplay').textContent = currentSituation;
+
+            const container = document.getElementById('palancaContent');
+
+            switch(currentPalanca) {
+                case 0:
+                    renderBreathingPalanca(container);
+                    break;
+                case 1:
+                    renderFocusPalanca(container);
+                    break;
+                case 2:
+                    renderLanguagePalanca(container);
+                    break;
+                case 3:
+                    renderVisualizationPalanca(container);
+                    break;
+            }
+
+            updateNavButtons();
+        }
+
+        // PALANCA 1: Breathing
+        function renderBreathingPalanca(container) {
+            container.innerHTML = `
+                <div class="palanca-header-card fade-in">
+                    <div class="palanca-header-row">
+                        <div class="palanca-number p1">I</div>
+                        <div class="palanca-info">
+                            <h3>Fisiología</h3>
+                            <p>Cambia tu cuerpo, cambia tu estado</p>
+                        </div>
+                    </div>
+                    <p class="mechanism-text">
+                        Tu cuerpo comunica con tu cerebro constantemente. La respiración 4-7-8 activa el nervio vago y calma el sistema nervioso en segundos.
+                    </p>
+                </div>
+
+                <div class="practice-area fade-in" style="animation-delay: 0.1s">
+                    <div class="practice-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="10 8 16 12 10 16 10 8"/>
+                        </svg>
+                        <span>Práctica: 3 ciclos de respiración 4-7-8</span>
+                    </div>
+                    <div class="practice-body">
+                        <div class="breathing-exercise" id="breathingExercise">
+                            <div class="breathing-circle" id="breathingCircle">
+                                <span class="breathing-text" id="breathingText">Listo</span>
+                            </div>
+                            <div class="breathing-timer" id="breathingTimer">0:00</div>
+                            <p class="breathing-instruction" id="breathingInstruction">Presiona iniciar para comenzar</p>
+                            <div class="breathing-controls">
+                                <button class="breath-btn primary" id="breathStartBtn" onclick="startBreathing()">
+                                    Iniciar
+                                </button>
+                            </div>
+                            <div class="breath-completed hidden" id="breathCompleted">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                <span>¡3 ciclos completados!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function startBreathing() {
+            if (breathingInterval) {
+                stopBreathing();
+                return;
+            }
+
+            practiceData.breathing.cycles = 0;
+            breathingPhase = 'inhale';
+            breathingSeconds = 4;
+
+            document.getElementById('breathStartBtn').textContent = 'Detener';
+            updateBreathingUI();
+
+            breathingInterval = setInterval(() => {
+                breathingSeconds--;
+
+                if (breathingSeconds <= 0) {
+                    if (breathingPhase === 'inhale') {
+                        breathingPhase = 'hold';
+                        breathingSeconds = 7;
+                    } else if (breathingPhase === 'hold') {
+                        breathingPhase = 'exhale';
+                        breathingSeconds = 8;
+                    } else if (breathingPhase === 'exhale') {
+                        practiceData.breathing.cycles++;
+                        if (practiceData.breathing.cycles >= 3) {
+                            completeBreathing();
+                            return;
+                        }
+                        breathingPhase = 'inhale';
+                        breathingSeconds = 4;
+                    }
+                }
+
+                updateBreathingUI();
+            }, 1000);
+        }
+
+        function updateBreathingUI() {
+            const circle = document.getElementById('breathingCircle');
+            const text = document.getElementById('breathingText');
+            const instruction = document.getElementById('breathingInstruction');
+            const timer = document.getElementById('breathingTimer');
+
+            circle.classList.remove('inhale', 'hold', 'exhale');
+
+            if (breathingPhase === 'inhale') {
+                circle.classList.add('inhale');
+                text.textContent = breathingSeconds;
+                instruction.textContent = 'Inhala profundo por la nariz';
+            } else if (breathingPhase === 'hold') {
+                circle.classList.add('hold');
+                text.textContent = breathingSeconds;
+                instruction.textContent = 'Sostén el aire';
+            } else if (breathingPhase === 'exhale') {
+                circle.classList.add('exhale');
+                text.textContent = breathingSeconds;
+                instruction.textContent = 'Exhala lento por la boca';
+            }
+
+            timer.textContent = `Ciclo ${practiceData.breathing.cycles + 1}/3`;
+        }
+
+        function stopBreathing() {
+            if (breathingInterval) {
+                clearInterval(breathingInterval);
+                breathingInterval = null;
+            }
+            document.getElementById('breathStartBtn').textContent = 'Iniciar';
+            document.getElementById('breathingText').textContent = 'Listo';
+            document.getElementById('breathingInstruction').textContent = 'Presiona iniciar para comenzar';
+            breathingPhase = 'ready';
+        }
+
+        function completeBreathing() {
+            stopBreathing();
+            practiceData.breathing.completed = true;
+            document.getElementById('breathingTimer').textContent = '¡Completado!';
+            document.getElementById('breathingText').textContent = '✓';
+            document.getElementById('breathingInstruction').textContent = 'Excelente trabajo';
+            document.getElementById('breathCompleted').classList.remove('hidden');
+            document.getElementById('breathStartBtn').classList.add('hidden');
+        }
+
+        // PALANCA 2: Focus
+        function renderFocusPalanca(container) {
+            container.innerHTML = `
+                <div class="palanca-header-card fade-in">
+                    <div class="palanca-header-row">
+                        <div class="palanca-number p2">II</div>
+                        <div class="palanca-info">
+                            <h3>Enfoque</h3>
+                            <p>Dirige tu atención intencionalmente</p>
+                        </div>
+                    </div>
+                    <p class="mechanism-text">
+                        Tu Sistema Reticular Activador busca lo que le instruyes. Cambiar tu enfoque cambia literalmente qué información procesas.
+                    </p>
+                </div>
+
+                <div class="practice-area fade-in" style="animation-delay: 0.1s">
+                    <div class="practice-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <span>¿En qué vas a enfocar tu atención?</span>
+                    </div>
+                    <div class="practice-body">
+                        <div class="focus-exercise">
+                            <p class="focus-prompt">Para "${currentSituation}", voy a enfocarme en:</p>
+
+                            <div class="focus-options" id="focusOptions">
+                                ${focusOptions.map(opt => `
+                                    <div class="focus-option ${practiceData.focus.selected === opt.id ? 'selected' : ''}" onclick="selectFocus('${opt.id}')">
+                                        <div class="focus-option-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                ${opt.icon === 'target' ? '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>' : ''}
+                                                ${opt.icon === 'box' ? '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>' : ''}
+                                                ${opt.icon === 'sliders' ? '<line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/>' : ''}
+                                                ${opt.icon === 'book' ? '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>' : ''}
+                                            </svg>
+                                        </div>
+                                        <span class="focus-option-text">${opt.text}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div class="focus-custom">
+                                <label>Escribe específicamente qué vas a buscar:</label>
+                                <textarea class="action-input" id="focusCustom" placeholder="Ej: Voy a buscar señales de que la gente me escucha..." oninput="saveFocusCustom()">${practiceData.focus.custom}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectFocus(id) {
+            practiceData.focus.selected = id;
+            document.querySelectorAll('.focus-option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+        }
+
+        function saveFocusCustom() {
+            practiceData.focus.custom = document.getElementById('focusCustom').value;
+        }
+
+        // PALANCA 3: Language
+        function renderLanguagePalanca(container) {
+            const t = languageTransforms[practiceData.language.currentTransform];
+
+            container.innerHTML = `
+                <div class="palanca-header-card fade-in">
+                    <div class="palanca-header-row">
+                        <div class="palanca-number p3">III</div>
+                        <div class="palanca-info">
+                            <h3>Lenguaje</h3>
+                            <p>Cambia tus palabras, cambia tu biología</p>
+                        </div>
+                    </div>
+                    <p class="mechanism-text">
+                        Las palabras crean tu realidad bioquímica. Decir la frase nueva en voz alta activa las redes neuronales del cambio.
+                    </p>
+                </div>
+
+                <div class="practice-area fade-in" style="animation-delay: 0.1s">
+                    <div class="practice-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                        <span>Di en VOZ ALTA la nueva frase (3 veces)</span>
+                    </div>
+                    <div class="practice-body">
+                        <div class="language-exercise">
+                            <div class="language-transform">
+                                <div class="transform-row">
+                                    <div class="transform-box old">
+                                        <p class="transform-label">En lugar de</p>
+                                        <p class="transform-text">"${t.old}"</p>
+                                    </div>
+                                </div>
+                                <div class="transform-arrow" style="text-align: center; padding: 8px 0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                        <polyline points="19 12 12 19 5 12"/>
+                                    </svg>
+                                </div>
+                                <div class="transform-row">
+                                    <div class="transform-box new">
+                                        <p class="transform-label">Voy a decir</p>
+                                        <p class="transform-text">"${t.new}"</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="speak-section">
+                                <p class="speak-instruction">Presiona el botón cada vez que digas la frase EN VOZ ALTA</p>
+                                <button class="speak-btn" onclick="countSpeak()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                        <line x1="12" x2="12" y1="19" y2="22"/>
+                                    </svg>
+                                    ¡Lo dije!
+                                </button>
+                                <p class="speak-counter">
+                                    Repeticiones: <strong id="speakCount">${practiceData.language.speakCount}</strong>/3
+                                    ${practiceData.language.speakCount >= 3 ? ' ✓' : ''}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function countSpeak() {
+            if (practiceData.language.speakCount < 3) {
+                practiceData.language.speakCount++;
+                document.getElementById('speakCount').textContent = practiceData.language.speakCount;
+
+                if (practiceData.language.speakCount >= 3) {
+                    document.querySelector('.speak-counter').innerHTML =
+                        'Repeticiones: <strong style="color: var(--success);">3</strong>/3 ✓ ¡Excelente!';
+                }
+
+                // Vibrate if available
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+            }
+        }
+
+        // PALANCA 4: Visualization
+        function renderVisualizationPalanca(container) {
+            container.innerHTML = `
+                <div class="palanca-header-card fade-in">
+                    <div class="palanca-header-row">
+                        <div class="palanca-number p4">IV</div>
+                        <div class="palanca-info">
+                            <h3>Imaginación</h3>
+                            <p>Tu cerebro no diferencia lo real de lo vívido</p>
+                        </div>
+                    </div>
+                    <p class="mechanism-text">
+                        Las mismas redes neuronales se activan al imaginar vívidamente. Visualiza el proceso completo, incluyendo posibles errores y tu recuperación.
+                    </p>
+                </div>
+
+                <div class="practice-area fade-in" style="animation-delay: 0.1s">
+                    <div class="practice-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <span>Visualización guiada (60 segundos)</span>
+                    </div>
+                    <div class="practice-body">
+                        <div class="visualization-exercise">
+                            <div class="viz-timer-section">
+                                <div class="viz-circle" id="vizCircle">
+                                    <span class="viz-timer-text" id="vizTimer">1:00</span>
+                                </div>
+                                <p class="viz-instruction" id="vizInstruction">Cierra los ojos y visualiza</p>
+                                <p class="viz-sub" id="vizSub">"${currentSituation}" saliendo exactamente como quieres</p>
+                                <div class="viz-controls">
+                                    <button class="viz-btn primary" id="vizStartBtn" onclick="toggleVisualization()">
+                                        Iniciar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="error-rehearsal">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                    </svg>
+                                    Ensayo de errores (opcional)
+                                </h4>
+                                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                                    Visualiza un posible error y cómo te recuperas con calma.
+                                </p>
+
+                                <div class="error-item">
+                                    <label>¿Qué podría salir mal?</label>
+                                    <input type="text" id="errorInput" placeholder="Ej: Me quedo en blanco..." oninput="saveError()">
+                                    <label class="error-recovery-label">¿Cómo me recupero?</label>
+                                    <input type="text" id="recoveryInput" placeholder="Ej: Respiro, miro mis notas, continúo..." oninput="saveError()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleVisualization() {
+            if (vizRunning) {
+                stopVisualization();
+            } else {
+                startVisualization();
+            }
+        }
+
+        function startVisualization() {
+            vizRunning = true;
+            vizSeconds = 60;
+            document.getElementById('vizStartBtn').textContent = 'Pausar';
+            updateVizUI();
+
+            vizInterval = setInterval(() => {
+                vizSeconds--;
+                updateVizUI();
+
+                if (vizSeconds <= 0) {
+                    completeVisualization();
+                }
+            }, 1000);
+        }
+
+        function stopVisualization() {
+            vizRunning = false;
+            if (vizInterval) {
+                clearInterval(vizInterval);
+                vizInterval = null;
+            }
+            document.getElementById('vizStartBtn').textContent = 'Continuar';
+        }
+
+        function updateVizUI() {
+            const mins = Math.floor(vizSeconds / 60);
+            const secs = vizSeconds % 60;
+            document.getElementById('vizTimer').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+
+            const progress = ((60 - vizSeconds) / 60) * 100;
+            document.getElementById('vizCircle').style.background =
+                `conic-gradient(var(--palanca-4) ${progress}%, var(--border-color) ${progress}%)`;
+
+            // Change instruction based on time
+            if (vizSeconds > 45) {
+                document.getElementById('vizInstruction').textContent = 'Visualiza el inicio...';
+                document.getElementById('vizSub').textContent = 'Cómo entras, cómo te sientes, qué ves';
+            } else if (vizSeconds > 30) {
+                document.getElementById('vizInstruction').textContent = 'Visualiza el desarrollo...';
+                document.getElementById('vizSub').textContent = 'Todo fluye, te sientes en control';
+            } else if (vizSeconds > 15) {
+                document.getElementById('vizInstruction').textContent = 'Visualiza el éxito...';
+                document.getElementById('vizSub').textContent = 'Siente la emoción del logro';
+            } else {
+                document.getElementById('vizInstruction').textContent = 'Ancla la sensación...';
+                document.getElementById('vizSub').textContent = 'Guarda esta imagen y emoción';
+            }
+        }
+
+        function completeVisualization() {
+            stopVisualization();
+            practiceData.visualization.completed = true;
+            practiceData.visualization.seconds = 60;
+            document.getElementById('vizTimer').textContent = '✓';
+            document.getElementById('vizInstruction').textContent = '¡Visualización completada!';
+            document.getElementById('vizSub').textContent = 'Tu cerebro ya practicó el éxito';
+            document.getElementById('vizStartBtn').textContent = 'Completado';
+            document.getElementById('vizStartBtn').disabled = true;
+            document.getElementById('vizCircle').style.background =
+                `conic-gradient(var(--palanca-4) 100%, var(--palanca-4) 100%)`;
+        }
+
+        function saveError() {
+            practiceData.visualization.errors = [{
+                error: document.getElementById('errorInput')?.value || '',
+                recovery: document.getElementById('recoveryInput')?.value || ''
+            }];
+        }
+
+        // Navigation
+        function updateNavButtons() {
+            document.getElementById('palancaPrevBtn').style.visibility = currentPalanca === 0 ? 'hidden' : 'visible';
+
+            if (currentPalanca === 3) {
+                document.getElementById('palancaNextBtn').innerHTML = `
+                    Ver Resumen
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                `;
+            } else {
+                document.getElementById('palancaNextBtn').innerHTML = `
+                    Siguiente
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                `;
+            }
+        }
+
+        function prevPalanca() {
+            // Stop any running timers
+            stopBreathing();
+            stopVisualization();
+
+            if (currentPalanca > 0) {
+                currentPalanca--;
+                renderPalanca();
+            }
+        }
+
+        function nextPalanca() {
+            // Stop any running timers
+            stopBreathing();
+            stopVisualization();
+
+            if (currentPalanca < 3) {
+                currentPalanca++;
+                renderPalanca();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            showScreen('resultScreen');
+            renderResult();
+        }
+
+        function renderResult() {
+            const container = document.getElementById('resultContent');
+
+            const focusText = practiceData.focus.custom ||
+                (focusOptions.find(o => o.id === practiceData.focus.selected)?.text || 'No seleccionado');
+
+            container.innerHTML = `
+                <div class="result-card fade-in">
+                    <div class="result-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <h2 class="result-title">¡Práctica Completada!</h2>
+                    <p class="result-subtitle">Has activado las 4 palancas para "${currentSituation}"</p>
+                </div>
+
+                <div class="summary-section fade-in" style="animation-delay: 0.1s">
+                    <div class="summary-header">
+                        <div class="summary-icon p1">I</div>
+                        <span class="summary-title">Fisiología</span>
+                    </div>
+                    <div class="summary-content">
+                        <p>Respiración 4-7-8: ${practiceData.breathing.cycles} ciclos completados</p>
+                        ${practiceData.breathing.completed ? `
+                            <div class="summary-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                Completado
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                <div class="summary-section fade-in" style="animation-delay: 0.15s">
+                    <div class="summary-header">
+                        <div class="summary-icon p2">II</div>
+                        <span class="summary-title">Enfoque</span>
+                    </div>
+                    <div class="summary-content">
+                        <p>${focusText}</p>
+                    </div>
+                </div>
+
+                <div class="summary-section fade-in" style="animation-delay: 0.2s">
+                    <div class="summary-header">
+                        <div class="summary-icon p3">III</div>
+                        <span class="summary-title">Lenguaje</span>
+                    </div>
+                    <div class="summary-content">
+                        <p>"${languageTransforms[0].new}"</p>
+                        <p style="margin-top: 8px; font-size: 13px; color: var(--text-secondary);">
+                            Dicho en voz alta: ${practiceData.language.speakCount} veces
+                            ${practiceData.language.speakCount >= 3 ? ' ✓' : ''}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="summary-section fade-in" style="animation-delay: 0.25s">
+                    <div class="summary-header">
+                        <div class="summary-icon p4">IV</div>
+                        <span class="summary-title">Visualización</span>
+                    </div>
+                    <div class="summary-content">
+                        <p>${practiceData.visualization.completed ? 'Visualización de 60 segundos completada' : 'Visualización en progreso'}</p>
+                        ${practiceData.visualization.errors[0]?.error ? `
+                            <p style="margin-top: 10px; font-size: 13px;">
+                                <strong style="color: var(--palanca-4);">Error ensayado:</strong>
+                                ${practiceData.visualization.errors[0].error}
+                                → ${practiceData.visualization.errors[0].recovery}
+                            </p>
+                        ` : ''}
+                        ${practiceData.visualization.completed ? `
+                            <div class="summary-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                Completado
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                <div class="action-buttons fade-in" style="animation-delay: 0.3s">
+                    <button class="action-btn secondary" onclick="resetSession()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                            <path d="M3 3v5h5"/>
+                        </svg>
+                        Nueva Práctica
+                    </button>
+                    <button class="action-btn primary" onclick="saveAndClose()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        Finalizar
+                    </button>
+                </div>
+            `;
+        }
+
+        function resetSession() {
+            currentSituation = '';
+            currentPalanca = 0;
+            practiceData = {
+                breathing: { completed: false, cycles: 0 },
+                focus: { selected: '', custom: '' },
+                language: { speakCount: 0, currentTransform: 0 },
+                visualization: { completed: false, seconds: 0, errors: [] }
+            };
+            document.querySelectorAll('.situation-option').forEach(b => b.classList.remove('selected'));
+            document.getElementById('customSituation').value = '';
+            showScreen('situationScreen');
+        }
+
+        function saveAndClose() {
+            // Save to localStorage
+            const session = {
+                situation: currentSituation,
+                practiceData,
+                timestamp: new Date().toISOString()
+            };
+
+            let history = JSON.parse(localStorage.getItem('palancas_history') || '[]');
+            history.unshift(session);
+            if (history.length > 20) history = history.slice(0, 20);
+            localStorage.setItem('palancas_history', JSON.stringify(history));
+
+            handleBack();
+        }
+
+        function handleBack() {
+            // Stop any running exercises
+            try {
+                stopBreathing();
+                stopVisualization();
+            } catch(e) {
+                console.log('Error stopping exercises:', e);
+            }
+
+            const activeElement = document.querySelector('.screen.active');
+            const activeScreen = activeElement ? activeElement.id : 'startScreen';
+
+            if (activeScreen === 'situationScreen') {
+                showScreen('startScreen');
+            } else if (activeScreen === 'palancaScreen') {
+                if (currentPalanca === 0) {
+                    showScreen('situationScreen');
+                } else {
+                    prevPalanca();
+                }
+            } else if (activeScreen === 'resultScreen') {
+                showScreen('startScreen');
+            } else if (activeScreen === 'startScreen') {
+                goToApps();
+            } else {
+                goToApps();
+            }
+        }
+
+        function goToApps() {
+            // Navegación directa y simple
+            window.location.href = '/apps';
+        }
+
+        console.log('Las 4 Palancas App v2.0 - Con prácticas activas');
+    </script>
+</body>
+</html>

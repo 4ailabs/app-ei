@@ -550,21 +550,13 @@
     <!-- Start Screen -->
     <div class="start-screen" id="startScreen">
         <div class="start-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <!-- Cabeza -->
-                <circle cx="12" cy="4" r="2.5"/>
-                <!-- Cuerpo -->
-                <path d="M12 7v6"/>
-                <!-- Brazos -->
-                <path d="M8 9.5c1.5 0 2.5 1 4 1s2.5-1 4-1"/>
-                <!-- Piernas -->
-                <path d="M12 13l-3 7"/>
-                <path d="M12 13l3 7"/>
-                <!-- Ondas de escaneo -->
-                <path d="M4 12c0-4.4 3.6-8 8-8" opacity="0.4"/>
-                <path d="M20 12c0-4.4-3.6-8-8-8" opacity="0.4"/>
-                <path d="M4 12c0 4.4 3.6 8 8 8" opacity="0.4"/>
-                <path d="M20 12c0 4.4-3.6 8-8 8" opacity="0.4"/>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Lucide ScanLine icon -->
+                <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                <path d="M7 12h10"/>
             </svg>
         </div>
         <h1 class="start-title">Escáner Corporal</h1>
@@ -608,16 +600,13 @@
     <div class="player-screen" id="playerScreen">
         <div class="main-content">
             <div class="breath-circle breathing" id="breathCircle">
-                <svg class="circle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <!-- Cabeza -->
-                    <circle cx="12" cy="4" r="2.5"/>
-                    <!-- Cuerpo -->
-                    <path d="M12 7v6"/>
-                    <!-- Brazos -->
-                    <path d="M8 9.5c1.5 0 2.5 1 4 1s2.5-1 4-1"/>
-                    <!-- Piernas -->
-                    <path d="M12 13l-3 7"/>
-                    <path d="M12 13l3 7"/>
+                <svg class="circle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Lucide ScanLine icon -->
+                    <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                    <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                    <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                    <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                    <path d="M7 12h10"/>
                 </svg>
                 <span class="circle-text" id="circleText">Escuchando</span>
                 <span class="circle-subtext" id="circleSubtext">Relájate y respira</span>
@@ -646,8 +635,8 @@
             </button>
             <button class="control-btn primary" id="playPauseBtn" onclick="togglePlayPause()">
                 <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor">
-                    <rect x="6" y="4" width="4" height="16"/>
-                    <rect x="14" y="4" width="4" height="16"/>
+                    <rect x="6" y="4" width="4" height="16" rx="1"/>
+                    <rect x="14" y="4" width="4" height="16" rx="1"/>
                 </svg>
                 <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor" class="hidden">
                     <polygon points="5 3 19 12 5 21 5 3"/>

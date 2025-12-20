@@ -1,5 +1,5 @@
 import { AppLink } from "@/data/sessions"
-import { Play, Activity, Radio, Smartphone, Zap, Heart, Sparkles } from "lucide-react"
+import { Play, Activity, Radio, Smartphone, Zap, Heart, Sparkles, Gauge, SlidersHorizontal, MessageSquare } from "lucide-react"
 import Link from "next/link"
 
 interface AppSectionProps {
@@ -11,7 +11,10 @@ const iconMap: Record<string, any> = {
     Radio,
     Smartphone,
     Zap,
-    Heart
+    Heart,
+    Gauge,
+    SlidersHorizontal,
+    MessageSquare
 }
 
 // Colores por tipo de app - consistente con el estilo de la app
@@ -35,6 +38,21 @@ const appStyles: Record<string, { color: string; bgLight: string; bgDark: string
         color: "#F59E0B",
         bgLight: "bg-amber-50",
         bgDark: "dark:bg-amber-950/20"
+    },
+    Gauge: {
+        color: "#D97706",
+        bgLight: "bg-orange-50",
+        bgDark: "dark:bg-orange-950/20"
+    },
+    SlidersHorizontal: {
+        color: "#EA580C",
+        bgLight: "bg-orange-50",
+        bgDark: "dark:bg-orange-950/20"
+    },
+    MessageSquare: {
+        color: "#7C3AED",
+        bgLight: "bg-violet-50",
+        bgDark: "dark:bg-violet-950/20"
     },
     default: {
         color: "#706F6C",
@@ -94,7 +112,7 @@ export function AppSection({ apps }: AppSectionProps) {
                             </div>
 
                             {/* Botón de acción */}
-                            <Link href={app.url} target="_blank" className="block">
+                            <Link href={app.url} className="block">
                                 <button
                                     className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#F5F4F0] dark:bg-[#333333] text-[#1A1915] dark:text-[#E5E5E5] font-medium text-sm transition-all duration-200 hover:bg-[#E5E4E0] dark:hover:bg-[#404040] active:scale-[0.98]"
                                 >
