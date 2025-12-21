@@ -19,7 +19,7 @@ const apps: AppCard[] = [
     description: "Patrones de respiración para regular el sistema nervioso: 4-7-8, Box Breathing y más.",
     url: "/protocols/respiracion-guiada-app.html",
     iconName: "Wind",
-    color: "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+    color: "bg-[#2ca58d]/10 text-[#2ca58d] dark:bg-[#2ca58d]/20 dark:text-[#5BB98C]"
   },
   {
     id: "mariposa",
@@ -27,7 +27,7 @@ const apps: AppCard[] = [
     description: "Práctica guiada de estimulación bilateral con vibración, timer y registro de sensaciones.",
     url: "/protocols/abrazo-mariposa-app.html",
     iconName: "Heart",
-    color: "bg-pink-500/10 text-pink-600 dark:text-pink-400"
+    color: "bg-[#2ca58d]/10 text-[#2ca58d] dark:bg-[#2ca58d]/20 dark:text-[#5BB98C]"
   },
   {
     id: "lugar-seguro",
@@ -35,7 +35,7 @@ const apps: AppCard[] = [
     description: "Visualización guiada para crear y anclar tu espacio interno de calma y seguridad.",
     url: "/protocols/lugar-seguro-app.html",
     iconName: "Shield",
-    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+    color: "bg-[#2ca58d]/10 text-[#2ca58d] dark:bg-[#2ca58d]/20 dark:text-[#5BB98C]"
   },
   {
     id: "escaner",
@@ -43,7 +43,7 @@ const apps: AppCard[] = [
     description: "Recorrido guiado por todo el cuerpo para observar sensaciones y liberar tensiones.",
     url: "/protocols/escaner-corporal-app.html",
     iconName: "ScanLine",
-    color: "bg-purple-500/10 text-purple-600 dark:text-purple-400"
+    color: "bg-[#DA7756]/10 text-[#DA7756] dark:bg-[#DA7756]/20 dark:text-[#E89A7F]"
   },
   {
     id: "checkin",
@@ -51,7 +51,7 @@ const apps: AppCard[] = [
     description: "Identifica si estás en Ventral, Simpático o Dorsal y recibe recomendaciones personalizadas.",
     url: "/protocols/checkin-estado-app.html",
     iconName: "Gauge",
-    color: "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+    color: "bg-[#706F6C]/10 text-[#706F6C] dark:bg-[#706F6C]/20 dark:text-[#A0A0A0]"
   },
   {
     id: "palancas",
@@ -59,7 +59,7 @@ const apps: AppCard[] = [
     description: "Guía interactiva paso a paso para cambiar tu estado neurobiológico usando las 4 palancas.",
     url: "/protocols/las-4-palancas-app.html",
     iconName: "SlidersHorizontal",
-    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400"
+    color: "bg-[#DA7756]/10 text-[#DA7756] dark:bg-[#DA7756]/20 dark:text-[#E89A7F]"
   },
   {
     id: "reetiquetado",
@@ -67,7 +67,7 @@ const apps: AppCard[] = [
     description: "Práctica de transformar lenguaje limitante en lenguaje que abre posibilidades.",
     url: "/protocols/re-etiquetado-app.html",
     iconName: "MessageSquare",
-    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400"
+    color: "bg-[#DA7756]/10 text-[#DA7756] dark:bg-[#DA7756]/20 dark:text-[#E89A7F]"
   }
 ]
 
