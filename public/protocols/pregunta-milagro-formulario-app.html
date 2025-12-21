@@ -37,8 +37,8 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 16px;
-            padding-bottom: 100px;
+            padding: 12px;
+            padding-bottom: 90px;
         }
 
         @media (min-width: 640px) {
@@ -48,12 +48,20 @@
         /* Header */
         .header {
             background: linear-gradient(135deg, #1A1915 0%, #2D2D2A 100%);
-            border-radius: 20px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 20px 16px;
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             position: relative;
             overflow: hidden;
+        }
+
+        @media (min-width: 640px) {
+            .header {
+                border-radius: 20px;
+                padding: 24px;
+                margin-bottom: 24px;
+            }
         }
 
         .header::before {
@@ -64,59 +72,104 @@
         }
 
         .header-icon {
-            width: 56px;
-            height: 56px;
+            width: 48px;
+            height: 48px;
             background: var(--accent);
-            border-radius: 16px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 16px;
+            margin: 0 auto 12px;
             position: relative;
         }
 
+        @media (min-width: 640px) {
+            .header-icon {
+                width: 56px;
+                height: 56px;
+                border-radius: 16px;
+                margin: 0 auto 16px;
+            }
+        }
+
         .header-icon svg {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             color: white;
         }
 
+        @media (min-width: 640px) {
+            .header-icon svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
         .header h1 {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: white;
             margin-bottom: 4px;
             position: relative;
         }
 
+        @media (min-width: 640px) {
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+
         .header p {
-            font-size: 14px;
+            font-size: 13px;
             color: rgba(255,255,255,0.7);
             position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .header p {
+                font-size: 14px;
+            }
         }
 
         /* Tabs */
         .tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
+            gap: 6px;
+            margin-bottom: 16px;
             background: var(--bg-card);
-            padding: 6px;
-            border-radius: 14px;
+            padding: 4px;
+            border-radius: 12px;
             border: 1px solid var(--border);
+        }
+
+        @media (min-width: 640px) {
+            .tabs {
+                gap: 8px;
+                margin-bottom: 24px;
+                padding: 6px;
+                border-radius: 14px;
+            }
         }
 
         .tab {
             flex: 1;
-            padding: 12px 16px;
+            padding: 10px 14px;
             border: none;
             background: transparent;
-            border-radius: 10px;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.2s;
+        }
+
+        @media (min-width: 640px) {
+            .tab {
+                padding: 12px 16px;
+                border-radius: 10px;
+                font-size: 14px;
+            }
         }
 
         .tab.active {
@@ -141,9 +194,17 @@
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .card {
+                border-radius: 16px;
+                padding: 20px;
+                margin-bottom: 16px;
+            }
         }
 
         .card-title {
@@ -171,15 +232,28 @@
 
         /* Form Elements */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 14px;
+        }
+
+        @media (min-width: 640px) {
+            .form-group {
+                margin-bottom: 20px;
+            }
         }
 
         .form-label {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+        }
+
+        @media (min-width: 640px) {
+            .form-label {
+                font-size: 13px;
+                margin-bottom: 8px;
+            }
         }
 
         .form-label .hint {
@@ -189,14 +263,22 @@
 
         .form-input {
             width: 100%;
-            padding: 12px 14px;
+            padding: 10px 12px;
             border: 1.5px solid var(--border);
-            border-radius: 10px;
-            font-size: 15px;
+            border-radius: 8px;
+            font-size: 14px;
             color: var(--text-primary);
             background: var(--bg-section);
             transition: border-color 0.2s, box-shadow 0.2s;
             font-family: inherit;
+        }
+
+        @media (min-width: 640px) {
+            .form-input {
+                padding: 12px 14px;
+                border-radius: 10px;
+                font-size: 15px;
+            }
         }
 
         .form-input:focus {
@@ -210,13 +292,25 @@
         }
 
         textarea.form-input {
-            min-height: 80px;
+            min-height: 70px;
             resize: vertical;
+        }
+
+        @media (min-width: 640px) {
+            textarea.form-input {
+                min-height: 80px;
+            }
         }
 
         .form-row {
             display: grid;
-            gap: 12px;
+            gap: 10px;
+        }
+
+        @media (min-width: 640px) {
+            .form-row {
+                gap: 12px;
+            }
         }
 
         @media (min-width: 640px) {
@@ -226,20 +320,28 @@
         /* Day Parts Grid */
         .day-parts-grid {
             display: grid;
-            gap: 12px;
+            gap: 10px;
         }
 
         .day-part {
-            background: var(--bg-section);
-            border-radius: 12px;
-            padding: 14px;
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+        }
+
+        @media (min-width: 640px) {
+            .day-part {
+                background: var(--bg-section);
+                border-radius: 12px;
+                padding: 14px;
+            }
         }
 
         .day-part-label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--accent);
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -250,10 +352,17 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 14px;
-            background: white;
+            background: var(--bg-section);
             font-family: inherit;
-            min-height: 60px;
+            min-height: 50px;
             resize: vertical;
+        }
+
+        @media (min-width: 640px) {
+            .day-part-input {
+                background: white;
+                min-height: 60px;
+            }
         }
 
         .day-part-input:focus {
@@ -264,24 +373,35 @@
         /* Sensory Grid */
         .sensory-grid {
             display: grid;
-            gap: 12px;
+            gap: 8px;
         }
 
         @media (min-width: 640px) {
-            .sensory-grid { grid-template-columns: repeat(3, 1fr); }
+            .sensory-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
         }
 
         .sensory-card {
-            background: var(--bg-section);
-            border-radius: 12px;
-            padding: 14px;
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+        }
+
+        @media (min-width: 640px) {
+            .sensory-card {
+                background: var(--bg-section);
+                border-radius: 12px;
+                padding: 14px;
+            }
         }
 
         .sensory-label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--text-secondary);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .sensory-input {
@@ -290,8 +410,14 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 13px;
-            background: white;
+            background: var(--bg-section);
             font-family: inherit;
+        }
+
+        @media (min-width: 640px) {
+            .sensory-input {
+                background: white;
+            }
         }
 
         .sensory-input:focus {
@@ -302,9 +428,17 @@
         /* Exception Card */
         .exception-card {
             background: var(--bg-section);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        @media (min-width: 640px) {
+            .exception-card {
+                border-radius: 12px;
+                padding: 16px;
+                margin-bottom: 12px;
+            }
         }
 
         .exception-header {
