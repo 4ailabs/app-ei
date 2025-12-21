@@ -1,0 +1,209 @@
+================================================================================
+GUIÓN DE AUDIO - LA PREGUNTA DEL MILAGRO (DIÁLOGO)
+================================================================================
+
+Instrucciones para generación de audio IA:
+- Speaker 1 (Guía): Voz calmada, acogedora, ritmo pausado
+- Speaker 2 (Explorador): Voz reflexiva, a veces dubitativa, auténtica
+- Las marcas <#X#> indican pausas de X segundos
+- Idioma: Español neutro/latinoamericano
+- Archivo: pregunta-milagro-dialogo.mp3
+- Duración estimada: 10-12 minutos
+
+================================================================================
+
+Speaker 1: Tengo una pregunta extraña, tal vez inusual, una pregunta que requiere algo de imaginación
+
+<#4#>
+
+Speaker 1: Suponga que después de que terminemos aquí, usted se va a casa esta noche, ve televisión, hace sus tareas habituales, y luego se va a la cama y se duerme
+
+<#3#>
+
+Speaker 1: Y mientras está durmiendo, ocurre un milagro
+
+<#4#>
+
+Speaker 1: Y los problemas que lo trajeron aquí se resuelven. Así como así
+
+<#3#>
+
+Speaker 1: Pero esto sucede mientras usted está durmiendo, así que no puede saber que ha sucedido
+
+<#3#>
+
+Speaker 1: Una vez que despierta en la mañana, cómo descubriría usted que este milagro le ocurrió
+
+<#6#>
+
+Speaker 2: Mmm, no sé, creo que me despertaría diferente. Sin esa sensación de peso en el pecho que siempre tengo
+
+<#3#>
+
+Speaker 1: Qué más notaría
+
+<#4#>
+
+Speaker 2: Creo que me levantaría con ganas. Sin quedarme acostado pensando en todo lo que tengo que hacer
+
+<#3#>
+
+Speaker 1: Cuénteme más sobre esa mañana, desde que abre los ojos
+
+<#4#>
+
+Speaker 2: Abriría los ojos y sentiría que descansé de verdad. Mi cuerpo estaría relajado. Tal vez hasta sonreiría
+
+<#3#>
+
+Speaker 1: Qué ve en esa mañana
+
+<#3#>
+
+Speaker 2: Veo la luz entrando por la ventana. Y en lugar de sentir que es otra mañana más, siento que es un día con posibilidades
+
+<#3#>
+
+Speaker 1: Qué escucha
+
+<#3#>
+
+Speaker 2: Los pájaros afuera. Y silencio. Silencio en mi mente. Sin esa lista interminable de preocupaciones
+
+<#3#>
+
+Speaker 1: Qué siente en el cuerpo
+
+<#4#>
+
+Speaker 2: Ligereza. Mi estómago está tranquilo. Mis hombros están abajo, no tensos cerca de las orejas como siempre
+
+<#4#>
+
+Speaker 1: Ahora piense en alguien importante para usted. Cómo descubriría esa persona que este milagro le ocurrió, sin que usted le diga nada
+
+<#5#>
+
+Speaker 2: Mi pareja, creo que notaría que le hablo diferente. Con más paciencia. Sin ese tono cortante que a veces tengo
+
+<#3#>
+
+Speaker 1: Qué más vería en usted
+
+<#4#>
+
+Speaker 2: Que estoy presente. Que lo miro a los ojos cuando me habla en lugar de estar pensando en otra cosa. Que sonrío más
+
+<#3#>
+
+Speaker 1: Y sus compañeros de trabajo
+
+<#4#>
+
+Speaker 2: Verían que llego con energía. Que propongo ideas en lugar de solo reaccionar a los problemas. Que no me quejo tanto
+
+<#4#>
+
+Speaker 1: Ahora viene una parte muy importante
+
+<#3#>
+
+Speaker 1: Cuándo fue la vez más reciente, tal vez días, horas, o semanas atrás, que usted puede recordar cuando las cosas fueron algo así como este día después del milagro
+
+<#6#>
+
+Speaker 2: Hmm, déjeme pensar
+
+<#4#>
+
+Speaker 2: Fue hace como dos semanas. Un domingo. Me desperté temprano pero no tenía nada que hacer. Salí a caminar solo
+
+<#3#>
+
+Speaker 1: Qué tenía diferente ese momento
+
+<#4#>
+
+Speaker 2: No había prisa. No había expectativas. Solo estaba ahí, caminando, viendo los árboles
+
+<#3#>
+
+Speaker 1: Qué estaba haciendo usted de manera diferente
+
+<#4#>
+
+Speaker 2: No estaba revisando el teléfono. No estaba pensando en el trabajo. Solo estaba presente
+
+<#3#>
+
+Speaker 1: Qué no estaba haciendo que normalmente sí hace
+
+<#4#>
+
+Speaker 2: No estaba anticipando problemas. No estaba planeando. Solo estaba siendo
+
+<#3#>
+
+Speaker 1: Cómo logró que eso sucediera
+
+<#5#>
+
+Speaker 2: Creo que simplemente me di permiso. Me dije que ese momento era solo para mí. Sin culpa
+
+<#4#>
+
+Speaker 1: En una escala del cero al diez, donde diez representa cómo son las cosas el día después del milagro y cero representa el peor momento, en qué punto diría que está ahora
+
+<#5#>
+
+Speaker 2: Ahora mismo diría que un cuatro. A veces bajo a dos, pero hoy estoy en cuatro
+
+<#3#>
+
+Speaker 1: Qué necesitaría pasar para subir medio punto en esta escala
+
+<#5#>
+
+Speaker 2: Medio punto, creo que necesitaría darme esos momentos de pausa más seguido. No esperar al domingo. Tal vez cinco minutos en la mañana, sin teléfono, sin pensar en la lista de pendientes
+
+<#3#>
+
+Speaker 1: Solo medio punto. Un pequeño cambio
+
+<#3#>
+
+Speaker 2: Sí, cinco minutos. Creo que eso podría hacerlo
+
+<#4#>
+
+Speaker 1: Muy bien. Entonces, recapitulando, usted se ve despertando con ligereza, presente, sonriendo más. Y ya lo logró antes, ese domingo cuando salió a caminar
+
+<#3#>
+
+Speaker 2: Sí, es verdad. Ya pasó antes
+
+<#3#>
+
+Speaker 1: Y el paso concreto sería darse cinco minutos en la mañana, sin teléfono
+
+<#3#>
+
+Speaker 2: Sí. Creo que eso puedo hacerlo
+
+<#3#>
+
+Speaker 1: Perfecto. Entonces la próxima vez que nos veamos, vamos a empezar preguntando, qué está mejor
+
+<#3#>
+
+Speaker 2: Entendido
+
+<#2#>
+
+Speaker 1: Gracias por compartir esto. Tiene los recursos, aunque a veces no los vea
+
+<#3#>
+
+================================================================================
+FIN DEL GUIÓN
+================================================================================

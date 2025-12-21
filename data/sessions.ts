@@ -1824,12 +1824,20 @@ export const sessions: Session[] = [
     protocols: [
       {
         id: "p8-1",
-        title: "Guía de la Pregunta del Milagro",
-        description: "Cómo aplicar esta poderosa técnica de visualización.",
-        pdfUrl: ""
+        title: "La Pregunta del Milagro — Protocolo",
+        description: "Guía completa paso a paso basada en la metodología de Steve de Shazer.",
+        pdfUrl: "/protocols/pregunta-milagro.html"
       }
     ],
-    apps: []
+    apps: [
+      {
+        id: "app8-1",
+        name: "Pregunta del Milagro",
+        description: "Práctica guiada con audio para visualizar tu futuro ideal.",
+        url: "/protocols/pregunta-milagro-app.html",
+        iconName: "Sparkles"
+      }
+    ]
   },
   {
     id: 9,

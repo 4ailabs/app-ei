@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Pregunta del Milagro — Protocolo de Aplicación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FAF9F7;
+            --bg-card: #FFFFFF;
+            --bg-section: #F5F4F0;
+            --text-primary: #1A1915;
+            --text-secondary: #706F6C;
+            --text-muted: #9B9A97;
+            --border: #E5E4E0;
+            --accent: #DA7756;
+            --accent-light: #E89A7F;
+            --success: #2ca58d;
+            --warning: #F59E0B;
+            --purple: #8B5CF6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 16px;
+            padding-bottom: 100px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @media (min-width: 640px) {
+            body { padding: 32px; padding-bottom: 120px; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header Card */
+        .header-card {
+            background: linear-gradient(135deg, #1A1915 0%, #2D2D2A 100%);
+            border-radius: 24px;
+            padding: 32px 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 640px) {
+            .header-card { padding: 56px 48px; }
+        }
+
+        .header-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(218, 119, 86, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .header-icon {
+            width: 72px;
+            height: 72px;
+            background: var(--accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .header-icon svg {
+            width: 36px;
+            height: 36px;
+            color: white;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.8);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 640px) {
+            .header-title { font-size: 42px; }
+        }
+
+        .header-subtitle {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Quote Card */
+        .quote-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .quote-card { padding: 32px; }
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: 16px;
+            left: 20px;
+            font-size: 48px;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 17px;
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding-left: 24px;
+            border-left: 3px solid var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .quote-author {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: right;
+        }
+
+        /* Section Card */
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .section-header { padding: 24px 32px; }
+        }
+
+        .section-number {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .section-number.intro {
+            background: var(--bg-section);
+            color: var(--text-secondary);
+        }
+
+        .section-number svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .section-title-group {
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        @media (min-width: 640px) {
+            .section-title { font-size: 20px; }
+        }
+
+        .section-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .section-body {
+            padding: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .section-body { padding: 32px; }
+        }
+
+        /* Intro Box */
+        .intro-box {
+            background: var(--bg-section);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .intro-box h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .intro-box p {
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        /* Mechanism Cards */
+        .mechanism-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .mechanism-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .mechanism-card {
+            background: var(--bg-section);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .mechanism-number {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto 12px;
+        }
+
+        .mechanism-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .mechanism-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Role Cards */
+        .role-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .role-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .role-card {
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .role-card.guide {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .role-card.explorer {
+            background: linear-gradient(135deg, rgba(44, 165, 141, 0.1) 0%, rgba(44, 165, 141, 0.05) 100%);
+            border: 1px solid rgba(44, 165, 141, 0.2);
+        }
+
+        .role-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .role-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .role-card.guide .role-icon {
+            background: var(--purple);
+        }
+
+        .role-card.explorer .role-icon {
+            background: var(--success);
+        }
+
+        .role-icon svg {
+            width: 20px;
+            height: 20px;
+            color: white;
+        }
+
+        .role-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .role-list {
+            list-style: none;
+        }
+
+        .role-list li {
+            font-size: 14px;
+            color: var(--text-primary);
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .role-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 14px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .role-card.guide .role-list li::before {
+            background: var(--purple);
+        }
+
+        .role-card.explorer .role-list li::before {
+            background: var(--success);
+        }
+
+        /* Golden Rule */
+        .golden-rule {
+            background: linear-gradient(135deg, rgba(218, 119, 86, 0.15) 0%, rgba(218, 119, 86, 0.05) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .golden-rule-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .golden-rule h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .golden-rule p {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Phase Card */
+        .phase-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .phase-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .phase-header.important {
+            background: linear-gradient(135deg, rgba(218, 119, 86, 0.1) 0%, rgba(218, 119, 86, 0.02) 100%);
+        }
+
+        @media (min-width: 640px) {
+            .phase-header { padding: 24px 32px; }
+        }
+
+        .phase-number {
+            width: 48px;
+            height: 48px;
+            background: var(--accent);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .phase-number.star {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+        }
+
+        .phase-title-group {
+            flex: 1;
+        }
+
+        .phase-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .phase-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        @media (min-width: 640px) {
+            .phase-title { font-size: 22px; }
+        }
+
+        .phase-body {
+            padding: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .phase-body { padding: 32px; }
+        }
+
+        .phase-objective {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .phase-objective-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .phase-objective-text {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        /* Script Box */
+        .script-box {
+            background: linear-gradient(135deg, #1A1915 0%, #2D2D2A 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .script-label {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .script-text {
+            font-size: 16px;
+            color: white;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        @media (min-width: 640px) {
+            .script-text { font-size: 18px; }
+        }
+
+        .script-text .pause {
+            display: block;
+            color: var(--accent-light);
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            margin: 12px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .script-text .emphasis {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+
+        /* Question Box */
+        .question-box {
+            background: linear-gradient(135deg, rgba(218, 119, 86, 0.1) 0%, rgba(218, 119, 86, 0.02) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin: 24px 0;
+        }
+
+        .question-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        @media (min-width: 640px) {
+            .question-text { font-size: 24px; }
+        }
+
+        /* Silence Reminder */
+        .silence-reminder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+
+        .silence-reminder svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-secondary);
+        }
+
+        .silence-reminder span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* Follow-up Questions */
+        .followup-section {
+            margin-top: 24px;
+        }
+
+        .followup-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .followup-list {
+            list-style: none;
+        }
+
+        .followup-list li {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        .followup-list li.important {
+            background: linear-gradient(135deg, rgba(218, 119, 86, 0.1) 0%, rgba(218, 119, 86, 0.05) 100%);
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Why Important Box */
+        .why-box {
+            background: linear-gradient(135deg, rgba(44, 165, 141, 0.1) 0%, rgba(44, 165, 141, 0.02) 100%);
+            border: 1px solid rgba(44, 165, 141, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+
+        .why-box h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .why-list {
+            list-style: none;
+        }
+
+        .why-list li {
+            font-size: 14px;
+            color: var(--text-primary);
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .why-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        /* Scale Box */
+        .scale-box {
+            background: var(--bg-section);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        .scale-visual {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .scale-end {
+            text-align: center;
+        }
+
+        .scale-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .scale-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            max-width: 100px;
+        }
+
+        .scale-line {
+            flex: 1;
+            height: 8px;
+            background: linear-gradient(to right, #ef4444, #f59e0b, #22c55e);
+            border-radius: 4px;
+            margin: 0 16px;
+        }
+
+        .scale-items {
+            display: grid;
+            gap: 12px;
+        }
+
+        .scale-item {
+            display: flex;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .scale-item strong {
+            color: var(--accent);
+            min-width: 24px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.02) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .warning-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .warning-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--warning);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .warning-icon svg {
+            width: 20px;
+            height: 20px;
+            color: white;
+        }
+
+        .warning-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--warning);
+        }
+
+        .warning-text {
+            font-size: 14px;
+            color: var(--text-primary);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* Errors Section */
+        .errors-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .error-card {
+            background: var(--bg-section);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .error-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .error-x {
+            width: 28px;
+            height: 28px;
+            background: #ef4444;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .error-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .error-solution {
+            background: rgba(44, 165, 141, 0.1);
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .error-solution strong {
+            color: var(--success);
+        }
+
+        /* Worksheet Section */
+        .worksheet-card {
+            background: var(--bg-card);
+            border: 2px dashed var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .worksheet-card { padding: 32px; }
+        }
+
+        .worksheet-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .worksheet-title svg {
+            width: 24px;
+            height: 24px;
+            color: var(--accent);
+        }
+
+        .worksheet-field {
+            margin-bottom: 24px;
+        }
+
+        .worksheet-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .worksheet-lines {
+            border-bottom: 1px solid var(--border);
+            height: 32px;
+            margin-bottom: 8px;
+        }
+
+        .worksheet-scale {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .worksheet-scale-input {
+            width: 60px;
+            height: 48px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            background: var(--bg-section);
+        }
+
+        .worksheet-scale-label {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        /* Footer Quote */
+        .footer-quote {
+            background: linear-gradient(135deg, #1A1915 0%, #2D2D2A 100%);
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .footer-quote { padding: 48px; }
+        }
+
+        .footer-quote-text {
+            font-size: 18px;
+            font-style: italic;
+            color: white;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .footer-quote-text { font-size: 20px; }
+        }
+
+        .footer-quote-author {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Back Button */
+        .back-button {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            transform: translateX(-50%) scale(1.02);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+        }
+
+        .back-button svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-section);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .divider-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header-card">
+            <div class="header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                    <path d="M19 3v4"/>
+                    <path d="M21 5h-4"/>
+                </svg>
+            </div>
+            <div class="header-badge">Protocolo de Aplicación</div>
+            <h1 class="header-title">La Pregunta del Milagro</h1>
+            <p class="header-subtitle">Basado en la metodología de Steve de Shazer</p>
+        </div>
+
+        <!-- Quote -->
+        <div class="quote-card">
+            <span class="quote-icon">"</span>
+            <p class="quote-text">El propósito nunca fue la pregunta en sí, sino la respuesta del cliente y hacia dónde nos lleva esa respuesta.</p>
+            <p class="quote-author">— Steve de Shazer</p>
+        </div>
+
+        <!-- What is it -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-number intro">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4"/>
+                        <path d="M12 8h.01"/>
+                    </svg>
+                </div>
+                <div class="section-title-group">
+                    <h2 class="section-title">¿Qué es la Pregunta del Milagro?</h2>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="intro-box">
+                    <p>La Pregunta del Milagro no es solo una pregunta. Es una <strong>intervención terapéutica completa</strong> diseñada para transformar la forma en que tu cerebro procesa los problemas y construye el futuro.</p>
+                </div>
+                <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px;">
+                    Desarrollada por Steve de Shazer e Insoo Kim Berg en el Brief Family Therapy Center de Milwaukee en 1984, esta técnica ha sido validada por cuatro décadas de práctica clínica y, más recientemente, por la neurociencia moderna.
+                </p>
+
+                <div class="intro-box" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.02) 100%); border: 1px solid rgba(139, 92, 246, 0.2);">
+                    <h3 style="color: var(--purple);">
+                        <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
+                            <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
+                            <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/>
+                            <path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/>
+                            <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/>
+                            <path d="M3.477 10.896a4 4 0 0 1 .585-.396"/>
+                            <path d="M19.938 10.5a4 4 0 0 1 .585.396"/>
+                            <path d="M6 18a4 4 0 0 1-1.967-.516"/>
+                            <path d="M19.967 17.484A4 4 0 0 1 18 18"/>
+                        </svg>
+                        Por qué funciona: La neurociencia
+                    </h3>
+                    <p>Cuando imaginas un futuro con suficiente detalle sensorial, activas la <strong>Red de Modo Predeterminado</strong> — la misma red neuronal que construye tu sentido de identidad, recuerda el pasado y planifica el futuro.</p>
+                    <p style="margin-top: 12px;">Estudios de neuroimagen han demostrado que el cerebro <strong>no distingue claramente</strong> entre una experiencia imaginada vividamente y una experiencia real. Las mismas áreas cerebrales se activan.</p>
+                </div>
+
+                <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 24px 0 16px;">Tres Mecanismos Neurológicos</h3>
+                <div class="mechanism-grid">
+                    <div class="mechanism-card">
+                        <div class="mechanism-number">1</div>
+                        <div class="mechanism-title">Neuroplasticidad por simulación</div>
+                        <div class="mechanism-desc">Construyes las redes neuronales del futuro deseado</div>
+                    </div>
+                    <div class="mechanism-card">
+                        <div class="mechanism-number">2</div>
+                        <div class="mechanism-title">Bypass del "cómo"</div>
+                        <div class="mechanism-desc">Evitas las defensas y accedes a soluciones que la mente consciente no ve</div>
+                    </div>
+                    <div class="mechanism-card">
+                        <div class="mechanism-number">3</div>
+                        <div class="mechanism-title">Integración corteza-límbico</div>
+                        <div class="mechanism-desc">Creas una experiencia sentida, no solo una idea</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roles Section -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-number intro">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <div class="section-title-group">
+                    <h2 class="section-title">Antes de Comenzar</h2>
+                    <p class="section-subtitle">Los roles en este ejercicio</p>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="role-grid">
+                    <div class="role-card guide">
+                        <div class="role-header">
+                            <div class="role-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 20h9"/>
+                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                                </svg>
+                            </div>
+                            <h3 class="role-title">Tu rol como Guía</h3>
+                        </div>
+                        <ul class="role-list">
+                            <li>Lee el script exactamente como está escrito. Las palabras están elegidas con intención.</li>
+                            <li>Respeta las pausas. El silencio es donde ocurre el trabajo profundo.</li>
+                            <li>No interrumpas el silencio de tu compañero. Cuenta mentalmente hasta 15 si es necesario.</li>
+                            <li>Mantén contacto visual suave. Postura abierta y receptiva.</li>
+                            <li>Confía en el proceso. No necesitas "arreglar" ni "ayudar". Solo guiar.</li>
+                        </ul>
+                    </div>
+                    <div class="role-card explorer">
+                        <div class="role-header">
+                            <div class="role-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                                </svg>
+                            </div>
+                            <h3 class="role-title">Tu rol como Explorador</h3>
+                        </div>
+                        <ul class="role-list">
+                            <li>Elige algo real pero manejable. No tu trauma más profundo.</li>
+                            <li>Permite que emerja lo que emerja. No censures ni juzgues lo que aparece.</li>
+                            <li>Describe con detalle sensorial. Qué ves, qué escuchas, qué sientes en el cuerpo.</li>
+                            <li>Toma tu tiempo. El silencio es tu aliado, no tu enemigo.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="golden-rule">
+                    <div class="golden-rule-icon">⚡</div>
+                    <h4>La Regla de Oro</h4>
+                    <p>Después de cada pregunta: <strong>SILENCIO.</strong><br>El silencio es donde ocurre la transformación.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider">
+            <div class="divider-line"></div>
+            <div class="divider-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+            </div>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- Phase 1 -->
+        <div class="phase-card">
+            <div class="phase-header">
+                <div class="phase-number">1</div>
+                <div class="phase-title-group">
+                    <h2 class="phase-title">Setup del Milagro</h2>
+                </div>
+            </div>
+            <div class="phase-body">
+                <div class="phase-objective">
+                    <div class="phase-objective-label">Objetivo</div>
+                    <div class="phase-objective-text">Crear el contexto imaginativo. Preparar la mente para la construcción del futuro.</div>
+                </div>
+
+                <div class="script-box">
+                    <div class="script-label">Script — Lee exactamente así</div>
+                    <div class="script-text">
+                        "Tengo una pregunta extraña... tal vez inusual... una pregunta que requiere algo de imaginación..."
+                        <span class="pause">[ Pausa — 4 segundos ]</span>
+                        "Suponga..."
+                        <span class="pause">[ Pausa — 3 segundos ]</span>
+                        "...que después de que terminemos aquí, usted se va a casa esta noche..."
+                        <span class="pause">[ Pausa — 2 segundos ]</span>
+                        "...ve televisión, hace sus tareas habituales..."
+                        <span class="pause">[ Pausa — 2 segundos ]</span>
+                        "...y luego se va a la cama y se duerme."
+                        <span class="pause">[ Pausa — 3 segundos ]</span>
+                        "Y mientras está durmiendo..."
+                        <span class="pause">[ Pausa — 2 segundos ]</span>
+                        "...<span class="emphasis">ocurre un milagro.</span>"
+                        <span class="pause">[ Pausa — 4 segundos — dejar que la palabra resuene ]</span>
+                        "Y los problemas que lo trajeron aquí... se resuelven. Así como así."
+                        <span class="pause">[ Pausa — 3 segundos ]</span>
+                        "Pero esto sucede mientras usted está durmiendo..."
+                        <span class="pause">[ Pausa — 2 segundos ]</span>
+                        "...así que no puede saber que ha sucedido."
+                        <span class="pause">[ Pausa — 4 segundos ]</span>
+                        "Una vez que despierta en la mañana..."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase-card">
+            <div class="phase-header">
+                <div class="phase-number">2</div>
+                <div class="phase-title-group">
+                    <h2 class="phase-title">Descubrimiento Personal</h2>
+                </div>
+            </div>
+            <div class="phase-body">
+                <div class="phase-objective">
+                    <div class="phase-objective-label">Objetivo</div>
+                    <div class="phase-objective-text">Que el explorador describa concretamente cómo sería su día después del milagro.</div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-label">La Pregunta</div>
+                    <div class="question-text">"¿Cómo descubriría usted que este milagro le ocurrió?"</div>
+                </div>
+
+                <div class="silence-reminder">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8" y1="23" x2="16" y2="23"/>
+                    </svg>
+                    <span>Después de preguntar: SILENCIO. Espera. No interrumpas.</span>
+                </div>
+
+                <div class="followup-section">
+                    <h4 class="followup-title">
+                        <svg style="width: 18px; height: 18px; color: var(--accent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                        Preguntas de profundización
+                    </h4>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Si la respuesta es breve o vaga, usa estas preguntas:</p>
+                    <ul class="followup-list">
+                        <li>"¿Qué más notaría?"</li>
+                        <li>"Cuénteme más sobre esa mañana... desde que abre los ojos."</li>
+                        <li>"¿Cómo sería eso exactamente?"</li>
+                        <li>"Descríbame ese momento con más detalle..."</li>
+                    </ul>
+                </div>
+
+                <div class="intro-box" style="margin-top: 20px;">
+                    <h3>
+                        <svg style="width: 18px; height: 18px; color: var(--accent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        Busca detalles sensoriales
+                    </h3>
+                    <p><strong>¿Qué ve?</strong> • <strong>¿Qué escucha?</strong> • <strong>¿Qué siente en el cuerpo?</strong></p>
+                    <p style="margin-top: 8px; font-size: 14px; color: var(--text-secondary);">Entre más detalle sensorial, más se activan las redes neuronales del futuro deseado.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase-card">
+            <div class="phase-header">
+                <div class="phase-number">3</div>
+                <div class="phase-title-group">
+                    <h2 class="phase-title">Descubrimiento Relacional</h2>
+                </div>
+            </div>
+            <div class="phase-body">
+                <div class="phase-objective">
+                    <div class="phase-objective-label">Objetivo</div>
+                    <div class="phase-objective-text">Agregar perspectiva externa. Si otros lo notarían, el cambio es real.</div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-label">La Pregunta</div>
+                    <div class="question-text">"¿Cómo descubriría [persona importante] que este milagro le ocurrió a usted... sin que usted le diga nada?"</div>
+                </div>
+
+                <div class="followup-section">
+                    <h4 class="followup-title">
+                        <svg style="width: 18px; height: 18px; color: var(--accent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                        Preguntas de exploración
+                    </h4>
+                    <ul class="followup-list">
+                        <li>"¿Qué notaría su pareja?"</li>
+                        <li>"¿Y su mejor amigo?"</li>
+                        <li>"¿Y sus compañeros de trabajo?"</li>
+                        <li>"¿Qué verían en su cara? ¿En su tono de voz? ¿En su forma de caminar?"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 4 - Most Important -->
+        <div class="phase-card">
+            <div class="phase-header important">
+                <div class="phase-number star">⭐</div>
+                <div class="phase-title-group">
+                    <span class="phase-badge">La Fase Más Poderosa</span>
+                    <h2 class="phase-title">Búsqueda de Excepciones</h2>
+                </div>
+            </div>
+            <div class="phase-body">
+                <div class="phase-objective">
+                    <div class="phase-objective-label">Objetivo</div>
+                    <div class="phase-objective-text">Identificar momentos en que el "milagro" ya ocurrió parcialmente. Revelar recursos que ya existen.</div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-label">La Pregunta</div>
+                    <div class="question-text">"¿Cuándo fue la vez MÁS RECIENTE — tal vez días, horas, o semanas atrás — que usted puede recordar cuando las cosas fueron ALGO ASÍ como este día después del milagro?"</div>
+                </div>
+
+                <div class="why-box">
+                    <h4>
+                        <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="m9 12 2 2 4-4"/>
+                        </svg>
+                        ¿Por qué es tan poderosa?
+                    </h4>
+                    <ul class="why-list">
+                        <li>Demuestra que el problema NO es constante</li>
+                        <li>Identifica recursos que el explorador YA tiene</li>
+                        <li>Cambia la narrativa de "imposible" a "ya lo logré antes"</li>
+                        <li>Genera esperanza basada en evidencia real</li>
+                    </ul>
+                </div>
+
+                <div class="followup-section">
+                    <h4 class="followup-title">
+                        <svg style="width: 18px; height: 18px; color: var(--accent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                        Preguntas de exploración
+                    </h4>
+                    <ul class="followup-list">
+                        <li>"¿Qué tenía diferente ese momento?"</li>
+                        <li>"¿Qué estaba haciendo usted de manera diferente?"</li>
+                        <li>"¿Qué NO estaba haciendo que normalmente sí hace?"</li>
+                        <li class="important">"¿Cómo logró que eso sucediera?" ← <strong>La más importante</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="phase-card">
+            <div class="phase-header">
+                <div class="phase-number">5</div>
+                <div class="phase-title-group">
+                    <h2 class="phase-title">Escala de Progreso</h2>
+                </div>
+            </div>
+            <div class="phase-body">
+                <div class="phase-objective">
+                    <div class="phase-objective-label">Objetivo</div>
+                    <div class="phase-objective-text">Crear una medida concreta del progreso y convertir la visión en acción.</div>
+                </div>
+
+                <div class="scale-box">
+                    <div class="scale-visual">
+                        <div class="scale-end">
+                            <div class="scale-number">0</div>
+                            <div class="scale-label">El peor momento</div>
+                        </div>
+                        <div class="scale-line"></div>
+                        <div class="scale-end">
+                            <div class="scale-number">10</div>
+                            <div class="scale-label">El día después del milagro</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-label">La Pregunta</div>
+                    <div class="question-text">"En una escala del 0 al 10, donde 10 representa cómo son las cosas el día después del milagro y 0 representa el peor momento... ¿En qué punto diría que está AHORA?"</div>
+                </div>
+
+                <div class="intro-box" style="margin-top: 24px; background: linear-gradient(135deg, rgba(218, 119, 86, 0.1) 0%, rgba(218, 119, 86, 0.02) 100%); border: 1px solid rgba(218, 119, 86, 0.2);">
+                    <h3 style="color: var(--accent);">Pregunta de seguimiento crucial</h3>
+                    <p style="font-size: 17px; font-weight: 600;">"¿Qué necesitaría pasar para subir <strong>medio punto</strong> en esta escala?"</p>
+                    <p style="margin-top: 8px; font-size: 14px; color: var(--text-secondary);">(No un punto completo — medio punto es alcanzable y concreto)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 6 -->
+        <div class="phase-card">
+            <div class="phase-header">
+                <div class="phase-number">6</div>
+                <div class="phase-title-group">
+                    <h2 class="phase-title">Seguimiento</h2>
+                    <p class="section-subtitle">Para sesiones futuras</p>
+                </div>
+            </div>
+            <div class="phase-body">
+                <div class="warning-box">
+                    <div class="warning-header">
+                        <div class="warning-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <div class="warning-title">Advertencia de Steve de Shazer</div>
+                    </div>
+                    <p class="warning-text">"Fallar en comenzar las sesiones subsecuentes con esta pregunta SOCAVA el valor de las otras cuatro partes."</p>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-label">Pregunta de apertura para la Sesión 2 y siguientes</div>
+                    <div class="question-text">"Entonces, ¿qué está MEJOR?"</div>
+                </div>
+
+                <div class="intro-box" style="margin-top: 20px;">
+                    <p><strong style="color: #ef4444;">NO usar:</strong> "¿Cómo está?" • "¿Cómo le fue?" • "¿Mejoró algo?"</p>
+                    <p style="margin-top: 8px;"><strong style="color: var(--success);">SÍ usar:</strong> "¿Qué está MEJOR?" — presupone mejora y orienta el cerebro a buscar evidencia de cambio.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Errors -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-number intro" style="background: #fef2f2;">
+                    <svg style="color: #ef4444;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="15" y1="9" x2="9" y2="15"/>
+                        <line x1="9" y1="9" x2="15" y2="15"/>
+                    </svg>
+                </div>
+                <div class="section-title-group">
+                    <h2 class="section-title">Errores Comunes y Cómo Evitarlos</h2>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="errors-grid">
+                    <div class="error-card">
+                        <div class="error-header">
+                            <div class="error-x">1</div>
+                            <div class="error-title">Interrumpir el silencio del explorador</div>
+                        </div>
+                        <div class="error-solution"><strong>Solución:</strong> Cuenta mentalmente hasta 15. Respira. Confía en el proceso.</div>
+                    </div>
+                    <div class="error-card">
+                        <div class="error-header">
+                            <div class="error-x">2</div>
+                            <div class="error-title">Aceptar respuestas vagas sin concretizar</div>
+                        </div>
+                        <div class="error-solution"><strong>Solución:</strong> "¿Cómo notaría que se siente mejor? ¿Qué estaría haciendo exactamente?"</div>
+                    </div>
+                    <div class="error-card">
+                        <div class="error-header">
+                            <div class="error-x">3</div>
+                            <div class="error-title">El explorador describe milagros "imposibles"</div>
+                        </div>
+                        <div class="error-solution"><strong>Solución:</strong> Espera en silencio (frecuentemente se auto-corrigen). Si no: "Entiendo que eso sería maravilloso. Y si el problema se resolviera de otra forma más alcanzable, ¿cómo sería?"</div>
+                    </div>
+                    <div class="error-card">
+                        <div class="error-header">
+                            <div class="error-x">4</div>
+                            <div class="error-title">El explorador describe cambios de OTROS</div>
+                        </div>
+                        <div class="error-solution"><strong>Solución:</strong> Redirige a agencia propia: "Y cuando tu esposo deje de beber, ¿qué estarás haciendo TÚ diferente?"</div>
+                    </div>
+                    <div class="error-card">
+                        <div class="error-header">
+                            <div class="error-x">5</div>
+                            <div class="error-title">No encontrar ninguna excepción</div>
+                        </div>
+                        <div class="error-solution"><strong>Solución:</strong> Persiste: "¿Alguna vez fue 5% mejor? ¿Un momento? ¿Un pensamiento diferente?"</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Worksheet -->
+        <div class="worksheet-card">
+            <h3 class="worksheet-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9"/>
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+                Mi Día Después del Milagro
+            </h3>
+            <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 24px;">Usa este espacio para escribir lo que emergió durante la práctica.</p>
+
+            <div class="worksheet-field">
+                <div class="worksheet-label">¿Qué vi en mi día después del milagro?</div>
+                <div class="worksheet-lines"></div>
+                <div class="worksheet-lines"></div>
+                <div class="worksheet-lines"></div>
+            </div>
+
+            <div class="worksheet-field">
+                <div class="worksheet-label">¿Qué excepciones encontré? (Momentos en que ya fue así)</div>
+                <div class="worksheet-lines"></div>
+                <div class="worksheet-lines"></div>
+                <div class="worksheet-lines"></div>
+            </div>
+
+            <div class="worksheet-field">
+                <div class="worksheet-label">¿En qué número estoy en la escala?</div>
+                <div class="worksheet-scale">
+                    <div class="worksheet-scale-input"></div>
+                    <div class="worksheet-scale-label">/ 10</div>
+                </div>
+            </div>
+
+            <div class="worksheet-field">
+                <div class="worksheet-label">¿Qué paso pequeño puedo dar esta semana?</div>
+                <div class="worksheet-lines"></div>
+                <div class="worksheet-lines"></div>
+                <div class="worksheet-lines"></div>
+            </div>
+        </div>
+
+        <!-- Footer Quote -->
+        <div class="footer-quote">
+            <p class="footer-quote-text">"Confíe en el proceso. Confíe en el cliente.<br>Ellos tienen los recursos, aunque no los vean aún."</p>
+            <p class="footer-quote-author">— Steve de Shazer</p>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="goBack()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Volver
+    </button>
+
+    <script>
+        function goBack() {
+            if (document.referrer && document.referrer.includes(window.location.host)) {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html>
