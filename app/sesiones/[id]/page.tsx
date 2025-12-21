@@ -17,7 +17,12 @@ import {
   FolderPlus,
   Calendar,
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  Sparkles,
+  Layers,
+  Flame,
+  Target,
+  Brain
 } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -54,7 +59,20 @@ function ContentBadge({
   )
 }
 
-const sessionIcons = [Lightbulb, Settings, Rocket, Cpu, Leaf]
+// Iconos por sesión (índice 0 = sesión 1, etc.)
+// Bloque 1: sesiones 1-3, Bloque 2: sesión 4, Bloque 3: sesión 5, Bloque 4: sesiones 6-7, Bloque 5: sesión 8, etc.
+const sessionIcons = [
+  Lightbulb,   // Sesión 1 - Neurobiología
+  Settings,    // Sesión 2 - Recursos y Neuroplasticidad
+  Leaf,        // Sesión 3 - Sufrimiento y Nueva Historia
+  Cpu,         // Sesión 4 - TRSB
+  Target,      // Sesión 5 - PONS
+  Layers,      // Sesión 6 - Context Engineering intro
+  Brain,       // Sesión 7 - Context Engineering (7 fases)
+  Sparkles,    // Sesión 8 - Pregunta del Milagro (Bloque 5)
+  Flame,       // Sesión 9 - Los 4 Protocolos
+  Rocket       // Sesión 10 - El Poder de los Rituales
+]
 
 export default async function SessionPage({ params, searchParams }: SessionPageProps) {
   const session = await auth()

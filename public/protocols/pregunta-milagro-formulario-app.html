@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario del Milagro — Registro del Terapeuta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FAF9F7;
+            --bg-card: #FFFFFF;
+            --bg-section: #F5F4F0;
+            --text-primary: #1A1915;
+            --text-secondary: #706F6C;
+            --text-muted: #9B9A97;
+            --border: #E5E4E0;
+            --accent: #DA7756;
+            --accent-light: #E89A7F;
+            --success: #2ca58d;
+            --purple: #8B5CF6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+
+        @media (min-width: 640px) {
+            .container { padding: 32px; padding-bottom: 120px; }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1A1915 0%, #2D2D2A 100%);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(218, 119, 86, 0.15) 0%, transparent 50%);
+        }
+
+        .header-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--accent);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .header-icon svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+            position: relative;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            position: relative;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            background: var(--bg-card);
+            padding: 6px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .tab:not(.active):hover {
+            background: var(--bg-section);
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: -12px;
+            margin-bottom: 16px;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-label .hint {
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 15px;
+            color: var(--text-primary);
+            background: var(--bg-section);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(218, 119, 86, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        textarea.form-input {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .form-row { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* Day Parts Grid */
+        .day-parts-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .day-part {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .day-part-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .day-part-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            font-family: inherit;
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        .day-part-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Sensory Grid */
+        .sensory-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .sensory-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .sensory-card {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .sensory-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .sensory-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            background: white;
+            font-family: inherit;
+        }
+
+        .sensory-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Exception Card */
+        .exception-card {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .exception-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .exception-number {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .exception-remove {
+            font-size: 12px;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .exception-remove:hover {
+            color: #ef4444;
+        }
+
+        .exception-fields {
+            display: grid;
+            gap: 10px;
+        }
+
+        .exception-field {
+            display: grid;
+            gap: 4px;
+        }
+
+        .exception-field label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .exception-field input,
+        .exception-field textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            background: white;
+            font-family: inherit;
+        }
+
+        .exception-field textarea {
+            min-height: 50px;
+            resize: vertical;
+        }
+
+        .add-exception-btn {
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            background: transparent;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-exception-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Scale Input */
+        .scale-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .scale-input {
+            width: 80px;
+            height: 56px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            background: var(--bg-section);
+        }
+
+        .scale-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .scale-label {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .scale-hint {
+            font-size: 12px;
+            color: var(--accent);
+            margin-top: 8px;
+        }
+
+        /* History Section */
+        .history-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+
+        .history-empty svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .session-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .session-date {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .session-number {
+            font-size: 12px;
+            color: white;
+            background: var(--accent);
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+
+        .session-scale {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .session-scale-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .session-scale-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .session-better {
+            background: rgba(44, 165, 141, 0.1);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: var(--success);
+        }
+
+        .session-better strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .session-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .session-btn {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .session-btn:hover {
+            background: var(--bg-section);
+        }
+
+        .session-btn.delete {
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .session-btn.delete:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Chart */
+        .chart-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .chart {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--border);
+            position: relative;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--accent), var(--accent-light));
+            border-radius: 6px 6px 0 0;
+            min-height: 20px;
+            position: relative;
+            transition: height 0.3s;
+        }
+
+        .chart-bar-value {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .chart-labels {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .chart-label {
+            flex: 1;
+            text-align: center;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c86a4d;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-section);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #249a7a;
+        }
+
+        .btn-group {
+            display: grid;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .btn-group { grid-template-columns: 1fr 1fr; }
+            .btn-group-3 { grid-template-columns: 1fr 1fr 1fr; }
+        }
+
+        /* Back Button */
+        .back-button {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            transform: translateX(-50%) scale(1.02);
+        }
+
+        .back-button svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text-primary);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 200;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Client selector */
+        .client-selector {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .client-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .client-chip {
+            padding: 8px 14px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .client-chip:hover {
+            border-color: var(--accent);
+        }
+
+        .client-chip.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .client-chip.new {
+            background: transparent;
+            border-style: dashed;
+            color: var(--text-muted);
+        }
+
+        .client-delete {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-left: 2px;
+            transition: all 0.2s;
+        }
+
+        .client-delete:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .client-chip.active .client-delete {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .client-chip.active .client-delete:hover {
+            background: white;
+            color: #ef4444;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+        }
+
+        /* Important phase badge */
+        .phase-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9"/>
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+            </div>
+            <h1>Formulario del Milagro</h1>
+            <p>Registro de sesiones — Steve de Shazer</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('nueva')">Nueva Sesion</button>
+            <button class="tab" onclick="showSection('historial')">Historial</button>
+        </div>
+
+        <!-- Nueva Sesion Section -->
+        <div class="section active" id="section-nueva">
+            <!-- Client Selector -->
+            <div class="client-selector">
+                <div class="form-label">Explorador</div>
+                <div class="client-list" id="clientList">
+                    <div class="client-chip new" onclick="showNewClientModal()">+ Nuevo Explorador</div>
+                </div>
+            </div>
+
+            <!-- Datos de la Sesion -->
+            <div class="card" id="clientDataCard" style="display: none;">
+                <h3 class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Datos de la Sesion
+                </h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Fecha</label>
+                        <input type="date" class="form-input" id="sessionDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Numero de Sesion</label>
+                        <input type="number" class="form-input" id="sessionNumber" min="1" placeholder="1, 2, 3...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Problema presentado</label>
+                    <textarea class="form-input" id="problemPresented" placeholder="Descripcion breve del problema que trae el explorador..."></textarea>
+                </div>
+            </div>
+
+            <!-- El Dia del Milagro -->
+            <div class="card" id="miracleCard" style="display: none;">
+                <h3 class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                    </svg>
+                    Fase 2: El Dia Despues del Milagro
+                </h3>
+                <p class="card-subtitle">Descripcion concreta de como seria el dia completo</p>
+
+                <div class="form-group">
+                    <label class="form-label">Primera senal del milagro</label>
+                    <input type="text" class="form-input" id="firstSign" placeholder="Lo primero que notaria al despertar...">
+                </div>
+
+                <div class="day-parts-grid">
+                    <div class="day-part">
+                        <div class="day-part-label">En la manana</div>
+                        <textarea class="day-part-input" id="dayMorning" placeholder="Como despierta, que hace, que piensa, como se siente..."></textarea>
+                    </div>
+                    <div class="day-part">
+                        <div class="day-part-label">Durante el dia</div>
+                        <textarea class="day-part-input" id="dayAfternoon" placeholder="Que hace diferente, como son sus interacciones..."></textarea>
+                    </div>
+                    <div class="day-part">
+                        <div class="day-part-label">En la noche</div>
+                        <textarea class="day-part-input" id="dayNight" placeholder="Como termina su dia, que siente, que piensa..."></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-top: 16px;">
+                    <label class="form-label">Detalles sensoriales</label>
+                    <div class="sensory-grid">
+                        <div class="sensory-card">
+                            <div class="sensory-label">Que ve</div>
+                            <input type="text" class="sensory-input" id="sensoryVe" placeholder="Luz, colores, espacios...">
+                        </div>
+                        <div class="sensory-card">
+                            <div class="sensory-label">Que escucha</div>
+                            <input type="text" class="sensory-input" id="sensoryEscucha" placeholder="Sonidos, voces, silencio...">
+                        </div>
+                        <div class="sensory-card">
+                            <div class="sensory-label">Que siente en el cuerpo</div>
+                            <input type="text" class="sensory-input" id="sensorySiente" placeholder="Ligereza, calma, energia...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Perspectiva Relacional -->
+            <div class="card" id="relationCard" style="display: none;">
+                <h3 class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    Fase 3: Perspectiva Relacional
+                </h3>
+                <p class="card-subtitle">Como descubririan otros que el milagro ocurrio, sin que se les diga</p>
+
+                <div class="form-group">
+                    <label class="form-label">Pareja / familia cercana</label>
+                    <textarea class="form-input" id="relationFamily" placeholder="Que verian diferente, que notarian en su cara, tono de voz, forma de caminar..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Amigos / companeros de trabajo</label>
+                    <textarea class="form-input" id="relationFriends" placeholder="Que verian diferente..."></textarea>
+                </div>
+            </div>
+
+            <!-- Excepciones -->
+            <div class="card" id="exceptionsCard" style="display: none;">
+                <h3 class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    Fase 4: Busqueda de Excepciones
+                    <span class="phase-badge">La mas poderosa</span>
+                </h3>
+                <p class="card-subtitle">Momentos en que el milagro ya ocurrio parcialmente — revela recursos existentes</p>
+
+                <div id="exceptionsList">
+                    <!-- Exceptions will be added here dynamically -->
+                </div>
+                <button class="add-exception-btn" onclick="addException()">+ Agregar otra excepcion</button>
+            </div>
+
+            <!-- Escala -->
+            <div class="card" id="scaleCard" style="display: none;">
+                <h3 class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="20" x2="12" y2="10"/>
+                        <line x1="18" y1="20" x2="18" y2="4"/>
+                        <line x1="6" y1="20" x2="6" y2="16"/>
+                    </svg>
+                    Fase 5: Escala de Progreso
+                </h3>
+
+                <div class="form-group">
+                    <label class="form-label">Donde esta ahora (0 = peor momento, 10 = dia del milagro)</label>
+                    <div class="scale-container">
+                        <input type="number" class="scale-input" id="currentScale" min="0" max="10" step="0.5" placeholder="0">
+                        <span class="scale-label">/ 10</span>
+                    </div>
+                    <div class="scale-hint">Recuerda: El objetivo es subir solo medio punto, no un punto.</div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Donde estaba en la excepcion</label>
+                        <div class="scale-container">
+                            <input type="number" class="scale-input" id="exceptionScale" min="0" max="10" step="0.5" placeholder="0" style="width: 60px; height: 44px; font-size: 18px;">
+                            <span class="scale-label">/ 10</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Donde diria [persona cercana] que esta</label>
+                        <div class="scale-container">
+                            <input type="number" class="scale-input" id="otherScale" min="0" max="10" step="0.5" placeholder="0" style="width: 60px; height: 44px; font-size: 18px;">
+                            <span class="scale-label">/ 10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Que necesita para subir MEDIO PUNTO <span class="hint">(paso concreto y alcanzable)</span></label>
+                    <textarea class="form-input" id="halfPointStep" placeholder="Acciones especificas que el explorador identifica..."></textarea>
+                </div>
+            </div>
+
+            <!-- Seguimiento (para sesiones 2+) -->
+            <div class="card" id="followupCard" style="display: none;">
+                <h3 class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    Seguimiento — Que esta mejor
+                </h3>
+                <p class="card-subtitle">Pregunta de apertura para sesiones 2+: "Entonces, que esta MEJOR?"</p>
+
+                <div class="form-group">
+                    <label class="form-label">Respuesta del explorador</label>
+                    <textarea class="form-input" id="whatsBetter" placeholder="Cambios observados desde la ultima sesion..."></textarea>
+                </div>
+            </div>
+
+            <!-- Notas del Terapeuta -->
+            <div class="card" id="notesCard" style="display: none;">
+                <h3 class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    Notas del Terapeuta
+                </h3>
+                <div class="form-group">
+                    <label class="form-label">Observaciones y notas privadas</label>
+                    <textarea class="form-input" id="therapistNotes" placeholder="Lenguaje corporal, tono de voz, areas a explorar, hipotesis..."></textarea>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-group" id="actionButtons" style="display: none;">
+                <button class="btn btn-primary" onclick="saveSession()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                        <polyline points="17 21 17 13 7 13 7 21"/>
+                        <polyline points="7 3 7 8 15 8"/>
+                    </svg>
+                    Guardar
+                </button>
+                <button class="btn btn-secondary" onclick="downloadTXT()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Descargar
+                </button>
+            </div>
+        </div>
+
+        <!-- Historial Section -->
+        <div class="section" id="section-historial">
+            <div class="client-selector">
+                <div class="form-label">Selecciona un explorador para ver su historial</div>
+                <div class="client-list" id="historyClientList"></div>
+            </div>
+
+            <div id="historyContent">
+                <div class="history-empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    <p>Selecciona un explorador para ver su historial de sesiones</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Client Modal -->
+    <div class="modal-overlay" id="newClientModal">
+        <div class="modal">
+            <h3 class="modal-title">Nuevo Explorador</h3>
+            <div class="form-group">
+                <label class="form-label">Nombre o identificador</label>
+                <input type="text" class="form-input" id="newClientName" placeholder="Nombre, iniciales o codigo...">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="hideNewClientModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="addNewClient()">Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="goBack()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Volver
+    </button>
+
+    <script>
+        // State
+        let clients = JSON.parse(localStorage.getItem('miracleClients') || '[]');
+        let sessions = JSON.parse(localStorage.getItem('miracleSessions') || '{}');
+        let currentClient = null;
+        let historyClient = null;
+        let exceptions = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderClients();
+            document.getElementById('sessionDate').valueAsDate = new Date();
+            addException(); // Add first exception by default
+        });
+
+        // Tab navigation
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+            document.getElementById('section-' + section).classList.add('active');
+            event.target.classList.add('active');
+
+            if (section === 'historial') {
+                renderHistoryClients();
+            }
+        }
+
+        // Client management
+        function renderClients() {
+            const list = document.getElementById('clientList');
+            list.innerHTML = clients.map(c =>
+                `<div class="client-chip ${currentClient === c ? 'active' : ''}" onclick="selectClient('${c}')">
+                    <span>${c}</span>
+                    <span class="client-delete" onclick="event.stopPropagation(); confirmDeleteClient('${c}')" title="Eliminar">x</span>
+                </div>`
+            ).join('') + '<div class="client-chip new" onclick="showNewClientModal()">+ Nuevo</div>';
+        }
+
+        function confirmDeleteClient(name) {
+            if (confirm('Eliminar a "' + name + '" y todas sus sesiones?')) {
+                deleteClient(name);
+            }
+        }
+
+        function deleteClient(name) {
+            // Remove from clients array
+            const index = clients.indexOf(name);
+            if (index > -1) {
+                clients.splice(index, 1);
+                localStorage.setItem('miracleClients', JSON.stringify(clients));
+            }
+
+            // Remove sessions
+            if (sessions[name]) {
+                delete sessions[name];
+                localStorage.setItem('miracleSessions', JSON.stringify(sessions));
+            }
+
+            // Reset current selection if needed
+            if (currentClient === name) {
+                currentClient = null;
+                hideFormCards();
+            }
+
+            if (historyClient === name) {
+                historyClient = null;
+            }
+
+            renderClients();
+            renderHistoryClients();
+            showToast('Explorador eliminado');
+        }
+
+        function hideFormCards() {
+            ['clientDataCard', 'miracleCard', 'relationCard', 'exceptionsCard', 'scaleCard', 'followupCard', 'notesCard', 'actionButtons'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            });
+        }
+
+        function selectClient(name) {
+            currentClient = name;
+            renderClients();
+            showFormCards();
+
+            // Auto-set session number
+            const clientSessions = sessions[name] || [];
+            document.getElementById('sessionNumber').value = clientSessions.length + 1;
+
+            // Show followup card if session 2+
+            if (clientSessions.length > 0) {
+                document.getElementById('followupCard').style.display = 'block';
+            } else {
+                document.getElementById('followupCard').style.display = 'none';
+            }
+        }
+
+        function showFormCards() {
+            ['clientDataCard', 'miracleCard', 'relationCard', 'exceptionsCard', 'scaleCard', 'notesCard', 'actionButtons'].forEach(id => {
+                document.getElementById(id).style.display = 'block';
+            });
+        }
+
+        function showNewClientModal() {
+            document.getElementById('newClientModal').classList.add('show');
+            document.getElementById('newClientName').focus();
+        }
+
+        function hideNewClientModal() {
+            document.getElementById('newClientModal').classList.remove('show');
+            document.getElementById('newClientName').value = '';
+        }
+
+        function addNewClient() {
+            const name = document.getElementById('newClientName').value.trim();
+            if (!name) return;
+
+            if (!clients.includes(name)) {
+                clients.push(name);
+                localStorage.setItem('miracleClients', JSON.stringify(clients));
+            }
+
+            hideNewClientModal();
+            selectClient(name);
+        }
+
+        // Exceptions management
+        function addException() {
+            const id = Date.now();
+            exceptions.push(id);
+            renderExceptions();
+        }
+
+        function removeException(id) {
+            if (exceptions.length <= 1) return;
+            exceptions = exceptions.filter(e => e !== id);
+            renderExceptions();
+        }
+
+        function renderExceptions() {
+            const container = document.getElementById('exceptionsList');
+            container.innerHTML = exceptions.map((id, index) => `
+                <div class="exception-card" data-id="${id}">
+                    <div class="exception-header">
+                        <span class="exception-number">Excepcion ${index + 1}</span>
+                        ${exceptions.length > 1 ? `<button class="exception-remove" onclick="removeException(${id})">Eliminar</button>` : ''}
+                    </div>
+                    <div class="exception-fields">
+                        <div class="exception-field">
+                            <label>Cuando fue (dia/hora aproximada)</label>
+                            <input type="text" id="exc-when-${id}" placeholder="El martes pasado, hace 3 dias...">
+                        </div>
+                        <div class="exception-field">
+                            <label>Que tenia diferente ese momento</label>
+                            <textarea id="exc-what-${id}" placeholder="Que era diferente, quien estaba ahi..."></textarea>
+                        </div>
+                        <div class="exception-field">
+                            <label>Que estaba haciendo de manera diferente</label>
+                            <textarea id="exc-doing-${id}" placeholder="Que hacia, que NO hacia que normalmente si hace..."></textarea>
+                        </div>
+                        <div class="exception-field">
+                            <label>Como logro que eso sucediera</label>
+                            <textarea id="exc-how-${id}" placeholder="Que hizo para que ocurriera..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getExceptionsData() {
+            return exceptions.map(id => ({
+                when: document.getElementById(`exc-when-${id}`)?.value || '',
+                what: document.getElementById(`exc-what-${id}`)?.value || '',
+                doing: document.getElementById(`exc-doing-${id}`)?.value || '',
+                how: document.getElementById(`exc-how-${id}`)?.value || ''
+            })).filter(e => e.when || e.what || e.doing || e.how);
+        }
+
+        // Save session
+        function saveSession() {
+            if (!currentClient) {
+                showToast('Selecciona un explorador primero');
+                return;
+            }
+
+            const sessionData = gatherSessionData();
+
+            if (!sessions[currentClient]) {
+                sessions[currentClient] = [];
+            }
+            sessions[currentClient].push(sessionData);
+            localStorage.setItem('miracleSessions', JSON.stringify(sessions));
+
+            showToast('Sesion guardada correctamente');
+            clearForm();
+        }
+
+        function gatherSessionData() {
+            return {
+                date: document.getElementById('sessionDate').value,
+                number: parseInt(document.getElementById('sessionNumber').value) || 1,
+                problem: document.getElementById('problemPresented').value,
+                miracle: {
+                    firstSign: document.getElementById('firstSign').value,
+                    morning: document.getElementById('dayMorning').value,
+                    afternoon: document.getElementById('dayAfternoon').value,
+                    night: document.getElementById('dayNight').value,
+                    sensory: {
+                        ve: document.getElementById('sensoryVe').value,
+                        escucha: document.getElementById('sensoryEscucha').value,
+                        siente: document.getElementById('sensorySiente').value
+                    }
+                },
+                relation: {
+                    family: document.getElementById('relationFamily').value,
+                    friends: document.getElementById('relationFriends').value
+                },
+                exceptions: getExceptionsData(),
+                scale: {
+                    current: parseFloat(document.getElementById('currentScale').value) || 0,
+                    exception: parseFloat(document.getElementById('exceptionScale').value) || null,
+                    other: parseFloat(document.getElementById('otherScale').value) || null,
+                    halfPointStep: document.getElementById('halfPointStep').value
+                },
+                whatsBetter: document.getElementById('whatsBetter').value,
+                notes: document.getElementById('therapistNotes').value,
+                savedAt: new Date().toISOString()
+            };
+        }
+
+        function clearForm() {
+            ['problemPresented', 'firstSign', 'dayMorning', 'dayAfternoon', 'dayNight',
+             'sensoryVe', 'sensoryEscucha', 'sensorySiente', 'relationFamily', 'relationFriends',
+             'currentScale', 'exceptionScale', 'otherScale', 'halfPointStep', 'whatsBetter', 'therapistNotes'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            exceptions = [];
+            addException();
+
+            const clientSessions = sessions[currentClient] || [];
+            document.getElementById('sessionNumber').value = clientSessions.length + 1;
+        }
+
+        // Download functions
+        function downloadTXT() {
+            if (!currentClient) {
+                showToast('Selecciona un explorador primero');
+                return;
+            }
+
+            const data = gatherSessionData();
+            const content = generateTXTContent(data);
+
+            downloadFile(content, `milagro_${currentClient}_sesion${data.number}_${data.date}.txt`, 'text/plain');
+            showToast('Archivo TXT descargado');
+        }
+
+        function generateTXTContent(data) {
+            let content = `LA PREGUNTA DEL MILAGRO - REGISTRO DE SESION
+=============================================
+EXPLORADOR: ${currentClient}
+FECHA: ${data.date}
+SESION #: ${data.number}
+
+---------------------------------------------
+PROBLEMA PRESENTADO
+---------------------------------------------
+${data.problem || '(Sin registro)'}
+
+---------------------------------------------
+FASE 2: EL DIA DESPUES DEL MILAGRO
+---------------------------------------------
+Primera senal: ${data.miracle.firstSign || '-'}
+
+EN LA MANANA:
+${data.miracle.morning || '(Sin registro)'}
+
+DURANTE EL DIA:
+${data.miracle.afternoon || '(Sin registro)'}
+
+EN LA NOCHE:
+${data.miracle.night || '(Sin registro)'}
+
+DETALLES SENSORIALES:
+- Que ve: ${data.miracle.sensory.ve || '-'}
+- Que escucha: ${data.miracle.sensory.escucha || '-'}
+- Que siente: ${data.miracle.sensory.siente || '-'}
+
+---------------------------------------------
+FASE 3: PERSPECTIVA RELACIONAL
+---------------------------------------------
+Pareja/familia:
+${data.relation.family || '(Sin registro)'}
+
+Amigos/companeros:
+${data.relation.friends || '(Sin registro)'}
+
+---------------------------------------------
+FASE 4: EXCEPCIONES ENCONTRADAS
+---------------------------------------------`;
+
+            if (data.exceptions.length > 0) {
+                data.exceptions.forEach((exc, i) => {
+                    content += `
+
+EXCEPCION ${i + 1}:
+- Cuando: ${exc.when || '-'}
+- Que fue diferente: ${exc.what || '-'}
+- Que hacia diferente: ${exc.doing || '-'}
+- Como lo logro: ${exc.how || '-'}`;
+                });
+            } else {
+                content += `
+(Sin excepciones registradas)`;
+            }
+
+            content += `
+
+---------------------------------------------
+FASE 5: ESCALA DE PROGRESO
+---------------------------------------------
+Posicion actual: ${data.scale.current} / 10
+Posicion en la excepcion: ${data.scale.exception || '-'} / 10
+Posicion segun otro: ${data.scale.other || '-'} / 10
+
+Paso para subir medio punto:
+${data.scale.halfPointStep || '(Sin registro)'}
+
+---------------------------------------------
+SEGUIMIENTO: QUE ESTA MEJOR
+---------------------------------------------
+${data.whatsBetter || '(Sin registro)'}
+
+---------------------------------------------
+NOTAS DEL TERAPEUTA
+---------------------------------------------
+${data.notes || '(Sin notas)'}
+
+=============================================
+Metodologia: Steve de Shazer & Insoo Kim Berg
+Generado: ${new Date().toLocaleString('es-ES')}
+`;
+
+            return content;
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type: type + ';charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // History
+        function renderHistoryClients() {
+            const list = document.getElementById('historyClientList');
+            list.innerHTML = clients.map(c =>
+                `<div class="client-chip ${historyClient === c ? 'active' : ''}" onclick="showClientHistory('${c}')">
+                    <span>${c}</span>
+                    <span class="client-delete" onclick="event.stopPropagation(); confirmDeleteClient('${c}')" title="Eliminar">x</span>
+                </div>`
+            ).join('');
+
+            if (clients.length === 0) {
+                list.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No hay exploradores registrados</p>';
+            }
+        }
+
+        function showClientHistory(name) {
+            historyClient = name;
+            renderHistoryClients();
+
+            const clientSessions = sessions[name] || [];
+            const content = document.getElementById('historyContent');
+
+            if (clientSessions.length === 0) {
+                content.innerHTML = `
+                    <div class="history-empty">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <p>No hay sesiones registradas para ${name}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Render chart if multiple sessions
+            let chartHTML = '';
+            if (clientSessions.length > 1) {
+                const maxScale = 10;
+                chartHTML = `
+                    <div class="chart-container">
+                        <div class="chart-title">Evolucion de la Escala</div>
+                        <div class="chart">
+                            ${clientSessions.map((s) => `
+                                <div class="chart-bar" style="height: ${((s.scale?.current || s.scale || 0) / maxScale) * 100}%">
+                                    <span class="chart-bar-value">${s.scale?.current || s.scale || 0}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="chart-labels">
+                            ${clientSessions.map(s => `<div class="chart-label">S${s.number}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Render sessions
+            const sessionsHTML = clientSessions.slice().reverse().map(s => `
+                <div class="session-card">
+                    <div class="session-header">
+                        <span class="session-date">${formatDate(s.date)}</span>
+                        <span class="session-number">Sesion ${s.number}</span>
+                    </div>
+                    <div class="session-scale">
+                        <span class="session-scale-value">${s.scale?.current || s.scale || 0}</span>
+                        <span class="session-scale-label">/ 10</span>
+                    </div>
+                    ${s.whatsBetter ? `
+                        <div class="session-better">
+                            <strong>Que esta mejor:</strong>
+                            ${s.whatsBetter}
+                        </div>
+                    ` : ''}
+                    <div class="session-actions">
+                        <button class="session-btn" onclick="downloadHistorySession('${name}', ${s.number})">
+                            Descargar
+                        </button>
+                        <button class="session-btn delete" onclick="deleteSession('${name}', ${s.number})">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            content.innerHTML = chartHTML + sessionsHTML + `
+                <button class="btn btn-success" style="margin-top: 16px;" onclick="downloadAllHistory('${name}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Descargar Historial Completo
+                </button>
+            `;
+        }
+
+        function downloadHistorySession(clientName, sessionNumber) {
+            const clientSessions = sessions[clientName] || [];
+            const session = clientSessions.find(s => s.number === sessionNumber);
+            if (!session) return;
+
+            currentClient = clientName;
+            const content = generateTXTContent(session);
+            downloadFile(content, `milagro_${clientName}_sesion${session.number}_${session.date}.txt`, 'text/plain');
+            showToast('Sesion descargada');
+        }
+
+        function downloadAllHistory(clientName) {
+            const clientSessions = sessions[clientName] || [];
+            if (clientSessions.length === 0) return;
+
+            let content = `HISTORIAL COMPLETO - LA PREGUNTA DEL MILAGRO
+=============================================
+EXPLORADOR: ${clientName}
+TOTAL DE SESIONES: ${clientSessions.length}
+METODOLOGIA: Steve de Shazer & Insoo Kim Berg
+FECHA DE EXPORTACION: ${new Date().toLocaleString('es-ES')}
+=============================================
+
+EVOLUCION DE LA ESCALA:
+${clientSessions.map(s => `  Sesion ${s.number} (${s.date}): ${s.scale?.current || s.scale || 0}/10`).join('\n')}
+
+`;
+
+            clientSessions.forEach(session => {
+                content += `
+---------------------------------------------
+SESION ${session.number} - ${session.date}
+---------------------------------------------
+ESCALA: ${session.scale?.current || session.scale || 0}/10
+
+PROBLEMA:
+${session.problem || '(Sin registro)'}
+
+MILAGRO:
+${session.miracle?.morning || session.miracle || '(Sin registro)'}
+
+EXCEPCIONES:
+${session.exceptions?.map((e, i) => `${i + 1}. ${e.when}: ${e.what}`).join('\n') || '(Sin registro)'}
+
+PASO MEDIO PUNTO:
+${session.scale?.halfPointStep || session.halfPointStep || '(Sin registro)'}
+
+QUE ESTA MEJOR:
+${session.whatsBetter || '(Sin registro)'}
+
+NOTAS:
+${session.notes || '(Sin notas)'}
+
+`;
+            });
+
+            downloadFile(content, `historial_milagro_${clientName}_${new Date().toISOString().split('T')[0]}.txt`, 'text/plain');
+            showToast('Historial completo descargado');
+        }
+
+        function deleteSession(clientName, sessionNumber) {
+            if (!confirm('Seguro que quieres eliminar esta sesion?')) return;
+
+            sessions[clientName] = sessions[clientName].filter(s => s.number !== sessionNumber);
+            localStorage.setItem('miracleSessions', JSON.stringify(sessions));
+            showClientHistory(clientName);
+            showToast('Sesion eliminada');
+        }
+
+        // Utilities
+        function formatDate(dateStr) {
+            if (!dateStr) return 'Sin fecha';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function goBack() {
+            if (document.referrer && document.referrer.includes(window.location.host)) {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html>

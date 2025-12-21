@@ -1816,7 +1816,7 @@ export const sessions: Session[] = [
     title: "Miracle Question (La Pregunta del Milagro)",
     description: "Técnica de proyección para identificar objetivos y soluciones ideales.",
     day: 5,
-    imageUrl: "/images/sessions/session-8.png",
+    imageUrl: "",
     pdfUrl: "",
     videos: [],
     audios: [],
@@ -1836,6 +1836,13 @@ export const sessions: Session[] = [
         description: "Práctica guiada con audio para visualizar tu futuro ideal.",
         url: "/protocols/pregunta-milagro-app.html",
         iconName: "Sparkles"
+      },
+      {
+        id: "app8-2",
+        name: "Formulario del Milagro",
+        description: "Registro de sesiones con seguimiento para terapeutas.",
+        url: "/protocols/pregunta-milagro-formulario-app.html",
+        iconName: "MessageSquare"
       }
     ]
   },

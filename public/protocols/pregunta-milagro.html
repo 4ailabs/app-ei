@@ -700,7 +700,7 @@
         }
 
         .why-list li::before {
-            content: '✓';
+            content: '-';
             position: absolute;
             left: 0;
             color: var(--success);
@@ -913,8 +913,8 @@
         }
 
         .worksheet-scale-input {
-            width: 60px;
-            height: 48px;
+            width: 80px;
+            height: 56px;
             border: 2px solid var(--border);
             border-radius: 12px;
             text-align: center;
@@ -922,11 +922,106 @@
             font-weight: 700;
             color: var(--text-primary);
             background: var(--bg-section);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        .worksheet-scale-input::-webkit-outer-spin-button,
+        .worksheet-scale-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .worksheet-scale-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(218, 119, 86, 0.15);
+        }
+
+        .worksheet-scale-input::placeholder {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .worksheet-scale-label {
             font-size: 18px;
             color: var(--text-secondary);
+        }
+
+        .worksheet-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            color: var(--text-primary);
+            background: var(--bg-section);
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .worksheet-textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(218, 119, 86, 0.15);
+        }
+
+        .worksheet-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .worksheet-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .worksheet-actions {
+                flex-direction: row;
+            }
+        }
+
+        .worksheet-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .worksheet-btn:hover {
+            background: #c86a4d;
+            transform: translateY(-1px);
+        }
+
+        .worksheet-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .worksheet-btn-secondary {
+            background: var(--bg-section);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .worksheet-btn-secondary:hover {
+            background: var(--border);
         }
 
         /* Footer Quote */
@@ -1163,7 +1258,7 @@
                 </div>
 
                 <div class="golden-rule">
-                    <div class="golden-rule-icon">⚡</div>
+                    <div class="golden-rule-icon">!</div>
                     <h4>La Regla de Oro</h4>
                     <p>Después de cada pregunta: <strong>SILENCIO.</strong><br>El silencio es donde ocurre la transformación.</p>
                 </div>
@@ -1517,31 +1612,46 @@
 
             <div class="worksheet-field">
                 <div class="worksheet-label">¿Qué vi en mi día después del milagro?</div>
-                <div class="worksheet-lines"></div>
-                <div class="worksheet-lines"></div>
-                <div class="worksheet-lines"></div>
+                <textarea class="worksheet-textarea" id="ws-milagro" placeholder="Describe con detalle lo que viste, escuchaste y sentiste..."></textarea>
             </div>
 
             <div class="worksheet-field">
                 <div class="worksheet-label">¿Qué excepciones encontré? (Momentos en que ya fue así)</div>
-                <div class="worksheet-lines"></div>
-                <div class="worksheet-lines"></div>
-                <div class="worksheet-lines"></div>
+                <textarea class="worksheet-textarea" id="ws-excepciones" placeholder="Cuando fue la vez más reciente que las cosas fueron algo así..."></textarea>
             </div>
 
             <div class="worksheet-field">
                 <div class="worksheet-label">¿En qué número estoy en la escala?</div>
                 <div class="worksheet-scale">
-                    <div class="worksheet-scale-input"></div>
+                    <input type="number" class="worksheet-scale-input" id="ws-escala" min="0" max="10" step="0.5" placeholder="0-10">
                     <div class="worksheet-scale-label">/ 10</div>
                 </div>
+                <p style="font-size: 13px; color: var(--accent); margin-top: 12px; font-weight: 500;">
+                    Recuerda: El objetivo es subir solo <strong>medio punto</strong>, no un punto. Un cambio pequeno y alcanzable.
+                </p>
             </div>
 
             <div class="worksheet-field">
-                <div class="worksheet-label">¿Qué paso pequeño puedo dar esta semana?</div>
-                <div class="worksheet-lines"></div>
-                <div class="worksheet-lines"></div>
-                <div class="worksheet-lines"></div>
+                <div class="worksheet-label">¿Qué paso pequeño puedo dar esta semana para subir medio punto?</div>
+                <textarea class="worksheet-textarea" id="ws-paso" placeholder="Un cambio pequeño y alcanzable..."></textarea>
+            </div>
+
+            <div class="worksheet-actions">
+                <button class="worksheet-btn" onclick="downloadWorksheet()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Descargar mis notas
+                </button>
+                <a href="/protocols/pregunta-milagro-formulario-app.html" class="worksheet-btn worksheet-btn-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    Formulario completo (Terapeutas)
+                </a>
             </div>
         </div>
 
@@ -1568,6 +1678,62 @@
             } else {
                 window.location.href = '/';
             }
+        }
+
+        function downloadWorksheet() {
+            const milagro = document.getElementById('ws-milagro').value;
+            const excepciones = document.getElementById('ws-excepciones').value;
+            const escala = document.getElementById('ws-escala').value;
+            const paso = document.getElementById('ws-paso').value;
+
+            const fecha = new Date().toLocaleDateString('es-ES', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            const content = `MI DIA DESPUES DEL MILAGRO
+============================
+Fecha: ${fecha}
+
+-----------------------------
+QUE VI EN MI DIA DESPUES DEL MILAGRO
+-----------------------------
+${milagro || '(Sin completar)'}
+
+-----------------------------
+EXCEPCIONES ENCONTRADAS
+(Momentos en que ya fue asi)
+-----------------------------
+${excepciones || '(Sin completar)'}
+
+-----------------------------
+ESCALA DE PROGRESO
+-----------------------------
+Posicion actual: ${escala || '0'} / 10
+
+Recuerda: El objetivo es subir solo medio punto, no un punto.
+
+-----------------------------
+MI PASO PARA ESTA SEMANA
+-----------------------------
+${paso || '(Sin completar)'}
+
+============================
+"Confie en el proceso. Confie en el cliente.
+Ellos tienen los recursos, aunque no los vean aun."
+— Steve de Shazer
+`;
+
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mi-dia-del-milagro_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
     </script>
 </body>
