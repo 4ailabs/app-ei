@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Download, FileText, CheckCircle2, Maximize2, ExternalLink, Presentation } from "lucide-react"
+import { Download, FileText, CheckCircle2, Maximize2, ExternalLink, Presentation, Eye } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { PDF } from "@/data/sessions"
@@ -141,8 +141,12 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
                         size="default"
                         className="w-full sm:w-auto text-sm"
                       >
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        {isEmbeddable ? 'Abrir' : 'Descargar'}
+                        {isSlide ? (
+                          <Eye className="mr-2 h-4 w-4" />
+                        ) : (
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                        )}
+                        {isEmbeddable ? 'Abrir' : isSlide ? 'Ver' : 'Descargar'}
                       </Button>
                     </>
                   ) : (

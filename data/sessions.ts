@@ -111,6 +111,7 @@ export interface PDF {
   description: string
   url?: string
   category?: "referencia" | "ejercicio" | "contenido_profundo" | "recursos_adicionales"
+  type?: 'slide'
 }
 
 export const sessions: Session[] = [
@@ -1818,6 +1819,17 @@ export const sessions: Session[] = [
     day: 5,
     imageUrl: "",
     pdfUrl: "",
+    pdfs: [
+      {
+        id: "slide8-1",
+        title: "Manual Profesional — Slides",
+        url: "/protocols/pregunta-milagro-slides.html",
+        description: "25 slides interactivas con el manual completo: metodología, fases, neurobiología y guía práctica.",
+        pages: 25,
+        category: "contenido_profundo",
+        type: "slide"
+      }
+    ],
     videos: [],
     audios: [],
     themes: [],
