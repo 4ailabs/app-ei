@@ -1,31 +1,9 @@
 import { auth } from "@/lib/auth-server"
 import { redirect } from "next/navigation"
 import { seminarioOnline } from "@/data/seminario-online"
-import { Calendar, Video as VideoIcon, ArrowLeft, Home, Play, CheckCircle2, Clock, ArrowRight } from "lucide-react"
+import { Calendar, Video as VideoIcon, Home, Play, CheckCircle2, Clock, ArrowRight, Volume2, FileText } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-
-// Paleta de colores estilo Claude de Anthropic
-const dayColors = [
-  {
-    gradient: "from-[#DA7756] to-[#C4684A]",
-    accent: "bg-[#DA7756]",
-    text: "text-[#DA7756]",
-    bg: "bg-[#DA7756]/10"
-  },
-  {
-    gradient: "from-[#2ca58d] to-[#259078]",
-    accent: "bg-[#2ca58d]",
-    text: "text-[#2ca58d]",
-    bg: "bg-[#2ca58d]/10"
-  },
-  {
-    gradient: "from-[#706F6C] to-[#1A1915]",
-    accent: "bg-[#706F6C]",
-    text: "text-[#706F6C]",
-    bg: "bg-[#F5F4F0]"
-  }
-]
 
 export default async function SeminarioOnlinePage() {
   const session = await auth()
@@ -34,62 +12,47 @@ export default async function SeminarioOnlinePage() {
     redirect("/login")
   }
 
-  const totalVideos = seminarioOnline.reduce((acc, dia) => acc + dia.videos.length, 0)
   const videosWithStreamId = seminarioOnline.reduce((acc, dia) => {
     return acc + dia.videos.filter(v => v.cloudflareStreamId).length
   }, 0)
+  const totalAudios = seminarioOnline.reduce((acc, dia) => acc + dia.audios.length, 0)
 
   return (
     <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#1A1A1A]">
-      <div className="container mx-auto px-4 py-8 pb-24">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 pb-20 sm:pb-24">
         {/* Back Button */}
-        <div className="mb-6 animate-fade-in">
+        <div className="mb-4 sm:mb-6 animate-fade-in">
           <Link href="/">
-            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all text-[#706F6C] dark:text-[#A0A0A0]">
-              <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-              <Home className="mr-2 h-4 w-4" />
-              Volver al Dashboard
+            <Button variant="ghost" className="group hover:bg-[#F5F4F0] dark:hover:bg-[#252525] transition-all rounded-full text-[#706F6C] dark:text-[#A0A0A0] px-3 sm:px-5 py-2 h-auto text-sm">
+              <Home className="mr-1.5 sm:mr-2 h-4 w-4" />
+              <span className="hidden sm:inline">Volver al Dashboard</span>
+              <span className="sm:hidden">Inicio</span>
             </Button>
           </Link>
         </div>
 
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="bg-white dark:bg-[#252525] rounded-3xl mb-8 overflow-hidden animate-fade-in-up shadow-sm border-2 border-[#DA7756] dark:border-[#DA7756]">
-            <div className="p-8 lg:p-12 relative overflow-hidden">
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <Calendar className="h-8 w-8 text-[#DA7756] dark:text-[#DA7756]" />
-                  <span className="text-sm font-semibold uppercase tracking-wider text-[#DA7756] dark:text-[#DA7756]">
-                    Seminario On Line
-                  </span>
-                </div>
-                <h1 className="text-3xl md:text-5xl font-bold mb-3 text-[#1A1915] dark:text-[#E5E5E5]">
-                  Videos del Seminario
-                </h1>
-                <p className="text-lg text-[#706F6C] dark:text-[#A0A0A0] mb-6">
-                  Accede a todos los videos del seminario online. Organizados por día para facilitar tu navegación.
+        <div className="max-w-6xl mx-auto">
+          {/* Header - Estilo coherente con sesiones */}
+          <div className="mb-5 sm:mb-8 animate-fade-in-up">
+            <div className="flex items-center gap-2.5 sm:gap-3 mb-3 sm:mb-4">
+              <div className="p-2 sm:p-3 bg-[#DA7756] rounded-lg sm:rounded-xl flex-shrink-0">
+                <Calendar className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
+              </div>
+              <div className="min-w-0">
+                <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#1A1915] dark:text-[#E5E5E5]">Seminario Online</h1>
+                <p className="text-xs sm:text-base text-[#706F6C] dark:text-[#A0A0A0] mt-0.5 sm:mt-1">
+                  {seminarioOnline.length} días · {videosWithStreamId} videos · {totalAudios} audios
                 </p>
-                <div className="flex flex-wrap items-center gap-6 text-sm">
-                  <div className="flex items-center gap-2 bg-[#DA7756]/10 dark:bg-[#DA7756]/10 border border-[#DA7756]/20 dark:border-[#DA7756]/20 px-4 py-2 rounded-full">
-                    <VideoIcon className="h-5 w-5 text-[#DA7756] dark:text-[#DA7756]" />
-                    <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">{videosWithStreamId} / {totalVideos} videos disponibles</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-[#DA7756]/10 dark:bg-[#DA7756]/10 border border-[#DA7756]/20 dark:border-[#DA7756]/20 px-4 py-2 rounded-full">
-                    <Calendar className="h-5 w-5 text-[#DA7756] dark:text-[#DA7756]" />
-                    <span className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">{seminarioOnline.length} días</span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
 
-          {/* Grid de Días - 2 columnas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {seminarioOnline.map((dia, index) => {
-              const colors = dayColors[index % dayColors.length]
+          {/* Grid de Días */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {seminarioOnline.map((dia) => {
               const videosConStreamId = dia.videos.filter(v => v.cloudflareStreamId)
-              const hasVideos = videosConStreamId.length > 0
+              const hasContent = videosConStreamId.length > 0 || dia.audios.length > 0 || (dia.slides && dia.slides.length > 0)
+              const totalContent = videosConStreamId.length + dia.audios.length + (dia.slides?.length || 0)
 
               return (
                 <Link
@@ -97,80 +60,109 @@ export default async function SeminarioOnlinePage() {
                   href={`/seminario-online/${dia.day}`}
                   className="group block"
                 >
-                  <div className="bg-white dark:bg-[#252525] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-[#E5E4E0] dark:border-[#333333] hover:border-[#DA7756]/30 dark:hover:border-[#E5E5E5]/30 h-full flex flex-col">
-                    {/* Header con Gradiente */}
-                    <div className={`bg-gradient-to-br ${colors.gradient} p-6 text-white relative overflow-hidden`}>
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl -mr-16 -mt-16"></div>
-                      <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className={`w-16 h-16 rounded-xl ${colors.accent} bg-white/10 backdrop-blur-sm flex items-center justify-center font-bold text-2xl shadow-sm`}>
+                  <div className="bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-[#E5E4E0] dark:border-[#333333] hover:border-[#DA7756]/50 dark:hover:border-[#DA7756]/50 h-full flex flex-col">
+                    {/* Header */}
+                    <div className="p-4 sm:p-6 border-b border-[#E5E4E0] dark:border-[#333333]">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-[#DA7756] flex items-center justify-center font-bold text-xl sm:text-2xl text-white shadow-sm group-hover:scale-105 transition-transform">
                             {dia.day}
                           </div>
-                          {hasVideos && (
-                            <CheckCircle2 className="h-6 w-6 text-white/90" />
-                          )}
+                          <div className="min-w-0">
+                            <h2 className="text-base sm:text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5] group-hover:text-[#DA7756] transition-colors">
+                              {dia.title}
+                            </h2>
+                            {dia.date && (
+                              <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0]">{dia.date}</p>
+                            )}
+                          </div>
                         </div>
-                        <h2 className="text-2xl font-bold mb-1">{dia.title}</h2>
-                        {dia.date && (
-                          <p className="text-sm text-white/80">{dia.date}</p>
+                        {hasContent && (
+                          <CheckCircle2 className="h-5 w-5 text-[#DA7756] flex-shrink-0 mt-1" />
                         )}
                       </div>
                     </div>
 
-                    {/* Content */}
-                    <div className="p-6 flex-1 flex flex-col">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2">
-                          <VideoIcon className={`h-5 w-5 ${colors.text}`} />
-                          <span className={`text-sm font-semibold ${colors.text}`}>
-                            {videosConStreamId.length} / {dia.videos.length} videos
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Video List Preview */}
-                      <div className="space-y-2 mb-4 flex-1">
-                        {dia.videos.slice(0, 3).map((video) => (
-                          <div
-                            key={video.id}
-                            className={`flex items-center gap-2 text-sm p-2 rounded-lg ${
-                              video.cloudflareStreamId ? colors.bg : 'bg-[#F5F4F0] dark:bg-[#333333]'
-                            }`}
-                          >
-                            <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
-                              video.cloudflareStreamId ? colors.accent : 'bg-[#E5E4E0] dark:bg-[#4A4A4A]'
-                            }`}>
-                              {video.cloudflareStreamId ? (
-                                <CheckCircle2 className="h-4 w-4 text-white" />
-                              ) : (
-                                <Clock className="h-3 w-3 text-[#9B9A97] dark:text-[#808080]" />
-                              )}
-                            </div>
-                            <span className={`flex-1 truncate ${
-                              video.cloudflareStreamId ? 'text-[#1A1915] dark:text-[#E5E5E5] font-medium' : 'text-[#9B9A97] dark:text-[#808080]'
-                            }`}>
-                              {video.title}
-                            </span>
+                    {/* Content Stats */}
+                    <div className="p-4 sm:p-6 flex-1 flex flex-col">
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {dia.videos.length > 0 && (
+                          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm bg-[#F5F4F0] dark:bg-[#333333] text-[#706F6C] dark:text-[#A0A0A0]">
+                            <VideoIcon className="h-3.5 w-3.5" />
+                            <span className="font-medium">{videosConStreamId.length}/{dia.videos.length}</span>
                           </div>
-                        ))}
-                        {dia.videos.length > 3 && (
-                          <p className="text-xs text-[#9B9A97] dark:text-[#808080] text-center">
-                            +{dia.videos.length - 3} videos más
-                          </p>
+                        )}
+                        {dia.audios.length > 0 && (
+                          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm bg-[#F5F4F0] dark:bg-[#333333] text-[#706F6C] dark:text-[#A0A0A0]">
+                            <Volume2 className="h-3.5 w-3.5" />
+                            <span className="font-medium">{dia.audios.length}</span>
+                          </div>
+                        )}
+                        {dia.slides && dia.slides.length > 0 && (
+                          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm bg-[#F5F4F0] dark:bg-[#333333] text-[#706F6C] dark:text-[#A0A0A0]">
+                            <FileText className="h-3.5 w-3.5" />
+                            <span className="font-medium">{dia.slides.length}</span>
+                          </div>
                         )}
                       </div>
 
+                      {/* Content Preview - Solo mostrar si hay contenido */}
+                      {hasContent ? (
+                        <div className="space-y-2 mb-4 flex-1">
+                          {/* Mostrar primeros 2 items de cualquier tipo */}
+                          {videosConStreamId.slice(0, 1).map((video) => (
+                            <div
+                              key={video.id}
+                              className="flex items-center gap-2 text-xs sm:text-sm p-2 rounded-lg bg-[#F5F4F0] dark:bg-[#333333]"
+                            >
+                              <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 bg-[#706F6C] dark:bg-[#505050]">
+                                <Play className="h-2.5 w-2.5 text-white ml-0.5" fill="currentColor" />
+                              </div>
+                              <span className="flex-1 truncate text-[#1A1915] dark:text-[#E5E5E5]">
+                                {video.title}
+                              </span>
+                            </div>
+                          ))}
+                          {dia.audios.slice(0, videosConStreamId.length > 0 ? 1 : 2).map((audio) => (
+                            <div
+                              key={audio.id}
+                              className="flex items-center gap-2 text-xs sm:text-sm p-2 rounded-lg bg-[#F5F4F0] dark:bg-[#333333]"
+                            >
+                              <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 bg-[#706F6C] dark:bg-[#505050]">
+                                <Volume2 className="h-2.5 w-2.5 text-white" />
+                              </div>
+                              <span className="flex-1 truncate text-[#1A1915] dark:text-[#E5E5E5]">
+                                {audio.title}
+                              </span>
+                            </div>
+                          ))}
+                          {totalContent > 2 && (
+                            <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] text-center pt-1">
+                              +{totalContent - 2} elementos más
+                            </p>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="flex-1 flex items-center justify-center py-4">
+                          <div className="text-center">
+                            <Clock className="h-8 w-8 text-[#E5E4E0] dark:text-[#4A4A4A] mx-auto mb-2" />
+                            <p className="text-xs text-[#9B9A97] dark:text-[#808080]">Próximamente</p>
+                          </div>
+                        </div>
+                      )}
+
                       {/* Action Button */}
                       <div
-                        className={`w-full py-3 px-4 rounded-full font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
-                          hasVideos
-                            ? `${colors.accent} text-white group-hover:shadow-md active:scale-[0.98]`
+                        className={`w-full py-2.5 sm:py-3 px-4 rounded-full font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2 ${
+                          hasContent
+                            ? 'border border-[#DA7756] text-[#DA7756] group-hover:bg-[#DA7756] group-hover:text-white active:scale-[0.98]'
                             : 'bg-[#F5F4F0] dark:bg-[#333333] text-[#9B9A97] dark:text-[#808080]'
                         }`}
                       >
-                        <Play className="h-4 w-4" />
-                        <span>Ver Videos</span>
-                        <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        <span>{hasContent ? 'Ver Contenido' : 'Sin contenido'}</span>
+                        {hasContent && (
+                          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        )}
                       </div>
                     </div>
                   </div>
