@@ -726,6 +726,13 @@ export const sessions: Session[] = [
         description: "Identifica si estás en Ventral, Simpático o Dorsal y recibe recomendaciones personalizadas.",
         url: "/protocols/checkin-estado-app.html",
         iconName: "Gauge"
+      },
+      {
+        id: "app1-3",
+        name: "Detector de Estados",
+        description: "Entrena tu capacidad de reconocer señales corporales y elegir la técnica correcta.",
+        url: "/protocols/detector-estados-app.html",
+        iconName: "Gamepad2"
       }
     ]
   },

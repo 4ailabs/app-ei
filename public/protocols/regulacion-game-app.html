@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Regulación Game</title>
+    <style>
+        :root {
+            --bg-primary: #0F0F1A;
+            --bg-secondary: #1A1A2E;
+            --bg-card: #252540;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0C0;
+            --accent: #FF6B6B;
+            --accent-glow: rgba(255, 107, 107, 0.5);
+            --success: #4ECDC4;
+            --success-glow: rgba(78, 205, 196, 0.5);
+            --warning: #FFE66D;
+            --energy-low: #4ECDC4;
+            --energy-mid: #FFE66D;
+            --energy-high: #FF6B6B;
+            --xp-gold: #FFD700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(0,0,0,0.3);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .stats-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .stat-pill.xp {
+            background: linear-gradient(135deg, rgba(255,215,0,0.3), rgba(255,165,0,0.3));
+            color: var(--xp-gold);
+        }
+
+        .stat-pill svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Game Container */
+        .game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Screens */
+        .screen {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* Start Screen */
+        .start-screen {
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 30%, var(--bg-secondary) 0%, var(--bg-primary) 70%);
+        }
+
+        .game-title {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), var(--warning));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .game-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .level-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .level-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 4px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+
+        .level-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        .level-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .xp-bar-container {
+            width: 200px;
+        }
+
+        .xp-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .xp-bar {
+            height: 8px;
+            background: var(--bg-card);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .xp-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--xp-gold));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .play-btn {
+            padding: 20px 60px;
+            background: linear-gradient(135deg, var(--accent), #FF8E8E);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 30px var(--accent-glow);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Game Screen */
+        .game-screen {
+            background: var(--bg-primary);
+        }
+
+        .game-hud {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer-display {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .score-display {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--xp-gold);
+        }
+
+        .combo-display {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--success);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .combo-display.active {
+            opacity: 1;
+        }
+
+        /* Energy Bar */
+        .energy-section {
+            padding: 0 16px 16px;
+        }
+
+        .energy-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .energy-title {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .energy-state {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .energy-state.low {
+            background: rgba(78, 205, 196, 0.2);
+            color: var(--energy-low);
+        }
+
+        .energy-state.mid {
+            background: rgba(255, 230, 109, 0.2);
+            color: var(--energy-mid);
+        }
+
+        .energy-state.high {
+            background: rgba(255, 107, 107, 0.2);
+            color: var(--energy-high);
+        }
+
+        .energy-bar {
+            height: 12px;
+            background: var(--bg-card);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .energy-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .energy-bar-fill.low {
+            background: linear-gradient(90deg, var(--energy-low), #6EE7DE);
+        }
+
+        .energy-bar-fill.mid {
+            background: linear-gradient(90deg, var(--energy-mid), #FFD93D);
+        }
+
+        .energy-bar-fill.high {
+            background: linear-gradient(90deg, var(--energy-high), #FF8E8E);
+        }
+
+        .energy-zones {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            pointer-events: none;
+        }
+
+        .energy-zone {
+            flex: 1;
+            border-right: 2px dashed rgba(255,255,255,0.2);
+        }
+
+        .energy-zone:last-child {
+            border-right: none;
+        }
+
+        .zone-marker {
+            position: absolute;
+            top: -20px;
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        /* Tap Area */
+        .tap-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tap-target {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--bg-card) 0%, var(--bg-secondary) 100%);
+            border: 4px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.1s;
+            box-shadow: 0 0 60px var(--accent-glow);
+            position: relative;
+        }
+
+        .tap-target::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            opacity: 0.3;
+            animation: pulse-ring 2s ease-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        .tap-target:active {
+            transform: scale(0.92);
+            box-shadow: 0 0 80px var(--accent-glow);
+        }
+
+        .tap-target.success {
+            border-color: var(--success);
+            box-shadow: 0 0 80px var(--success-glow);
+        }
+
+        .tap-icon {
+            font-size: 48px;
+        }
+
+        .tap-hint {
+            position: absolute;
+            bottom: -50px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Floating Points */
+        .floating-point {
+            position: absolute;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--xp-gold);
+            pointer-events: none;
+            animation: float-up 1s ease-out forwards;
+            text-shadow: 0 2px 10px rgba(255,215,0,0.5);
+        }
+
+        @keyframes float-up {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-80px) scale(1.2); }
+        }
+
+        /* Instructions */
+        .instructions {
+            padding: 16px;
+            text-align: center;
+        }
+
+        .instruction-text {
+            font-size: 16px;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .instruction-text strong {
+            color: var(--accent);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 30%, var(--bg-secondary) 0%, var(--bg-primary) 70%);
+        }
+
+        .result-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 48px;
+        }
+
+        .result-icon.win {
+            background: linear-gradient(135deg, var(--success), #6EE7DE);
+            box-shadow: 0 8px 40px var(--success-glow);
+        }
+
+        .result-icon.lose {
+            background: linear-gradient(135deg, var(--accent), #FF8E8E);
+            box-shadow: 0 8px 40px var(--accent-glow);
+        }
+
+        .result-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .result-message {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 280px;
+        }
+
+        .result-stats {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .result-stat {
+            text-align: center;
+        }
+
+        .result-stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--xp-gold);
+        }
+
+        .result-stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .result-btn {
+            padding: 16px 48px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 2px solid var(--accent);
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 8px;
+            transition: all 0.3s;
+        }
+
+        .result-btn.primary {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .result-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Mode Selection */
+        .mode-selection {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .mode-btn {
+            padding: 20px 24px;
+            background: var(--bg-card);
+            border: 2px solid var(--bg-card);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .mode-btn:hover, .mode-btn.selected {
+            border-color: var(--accent);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .mode-btn-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .mode-btn-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Particles */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        @keyframes particle-burst {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+        </button>
+        <div class="stats-bar">
+            <div class="stat-pill">
+                <span id="bestScore">0</span>
+            </div>
+            <div class="stat-pill xp">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+                <span id="totalXP">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="game-container">
+        <!-- Start Screen -->
+        <div class="screen active" id="startScreen">
+            <div class="start-screen">
+                <h1 class="game-title">REGULA</h1>
+                <p class="game-subtitle">Entrena tu Sistema Nervioso</p>
+
+                <div class="level-display">
+                    <div class="level-circle">
+                        <div class="level-number" id="levelNumber">1</div>
+                        <div class="level-label">Nivel</div>
+                    </div>
+                    <div class="xp-bar-container">
+                        <div class="xp-bar-label">
+                            <span>XP</span>
+                            <span id="xpProgress">0/100</span>
+                        </div>
+                        <div class="xp-bar">
+                            <div class="xp-bar-fill" id="xpBarFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mode-selection">
+                    <button class="mode-btn selected" onclick="selectMode('calm')" data-mode="calm">
+                        <div class="mode-btn-title">Calmar</div>
+                        <div class="mode-btn-desc">Baja tu energía con taps lentos</div>
+                    </button>
+                    <button class="mode-btn" onclick="selectMode('activate')" data-mode="activate">
+                        <div class="mode-btn-title">Activar</div>
+                        <div class="mode-btn-desc">Sube tu energía con taps rápidos</div>
+                    </button>
+                </div>
+
+                <button class="play-btn" onclick="startGame()">
+                    JUGAR
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div class="screen" id="gameScreen">
+            <div class="game-screen">
+                <div class="game-hud">
+                    <div class="timer-display" id="timer">30</div>
+                    <div class="combo-display" id="comboDisplay">x2 COMBO</div>
+                    <div class="score-display">+<span id="score">0</span></div>
+                </div>
+
+                <div class="energy-section">
+                    <div class="energy-label">
+                        <span class="energy-title">Nivel de Energía</span>
+                        <span class="energy-state high" id="energyState">Alto</span>
+                    </div>
+                    <div class="energy-bar">
+                        <div class="energy-zones">
+                            <div class="energy-zone"></div>
+                            <div class="energy-zone"></div>
+                            <div class="energy-zone"></div>
+                        </div>
+                        <div class="energy-bar-fill high" id="energyFill" style="width: 80%"></div>
+                    </div>
+                </div>
+
+                <div class="tap-area" id="tapArea">
+                    <div class="tap-target" id="tapTarget" ontouchstart="handleTap(event)" onmousedown="handleTap(event)">
+                        <span class="tap-icon" id="tapIcon">👆</span>
+                    </div>
+                    <span class="tap-hint" id="tapHint">TAP PARA CALMAR</span>
+                </div>
+
+                <div class="instructions">
+                    <p class="instruction-text" id="instructionText">
+                        Toca <strong>lento y rítmico</strong> para bajar tu energía a la zona verde
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div class="screen" id="resultScreen">
+            <div class="result-screen">
+                <div class="result-icon win" id="resultIcon">🎯</div>
+                <h2 class="result-title" id="resultTitle">¡Regulado!</h2>
+                <p class="result-message" id="resultMessage">
+                    Has llevado tu sistema nervioso a un estado óptimo.
+                </p>
+
+                <div class="result-stats">
+                    <div class="result-stat">
+                        <div class="result-stat-value" id="resultScore">0</div>
+                        <div class="result-stat-label">Puntos</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-stat-value" id="resultTaps">0</div>
+                        <div class="result-stat-label">Taps</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-stat-value" id="resultCombo">0</div>
+                        <div class="result-stat-label">Max Combo</div>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="result-btn primary" onclick="startGame()">
+                        Jugar de Nuevo
+                    </button>
+                    <button class="result-btn" onclick="showStart()">
+                        Menú
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        const state = {
+            totalXP: 0,
+            level: 1,
+            currentXP: 0,
+            xpToNext: 100,
+            bestScore: 0,
+            mode: 'calm', // 'calm' or 'activate'
+            energy: 80,
+            targetEnergy: 30, // For calm mode
+            score: 0,
+            taps: 0,
+            combo: 0,
+            maxCombo: 0,
+            lastTapTime: 0,
+            idealInterval: 800, // ms between taps for calm mode
+            gameActive: false,
+            timeLeft: 30
+        };
+
+        let gameTimer = null;
+        let energyDecayTimer = null;
+
+        // Load State
+        function loadState() {
+            const saved = localStorage.getItem('regulaGame');
+            if (saved) {
+                const data = JSON.parse(saved);
+                state.totalXP = data.totalXP || 0;
+                state.level = data.level || 1;
+                state.currentXP = data.currentXP || 0;
+                state.xpToNext = data.xpToNext || 100;
+                state.bestScore = data.bestScore || 0;
+            }
+            updateUI();
+        }
+
+        // Save State
+        function saveState() {
+            localStorage.setItem('regulaGame', JSON.stringify({
+                totalXP: state.totalXP,
+                level: state.level,
+                currentXP: state.currentXP,
+                xpToNext: state.xpToNext,
+                bestScore: state.bestScore
+            }));
+        }
+
+        // Update UI
+        function updateUI() {
+            document.getElementById('totalXP').textContent = state.totalXP;
+            document.getElementById('bestScore').textContent = state.bestScore;
+            document.getElementById('levelNumber').textContent = state.level;
+            document.getElementById('xpProgress').textContent = `${state.currentXP}/${state.xpToNext}`;
+            document.getElementById('xpBarFill').style.width = `${(state.currentXP / state.xpToNext) * 100}%`;
+        }
+
+        // Navigation
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function goBack() {
+            if (state.gameActive) {
+                endGame(false);
+            }
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = '/apps';
+            }
+        }
+
+        function showStart() {
+            showScreen('startScreen');
+        }
+
+        // Mode Selection
+        function selectMode(mode) {
+            state.mode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.mode === mode);
+            });
+        }
+
+        // Start Game
+        function startGame() {
+            state.gameActive = true;
+            state.score = 0;
+            state.taps = 0;
+            state.combo = 0;
+            state.maxCombo = 0;
+            state.lastTapTime = 0;
+            state.timeLeft = 30;
+
+            // Set initial energy based on mode
+            if (state.mode === 'calm') {
+                state.energy = 80 + Math.random() * 20; // Start high
+                state.targetEnergy = 30;
+                state.idealInterval = 800; // Slow taps
+                document.getElementById('tapHint').textContent = 'TAP LENTO PARA CALMAR';
+                document.getElementById('instructionText').innerHTML =
+                    'Toca <strong>lento y rítmico</strong> para bajar tu energía a la zona verde';
+                document.getElementById('tapIcon').textContent = '🧘';
+            } else {
+                state.energy = 10 + Math.random() * 20; // Start low
+                state.targetEnergy = 70;
+                state.idealInterval = 200; // Fast taps
+                document.getElementById('tapHint').textContent = 'TAP RÁPIDO PARA ACTIVAR';
+                document.getElementById('instructionText').innerHTML =
+                    'Toca <strong>rápido</strong> para subir tu energía a la zona amarilla';
+                document.getElementById('tapIcon').textContent = '⚡';
+            }
+
+            updateEnergyDisplay();
+            document.getElementById('score').textContent = '0';
+            document.getElementById('timer').textContent = '30';
+            document.getElementById('comboDisplay').classList.remove('active');
+
+            showScreen('gameScreen');
+
+            // Start timers
+            gameTimer = setInterval(() => {
+                state.timeLeft--;
+                document.getElementById('timer').textContent = state.timeLeft;
+
+                if (state.timeLeft <= 0) {
+                    endGame(true);
+                }
+            }, 1000);
+
+            // Energy naturally returns to middle
+            energyDecayTimer = setInterval(() => {
+                if (state.mode === 'calm') {
+                    // Energy naturally rises when stressed
+                    state.energy = Math.min(100, state.energy + 0.5);
+                } else {
+                    // Energy naturally drops when tired
+                    state.energy = Math.max(0, state.energy - 0.5);
+                }
+                updateEnergyDisplay();
+            }, 100);
+        }
+
+        // Handle Tap
+        function handleTap(e) {
+            e.preventDefault();
+            if (!state.gameActive) return;
+
+            const now = Date.now();
+            const interval = now - state.lastTapTime;
+            state.lastTapTime = now;
+            state.taps++;
+
+            // Calculate points based on tap rhythm
+            let points = 10;
+            let comboMultiplier = 1;
+
+            if (state.taps > 1) {
+                const idealDiff = Math.abs(interval - state.idealInterval);
+
+                if (state.mode === 'calm') {
+                    // For calming: reward slow, rhythmic taps
+                    if (interval >= state.idealInterval * 0.7) {
+                        // Good slow tap
+                        state.energy = Math.max(0, state.energy - 3);
+                        points = 20;
+
+                        if (idealDiff < 200) {
+                            state.combo++;
+                            points = 30;
+                        } else {
+                            state.combo = Math.max(0, state.combo - 1);
+                        }
+                    } else {
+                        // Too fast - energy goes up!
+                        state.energy = Math.min(100, state.energy + 2);
+                        points = 5;
+                        state.combo = 0;
+                    }
+                } else {
+                    // For activating: reward fast taps
+                    if (interval <= state.idealInterval * 1.5) {
+                        // Good fast tap
+                        state.energy = Math.min(100, state.energy + 2);
+                        points = 20;
+
+                        if (interval <= state.idealInterval) {
+                            state.combo++;
+                            points = 30;
+                        }
+                    } else {
+                        // Too slow - energy drops
+                        state.energy = Math.max(0, state.energy - 1);
+                        points = 5;
+                        state.combo = 0;
+                    }
+                }
+            } else {
+                // First tap
+                if (state.mode === 'calm') {
+                    state.energy = Math.max(0, state.energy - 2);
+                } else {
+                    state.energy = Math.min(100, state.energy + 2);
+                }
+            }
+
+            // Bonus for being in target zone
+            const inZone = state.mode === 'calm'
+                ? state.energy <= 40
+                : state.energy >= 60;
+
+            if (inZone) {
+                points *= 1.5;
+            }
+
+            // Combo multiplier
+            if (state.combo >= 10) comboMultiplier = 3;
+            else if (state.combo >= 5) comboMultiplier = 2;
+            else if (state.combo >= 3) comboMultiplier = 1.5;
+
+            points = Math.floor(points * comboMultiplier);
+            state.score += points;
+            state.maxCombo = Math.max(state.maxCombo, state.combo);
+
+            // Update displays
+            document.getElementById('score').textContent = state.score;
+
+            if (state.combo >= 3) {
+                document.getElementById('comboDisplay').textContent = `x${comboMultiplier} COMBO`;
+                document.getElementById('comboDisplay').classList.add('active');
+            } else {
+                document.getElementById('comboDisplay').classList.remove('active');
+            }
+
+            updateEnergyDisplay();
+
+            // Visual feedback
+            createFloatingPoint(points, e);
+            createParticles(e);
+
+            const target = document.getElementById('tapTarget');
+            target.classList.add('success');
+            setTimeout(() => target.classList.remove('success'), 100);
+
+            // Haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(10);
+            }
+        }
+
+        // Update Energy Display
+        function updateEnergyDisplay() {
+            const fill = document.getElementById('energyFill');
+            const stateEl = document.getElementById('energyState');
+
+            fill.style.width = `${state.energy}%`;
+
+            // Remove all classes
+            fill.classList.remove('low', 'mid', 'high');
+            stateEl.classList.remove('low', 'mid', 'high');
+
+            if (state.energy <= 40) {
+                fill.classList.add('low');
+                stateEl.classList.add('low');
+                stateEl.textContent = 'Calmo';
+            } else if (state.energy <= 70) {
+                fill.classList.add('mid');
+                stateEl.classList.add('mid');
+                stateEl.textContent = 'Óptimo';
+            } else {
+                fill.classList.add('high');
+                stateEl.classList.add('high');
+                stateEl.textContent = 'Activado';
+            }
+        }
+
+        // Create Floating Point
+        function createFloatingPoint(points, e) {
+            const point = document.createElement('div');
+            point.className = 'floating-point';
+            point.textContent = `+${points}`;
+
+            const rect = document.getElementById('tapArea').getBoundingClientRect();
+            const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+            const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+
+            point.style.left = `${x}px`;
+            point.style.top = `${y}px`;
+
+            document.getElementById('tapArea').appendChild(point);
+            setTimeout(() => point.remove(), 1000);
+        }
+
+        // Create Particles
+        function createParticles(e) {
+            const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#FFD700'];
+            const tapArea = document.getElementById('tapArea');
+            const rect = tapArea.getBoundingClientRect();
+            const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+            const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                const angle = (Math.PI * 2 * i) / 8;
+                const distance = 50 + Math.random() * 50;
+                particle.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+                particle.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
+                particle.style.animation = 'particle-burst 0.6s ease-out forwards';
+
+                tapArea.appendChild(particle);
+                setTimeout(() => particle.remove(), 600);
+            }
+        }
+
+        // End Game
+        function endGame(completed) {
+            state.gameActive = false;
+            clearInterval(gameTimer);
+            clearInterval(energyDecayTimer);
+
+            // Determine win/lose
+            const won = state.mode === 'calm'
+                ? state.energy <= 40
+                : state.energy >= 60;
+
+            // Calculate XP
+            let xpEarned = Math.floor(state.score / 10);
+            if (won) xpEarned *= 2;
+
+            state.totalXP += xpEarned;
+            state.currentXP += xpEarned;
+
+            // Level up
+            while (state.currentXP >= state.xpToNext) {
+                state.currentXP -= state.xpToNext;
+                state.level++;
+                state.xpToNext = Math.floor(state.xpToNext * 1.3);
+            }
+
+            // Best score
+            if (state.score > state.bestScore) {
+                state.bestScore = state.score;
+            }
+
+            saveState();
+            updateUI();
+
+            // Update result screen
+            const icon = document.getElementById('resultIcon');
+            const title = document.getElementById('resultTitle');
+            const message = document.getElementById('resultMessage');
+
+            if (won) {
+                icon.className = 'result-icon win';
+                icon.textContent = '🎯';
+                title.textContent = '¡Regulado!';
+                message.textContent = state.mode === 'calm'
+                    ? 'Has calmado tu sistema nervioso. Tu cuerpo está en estado de recuperación.'
+                    : 'Has activado tu sistema nervioso. Estás listo para la acción.';
+            } else {
+                icon.className = 'result-icon lose';
+                icon.textContent = '💫';
+                title.textContent = 'Sigue Practicando';
+                message.textContent = state.mode === 'calm'
+                    ? 'Tu energía sigue alta. Intenta tocar más lento y rítmico.'
+                    : 'Tu energía sigue baja. Intenta tocar más rápido.';
+            }
+
+            document.getElementById('resultScore').textContent = state.score;
+            document.getElementById('resultTaps').textContent = state.taps;
+            document.getElementById('resultCombo').textContent = state.maxCombo;
+
+            showScreen('resultScreen');
+        }
+
+        // Initialize
+        loadState();
+    </script>
+</body>
+</html>

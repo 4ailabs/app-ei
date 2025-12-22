@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Aventura de Regulación</title>
+    <style>
+        :root {
+            --bg-primary: #0D0D12;
+            --bg-secondary: #16161D;
+            --bg-card: #1E1E28;
+            --text-primary: #ECECEC;
+            --text-secondary: #A0A0B0;
+            --text-muted: #606070;
+            --border-color: #2A2A35;
+            --accent: #DA7756;
+            --accent-light: rgba(218, 119, 86, 0.15);
+            --accent-glow: rgba(218, 119, 86, 0.4);
+            --success: #2ca58d;
+            --success-light: rgba(44, 165, 141, 0.15);
+            --warning: #E8A54B;
+            --warning-light: rgba(232, 165, 75, 0.15);
+            --danger: #E85A5A;
+            --danger-light: rgba(232, 90, 90, 0.15);
+            --ventral: #2ca58d;
+            --simpatico: #E8A54B;
+            --dorsal: #7B8794;
+            --xp-gold: #FFD700;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-primary: #FAF9F7;
+                --bg-secondary: #F0EFEC;
+                --bg-card: #FFFFFF;
+                --text-primary: #1A1915;
+                --text-secondary: #706F6C;
+                --text-muted: #9B9A97;
+                --border-color: #E5E4E0;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .header-center {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .xp-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #1A1A1A;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .xp-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Screens */
+        .screen {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* Start Screen */
+        .start-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .game-logo {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, var(--accent), #B85A3A);
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 32px var(--accent-glow);
+            position: relative;
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 8px 32px var(--accent-glow); }
+            50% { box-shadow: 0 8px 48px var(--accent-glow), 0 0 60px var(--accent-glow); }
+        }
+
+        .game-logo svg {
+            width: 64px;
+            height: 64px;
+            color: white;
+        }
+
+        .start-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .start-subtitle {
+            font-size: 18px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .start-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 320px;
+            margin-bottom: 32px;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 20px;
+            text-align: center;
+            min-width: 90px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .start-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px 56px;
+            background: linear-gradient(135deg, var(--accent), #B85A3A);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 24px var(--accent-glow);
+            transition: all 0.3s;
+        }
+
+        .start-btn:active {
+            transform: scale(0.98);
+        }
+
+        .start-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Scenario Screen */
+        .scenario-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scenario-image {
+            height: 220px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scenario-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 60%, var(--bg-primary) 100%);
+        }
+
+        .scenario-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--border-color);
+        }
+
+        .scenario-icon svg {
+            width: 48px;
+            height: 48px;
+            color: var(--text-secondary);
+        }
+
+        .scenario-content {
+            flex: 1;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        .scenario-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--warning-light);
+            color: var(--warning);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .scenario-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .scenario-narrative {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .narrator-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .narrative-text {
+            font-size: 16px;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .narrative-text .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Body Signals */
+        .body-signals {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .signals-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .signals-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--danger-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signals-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--danger);
+        }
+
+        .signals-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .signal-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .signal-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: var(--danger-light);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--danger);
+            font-weight: 500;
+        }
+
+        .signal-chip .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        /* Question */
+        .question-box {
+            background: linear-gradient(135deg, var(--accent-light), transparent);
+            border: 1px solid var(--accent);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Choices Screen */
+        .choices-screen {
+            flex: 1;
+            padding: 20px;
+            padding-bottom: 40px;
+        }
+
+        .choices-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .choices-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .choices-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .choice-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .choice-card:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .choice-card.selected {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .choice-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .choice-card.selected .choice-icon {
+            background: var(--accent);
+        }
+
+        .choice-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-secondary);
+        }
+
+        .choice-card.selected .choice-icon svg {
+            color: white;
+        }
+
+        .choice-content {
+            flex: 1;
+        }
+
+        .choice-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .choice-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .choice-xp {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,165,0,0.2));
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--xp-gold);
+        }
+
+        /* Practice Screen */
+        .practice-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            padding-bottom: 120px;
+        }
+
+        .practice-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .practice-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--success-light);
+            color: var(--success);
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .practice-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .practice-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .technique-visual {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .breathing-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--success), var(--ventral));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 60px rgba(44, 165, 141, 0.3);
+            animation: breathe 8s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            50% { transform: scale(1); }
+            75% { transform: scale(0.95); }
+        }
+
+        .breathing-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+        }
+
+        .breathing-count {
+            font-size: 48px;
+            font-weight: 800;
+        }
+
+        .technique-instructions {
+            text-align: center;
+            margin-top: 32px;
+        }
+
+        .instruction-step {
+            font-size: 18px;
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .instruction-detail {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .result-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .result-icon.success {
+            background: linear-gradient(135deg, var(--success), var(--ventral));
+            box-shadow: 0 8px 40px rgba(44, 165, 141, 0.4);
+        }
+
+        .result-icon svg {
+            width: 56px;
+            height: 56px;
+            color: white;
+        }
+
+        .result-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .result-message {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 300px;
+            margin-bottom: 32px;
+        }
+
+        .xp-earned {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,165,0,0.15));
+            border: 2px solid var(--xp-gold);
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+
+        .xp-earned-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--xp-gold);
+        }
+
+        .xp-earned-label {
+            font-size: 14px;
+            color: var(--xp-gold);
+            font-weight: 600;
+        }
+
+        .level-progress {
+            width: 100%;
+            max-width: 280px;
+            margin-bottom: 40px;
+        }
+
+        .level-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .level-bar {
+            height: 8px;
+            background: var(--bg-card);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .level-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--xp-gold));
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        .result-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 48px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .result-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 12px;
+            padding: 16px 20px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .nav-btn.secondary {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .nav-btn.primary {
+            background: var(--accent);
+            border: none;
+            color: white;
+        }
+
+        .nav-btn.primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .nav-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Volver
+        </button>
+        <div class="header-center">
+            <span class="header-title">Aventura</span>
+        </div>
+        <div class="xp-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+            <span id="totalXP">0</span>
+        </div>
+    </header>
+
+    <!-- Start Screen -->
+    <div class="screen active" id="startScreen">
+        <div class="start-screen">
+            <div class="game-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <h1 class="start-title">Aventura de Regulación</h1>
+            <p class="start-subtitle">Entrena tu Sistema Nervioso</p>
+            <p class="start-description">
+                Enfrenta escenarios reales y aprende a regular tu cuerpo.
+                Gana XP, sube de nivel y desbloquea nuevas técnicas.
+            </p>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-value" id="scenariosCompleted">0</div>
+                    <div class="stat-label">Completados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="currentLevel">1</div>
+                    <div class="stat-label">Nivel</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="streakDays">0</div>
+                    <div class="stat-label">Racha</div>
+                </div>
+            </div>
+            <button class="start-btn" onclick="startGame()">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                Comenzar Aventura
+            </button>
+        </div>
+    </div>
+
+    <!-- Scenario Screen -->
+    <div class="screen" id="scenarioScreen">
+        <div class="scenario-screen">
+            <div class="scenario-image">
+                <div class="scenario-icon" id="scenarioIcon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                        <path d="M16 3h-4v4M8 3h4v4"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="scenario-content fade-in">
+                <div class="scenario-badge" id="scenarioBadge">
+                    <span>Escenario 1</span>
+                </div>
+                <h2 class="scenario-title" id="scenarioTitle">Cargando...</h2>
+
+                <div class="scenario-narrative">
+                    <div class="narrator-label">Situación</div>
+                    <p class="narrative-text" id="narrativeText">...</p>
+                </div>
+
+                <div class="body-signals">
+                    <div class="signals-header">
+                        <div class="signals-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                        </div>
+                        <span class="signals-title">Señales de tu cuerpo</span>
+                    </div>
+                    <div class="signal-chips" id="signalChips">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p class="question-text">¿Qué técnica usarías para regularte?</p>
+                </div>
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-btn primary" onclick="showChoices()">
+                Elegir Técnica
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Choices Screen -->
+    <div class="screen" id="choicesScreen">
+        <div class="choices-screen">
+            <div class="choices-header">
+                <h2 class="choices-title">Elige tu Técnica</h2>
+                <p class="choices-subtitle">Selecciona la mejor opción para este momento</p>
+            </div>
+            <div id="choicesContainer">
+                <!-- Choices filled dynamically -->
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-btn secondary" onclick="showScenario()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Volver
+            </button>
+            <button class="nav-btn primary" id="confirmChoiceBtn" onclick="confirmChoice()" disabled>
+                Practicar
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Practice Screen -->
+    <div class="screen" id="practiceScreen">
+        <div class="practice-screen">
+            <div class="practice-header">
+                <div class="practice-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                    Práctica en vivo
+                </div>
+                <h2 class="practice-title" id="practiceTitle">Respiración 4-7-8</h2>
+                <p class="practice-subtitle" id="practiceSubtitle">Sigue el ritmo del círculo</p>
+            </div>
+
+            <div class="technique-visual">
+                <div class="breathing-circle" id="breathingCircle">
+                    <div class="breathing-text">
+                        <div id="breathingInstruction">Inhala</div>
+                        <div class="breathing-count" id="breathingCount">4</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="technique-instructions">
+                <p class="instruction-step" id="instructionStep">Paso 1 de 3</p>
+                <p class="instruction-detail" id="instructionDetail">Inhala profundamente por la nariz</p>
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-btn primary" id="practiceBtn" onclick="startPractice()">
+                Comenzar
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div class="screen" id="resultScreen">
+        <div class="result-screen slide-up">
+            <div class="result-icon success">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <path d="M20 6L9 17l-5-5"/>
+                </svg>
+            </div>
+            <h2 class="result-title">¡Excelente!</h2>
+            <p class="result-message" id="resultMessage">
+                Has regulado tu sistema nervioso exitosamente. Tu cuerpo ahora está más en calma.
+            </p>
+
+            <div class="xp-earned">
+                <div>
+                    <div class="xp-earned-value" id="xpEarnedValue">+50</div>
+                    <div class="xp-earned-label">XP Ganados</div>
+                </div>
+            </div>
+
+            <div class="level-progress">
+                <div class="level-label">
+                    <span>Nivel <span id="resultLevel">1</span></span>
+                    <span id="xpProgress">50/100 XP</span>
+                </div>
+                <div class="level-bar">
+                    <div class="level-fill" id="levelFill" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <button class="result-btn" onclick="nextScenario()">
+                Siguiente Escenario
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        const gameState = {
+            totalXP: 0,
+            level: 1,
+            xpToNextLevel: 100,
+            currentXP: 0,
+            scenariosCompleted: 0,
+            streakDays: 0,
+            currentScenario: 0,
+            selectedChoice: null
+        };
+
+        // Scenarios Data
+        const scenarios = [
+            {
+                id: 1,
+                title: "La Reunión Urgente",
+                badge: "Trabajo",
+                icon: "briefcase",
+                narrative: "Tu jefe te envía un mensaje: <span class='highlight'>\"Necesito verte en mi oficina en 5 minutos\"</span>. Sin más contexto. Tu mente empieza a correr con posibilidades.",
+                signals: ["Corazón acelerado", "Tensión en hombros", "Respiración corta", "Mandíbula apretada"],
+                choices: [
+                    {
+                        id: "breathing",
+                        name: "Respiración 4-7-8",
+                        desc: "Técnica de respiración para activar el sistema parasimpático",
+                        xp: 50,
+                        icon: "wind",
+                        optimal: true
+                    },
+                    {
+                        id: "grounding",
+                        name: "Anclaje 5-4-3-2-1",
+                        desc: "Usa tus sentidos para volver al presente",
+                        xp: 40,
+                        icon: "anchor"
+                    },
+                    {
+                        id: "movement",
+                        name: "Sacudir el cuerpo",
+                        desc: "Movimiento físico para liberar tensión acumulada",
+                        xp: 35,
+                        icon: "activity"
+                    },
+                    {
+                        id: "nothing",
+                        name: "Ir directamente",
+                        desc: "No hacer nada y enfrentar la situación como está",
+                        xp: 10,
+                        icon: "arrow-right"
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "El Comentario Inesperado",
+                badge: "Social",
+                icon: "users",
+                narrative: "En una reunión familiar, alguien hace un comentario sobre tu vida que te hace sentir <span class='highlight'>juzgado</span>. Todos te miran esperando tu respuesta.",
+                signals: ["Calor en el pecho", "Ganas de huir", "Nudo en la garganta", "Manos frías"],
+                choices: [
+                    {
+                        id: "butterfly",
+                        name: "Abrazo Mariposa",
+                        desc: "Auto-abrazo bilateral para calmar el sistema nervioso",
+                        xp: 50,
+                        icon: "heart",
+                        optimal: true
+                    },
+                    {
+                        id: "breathing",
+                        name: "Respiración profunda",
+                        desc: "3 respiraciones profundas antes de responder",
+                        xp: 45,
+                        icon: "wind"
+                    },
+                    {
+                        id: "pause",
+                        name: "Pausa consciente",
+                        desc: "Toma 10 segundos antes de reaccionar",
+                        xp: 40,
+                        icon: "pause"
+                    },
+                    {
+                        id: "react",
+                        name: "Responder inmediatamente",
+                        desc: "Decir lo primero que viene a la mente",
+                        xp: 5,
+                        icon: "zap"
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "La Noche sin Dormir",
+                badge: "Descanso",
+                icon: "moon",
+                narrative: "Son las 3am y no puedes dormir. Tu mente <span class='highlight'>repasa todo lo que tienes que hacer mañana</span>. El cuerpo está cansado pero alerta.",
+                signals: ["Mente acelerada", "Tensión general", "Ojos cansados", "Inquietud física"],
+                choices: [
+                    {
+                        id: "bodyscan",
+                        name: "Escáner Corporal",
+                        desc: "Recorre tu cuerpo liberando tensión zona por zona",
+                        xp: 50,
+                        icon: "scan",
+                        optimal: true
+                    },
+                    {
+                        id: "breathing478",
+                        name: "Respiración 4-7-8",
+                        desc: "La técnica del Dr. Weil para inducir el sueño",
+                        xp: 45,
+                        icon: "wind"
+                    },
+                    {
+                        id: "safeplace",
+                        name: "Lugar Seguro",
+                        desc: "Visualiza tu lugar de calma y seguridad",
+                        xp: 40,
+                        icon: "home"
+                    },
+                    {
+                        id: "phone",
+                        name: "Ver el teléfono",
+                        desc: "Revisar redes sociales para distraerte",
+                        xp: 5,
+                        icon: "smartphone"
+                    }
+                ]
+            }
+        ];
+
+        // Icons SVG
+        const icons = {
+            briefcase: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-4v4M8 3h4v4"/>',
+            users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+            moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
+            wind: '<path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>',
+            anchor: '<circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/>',
+            activity: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
+            heart: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+            pause: '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>',
+            zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+            scan: '<path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/>',
+            home: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+            smartphone: '<rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
+            'arrow-right': '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>'
+        };
+
+        // Load saved state
+        function loadState() {
+            const saved = localStorage.getItem('aventuraRegulacion');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                Object.assign(gameState, parsed);
+                updateUI();
+            }
+        }
+
+        // Save state
+        function saveState() {
+            localStorage.setItem('aventuraRegulacion', JSON.stringify(gameState));
+        }
+
+        // Update UI
+        function updateUI() {
+            document.getElementById('totalXP').textContent = gameState.totalXP;
+            document.getElementById('scenariosCompleted').textContent = gameState.scenariosCompleted;
+            document.getElementById('currentLevel').textContent = gameState.level;
+            document.getElementById('streakDays').textContent = gameState.streakDays;
+        }
+
+        // Navigation
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = '/apps';
+            }
+        }
+
+        // Game Flow
+        function startGame() {
+            gameState.currentScenario = 0;
+            showScenario();
+        }
+
+        function showScenario() {
+            const scenario = scenarios[gameState.currentScenario % scenarios.length];
+
+            // Update scenario content
+            document.getElementById('scenarioBadge').innerHTML = `<span>${scenario.badge}</span>`;
+            document.getElementById('scenarioTitle').textContent = scenario.title;
+            document.getElementById('narrativeText').innerHTML = scenario.narrative;
+
+            // Update icon
+            document.getElementById('scenarioIcon').innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    ${icons[scenario.icon] || icons.briefcase}
+                </svg>
+            `;
+
+            // Update signals
+            const signalsHtml = scenario.signals.map(signal =>
+                `<div class="signal-chip"><span class="pulse"></span>${signal}</div>`
+            ).join('');
+            document.getElementById('signalChips').innerHTML = signalsHtml;
+
+            showScreen('scenarioScreen');
+        }
+
+        function showChoices() {
+            const scenario = scenarios[gameState.currentScenario % scenarios.length];
+
+            const choicesHtml = scenario.choices.map(choice => `
+                <div class="choice-card" onclick="selectChoice('${choice.id}')" data-choice="${choice.id}">
+                    <div class="choice-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            ${icons[choice.icon] || icons.wind}
+                        </svg>
+                    </div>
+                    <div class="choice-content">
+                        <div class="choice-name">${choice.name}</div>
+                        <div class="choice-desc">${choice.desc}</div>
+                    </div>
+                    <div class="choice-xp">+${choice.xp} XP</div>
+                </div>
+            `).join('');
+
+            document.getElementById('choicesContainer').innerHTML = choicesHtml;
+            document.getElementById('confirmChoiceBtn').disabled = true;
+            gameState.selectedChoice = null;
+
+            showScreen('choicesScreen');
+        }
+
+        function selectChoice(choiceId) {
+            gameState.selectedChoice = choiceId;
+
+            // Update UI
+            document.querySelectorAll('.choice-card').forEach(card => {
+                card.classList.toggle('selected', card.dataset.choice === choiceId);
+            });
+
+            document.getElementById('confirmChoiceBtn').disabled = false;
+        }
+
+        function confirmChoice() {
+            if (!gameState.selectedChoice) return;
+
+            const scenario = scenarios[gameState.currentScenario % scenarios.length];
+            const choice = scenario.choices.find(c => c.id === gameState.selectedChoice);
+
+            // Update practice screen based on choice
+            document.getElementById('practiceTitle').textContent = choice.name;
+            document.getElementById('practiceSubtitle').textContent = choice.desc;
+
+            showScreen('practiceScreen');
+        }
+
+        let practiceInterval = null;
+        let breathPhase = 0;
+        let breathCount = 0;
+
+        function startPractice() {
+            const btn = document.getElementById('practiceBtn');
+            btn.innerHTML = `
+                <span>Practicando...</span>
+            `;
+            btn.disabled = true;
+
+            // Simple breathing animation
+            const phases = [
+                { text: 'Inhala', count: 4, duration: 4000 },
+                { text: 'Sostén', count: 7, duration: 7000 },
+                { text: 'Exhala', count: 8, duration: 8000 }
+            ];
+
+            breathPhase = 0;
+            breathCount = 0;
+
+            function updateBreath() {
+                const phase = phases[breathPhase];
+                document.getElementById('breathingInstruction').textContent = phase.text;
+                document.getElementById('breathingCount').textContent = phase.count;
+                document.getElementById('instructionStep').textContent = `Paso ${breathPhase + 1} de 3`;
+                document.getElementById('instructionDetail').textContent =
+                    breathPhase === 0 ? 'Inhala profundamente por la nariz' :
+                    breathPhase === 1 ? 'Mantén el aire en tus pulmones' :
+                    'Exhala lentamente por la boca';
+
+                // Update circle animation
+                const circle = document.getElementById('breathingCircle');
+                circle.style.animation = 'none';
+                circle.offsetHeight; // Trigger reflow
+                circle.style.animation = breathPhase === 0 ? 'breatheIn 4s ease-in-out' :
+                                         breathPhase === 1 ? 'breatheHold 7s ease-in-out' :
+                                         'breatheOut 8s ease-in-out';
+            }
+
+            updateBreath();
+
+            // Run through 2 complete cycles
+            let totalPhases = 0;
+            practiceInterval = setInterval(() => {
+                breathPhase = (breathPhase + 1) % 3;
+                totalPhases++;
+
+                if (totalPhases >= 6) { // 2 complete cycles
+                    clearInterval(practiceInterval);
+                    finishPractice();
+                } else {
+                    updateBreath();
+                }
+            }, phases[breathPhase].duration);
+
+            // For demo, finish after 5 seconds
+            setTimeout(() => {
+                if (practiceInterval) {
+                    clearInterval(practiceInterval);
+                    finishPractice();
+                }
+            }, 5000);
+        }
+
+        function finishPractice() {
+            const scenario = scenarios[gameState.currentScenario % scenarios.length];
+            const choice = scenario.choices.find(c => c.id === gameState.selectedChoice);
+
+            // Calculate XP
+            const xpEarned = choice.xp;
+            gameState.totalXP += xpEarned;
+            gameState.currentXP += xpEarned;
+
+            // Check level up
+            while (gameState.currentXP >= gameState.xpToNextLevel) {
+                gameState.currentXP -= gameState.xpToNextLevel;
+                gameState.level++;
+                gameState.xpToNextLevel = Math.floor(gameState.xpToNextLevel * 1.5);
+            }
+
+            gameState.scenariosCompleted++;
+
+            // Update result screen
+            document.getElementById('xpEarnedValue').textContent = `+${xpEarned}`;
+            document.getElementById('resultLevel').textContent = gameState.level;
+            document.getElementById('xpProgress').textContent = `${gameState.currentXP}/${gameState.xpToNextLevel} XP`;
+            document.getElementById('levelFill').style.width = `${(gameState.currentXP / gameState.xpToNextLevel) * 100}%`;
+
+            if (choice.optimal) {
+                document.getElementById('resultMessage').textContent =
+                    '¡Elección óptima! Has usado la técnica más efectiva para esta situación. Tu sistema nervioso está regulado.';
+            } else {
+                document.getElementById('resultMessage').textContent =
+                    'Has completado la práctica. Tu cuerpo ahora está más regulado. Sigue practicando para mejorar.';
+            }
+
+            saveState();
+            updateUI();
+            showScreen('resultScreen');
+        }
+
+        function nextScenario() {
+            gameState.currentScenario++;
+            gameState.selectedChoice = null;
+
+            if (gameState.currentScenario >= scenarios.length) {
+                // Completed all scenarios - show start again
+                showScreen('startScreen');
+            } else {
+                showScenario();
+            }
+        }
+
+        // Initialize
+        loadState();
+
+        // Add dynamic breath animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes breatheIn {
+                0% { transform: scale(0.9); }
+                100% { transform: scale(1.15); }
+            }
+            @keyframes breatheHold {
+                0%, 100% { transform: scale(1.15); }
+            }
+            @keyframes breatheOut {
+                0% { transform: scale(1.15); }
+                100% { transform: scale(0.9); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
