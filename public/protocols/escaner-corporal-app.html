@@ -822,6 +822,7 @@
                 const response = await fetch('/api/xp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
                     body: JSON.stringify({
                         appName: 'escaner-corporal',
                         xpGained: xpGained,

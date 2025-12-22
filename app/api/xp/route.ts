@@ -35,7 +35,22 @@ export async function GET() {
         })
     } catch (error) {
         console.error('Error obteniendo XP:', error)
-        return NextResponse.json({ error: 'Error interno' }, { status: 500 })
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        
+        // Si es un error de Prisma relacionado con campos faltantes
+        if (errorMessage.includes('Unknown arg') || errorMessage.includes('does not exist')) {
+            console.error('⚠️ Los campos de XP no existen en la base de datos. Ejecuta: npx prisma db push')
+            return NextResponse.json({ 
+                error: 'Base de datos no actualizada',
+                totalXP: 0,
+                premiumUnlocked: false
+            }, { status: 200 }) // Retornar valores por defecto en lugar de error
+        }
+        
+        return NextResponse.json({ 
+            error: 'Error interno',
+            details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+        }, { status: 500 })
     }
 }
 
@@ -69,11 +84,7 @@ export async function POST(request: NextRequest) {
                 where: { id: session.user.id },
                 data: {
                     totalXP: { increment: xpToAdd },
-                    lastXPSync: new Date(),
-                    // Desbloquear premium automáticamente si alcanza el umbral
-                    premiumUnlocked: {
-                        set: undefined // Se calcula después
-                    }
+                    lastXPSync: new Date()
                 },
                 select: {
                     totalXP: true,
@@ -112,6 +123,20 @@ export async function POST(request: NextRequest) {
         })
     } catch (error) {
         console.error('Error sincronizando XP:', error)
-        return NextResponse.json({ error: 'Error interno' }, { status: 500 })
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        
+        // Si es un error de Prisma relacionado con campos faltantes, dar un mensaje más útil
+        if (errorMessage.includes('Unknown arg') || errorMessage.includes('does not exist')) {
+            console.error('⚠️ Los campos de XP no existen en la base de datos. Ejecuta: npx prisma db push')
+            return NextResponse.json({ 
+                error: 'Base de datos no actualizada. Contacta al administrador.',
+                details: 'Los campos de XP no están en la base de datos'
+            }, { status: 500 })
+        }
+        
+        return NextResponse.json({ 
+            error: 'Error interno',
+            details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+        }, { status: 500 })
     }
 }
