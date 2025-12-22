@@ -71,7 +71,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
               {/* Mobile Header */}
               <div className="lg:hidden fixed top-0 left-0 right-0 bg-[#FAF9F7] dark:bg-[#1A1A1A] border-b border-[#E5E4E0] dark:border-[#333333] z-50 p-4 pt-safe">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
+                  <Link href="/" className="flex items-center space-x-3 group">
                     <div className="rounded-lg overflow-hidden">
                       <Image
                         src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
@@ -82,7 +82,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                       />
                     </div>
                     <span className="text-xs sm:text-sm font-bold text-[#1A1915] dark:text-[#E5E5E5]">Inteligencia Energética</span>
-                  </div>
+                  </Link>
                   <div className="flex items-center space-x-2">
                     <ThemeToggle />
                     <button
@@ -231,7 +231,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
               <aside className={`hidden lg:flex lg:fixed lg:left-0 lg:top-0 lg:h-screen bg-[#F5F4F0] dark:bg-[#1A1A1A] flex flex-col overflow-hidden border-r border-[#E5E4E0] dark:border-[#333333] transition-all duration-300 ${isDesktopCollapsed ? 'lg:w-0 border-r-0' : 'lg:w-80'}`}>
                 <div className={`flex flex-col space-y-12 h-full p-8 transition-all duration-300 ${isDesktopCollapsed ? 'opacity-0 w-0 overflow-hidden pointer-events-none' : 'opacity-100'}`}>
                 <div className="flex items-center justify-between flex-shrink-0">
-                  <div className="flex items-center space-x-3">
+                  <Link href="/" className="flex items-center space-x-3 group">
                     <div className="rounded-lg overflow-hidden">
                       <Image
                         src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
@@ -242,7 +242,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                       />
                     </div>
                     <span className="text-lg font-bold text-[#1A1915] dark:text-[#E5E5E5]">Inteligencia Energética</span>
-                  </div>
+                  </Link>
                   <ThemeToggle />
                 </div>
 

@@ -21,19 +21,47 @@ export function PromoVideo() {
         <Play className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756] dark:text-[#ECECEC]" />
         <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Video de Introducción</h2>
       </div>
-      <div className="aspect-video w-full rounded-lg sm:rounded-xl overflow-hidden bg-[#1A1915] dark:bg-black shadow-lg">
+      <div 
+        className="aspect-video w-full rounded-lg sm:rounded-xl overflow-hidden bg-transparent shadow-lg relative"
+        style={{ margin: 0, padding: 0 }}
+      >
         {videoUrl ? (
-          <iframe
-            key={`promo-${PROMO_VIDEO_ID}`}
-            src={videoUrl}
-            className="w-full h-full"
-            allow="accelerometer; gyroscope; encrypted-media; picture-in-picture; fullscreen"
-            allowFullScreen
-            style={{ border: "none" }}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Video de Introducción"
-          />
+          <div 
+            className="absolute inset-0 w-full h-full" 
+            style={{ 
+              margin: 0, 
+              padding: 0, 
+              lineHeight: 0,
+              fontSize: 0,
+              letterSpacing: 0
+            }}
+          >
+            <iframe
+              key={`promo-${PROMO_VIDEO_ID}`}
+              src={videoUrl}
+              className="w-full h-full"
+              allow="accelerometer; gyroscope; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+              style={{ 
+                border: "none",
+                outline: "none",
+                display: "block",
+                margin: 0,
+                padding: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                verticalAlign: "top",
+                lineHeight: 0,
+                fontSize: 0,
+                letterSpacing: 0,
+                boxSizing: "border-box"
+              }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Video de Introducción"
+            />
+          </div>
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <div className="text-center text-white">

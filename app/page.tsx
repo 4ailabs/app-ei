@@ -20,7 +20,7 @@ export default async function HomePage() {
 
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-2 sm:mb-4">
-            <div className="rounded-lg overflow-hidden bg-white/10 backdrop-blur-sm p-1">
+            <div className="rounded-lg overflow-hidden bg-white/10 backdrop-blur-sm p-1.5 sm:p-2 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10">
               <Image
                 src="https://framerusercontent.com/images/GVNBR2YhOqppm6eb9Xjat6VYn4.png?width=1024&height=1024"
                 alt="Inteligencia Energética"
