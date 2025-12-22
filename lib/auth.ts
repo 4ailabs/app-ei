@@ -51,11 +51,11 @@ export const authOptions: NextAuthConfig = {
   ],
   session: {
     strategy: "jwt",
-    maxAge: 7 * 24 * 60 * 60, // 7 días en segundos (sesión expira después de 7 días)
+    maxAge: 30 * 24 * 60 * 60, // 30 días en segundos (sesión expira después de 30 días)
     updateAge: 24 * 60 * 60, // Actualizar sesión cada 24 horas
   },
   jwt: {
-    maxAge: 7 * 24 * 60 * 60, // 7 días en segundos
+    maxAge: 30 * 24 * 60 * 60, // 30 días en segundos
   },
   cookies: {
     sessionToken: {
@@ -65,8 +65,28 @@ export const authOptions: NextAuthConfig = {
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // "none" para iframes en producción
         path: "/",
         secure: process.env.NODE_ENV === "production", // Siempre true en producción (requerido para sameSite: "none")
-        maxAge: 7 * 24 * 60 * 60, // 7 días
+        maxAge: 30 * 24 * 60 * 60, // 30 días para mejor persistencia
         // No especificar domain para que funcione en múltiples dominios
+      },
+    },
+    callbackUrl: {
+      name: `next-auth.callback-url`,
+      options: {
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 30 * 24 * 60 * 60,
+      },
+    },
+    csrfToken: {
+      name: `next-auth.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 30 * 24 * 60 * 60,
       },
     },
   },
