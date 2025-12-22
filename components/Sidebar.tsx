@@ -17,7 +17,8 @@ import {
   ChevronLeft,
   ChevronRight,
   GraduationCap,
-  Smartphone
+  Smartphone,
+  Sparkles
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/ThemeToggle"
@@ -164,6 +165,14 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                           mobile={true}
                           onClick={closeMobileMenu}
                         />
+                        <NavItem
+                          icon={<Sparkles className="w-6 h-6" />}
+                          label="Premium"
+                          href="/premium"
+                          active={pathname === '/premium'}
+                          mobile={true}
+                          onClick={closeMobileMenu}
+                        />
                         {isAdmin && (
                           <NavItem
                             icon={<Settings className="w-6 h-6" />}
@@ -279,6 +288,12 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, active, mobile = f
                         label="Apps"
                         href="/apps"
                         active={pathname === '/apps'}
+                      />
+                      <NavItem
+                        icon={<Sparkles className="w-6 h-6" />}
+                        label="Premium"
+                        href="/premium"
+                        active={pathname === '/premium'}
                       />
                       {isAdmin && (
                         <NavItem

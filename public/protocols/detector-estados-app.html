@@ -2173,6 +2173,10 @@
             // Sonido de sesión completada
             feedbackSounds.roundComplete();
 
+            // Sincronizar XP con el servidor
+            const details = `${gameState.roundsPerSession} rondas, ${accuracy}% precisión`;
+            syncXPToServer(gameState.sessionXP, details);
+
             showScreen('resultScreen');
         }
 
@@ -2206,6 +2210,55 @@
                 document.getElementById('soundOnIcon').classList.add('hidden');
                 document.getElementById('soundOffIcon').classList.remove('hidden');
             }
+        }
+
+        // Sincronizar XP con el servidor (para sistema premium)
+        async function syncXPToServer(xpGained, details) {
+            try {
+                const response = await fetch('/api/xp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        appName: 'detector-estados',
+                        xpGained: xpGained,
+                        details: details
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('XP sincronizado:', data);
+
+                    // Si acaba de desbloquear premium, mostrar notificación
+                    if (data.justUnlockedPremium) {
+                        showPremiumUnlockedNotification();
+                    }
+                }
+            } catch (error) {
+                // Silenciosamente falla si no hay conexión o no está logueado
+                console.log('XP guardado localmente (sin conexión o sin login)');
+            }
+        }
+
+        // Notificación de premium desbloqueado
+        function showPremiumUnlockedNotification() {
+            const notification = document.createElement('div');
+            notification.innerHTML = `
+                <div style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+                    background: linear-gradient(135deg, #F59E0B, #EA580C); color: white;
+                    padding: 16px 24px; border-radius: 16px; z-index: 9999;
+                    box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
+                    display: flex; align-items: center; gap: 12px;
+                    animation: slideDown 0.5s ease-out;">
+                    <span style="font-size: 24px;">🎉</span>
+                    <div>
+                        <div style="font-weight: 700; font-size: 16px;">¡Premium Desbloqueado!</div>
+                        <div style="font-size: 13px; opacity: 0.9;">Accede a contenido exclusivo</div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 5000);
         }
 
         // Mostrar pantalla de historial

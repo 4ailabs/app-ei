@@ -1865,6 +1865,43 @@
         function showResult() {
             showScreen('resultScreen');
             renderResult();
+
+            // Sincronizar XP - 20 XP base + 5 por transformación completada
+            const completedCount = Object.values(practiceData).filter(d => d.completed).length;
+            const xpGained = 20 + completedCount * 5;
+            const details = totalReps + ' repeticiones, ' + completedCount + '/' + transformations.length + ' completadas';
+            syncXPToServer(xpGained, details);
+        }
+
+        // Sincronizar XP con el servidor
+        async function syncXPToServer(xpGained, details) {
+            try {
+                const response = await fetch('/api/xp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        appName: 're-etiquetado',
+                        xpGained: xpGained,
+                        details: details
+                    })
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('XP sincronizado:', data);
+                    if (data.justUnlockedPremium) {
+                        showPremiumNotification();
+                    }
+                }
+            } catch (e) {
+                console.log('XP guardado localmente');
+            }
+        }
+
+        function showPremiumNotification() {
+            const n = document.createElement('div');
+            n.innerHTML = '<div style="position:fixed;top:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#F59E0B,#EA580C);color:white;padding:16px 24px;border-radius:16px;z-index:9999;box-shadow:0 8px 32px rgba(245,158,11,0.4);display:flex;align-items:center;gap:12px"><span style="font-size:24px">🎉</span><div><div style="font-weight:700">¡Premium Desbloqueado!</div><div style="font-size:13px;opacity:0.9">Accede a contenido exclusivo</div></div></div>';
+            document.body.appendChild(n);
+            setTimeout(() => n.remove(), 5000);
         }
 
         function renderResult() {
