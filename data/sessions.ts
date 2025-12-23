@@ -1806,7 +1806,57 @@ export const sessions: Session[] = [
         type: "slide"
       }
     ],
-    videos: [],
+    videos: [
+      {
+        id: "v7-1",
+        title: "¿Qué es Context Engineering?",
+        cloudflareStreamId: "37cbba02cf7907f197ad7e786a9e68d5",
+        duration: "",
+        description: "Introducción a la ingeniería del contexto para optimizar el entorno y la respuesta energética"
+      },
+      {
+        id: "v7-2",
+        title: "El Test Muscular como Herramienta de Acceso",
+        cloudflareStreamId: "282db05a22bb75540e97ff653f4aa000",
+        duration: "",
+        description: "Comprendiendo cómo el test muscular proporciona acceso a información del sistema mente-cuerpo"
+      },
+      {
+        id: "v7-3",
+        title: "Fase 1: ¿CUÁNDO? — Los 4 Niveles Temporales",
+        cloudflareStreamId: "57f1e9b8c5041874abdae774093abcf6",
+        duration: "",
+        description: "Los cuatro niveles de análisis y la primera coordenada temporal"
+      },
+      {
+        id: "v7-4",
+        title: "Fase 2: ¿QUÉ TIPO? — Los 13 Hologramas",
+        cloudflareStreamId: "a4824a9c220d82f31d9bdc90090bd13e",
+        duration: "",
+        description: "Los 13 hologramas y patrones de identificación"
+      },
+      {
+        id: "v7-5",
+        title: "Fase 3: ¿QUÉ SENSACIÓN? — Las 20 Sensaciones",
+        cloudflareStreamId: "24415147dd0b3da2a109de7ed7e49ff1",
+        duration: "",
+        description: "El vocabulario del cuerpo: las 20 sensaciones y su significado"
+      },
+      {
+        id: "v7-6",
+        title: "Fases 4-7: Personas, Evento, Significado, Función",
+        cloudflareStreamId: "29234485f61645462fc242d6f9f3a018",
+        duration: "",
+        description: "Las últimas cuatro fases: identificación de personas, eventos, significado y función"
+      },
+      {
+        id: "v7-7",
+        title: "Demo: Context Engineering Completo",
+        cloudflareStreamId: "34bc5573ee5fd8a92d8f8d713a43f777",
+        duration: "",
+        description: "Demostración práctica completa del proceso de Context Engineering"
+      }
+    ],
     audios: [],
     themes: [],
     protocols: [
