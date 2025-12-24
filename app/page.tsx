@@ -227,35 +227,131 @@ export default async function HomePage() {
         </div>
       )}
 
-      {/* CTA Section for non-logged in users */}
+      {/* Información para usuarios no registrados */}
       {!isLoggedIn && (
-        <div className="bg-white dark:bg-[#2A2A2A] p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#2ca58d]/30">
-          <div className="text-center py-6 sm:py-12 px-2 sm:px-4">
-            <div className="max-w-md mx-auto">
-              <div className="w-14 h-14 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#252525] dark:border dark:border-[#2ca58d]/30 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                <Lock className="h-7 w-7 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#7A7A76]" />
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC] mb-2 sm:mb-3">Accede a las Sesiones</h3>
-              <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#B4B4B4] mb-5 sm:mb-8">
-                Explora las {totalSessions} sesiones formativas exclusivas.
-                Inicia sesión o regístrate para acceder al material.
+        <>
+          {/* Sección de características */}
+          <div className="bg-gradient-to-br from-[#2ca58d]/10 to-[#DA7756]/10 dark:from-[#2ca58d]/20 dark:to-[#DA7756]/20 border border-[#2ca58d]/30 dark:border-[#2ca58d]/40 p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-3">
+                ¿Qué encontrarás en la plataforma?
+              </h2>
+              <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0] max-w-2xl mx-auto">
+                Todo lo que necesitas para tu desarrollo en Inteligencia Energética en un solo lugar
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <Link href="/login">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[#DA7756] dark:bg-[#DA7756] text-white dark:text-white rounded-full font-semibold hover:bg-[#C4684A] dark:hover:bg-[#C4684A] transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98] text-sm sm:text-base">
-                    Iniciar Sesión
-                    <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </button>
-                </Link>
-                <Link href="/register">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white dark:bg-[#252525] text-[#1A1915] dark:text-[#E5E5E5] border-2 border-[#E5E4E0] dark:border-[#2ca58d]/30 rounded-full font-semibold hover:border-[#DA7756] dark:hover:border-[#2ca58d]/50 hover:bg-[#FAF9F7] dark:hover:bg-[#2A2A2A] transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] text-sm sm:text-base">
-                    Registrarse
-                  </button>
-                </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
+              {/* Sesiones Formativas */}
+              <div className="bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2.5 bg-[#DA7756]/20 dark:bg-[#DA7756]/30 rounded-lg">
+                    <BookOpen className="h-6 w-6 text-[#DA7756] dark:text-[#E5E5E5]" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sesiones Formativas</h3>
+                </div>
+                <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+                  {totalSessions} sesiones completas con videos educativos, audios guiados, PDFs descargables, protocolos interactivos y temas explorables.
+                </p>
+                <ul className="text-xs text-[#706F6C] dark:text-[#A0A0A0] space-y-1">
+                  <li>• Videos de alta calidad</li>
+                  <li>• Meditaciones y audios guiados</li>
+                  <li>• Material descargable</li>
+                  <li>• Protocolos interactivos</li>
+                </ul>
+              </div>
+
+              {/* Apps Interactivas */}
+              <div className="bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2.5 bg-[#2ca58d]/20 dark:bg-[#2ca58d]/30 rounded-lg">
+                    <Smartphone className="h-6 w-6 text-[#2ca58d] dark:text-[#E5E5E5]" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Apps Interactivas</h3>
+                </div>
+                <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+                  10 herramientas prácticas para regular tu sistema nervioso, trabajar con estados emocionales y desarrollar nuevas habilidades.
+                </p>
+                <ul className="text-xs text-[#706F6C] dark:text-[#A0A0A0] space-y-1">
+                  <li>• Respiración Guiada</li>
+                  <li>• Las 4 Palancas</li>
+                  <li>• Re-etiquetado con IA</li>
+                  <li>• Y 7 apps más</li>
+                </ul>
+              </div>
+
+              {/* Sistema de XP y Premium */}
+              <div className="bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2.5 bg-[#DA7756]/20 dark:bg-[#DA7756]/30 rounded-lg">
+                    <Award className="h-6 w-6 text-[#DA7756] dark:text-[#E5E5E5]" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">XP y Premium</h3>
+                </div>
+                <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+                  Gana experiencia usando las apps y desbloquea contenido premium exclusivo al alcanzar 500 XP.
+                </p>
+                <ul className="text-xs text-[#706F6C] dark:text-[#A0A0A0] space-y-1">
+                  <li>• Gana XP practicando</li>
+                  <li>• Contenido exclusivo</li>
+                  <li>• Actualizaciones semanales</li>
+                  <li>• Seguimiento de progreso</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Beneficios adicionales */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+                <div className="flex items-center gap-3 mb-2">
+                  <Play className="h-5 w-5 text-[#2ca58d] dark:text-[#E5E5E5]" />
+                  <h4 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Videos de Alta Calidad</h4>
+                </div>
+                <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0]">
+                  Accede a videos educativos con integración de Cloudflare Stream para una reproducción fluida y de alta calidad.
+                </p>
+              </div>
+
+              <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+                <div className="flex items-center gap-3 mb-2">
+                  <FileText className="h-5 w-5 text-[#DA7756] dark:text-[#E5E5E5]" />
+                  <h4 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Material Descargable</h4>
+                </div>
+                <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0]">
+                  PDFs, protocolos, guías y manuales que puedes descargar y consultar cuando quieras.
+                </p>
               </div>
             </div>
           </div>
-        </div>
+
+          {/* CTA Section */}
+          <div className="bg-white dark:bg-[#2A2A2A] p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#2ca58d]/30">
+            <div className="text-center py-6 sm:py-12 px-2 sm:px-4">
+              <div className="max-w-md mx-auto">
+                <div className="w-14 h-14 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#252525] dark:border dark:border-[#2ca58d]/30 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <Lock className="h-7 w-7 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#7A7A76]" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC] mb-2 sm:mb-3">Comienza Ahora</h3>
+                <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#B4B4B4] mb-5 sm:mb-8">
+                  Regístrate gratuitamente y accede a todo el contenido. Tu cuenta será aprobada y recibirás acceso completo a las {totalSessions} sesiones formativas.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                  <Link href="/register">
+                    <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[#DA7756] dark:bg-[#DA7756] text-white dark:text-white rounded-full font-semibold hover:bg-[#C4684A] dark:hover:bg-[#C4684A] transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98] text-sm sm:text-base">
+                      Registrarse Gratis
+                      <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </button>
+                  </Link>
+                  <Link href="/login">
+                    <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white dark:bg-[#252525] text-[#1A1915] dark:text-[#E5E5E5] border-2 border-[#E5E4E0] dark:border-[#2ca58d]/30 rounded-full font-semibold hover:border-[#DA7756] dark:hover:border-[#2ca58d]/50 hover:bg-[#FAF9F7] dark:hover:bg-[#2A2A2A] transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] text-sm sm:text-base">
+                      Ya tengo cuenta
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </div>
   )
