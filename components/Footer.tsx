@@ -25,7 +25,8 @@ export function Footer() {
 
           {/* Center Section - Copyright */}
           <div className="text-xs text-[#706F6C] dark:text-[#A0A0A0] text-center">
-            © {new Date().getFullYear()} Inteligencia Energética - Todos los derechos reservados
+            <p>Dr. Miguel Ojeda Rios</p>
+            <p className="mt-1">© {new Date().getFullYear()} Inteligencia Energética - Todos los derechos reservados</p>
           </div>
 
           {/* Right Section - Links */}
