@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kit de Tarjetas - Context Engineering</title>
+    <style>
+        :root {
+            --bg-primary: #FAF9F7;
+            --bg-card: #FFFFFF;
+            --bg-secondary: #F5F4F0;
+            --text-primary: #1A1915;
+            --text-secondary: #706F6C;
+            --text-tertiary: #9B9A97;
+            --border-color: #E5E4E0;
+            --accent: #DA7756;
+            --accent-hover: #ea580c;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #0F0F0F;
+                --bg-card: #1A1A1A;
+                --bg-secondary: #252525;
+                --text-primary: #E5E5E5;
+                --text-secondary: #A0A0A0;
+                --text-tertiary: #808080;
+                --border-color: #333333;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            padding-bottom: 120px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Card Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Card Thumbnail */
+        .card-thumb {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .card-thumb:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .card-thumb:active {
+            transform: scale(0.98);
+        }
+
+        .card-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-thumb h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-thumb p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Full Card Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 1rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalIn 0.2s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            background: var(--accent);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1.5rem 1.5rem 0 0;
+            position: sticky;
+            top: 0;
+        }
+
+        .modal-header .card-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.9;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 2rem;
+            height: 2rem;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 0.5rem;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        /* Card Content Styles */
+        .phase-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .phase-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .phase-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2rem;
+            height: 2rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 50%;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .phase-content h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .phase-content p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: white;
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .result-box strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Method Card Styles */
+        .method-section {
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .method-section h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .method-section ul {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .method-section li {
+            padding: 0.25rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .method-section li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .test-result {
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--bg-card);
+            border-radius: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .test-result .yes {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .test-result .no {
+            color: var(--text-tertiary);
+        }
+
+        .principle-box {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: white;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .principle-box strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Phrase Card Styles */
+        .phrase-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .phrase-item {
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .phrase-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .phrase-text {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        /* Grid Items (Hologramas, Sensaciones, etc.) */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .grid-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .grid-item-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.5rem;
+            height: 1.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .grid-item-text {
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+
+        /* Event Categories */
+        .category-section {
+            margin-bottom: 1rem;
+        }
+
+        .category-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 999px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Functions List */
+        .function-item {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .function-item:last-child {
+            border-bottom: none;
+        }
+
+        .function-marker {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .function-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .function-text span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Therapeutic Phrase */
+        .therapeutic-phrase {
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .phrase-variable {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0 0.1rem;
+        }
+
+        .phrase-note {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* Belief Reference */
+        .belief-section {
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .belief-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .belief-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .belief-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .belief-examples {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--bg-secondary);
+            border: none;
+            border-radius: 0.75rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-btn:disabled:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .nav-counter {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Levels Grid */
+        .levels-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .level-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+        }
+
+        .level-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2.5rem;
+            height: 2.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .level-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .level-content p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .level-content .detail {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Verification Questions */
+        .verification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .verification-item {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .verification-question {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .verification-answer {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .verification-answer .yes {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Back Button */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            margin-left: -0.5rem;
+            border-radius: 0.5rem;
+            min-height: 44px;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+            background: var(--bg-secondary);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.75rem;
+                padding-top: max(0.75rem, env(safe-area-inset-top));
+            }
+
+            .header {
+                padding: 1.5rem 0.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .card-thumb {
+                padding: 1rem;
+            }
+
+            /* Modal fullscreen on mobile */
+            .modal-overlay {
+                padding: 0;
+            }
+
+            .modal-content {
+                border-radius: 0;
+                max-height: 100vh;
+                height: 100vh;
+            }
+
+            .modal-header {
+                border-radius: 0;
+                padding: 1.25rem;
+                padding-top: max(1.25rem, calc(env(safe-area-inset-top) + 0.5rem));
+            }
+
+            .modal-header h2 {
+                font-size: 1.1rem;
+                padding-right: 2rem;
+            }
+
+            .modal-body {
+                padding: 1rem;
+                padding-bottom: 100px;
+            }
+
+            .modal-close {
+                top: max(0.75rem, calc(env(safe-area-inset-top) + 0.25rem));
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+
+            /* Single column grids on small screens */
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-item {
+                padding: 0.75rem;
+            }
+
+            .grid-item-text {
+                font-size: 0.9rem;
+            }
+
+            /* Larger touch targets */
+            .nav-btn {
+                padding: 0.875rem 1rem;
+                min-height: 48px;
+            }
+
+            .nav-bar {
+                padding: 0.5rem;
+            }
+
+            /* Level items stack better */
+            .level-item {
+                padding: 0.875rem;
+            }
+
+            .level-number {
+                min-width: 2rem;
+                height: 2rem;
+                font-size: 1rem;
+            }
+
+            /* Tags wrap better */
+            .tag {
+                padding: 0.375rem 0.625rem;
+                font-size: 0.85rem;
+            }
+
+            /* Therapeutic phrase */
+            .therapeutic-phrase {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .phrase-variable {
+                font-size: 0.75rem;
+                padding: 0.1rem 0.4rem;
+            }
+        }
+
+        /* Swipe hint animation */
+        @keyframes swipeHint {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-5px); }
+        }
+
+        .modal-content.swipe-hint {
+            animation: swipeHint 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="javascript:history.back()" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Volver
+        </a>
+
+        <div class="header">
+            <span class="badge">13 Tarjetas</span>
+            <h1>Kit de Tarjetas Context Engineering</h1>
+            <p>Sistema de Diagnostico mediante Test Muscular</p>
+        </div>
+
+        <div class="cards-grid" id="cardsGrid">
+            <!-- Cards will be inserted by JS -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="card-label" id="modalLabel"></span>
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">x</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-bar">
+        <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Anterior
+        </button>
+        <span class="nav-counter" id="navCounter">-</span>
+        <button class="nav-btn" id="nextBtn" onclick="navigate(1)">
+            Siguiente
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        // Card Data
+        const cards = [
+            {
+                id: 1,
+                title: "Protocolo Context Engineering - Las 7 Fases",
+                summary: "Vista general del protocolo completo de diagnostico",
+                content: `
+                    <div class="phase-list">
+                        <div class="phase-item">
+                            <div class="phase-number">1</div>
+                            <div class="phase-content">
+                                <h4>CUANDO?</h4>
+                                <p>Nivel temporal: Transgeneracional - Gestacional - Infancia - Adulto</p>
+                            </div>
+                        </div>
+                        <div class="phase-item">
+                            <div class="phase-number">2</div>
+                            <div class="phase-content">
+                                <h4>QUE TIPO?</h4>
+                                <p>Holograma bioenergetico (13 tipos de impacto energetico)</p>
+                            </div>
+                        </div>
+                        <div class="phase-item">
+                            <div class="phase-number">3</div>
+                            <div class="phase-content">
+                                <h4>QUE SENSACION?</h4>
+                                <p>Sensacion visceral atrapada (20 sensaciones primitivas)</p>
+                            </div>
+                        </div>
+                        <div class="phase-item">
+                            <div class="phase-number">4</div>
+                            <div class="phase-content">
+                                <h4>QUIEN?</h4>
+                                <p>Persona involucrada en el evento origen</p>
+                            </div>
+                        </div>
+                        <div class="phase-item">
+                            <div class="phase-number">5</div>
+                            <div class="phase-content">
+                                <h4>QUE PASO?</h4>
+                                <p>Tipo de evento (6 categorias de experiencia)</p>
+                            </div>
+                        </div>
+                        <div class="phase-item">
+                            <div class="phase-number">6</div>
+                            <div class="phase-content">
+                                <h4>QUE SIGNIFICO?</h4>
+                                <p>Creencia limitante que se instalo</p>
+                            </div>
+                        </div>
+                        <div class="phase-item">
+                            <div class="phase-number">7</div>
+                            <div class="phase-content">
+                                <h4>PARA QUE SIRVE?</h4>
+                                <p>Funcion protectora del sintoma hoy</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="result-box">
+                        <strong>RESULTADO:</strong>
+                        Frase terapeutica completa para reprocesamiento con TRSB o PONS
+                    </div>
+                `
+            },
+            {
+                id: 2,
+                title: "Metodos de Test Muscular",
+                summary: "LLI y Auto-test del Terapeuta",
+                content: `
+                    <div class="method-section">
+                        <h4>Metodo 1: Medicion de Extremidades Inferiores (LLI)</h4>
+                        <ul>
+                            <li>Paciente acostado boca arriba en camilla</li>
+                            <li>Tomar ambos pies por los talones</li>
+                            <li>Comparar simetria de las extremidades inferiores</li>
+                        </ul>
+                        <div class="test-result">
+                            <span class="yes">ACORTAMIENTO = SI</span> | <span class="no">Sin cambio = NO</span>
+                        </div>
+                    </div>
+                    <div class="method-section">
+                        <h4>Metodo 2: Auto-test del Terapeuta (Sin Tocar)</h4>
+                        <ul>
+                            <li>Juntar palmas, pulgares alineados</li>
+                            <li>Ideal para ninos pequenos y bebes</li>
+                            <li>Terapeuta actua como intermediario</li>
+                        </ul>
+                        <div class="test-result">
+                            <span class="yes">ACORTAMIENTO PULGAR = SI</span> | <span class="no">Sin cambio = NO</span>
+                        </div>
+                    </div>
+                    <div class="principle-box">
+                        <strong>PRINCIPIO FUNDAMENTAL:</strong>
+                        El proceso es SILENCIOSO. El paciente no necesita hablar ni participar activamente. El terapeuta accede a la informacion del sistema directamente.
+                    </div>
+                `
+            },
+            {
+                id: 3,
+                title: "Frases de Orientacion Mental",
+                summary: "Guiones para cada fase del diagnostico",
+                content: `
+                    <div class="phrase-list">
+                        <div class="phrase-item">
+                            <div class="phrase-label">Convencion</div>
+                            <div class="phrase-text">"Acortamiento = SI. Sin cambio = NO."</div>
+                        </div>
+                        <div class="phrase-item">
+                            <div class="phrase-label">Conexion</div>
+                            <div class="phrase-text">"Me conecto con el sistema de [N]. Recibo las respuestas en mi cuerpo."</div>
+                        </div>
+                        <div class="phrase-item">
+                            <div class="phrase-label">Fase 1: Cuando</div>
+                            <div class="phrase-text">"Busco el nivel temporal donde se origino. Cuando lo encuentre, marcame."</div>
+                        </div>
+                        <div class="phrase-item">
+                            <div class="phrase-label">Fase 2: Holograma</div>
+                            <div class="phrase-text">"Busco el holograma bioenergetico. Cuando lo encuentre, marcame."</div>
+                        </div>
+                        <div class="phrase-item">
+                            <div class="phrase-label">Fase 3: Sensacion</div>
+                            <div class="phrase-text">"Busco la sensacion visceral atrapada. Cuando la encuentre, marcame."</div>
+                        </div>
+                        <div class="phrase-item">
+                            <div class="phrase-label">Fase 4: Quien</div>
+                            <div class="phrase-text">"Busco quien estuvo involucrado. Cuando lo encuentre, marcame."</div>
+                        </div>
+                        <div class="phrase-item">
+                            <div class="phrase-label">Fase 5: Que Paso</div>
+                            <div class="phrase-text">"Busco el tipo de evento. Cuando lo encuentre, marcame."</div>
+                        </div>
+                        <div class="phrase-item">
+                            <div class="phrase-label">Fase 6: Creencia</div>
+                            <div class="phrase-text">"Busco la creencia que se instalo. Cuando la encuentre, marcame."</div>
+                        </div>
+                        <div class="phrase-item">
+                            <div class="phrase-label">Fase 7: Funcion</div>
+                            <div class="phrase-text">"Busco la funcion protectora del sintoma. Cuando la encuentre, marcame."</div>
+                        </div>
+                        <div class="phrase-item">
+                            <div class="phrase-label">Verificacion</div>
+                            <div class="phrase-text">"Es correcta esta informacion?" / "Hay mas que buscar?"</div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 4,
+                title: "Conexion como Intermediario",
+                summary: "Para ninos, bebes o sin contacto",
+                content: `
+                    <p style="margin-bottom: 1rem; color: var(--text-secondary);">Para ninos pequenos, bebes, o cuando no se puede tocar al paciente:</p>
+                    <div class="phase-list">
+                        <div class="phase-item">
+                            <div class="phase-number">1</div>
+                            <div class="phase-content">
+                                <p>Centrar la atencion en el paciente</p>
+                            </div>
+                        </div>
+                        <div class="phase-item">
+                            <div class="phase-number">2</div>
+                            <div class="phase-content">
+                                <p>Pedir permiso internamente para acceder a su informacion</p>
+                            </div>
+                        </div>
+                        <div class="phase-item">
+                            <div class="phase-number">3</div>
+                            <div class="phase-content">
+                                <p>Establecer que las respuestas llegaran a TU cuerpo</p>
+                            </div>
+                        </div>
+                        <div class="phase-item">
+                            <div class="phase-number">4</div>
+                            <div class="phase-content">
+                                <p>Usar auto-test (manos/pulgares) para recibir respuestas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="result-box" style="margin-top: 1.5rem;">
+                        <strong>FRASE DE CONEXION:</strong>
+                        "Me conecto con el sistema de [NOMBRE]. Pido permiso para acceder a su informacion. Recibo las respuestas en mi cuerpo como intermediario."
+                    </div>
+                `
+            },
+            {
+                id: 5,
+                title: "Los 4 Niveles Temporales",
+                summary: "Transgeneracional, Gestacional, Infancia, Adulto",
+                content: `
+                    <div class="levels-list">
+                        <div class="level-item">
+                            <div class="level-number">1</div>
+                            <div class="level-content">
+                                <h4>TRANSGENERACIONAL</h4>
+                                <p>Herencia de ancestros: padres, abuelos, bisabuelos.</p>
+                                <span class="detail">Patrones familiares, secretos, traumas no resueltos del linaje.</span>
+                            </div>
+                        </div>
+                        <div class="level-item">
+                            <div class="level-number">2</div>
+                            <div class="level-content">
+                                <h4>GESTACIONAL</h4>
+                                <p>Desde la concepcion hasta el nacimiento.</p>
+                                <span class="detail">Estres materno, emociones durante embarazo, circunstancias del parto.</span>
+                            </div>
+                        </div>
+                        <div class="level-item">
+                            <div class="level-number">3</div>
+                            <div class="level-content">
+                                <h4>INFANCIA</h4>
+                                <p>De 0 a 12 anos aproximadamente.</p>
+                                <span class="detail">Eventos formativos, relaciones primarias, experiencias escolares.</span>
+                            </div>
+                        </div>
+                        <div class="level-item">
+                            <div class="level-number">4</div>
+                            <div class="level-content">
+                                <h4>ADULTO</h4>
+                                <p>Desde los 12 anos en adelante.</p>
+                                <span class="detail">Adolescencia y vida adulta: relaciones, trabajo, perdidas, decisiones.</span>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 6,
+                title: "Los 13 Hologramas Bioenergeticos",
+                summary: "Patrones de impacto energetico",
+                content: `
+                    <div class="items-grid">
+                        <div class="grid-item"><span class="grid-item-number">1</span><span class="grid-item-text">Impacto Frontal</span></div>
+                        <div class="grid-item"><span class="grid-item-number">2</span><span class="grid-item-text">Traicion</span></div>
+                        <div class="grid-item"><span class="grid-item-number">3</span><span class="grid-item-text">He Fallado</span></div>
+                        <div class="grid-item"><span class="grid-item-number">4</span><span class="grid-item-text">Alguien Tiene la Culpa</span></div>
+                        <div class="grid-item"><span class="grid-item-number">5</span><span class="grid-item-text">Nadie Me Escucha</span></div>
+                        <div class="grid-item"><span class="grid-item-number">6</span><span class="grid-item-text">Me Siento Ultrajado</span></div>
+                        <div class="grid-item"><span class="grid-item-number">7</span><span class="grid-item-text">Ya No Puedo Mas</span></div>
+                        <div class="grid-item"><span class="grid-item-number">8</span><span class="grid-item-text">Sindrome del Abandono</span></div>
+                        <div class="grid-item"><span class="grid-item-number">9</span><span class="grid-item-text">Corazon Roto / Identidad</span></div>
+                        <div class="grid-item"><span class="grid-item-number">10</span><span class="grid-item-text">Bloqueo de Curacion</span></div>
+                        <div class="grid-item"><span class="grid-item-number">11</span><span class="grid-item-text">Yaciente / Gemelo Perdido</span></div>
+                        <div class="grid-item"><span class="grid-item-number">12</span><span class="grid-item-text">Perdida de Identidad</span></div>
+                        <div class="grid-item"><span class="grid-item-number">13</span><span class="grid-item-text">Corazon Herido</span></div>
+                    </div>
+                `
+            },
+            {
+                id: 7,
+                title: "Las 20 Sensaciones Viscerales",
+                summary: "Vocabulario del cuerpo",
+                content: `
+                    <div class="items-grid">
+                        <div class="grid-item"><span class="grid-item-number">1</span><span class="grid-item-text">Abandono</span></div>
+                        <div class="grid-item"><span class="grid-item-number">2</span><span class="grid-item-text">Agresion</span></div>
+                        <div class="grid-item"><span class="grid-item-number">3</span><span class="grid-item-text">Vacio</span></div>
+                        <div class="grid-item"><span class="grid-item-number">4</span><span class="grid-item-text">Soledad</span></div>
+                        <div class="grid-item"><span class="grid-item-number">5</span><span class="grid-item-text">Frustracion</span></div>
+                        <div class="grid-item"><span class="grid-item-number">6</span><span class="grid-item-text">Impotencia</span></div>
+                        <div class="grid-item"><span class="grid-item-number">7</span><span class="grid-item-text">Insatisfaccion</span></div>
+                        <div class="grid-item"><span class="grid-item-number">8</span><span class="grid-item-text">Vulnerabilidad</span></div>
+                        <div class="grid-item"><span class="grid-item-number">9</span><span class="grid-item-text">Hambre</span></div>
+                        <div class="grid-item"><span class="grid-item-number">10</span><span class="grid-item-text">Persecucion</span></div>
+                        <div class="grid-item"><span class="grid-item-number">11</span><span class="grid-item-text">Amor Dificil</span></div>
+                        <div class="grid-item"><span class="grid-item-number">12</span><span class="grid-item-text">Angustia</span></div>
+                        <div class="grid-item"><span class="grid-item-number">13</span><span class="grid-item-text">Ira</span></div>
+                        <div class="grid-item"><span class="grid-item-number">14</span><span class="grid-item-text">Infelicidad</span></div>
+                        <div class="grid-item"><span class="grid-item-number">15</span><span class="grid-item-text">Desvalorizacion</span></div>
+                        <div class="grid-item"><span class="grid-item-number">16</span><span class="grid-item-text">Traicion</span></div>
+                        <div class="grid-item"><span class="grid-item-number">17</span><span class="grid-item-text">Rendicion</span></div>
+                        <div class="grid-item"><span class="grid-item-number">18</span><span class="grid-item-text">Casi Muerte</span></div>
+                        <div class="grid-item"><span class="grid-item-number">19</span><span class="grid-item-text">Humillacion</span></div>
+                        <div class="grid-item"><span class="grid-item-number">20</span><span class="grid-item-text">Desv. Estetica</span></div>
+                    </div>
+                `
+            },
+            {
+                id: 8,
+                title: "Categorias de Eventos - Que Paso?",
+                summary: "6 categorias de experiencia",
+                content: `
+                    <div class="category-section">
+                        <div class="category-title">1. PERDIDAS</div>
+                        <div class="tags-list">
+                            <span class="tag">Muerte</span>
+                            <span class="tag">Separacion</span>
+                            <span class="tag">Divorcio</span>
+                            <span class="tag">Aborto</span>
+                            <span class="tag">Mudanza</span>
+                        </div>
+                    </div>
+                    <div class="category-section">
+                        <div class="category-title">2. ABUSOS</div>
+                        <div class="tags-list">
+                            <span class="tag">Fisico</span>
+                            <span class="tag">Emocional</span>
+                            <span class="tag">Sexual</span>
+                            <span class="tag">Negligencia</span>
+                            <span class="tag">Verbal</span>
+                        </div>
+                    </div>
+                    <div class="category-section">
+                        <div class="category-title">3. RECHAZOS</div>
+                        <div class="tags-list">
+                            <span class="tag">Abandono</span>
+                            <span class="tag">Exclusion</span>
+                            <span class="tag">Critica</span>
+                            <span class="tag">Comparacion</span>
+                            <span class="tag">Invisibilizacion</span>
+                        </div>
+                    </div>
+                    <div class="category-section">
+                        <div class="category-title">4. TRAUMAS MEDICOS</div>
+                        <div class="tags-list">
+                            <span class="tag">Cirugias</span>
+                            <span class="tag">Hospitalizaciones</span>
+                            <span class="tag">Diagnosticos</span>
+                            <span class="tag">Parto dificil</span>
+                        </div>
+                    </div>
+                    <div class="category-section">
+                        <div class="category-title">5. HUMILLACIONES</div>
+                        <div class="tags-list">
+                            <span class="tag">Publicas</span>
+                            <span class="tag">Bullying</span>
+                            <span class="tag">Verguenza</span>
+                            <span class="tag">Exposicion</span>
+                        </div>
+                    </div>
+                    <div class="category-section">
+                        <div class="category-title">6. TRAICIONES</div>
+                        <div class="tags-list">
+                            <span class="tag">Infidelidad</span>
+                            <span class="tag">Mentiras</span>
+                            <span class="tag">Promesas rotas</span>
+                            <span class="tag">Secretos</span>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 9,
+                title: "Funciones del Sintoma - Para Que Sirve?",
+                summary: "8 funciones protectoras",
+                content: `
+                    <div class="function-item">
+                        <div class="function-marker"></div>
+                        <div class="function-text">
+                            <strong>Proteger</strong>
+                            <span>de una situacion, persona o emocion temida</span>
+                        </div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-marker"></div>
+                        <div class="function-text">
+                            <strong>Mantener conexion</strong>
+                            <span>con alguien (vivo o fallecido)</span>
+                        </div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-marker"></div>
+                        <div class="function-text">
+                            <strong>Evitar responsabilidad</strong>
+                            <span>o expectativas de otros</span>
+                        </div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-marker"></div>
+                        <div class="function-text">
+                            <strong>Obtener atencion</strong>
+                            <span>o cuidado que no se recibe de otra forma</span>
+                        </div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-marker"></div>
+                        <div class="function-text">
+                            <strong>Castigar</strong>
+                            <span>a si mismo o a otros por algo del pasado</span>
+                        </div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-marker"></div>
+                        <div class="function-text">
+                            <strong>Evitar intimidad</strong>
+                            <span>o vulnerabilidad emocional</span>
+                        </div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-marker"></div>
+                        <div class="function-text">
+                            <strong>Mantener identidad</strong>
+                            <span>conocida (aunque sea dolorosa)</span>
+                        </div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-marker"></div>
+                        <div class="function-text">
+                            <strong>Lealtad familiar</strong>
+                            <span>- cargar algo que no es propio</span>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 10,
+                title: "Preguntas de Verificacion",
+                summary: "Confirmar y validar informacion",
+                content: `
+                    <div class="verification-list">
+                        <div class="verification-item">
+                            <div class="verification-question">"Es correcta la informacion que he encontrado?"</div>
+                            <div class="verification-answer"><span class="yes">Acortamiento = SI</span>, continuar | Sin cambio = Buscar mas</div>
+                        </div>
+                        <div class="verification-item">
+                            <div class="verification-question">"Hay mas informacion que necesito encontrar?"</div>
+                            <div class="verification-answer"><span class="yes">Acortamiento = SI</span>, hay mas | Sin cambio = Completo</div>
+                        </div>
+                        <div class="verification-item">
+                            <div class="verification-question">"Esta completa la frase terapeutica?"</div>
+                            <div class="verification-answer"><span class="yes">Acortamiento = SI</span>, procesar | Sin cambio = Falta algo</div>
+                        </div>
+                        <div class="verification-item">
+                            <div class="verification-question">"Es seguro procesar esta informacion ahora?"</div>
+                            <div class="verification-answer"><span class="yes">Acortamiento = SI</span>, proceder | Sin cambio = Esperar</div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 11,
+                title: "La Frase Terapeutica Completa",
+                summary: "Estructura para reprocesamiento",
+                content: `
+                    <div class="therapeutic-phrase">
+                        "A los <span class="phrase-variable">CUANDO</span>,<br>
+                        cuando <span class="phrase-variable">QUIEN</span> hizo <span class="phrase-variable">QUE PASO</span>,<br>
+                        se activo <span class="phrase-variable">HOLOGRAMA</span><br>
+                        y senti <span class="phrase-variable">SENSACION</span>.<br><br>
+                        La creencia que grabe fue <span class="phrase-variable">CREENCIA</span>.<br>
+                        Hoy este sintoma me permite <span class="phrase-variable">FUNCION</span>."
+                    </div>
+                    <div class="phrase-note">
+                        Esta frase integra las 7 fases y sirve como punto de partida para el reprocesamiento con TRSB o PONS.
+                    </div>
+                `
+            },
+            {
+                id: 12,
+                title: "Creencias por Holograma - Referencia",
+                summary: "Creencias asociadas a cada holograma",
+                content: `
+                    <div class="belief-section">
+                        <div class="belief-header">
+                            <span class="belief-badge">#1-3</span>
+                            <span class="belief-title">Impacto / Traicion / Falle</span>
+                        </div>
+                        <div class="belief-examples">"El peligro llega sin aviso" - "No puedo confiar" - "No soy suficiente"</div>
+                    </div>
+                    <div class="belief-section">
+                        <div class="belief-header">
+                            <span class="belief-badge">#4-6</span>
+                            <span class="belief-title">Culpa / Silencio / Ultraje</span>
+                        </div>
+                        <div class="belief-examples">"Me hicieron esto" - "Mi voz no importa" - "Me destruyeron"</div>
+                    </div>
+                    <div class="belief-section">
+                        <div class="belief-header">
+                            <span class="belief-badge">#7-9</span>
+                            <span class="belief-title">Limite / Abandono / Corazon</span>
+                        </div>
+                        <div class="belief-examples">"Ya no tengo fuerzas" - "Me van a dejar" - "Sin el/ella no soy nadie"</div>
+                    </div>
+                    <div class="belief-section">
+                        <div class="belief-header">
+                            <span class="belief-badge">#10-13</span>
+                            <span class="belief-title">Bloqueo / Yaciente / Identidad</span>
+                        </div>
+                        <div class="belief-examples">"No merezco sanar" - "Cargo algo que no es mio" - "No pertenezco"</div>
+                    </div>
+                `
+            },
+            {
+                id: 13,
+                title: "Creencias por Sensacion - Referencia",
+                summary: "Creencias asociadas a cada sensacion",
+                content: `
+                    <div class="belief-section">
+                        <div class="belief-header">
+                            <span class="belief-badge">#1-5</span>
+                            <span class="belief-title">Abandono - Frustracion</span>
+                        </div>
+                        <div class="belief-examples">"Me dejaron" - "Estoy solo/a" - "Hay un hueco que nada llena"</div>
+                    </div>
+                    <div class="belief-section">
+                        <div class="belief-header">
+                            <span class="belief-badge">#6-10</span>
+                            <span class="belief-title">Impotencia - Persecucion</span>
+                        </div>
+                        <div class="belief-examples">"No tengo poder" - "Nada me llena" - "Me persiguen"</div>
+                    </div>
+                    <div class="belief-section">
+                        <div class="belief-header">
+                            <span class="belief-badge">#11-15</span>
+                            <span class="belief-title">Amor Dificil - Desvalorizacion</span>
+                        </div>
+                        <div class="belief-examples">"Amo a quien me dana" - "Algo malo va a pasar" - "No valgo"</div>
+                    </div>
+                    <div class="belief-section">
+                        <div class="belief-header">
+                            <span class="belief-badge">#16-20</span>
+                            <span class="belief-title">Traicion - Estetica</span>
+                        </div>
+                        <div class="belief-examples">"Me clavaron punal" - "Ya no puedo mas" - "Mi cuerpo esta mal"</div>
+                    </div>
+                    <p style="margin-top: 1.5rem; text-align: center; font-size: 0.8rem; color: var(--text-tertiary);">
+                        Dr. Miguel Ojeda Rios | Instituto Centro Bioenergetica<br>
+                        Seminario Internacional de Inteligencia Energetica - 12a Edicion
+                    </p>
+                `
+            }
+        ];
+
+        let currentCard = null;
+
+        // Render card thumbnails
+        function renderCards() {
+            const grid = document.getElementById('cardsGrid');
+            grid.innerHTML = cards.map(card => `
+                <div class="card-thumb" onclick="openCard(${card.id})">
+                    <div class="card-number">${String(card.id).padStart(2, '0')}</div>
+                    <h3>${card.title}</h3>
+                    <p>${card.summary}</p>
+                </div>
+            `).join('');
+        }
+
+        // Open card modal
+        function openCard(id) {
+            const card = cards.find(c => c.id === id);
+            if (!card) return;
+
+            currentCard = id;
+            document.getElementById('modalLabel').textContent = `TARJETA ${String(id).padStart(2, '0')}`;
+            document.getElementById('modalTitle').textContent = card.title;
+            document.getElementById('modalBody').innerHTML = card.content;
+            document.getElementById('modal').classList.add('active');
+            updateNav();
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            currentCard = null;
+            updateNav();
+            document.body.style.overflow = '';
+        }
+
+        // Navigate between cards
+        function navigate(direction) {
+            if (currentCard === null) return;
+            const newId = currentCard + direction;
+            if (newId >= 1 && newId <= cards.length) {
+                openCard(newId);
+            }
+        }
+
+        // Update navigation state
+        function updateNav() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const counter = document.getElementById('navCounter');
+
+            if (currentCard === null) {
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+                counter.textContent = '-';
+            } else {
+                prevBtn.disabled = currentCard <= 1;
+                nextBtn.disabled = currentCard >= cards.length;
+                counter.textContent = `${currentCard} / ${cards.length}`;
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') navigate(-1);
+            if (e.key === 'ArrowRight') navigate(1);
+        });
+
+        // Close modal on overlay click
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        // Touch/Swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const modalContent = document.querySelector('.modal-content');
+
+        modalContent.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        modalContent.addEventListener('touchend', (e) => {
+            if (currentCard === null) return;
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) < swipeThreshold) return;
+
+            if (diff > 0 && currentCard < cards.length) {
+                // Swipe left -> next
+                navigate(1);
+            } else if (diff < 0 && currentCard > 1) {
+                // Swipe right -> previous
+                navigate(-1);
+            }
+        }
+
+        // Initialize
+        renderCards();
+        updateNav();
+    </script>
+</body>
+</html>
