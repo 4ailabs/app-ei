@@ -1881,10 +1881,10 @@ export const sessions: Session[] = [
     apps: [
       {
         id: "app7-1",
-        title: "Wizard 7 Fases",
+        name: "Wizard 7 Fases",
         url: "/protocols/context-engineering-7fases-app.html",
         description: "Guía interactiva paso a paso para el diagnóstico con test muscular.",
-        icon: "target"
+        iconName: "target"
       }
     ]
   },
