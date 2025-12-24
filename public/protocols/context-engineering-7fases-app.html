@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Context Engineering - 7 Fases | Inteligencia Energética</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #DA7756;
+            --primary-light: rgba(218, 119, 86, 0.1);
+            --primary-dark: #c56a4a;
+            --bg-main: #FAF9F7;
+            --bg-card: #FFFFFF;
+            --bg-secondary: #F5F4F0;
+            --text-primary: #1A1915;
+            --text-secondary: #706F6C;
+            --text-muted: #9B9A97;
+            --border: #E5E4E0;
+            --success: #4CAF50;
+            --success-light: rgba(76, 175, 80, 0.1);
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-main: #1A1A1A;
+                --bg-card: #252525;
+                --bg-secondary: #2A2A2A;
+                --text-primary: #E5E5E5;
+                --text-secondary: #A0A0A0;
+                --text-muted: #808080;
+                --border: #333333;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            padding-top: var(--safe-top);
+            padding-bottom: var(--safe-bottom);
+        }
+
+        /* XP Badge */
+        .xp-badge {
+            position: fixed;
+            top: calc(1rem + var(--safe-top));
+            left: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .xp-badge svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .xp-badge.gained {
+            animation: xpPulse 0.5s ease;
+        }
+
+        @keyframes xpPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); background: var(--primary); color: white; }
+            100% { transform: scale(1); }
+        }
+
+        .xp-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .xp-popup.show {
+            opacity: 1;
+            animation: xpPopup 1s ease forwards;
+        }
+
+        @keyframes xpPopup {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            40% { transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; transform: translate(-50%, -60%); }
+            100% { opacity: 0; transform: translate(-50%, -80%); }
+        }
+
+        /* Help Button - Floating */
+        .help-btn {
+            position: fixed;
+            top: calc(1rem + var(--safe-top));
+            right: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            transition: all 0.2s;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .help-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Progress Bar - Inline */
+        .progress-container {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .progress-steps {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .progress-step {
+            height: 6px;
+            flex: 1;
+            background: var(--bg-secondary);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-step.completed {
+            background: var(--success);
+        }
+
+        .progress-step.active {
+            background: var(--primary);
+        }
+
+        .progress-step.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .progress-container.hidden {
+            display: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        /* Screen Management */
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Start Screen */
+        .start-screen {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .start-icon {
+            width: 120px;
+            height: 120px;
+            background: var(--primary);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+        }
+
+        .start-icon svg {
+            width: 60px;
+            height: 60px;
+        }
+
+        .start-screen h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .start-screen p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .phases-preview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .phase-dot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .phase-dot span:first-child {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .phase-dot span:last-child {
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Phase Screen */
+        .phase-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .phase-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-question {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            font-style: italic;
+        }
+
+        /* Options Grid */
+        .options-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .options-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-btn {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .option-check {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .option-btn.selected .option-check {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .option-text {
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+        }
+
+        /* Option Groups */
+        .option-group {
+            margin-bottom: 1rem;
+        }
+
+        .option-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .option-group-label {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Option with detail (hologramas) */
+        .option-with-detail {
+            align-items: flex-start;
+        }
+
+        .option-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .option-detail {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .option-btn.selected .option-detail {
+            color: var(--text-secondary);
+        }
+
+        /* Notes Field */
+        .notes-container {
+            margin-top: 1.5rem;
+        }
+
+        .notes-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .notes-field {
+            width: 100%;
+            min-height: 80px;
+            padding: 0.875rem;
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9375rem;
+            resize: vertical;
+            transition: all 0.2s;
+        }
+
+        .notes-field:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .notes-field::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding-bottom: calc(1rem + var(--safe-bottom));
+        }
+
+        .btn-nav {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-back {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-back:hover {
+            background: var(--border);
+        }
+
+        .btn-next {
+            background: var(--primary);
+            border: none;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-next:disabled {
+            background: var(--border);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            padding: 1rem;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: var(--success);
+        }
+
+        .results-icon svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .icon-sm {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .results-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .results-header p {
+            color: var(--text-secondary);
+        }
+
+        .results-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-phase {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-phase-num {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .result-phase-name {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .result-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            padding-left: 2.75rem;
+        }
+
+        .result-notes {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            padding-left: 2.75rem;
+            margin-top: 0.25rem;
+            font-style: italic;
+        }
+
+        .result-empty {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn-action {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-copy {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-copy:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .btn-restart {
+            background: var(--primary);
+            border: none;
+            color: white;
+        }
+
+        .btn-restart:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Help Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 1.5rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+            z-index: 10;
+        }
+
+        .modal-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: var(--bg-secondary);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .help-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .help-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .help-section h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .help-section p,
+        .help-section li {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .help-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .help-section li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .help-section li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .help-highlight {
+            background: var(--primary-light);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .help-highlight p {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-primary);
+            color: var(--bg-main);
+            padding: 0.875rem 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.125rem;
+            }
+
+            .phases-preview {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .phase-dot span:first-child {
+                width: 32px;
+                height: 32px;
+                font-size: 0.75rem;
+            }
+
+            .start-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+
+            .modal-content {
+                max-height: 90vh;
+                border-radius: 1.5rem 1.5rem 0 0;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                max-width: 100%;
+            }
+        }
+
+        /* Swipe hint animation */
+        @keyframes swipeHint {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+        }
+
+        .swipe-hint {
+            animation: swipeHint 1s ease-in-out 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- XP Badge -->
+        <div class="xp-badge" id="xpBadge">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+            <span id="xpCount">0 XP</span>
+        </div>
+
+        <!-- XP Popup -->
+        <div class="xp-popup" id="xpPopup">+10 XP</div>
+
+        <!-- Floating Help Button -->
+        <button class="help-btn" onclick="showHelp()" aria-label="Ayuda">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+        </button>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Start Screen -->
+            <div class="screen active" id="startScreen">
+                <div class="start-screen">
+                    <div class="start-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
+                    </div>
+                    <h2>Las 7 Fases</h2>
+                    <p>Sistema diagnóstico mediante test muscular para mapear el origen de patrones emocionales.</p>
+
+                    <div class="phases-preview">
+                        <div class="phase-dot">
+                            <span>1</span>
+                            <span>Cuándo</span>
+                        </div>
+                        <div class="phase-dot">
+                            <span>2</span>
+                            <span>Qué tipo</span>
+                        </div>
+                        <div class="phase-dot">
+                            <span>3</span>
+                            <span>Dónde</span>
+                        </div>
+                        <div class="phase-dot">
+                            <span>4</span>
+                            <span>Quién</span>
+                        </div>
+                        <div class="phase-dot">
+                            <span>5</span>
+                            <span>Qué pasó</span>
+                        </div>
+                        <div class="phase-dot">
+                            <span>6</span>
+                            <span>Conclusión</span>
+                        </div>
+                        <div class="phase-dot">
+                            <span>7</span>
+                            <span>Para qué</span>
+                        </div>
+                        <div class="phase-dot">
+                            <span>✓</span>
+                            <span>Mapa</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="startWizard()">
+                        Iniciar Diagnóstico
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Phase Screens (generated by JS) -->
+            <div id="phaseContainer"></div>
+
+            <!-- Results Screen -->
+            <div class="screen" id="resultsScreen">
+                <div class="results-screen">
+                    <div class="results-header">
+                        <div class="results-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                            </svg>
+                        </div>
+                        <h2>Mapa del Patrón</h2>
+                        <p>Diagnóstico completado</p>
+                    </div>
+
+                    <div class="results-card" id="resultsCard">
+                        <!-- Generated by JS -->
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-action btn-copy" onclick="copyResults()">
+                            <svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                            </svg>
+                            Copiar Resultados
+                        </button>
+                        <button class="btn-action btn-restart" onclick="restartWizard()">
+                            <svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                            </svg>
+                            Nuevo Diagnóstico
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Navigation (hidden on start/results) -->
+        <nav class="nav-buttons" id="navButtons" style="display: none;">
+            <button class="btn-nav btn-back" onclick="previousPhase()">
+                <span>←</span>
+                Anterior
+            </button>
+            <button class="btn-nav btn-next" id="btnNext" onclick="nextPhase()">
+                Siguiente
+                <span>→</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal-overlay" id="helpModal" onclick="closeHelpOnOverlay(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Guía de Test Muscular</h3>
+                <button class="modal-close" onclick="closeHelp()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <div class="help-highlight">
+                        <p><strong>Principio:</strong> El estrés debilita el músculo. La verdad/congruencia lo fortalece.</p>
+                    </div>
+                </div>
+
+                <div class="help-section">
+                    <h4><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg> Posición</h4>
+                    <ul>
+                        <li>Cliente: brazo extendido horizontal (90°)</li>
+                        <li>Facilitador: presión suave hacia abajo en muñeca</li>
+                        <li>Presión constante (no empujón)</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z" /></svg> Calibración (siempre primero)</h4>
+                    <ul>
+                        <li>"Di tu nombre verdadero" → debe resistir (fuerte)</li>
+                        <li>"Di un nombre falso" → debe ceder (débil)</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg> Lectura</h4>
+                    <ul>
+                        <li><strong>Resistencia</strong> = Sí / Verdad / Sin estrés</li>
+                        <li><strong>Cede</strong> = No / Estrés / Incongruencia</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" /></svg> Precauciones</h4>
+                    <ul>
+                        <li>Cliente hidratado</li>
+                        <li>No presionar sobre articulación</li>
+                        <li>Presión consistente en cada test</li>
+                        <li>Si resultados inconsistentes: recalibrar</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" /></svg> Flujo de Trabajo</h4>
+                    <p style="text-align: center; margin-top: 0.5rem;">
+                        Fase 1 → Fase 2 → Fase 3 → Fase 4 → Fase 5 → Fase 6 → Fase 7<br>
+                        <strong style="color: var(--primary);">Resultado: MAPA COMPLETO del origen del patrón</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+        </svg>
+        <span id="toastText">Copiado al portapapeles</span>
+    </div>
+
+    <script>
+        // Phase Data - Basado en P17_Context_Engineering_Guia.pdf
+        const phases = [
+            {
+                id: 1,
+                coordinate: "CUÁNDO",
+                question: "¿Cuándo?",
+                fullQuestion: "Los 4 Niveles Temporales",
+                description: "¿En qué momento del tiempo se activó esto?",
+                options: [
+                    "1. PRESENTE (Hoy a 21 días)",
+                    "2. PASADO PERSONAL (Desde concepción)",
+                    "3. TRANSGENERACIONAL (Ancestros)",
+                    "4. SISTEMA ACTUAL (Función hoy)"
+                ],
+                subOptions: {
+                    "2. PASADO PERSONAL (Desde concepción)": [
+                        "Gestacional: 1-3 meses",
+                        "Gestacional: 4-6 meses",
+                        "Gestacional: 7-9 meses",
+                        "0-7 años",
+                        "7-14 años",
+                        "14-21 años",
+                        "21-28 años",
+                        "28-35 años",
+                        "35-42 años",
+                        "42+ años"
+                    ]
+                },
+                note: "El Nivel 4 es crítico: si el síntoma cumple función HOY, hay que trabajarla."
+            },
+            {
+                id: 2,
+                coordinate: "QUÉ TIPO",
+                question: "¿Qué tipo?",
+                fullQuestion: "Los 13 Hologramas",
+                description: "Patrones específicos de activación fisiológica en respuesta a un shock.",
+                options: [
+                    "1. Impacto Frontal",
+                    "2. Traición",
+                    "3. He Fallado",
+                    "4. Alguien Tiene la Culpa",
+                    "5. Nadie Me Escucha",
+                    "6. Me Siento Ultrajado",
+                    "7. Ya No Puedo Más",
+                    "8. Abandono",
+                    "9. Corazón Roto/Identidad Frágil",
+                    "10. Bloqueo de Curación",
+                    "11. Yaciente/Gemelo Perdido",
+                    "12. Pérdida de Identidad",
+                    "13. Corazón Herido"
+                ],
+                optionDetails: {
+                    "1. Impacto Frontal": "Susto, shock inesperado. Disociación, fragmentación.",
+                    "2. Traición": "Ataque por la espalda de alguien de confianza. Hipervigilancia.",
+                    "3. He Fallado": "Fracaso, no ser suficiente.",
+                    "4. Alguien Tiene la Culpa": "Posición víctima, resentimiento crónico.",
+                    "5. Nadie Me Escucha": "Voz silenciada, no ser escuchado.",
+                    "6. Me Siento Ultrajado": "Humillación, violación de dignidad. Vergüenza tóxica.",
+                    "7. Ya No Puedo Más": "Sistema al límite. CRÍTICO - Evaluar riesgo.",
+                    "8. Abandono": "Separación, quedarse solo. Apego ansioso.",
+                    "9. Corazón Roto/Identidad Frágil": "Identidad depende de otro.",
+                    "10. Bloqueo de Curación": "Algo impide sanar. 'No merezco estar bien'.",
+                    "11. Yaciente/Gemelo Perdido": "Cargar a alguien más. 'Vivo por dos'.",
+                    "12. Pérdida de Identidad": "'Pez fuera del agua'. No enraizarse.",
+                    "13. Corazón Herido": "Pérdidas amorosas profundas. Coraza emocional."
+                },
+                allowMultiple: true,
+                note: "Puede haber MÚLTIPLES hologramas activos. Preguntar: ¿Hay OTRO?"
+            },
+            {
+                id: 3,
+                coordinate: "QUÉ SENSACIÓN",
+                question: "¿Qué sensación?",
+                fullQuestion: "Las 20 Sensaciones Viscerales",
+                description: "Lo que el cuerpo SINTIÓ en el momento del impacto — no una emoción pensada.",
+                options: [
+                    "1. Abandono",
+                    "2. Agresión",
+                    "3. Vacío",
+                    "4. Soledad",
+                    "5. Frustración",
+                    "6. Impotencia",
+                    "7. Insatisfacción",
+                    "8. Vulnerabilidad",
+                    "9. Hambre",
+                    "10. Persecución",
+                    "11. Amor difícil",
+                    "12. Angustia",
+                    "13. Ira",
+                    "14. Infelicidad",
+                    "15. Desvalorización",
+                    "16. Traición",
+                    "17. Rendición",
+                    "18. Casi muerte",
+                    "19. Humillación",
+                    "20. Desv. estética"
+                ],
+                allowMultiple: true,
+                note: "La palabra EXACTA importa. Si dices 'miedo' pero fue 'vulnerabilidad', no hay liberación completa."
+            },
+            {
+                id: 4,
+                coordinate: "QUIÉN",
+                question: "¿Quién?",
+                fullQuestion: "Contexto Relacional",
+                description: "¿Quién estuvo involucrado en el evento?",
+                optionGroups: [
+                    { label: "NÚCLEO", options: ["Madre", "Padre", "Ambos", "Hermano/a", "Abuelo/a"] },
+                    { label: "EXTENDIDA", options: ["Tío/a", "Primo/a", "Otro familiar"] },
+                    { label: "SIGNIFICATIVOS", options: ["Pareja", "Hijo/a", "Amigo/a cercano", "Mentor"] },
+                    { label: "AUTORIDAD", options: ["Maestro/a", "Jefe", "Médico", "Figura religiosa"] },
+                    { label: "OTROS", options: ["Desconocido", "Grupo", "Institución", "Yo mismo", "Alguien que murió"] }
+                ],
+                allowMultiple: true,
+                hasDetailedNotes: true,
+                note: "Rol: ¿Causó daño? ¿Recibió daño? ¿No hizo nada? ¿Fue testigo? ¿Se fue? ¿Murió?"
+            },
+            {
+                id: 5,
+                coordinate: "QUÉ PASÓ",
+                question: "¿Qué pasó?",
+                fullQuestion: "Tipo de Evento",
+                description: "¿Qué tipo de evento fue?",
+                optionGroups: [
+                    { label: "PÉRDIDA", options: ["Muerte", "Ruptura", "Migración", "Pérdida de salud"] },
+                    { label: "VIOLENCIA", options: ["Abuso físico", "Abuso sexual", "Accidente"] },
+                    { label: "AMENAZA", options: ["Casi muerte", "Diagnóstico grave", "Peligro inminente"] },
+                    { label: "RECHAZO", options: ["Abandono", "Traición", "Exclusión", "Bullying", "Humillación"] },
+                    { label: "CONFUSIÓN ROL", options: ["Parentificación", "Inversión de roles", "Secreto familiar"] },
+                    { label: "SISTÉMICO", options: ["Exclusión familiar", "Duelo transgeneracional", "Lealtad invisible"] }
+                ],
+                allowMultiple: true,
+                hasDetailedNotes: true
+            },
+            {
+                id: 6,
+                coordinate: "QUÉ SIGNIFICÓ",
+                question: "¿Qué significó?",
+                fullQuestion: "Creencia Instalada",
+                description: "¿Qué decidiste sobre TI MISMO cuando pasó?",
+                options: [
+                    "No soy suficiente",
+                    "No merezco amor",
+                    "El mundo es peligroso",
+                    "Estoy solo/a",
+                    "Es mi culpa",
+                    "No puedo confiar",
+                    "Soy defectuoso/a",
+                    "No tengo control",
+                    "No valgo",
+                    "Soy impotente",
+                    "Debería haberlo sabido",
+                    "No puedo expresar emociones"
+                ],
+                allowMultiple: true,
+                hasDetailedNotes: true,
+                note: "Esta creencia se convierte en la CREENCIA LIMITANTE para TRSB."
+            },
+            {
+                id: 7,
+                coordinate: "PARA QUÉ SIRVE",
+                question: "¿Para qué sirve?",
+                fullQuestion: "Función del Síntoma",
+                description: "¿Qué función cumple mantener este patrón HOY en tu vida?",
+                options: [
+                    "Protección",
+                    "Evitar rechazo",
+                    "Mantener conexión",
+                    "Sentir control",
+                    "Lealtad familiar",
+                    "Evitar el dolor",
+                    "Castigarse",
+                    "Recibir atención"
+                ],
+                allowMultiple: true,
+                hasDetailedNotes: true,
+                note: "Entender la función = poder soltar con GRATITUD, no con lucha."
+            }
+        ];
+
+        // State
+        let currentPhase = 0;
+        let responses = {};
+        let totalXP = 0;
+        let phasesCompleted = new Set();
+
+        // XP Configuration
+        const XP_PER_PHASE = 10;
+        const XP_COMPLETION_BONUS = 30;
+
+        // Initialize
+        function init() {
+            generatePhaseScreens();
+            updateProgress();
+            loadXP();
+        }
+
+        // XP Functions
+        function loadXP() {
+            const saved = localStorage.getItem('contextEngineering_XP');
+            if (saved) {
+                totalXP = parseInt(saved) || 0;
+                updateXPDisplay();
+            }
+        }
+
+        function saveXP() {
+            localStorage.setItem('contextEngineering_XP', totalXP.toString());
+        }
+
+        function addXP(amount) {
+            totalXP += amount;
+            saveXP();
+            updateXPDisplay();
+            showXPPopup(amount);
+        }
+
+        function updateXPDisplay() {
+            document.getElementById('xpCount').textContent = `${totalXP} XP`;
+        }
+
+        function showXPPopup(amount) {
+            const popup = document.getElementById('xpPopup');
+            const badge = document.getElementById('xpBadge');
+
+            popup.textContent = `+${amount} XP`;
+            popup.classList.add('show');
+            badge.classList.add('gained');
+
+            setTimeout(() => {
+                popup.classList.remove('show');
+                badge.classList.remove('gained');
+            }, 1000);
+        }
+
+        function awardPhaseXP(phaseId) {
+            if (!phasesCompleted.has(phaseId)) {
+                phasesCompleted.add(phaseId);
+                addXP(XP_PER_PHASE);
+            }
+        }
+
+        // Generate Phase Screens
+        function generatePhaseScreens() {
+            const container = document.getElementById('phaseContainer');
+            container.innerHTML = phases.map(phase => `
+                <div class="screen" id="phase${phase.id}Screen">
+                    <div class="progress-container" id="progress${phase.id}">
+                        <div class="progress-steps">
+                            ${phases.map((_, idx) => `<div class="progress-step" data-phase="${idx + 1}"></div>`).join('')}
+                        </div>
+                        <span class="progress-text">${phase.id}/7</span>
+                    </div>
+                    <div class="phase-header">
+                        <div class="phase-badge">
+                            <span>Fase ${phase.id}</span>
+                            <span>${phase.coordinate}</span>
+                        </div>
+                        <h2 class="phase-title">${phase.fullQuestion}</h2>
+                        ${phase.description ? `<p class="phase-question">${phase.description}</p>` : ''}
+                    </div>
+
+                    <div class="options-container">
+                        <div class="options-label">${phase.allowMultiple ? 'Selecciona todas las que apliquen' : 'Opciones a testear'}</div>
+                        <div class="options-grid">
+                            ${generateOptionsHTML(phase)}
+                        </div>
+                        ${phase.note ? `<p style="color: var(--primary); font-size: 0.875rem; margin-top: 0.75rem; font-weight: 500;">${phase.note}</p>` : ''}
+                    </div>
+
+                    <div class="notes-container">
+                        <div class="notes-label">${phase.hasDetailedNotes ? 'Detalles y observaciones' : 'Notas adicionales'}</div>
+                        <textarea
+                            class="notes-field"
+                            id="notes${phase.id}"
+                            placeholder="${phase.hasDetailedNotes ? 'Describe lo que emergió durante el testeo...' : 'Observaciones opcionales...'}"
+                            oninput="saveNotes(${phase.id}, this.value)"
+                        ></textarea>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Generate Options HTML based on phase structure
+        function generateOptionsHTML(phase) {
+            // If has option groups (like Fase 4 and 5)
+            if (phase.optionGroups) {
+                return phase.optionGroups.map(group => `
+                    <div class="option-group">
+                        <div class="option-group-label">${group.label}</div>
+                        ${group.options.map(option => `
+                            <button class="option-btn" onclick="selectOption(${phase.id}, '${option.replace(/'/g, "\\'")}', this, ${phase.allowMultiple || false})" data-option="${option}">
+                                <div class="option-check">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                    </svg>
+                                </div>
+                                <span class="option-text">${option}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                `).join('');
+            }
+
+            // If has option details (like Fase 2 - Hologramas)
+            if (phase.optionDetails) {
+                return phase.options.map(option => `
+                    <button class="option-btn option-with-detail" onclick="selectOption(${phase.id}, '${option.replace(/'/g, "\\'")}', this, ${phase.allowMultiple || false})" data-option="${option}">
+                        <div class="option-check">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                            </svg>
+                        </div>
+                        <div class="option-content">
+                            <span class="option-text">${option}</span>
+                            <span class="option-detail">${phase.optionDetails[option] || ''}</span>
+                        </div>
+                    </button>
+                `).join('');
+            }
+
+            // Standard options
+            return phase.options.map(option => `
+                <button class="option-btn" onclick="selectOption(${phase.id}, '${option.replace(/'/g, "\\'")}', this, ${phase.allowMultiple || false})" data-option="${option}">
+                    <div class="option-check">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+                    </div>
+                    <span class="option-text">${option}</span>
+                </button>
+            `).join('');
+        }
+
+        // Update Progress
+        function updateProgress() {
+            // Update progress in all phase screens
+            phases.forEach(phase => {
+                const progressContainer = document.getElementById(`progress${phase.id}`);
+                if (progressContainer) {
+                    const steps = progressContainer.querySelectorAll('.progress-step');
+                    steps.forEach((step, idx) => {
+                        step.classList.remove('completed', 'active');
+                        if (idx + 1 < currentPhase) step.classList.add('completed');
+                        else if (idx + 1 === currentPhase) step.classList.add('active');
+                    });
+                }
+            });
+        }
+
+        // Start Wizard
+        function startWizard() {
+            document.getElementById('startScreen').classList.remove('active');
+            document.getElementById(`phase1Screen`).classList.add('active');
+            document.getElementById('navButtons').style.display = 'flex';
+            currentPhase = 1;
+            updateProgress();
+        }
+
+        // Select Option
+        function selectOption(phaseId, option, element, allowMultiple = false) {
+            if (allowMultiple) {
+                // Toggle selection for multiple choice
+                element.classList.toggle('selected');
+
+                // Update responses array
+                if (!responses[phaseId]) responses[phaseId] = { selections: [] };
+                if (!responses[phaseId].selections) responses[phaseId].selections = [];
+
+                if (element.classList.contains('selected')) {
+                    if (!responses[phaseId].selections.includes(option)) {
+                        responses[phaseId].selections.push(option);
+                    }
+                } else {
+                    responses[phaseId].selections = responses[phaseId].selections.filter(s => s !== option);
+                }
+
+                // Enable next button if at least one selection
+                document.getElementById('btnNext').disabled = responses[phaseId].selections.length === 0;
+            } else {
+                // Single selection
+                const parent = element.closest('.options-grid');
+                parent.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+                element.classList.add('selected');
+
+                if (!responses[phaseId]) responses[phaseId] = {};
+                responses[phaseId].selection = option;
+
+                document.getElementById('btnNext').disabled = false;
+            }
+        }
+
+        // Save Notes
+        function saveNotes(phaseId, value) {
+            if (!responses[phaseId]) responses[phaseId] = {};
+            responses[phaseId].notes = value;
+        }
+
+        // Next Phase
+        function nextPhase() {
+            if (currentPhase < phases.length) {
+                // Award XP for completing current phase
+                awardPhaseXP(currentPhase);
+
+                document.getElementById(`phase${currentPhase}Screen`).classList.remove('active');
+                currentPhase++;
+                document.getElementById(`phase${currentPhase}Screen`).classList.add('active');
+
+                // Check if next phase has selection (single or multiple)
+                const response = responses[currentPhase];
+                const hasSelection = response?.selection || (response?.selections && response.selections.length > 0);
+                document.getElementById('btnNext').disabled = !hasSelection;
+
+                // Update button text on last phase
+                if (currentPhase === phases.length) {
+                    document.getElementById('btnNext').innerHTML = 'Ver Resultados <svg class="icon-sm" style="margin-left:0.25rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>';
+                }
+            } else {
+                // Award XP for last phase and completion bonus
+                awardPhaseXP(currentPhase);
+                setTimeout(() => addXP(XP_COMPLETION_BONUS), 500);
+                // Show results
+                showResults();
+            }
+            updateProgress();
+        }
+
+        // Previous Phase
+        function previousPhase() {
+            if (currentPhase > 1) {
+                document.getElementById(`phase${currentPhase}Screen`).classList.remove('active');
+                currentPhase--;
+                document.getElementById(`phase${currentPhase}Screen`).classList.add('active');
+
+                // Reset button text
+                document.getElementById('btnNext').innerHTML = 'Siguiente <span>→</span>';
+                document.getElementById('btnNext').disabled = false;
+            } else {
+                // Go back to start
+                document.getElementById(`phase${currentPhase}Screen`).classList.remove('active');
+                document.getElementById('startScreen').classList.add('active');
+                document.getElementById('navButtons').style.display = 'none';
+                currentPhase = 0;
+            }
+            updateProgress();
+        }
+
+        // Show Results
+        function showResults() {
+            document.getElementById(`phase${currentPhase}Screen`).classList.remove('active');
+            document.getElementById('resultsScreen').classList.add('active');
+            document.getElementById('navButtons').style.display = 'none';
+
+            generateResultsContent();
+        }
+
+        // Generate Results Content
+        function generateResultsContent() {
+            const resultsCard = document.getElementById('resultsCard');
+
+            resultsCard.innerHTML = phases.map(phase => {
+                const response = responses[phase.id];
+                const selections = response?.selections || [];
+                const selection = response?.selection || null;
+                const notes = response?.notes || null;
+
+                // Get the display value (multiple or single)
+                let displayValue = null;
+                if (selections.length > 0) {
+                    displayValue = selections.join(', ');
+                } else if (selection) {
+                    displayValue = selection;
+                }
+
+                return `
+                    <div class="result-item">
+                        <div class="result-phase">
+                            <div class="result-phase-num">${phase.id}</div>
+                            <div class="result-phase-name">${phase.coordinate}</div>
+                        </div>
+                        ${displayValue
+                            ? `<div class="result-value">${displayValue}</div>`
+                            : `<div class="result-value result-empty">No seleccionado</div>`
+                        }
+                        ${notes ? `<div class="result-notes">${notes}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Copy Results
+        function copyResults() {
+            let text = "ESCENARIO ENERGÉTICO - Context Engineering\n";
+            text += "=".repeat(45) + "\n\n";
+
+            phases.forEach(phase => {
+                const response = responses[phase.id];
+                const selections = response?.selections || [];
+                const selection = response?.selection || null;
+                const displayValue = selections.length > 0 ? selections.join(', ') : selection;
+
+                text += `FASE ${phase.id}: ${phase.coordinate}\n`;
+                text += `→ ${displayValue || 'No seleccionado'}\n`;
+                if (response?.notes) {
+                    text += `  Notas: ${response.notes}\n`;
+                }
+                text += "\n";
+            });
+
+            // Generate therapeutic phrase
+            text += "=".repeat(45) + "\n";
+            text += "FRASE TERAPÉUTICA:\n\n";
+
+            const f1 = responses[1]?.selection || responses[1]?.selections?.join('/') || '[CUÁNDO]';
+            const f2 = responses[2]?.selections?.join(' + ') || '[HOLOGRAMA]';
+            const f3 = responses[3]?.selections?.join(' + ') || '[SENSACIÓN]';
+            const f4 = responses[4]?.selections?.join(' + ') || '[QUIÉN]';
+            const f5 = responses[5]?.selections?.join(', ') || responses[5]?.notes || '[QUÉ PASÓ]';
+            const f6 = responses[6]?.selections?.join(', ') || '[CREENCIA]';
+            const f7 = responses[7]?.selections?.join(', ') || '[FUNCIÓN]';
+
+            text += `"A los ${f1}, cuando ${f4} ${f5}, se activó ${f2} y sentí ${f3}. `;
+            text += `La creencia que grabé fue '${f6}'. Hoy este síntoma me permite ${f7}."\n\n`;
+
+            text += "=".repeat(45) + "\n";
+            text += "Seminario Internacional de Inteligencia Energética\n";
+            text += "Dr. Miguel Ojeda Rios";
+
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Copiado al portapapeles');
+            }).catch(() => {
+                showToast('Error al copiar');
+            });
+        }
+
+        // Restart Wizard
+        function restartWizard() {
+            // Reset state
+            currentPhase = 0;
+            responses = {};
+            phasesCompleted = new Set(); // Reset phases for new session (XP already saved)
+
+            // Reset UI
+            document.getElementById('resultsScreen').classList.remove('active');
+            document.getElementById('startScreen').classList.add('active');
+
+            // Reset all selections and notes
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelectorAll('.notes-field').forEach(field => field.value = '');
+
+            // Reset button
+            document.getElementById('btnNext').innerHTML = 'Siguiente <span>→</span>';
+            document.getElementById('btnNext').disabled = true;
+
+            updateProgress();
+        }
+
+        // Help Modal
+        function showHelp() {
+            document.getElementById('helpModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeHelp() {
+            document.getElementById('helpModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeHelpOnOverlay(event) {
+            if (event.target === event.currentTarget) {
+                closeHelp();
+            }
+        }
+
+        // Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeHelp();
+            }
+            if (e.key === 'ArrowRight' && currentPhase > 0 && currentPhase <= phases.length) {
+                const hasSelection = responses[currentPhase]?.selection;
+                if (hasSelection) nextPhase();
+            }
+            if (e.key === 'ArrowLeft' && currentPhase > 0) {
+                previousPhase();
+            }
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) < swipeThreshold) return;
+            if (currentPhase === 0 || document.getElementById('resultsScreen').classList.contains('active')) return;
+
+            if (diff > 0) {
+                // Swipe left - next
+                const hasSelection = responses[currentPhase]?.selection;
+                if (hasSelection) nextPhase();
+            } else {
+                // Swipe right - previous
+                previousPhase();
+            }
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
