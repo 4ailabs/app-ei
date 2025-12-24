@@ -1,5 +1,5 @@
 import { AppLink } from "@/data/sessions"
-import { Play, Activity, Radio, Smartphone, Zap, Heart, Sparkles, Gauge, SlidersHorizontal, MessageSquare, Rocket, Gamepad2 } from "lucide-react"
+import { Play, Activity, Radio, Smartphone, Zap, Heart, Sparkles, Gauge, SlidersHorizontal, MessageSquare, Rocket, Gamepad2, Target } from "lucide-react"
 
 interface AppSectionProps {
     apps: AppLink[]
@@ -16,7 +16,8 @@ const iconMap: Record<string, any> = {
     MessageSquare,
     Sparkles,
     Rocket,
-    Gamepad2
+    Gamepad2,
+    target: Target
 }
 
 // Colores por tipo de app - consistente con el estilo de la app
@@ -70,6 +71,11 @@ const appStyles: Record<string, { color: string; bgLight: string; bgDark: string
         color: "#8B5CF6",
         bgLight: "bg-purple-50",
         bgDark: "dark:bg-purple-950/20"
+    },
+    target: {
+        color: "#DA7756",
+        bgLight: "bg-orange-50",
+        bgDark: "dark:bg-orange-950/20"
     },
     default: {
         color: "#706F6C",
