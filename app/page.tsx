@@ -79,7 +79,7 @@ export default async function HomePage() {
       </div>
 
       {/* Sección de características - Visible para todos */}
-      <div className="bg-gradient-to-br from-[#2ca58d]/10 to-[#DA7756]/10 dark:from-[#2ca58d]/20 dark:to-[#DA7756]/20 border border-[#2ca58d]/30 dark:border-[#2ca58d]/40 p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl">
+      <div className="bg-gradient-to-br from-[#DA7756]/5 to-[#DA7756]/10 dark:from-[#DA7756]/10 dark:to-[#DA7756]/20 border border-[#DA7756]/20 dark:border-[#DA7756]/30 p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl">
         <div className="text-center mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-3">
             ¿Qué encontrarás en la plataforma?
@@ -119,8 +119,8 @@ export default async function HomePage() {
           {/* Apps Interactivas */}
           <div className="bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
             <div className="flex items-center gap-3 mb-3">
-              <div className="p-2.5 bg-[#2ca58d]/20 dark:bg-[#2ca58d]/30 rounded-lg">
-                <Smartphone className="h-6 w-6 text-[#2ca58d] dark:text-[#E5E5E5]" />
+              <div className="p-2.5 bg-[#DA7756]/20 dark:bg-[#DA7756]/30 rounded-lg">
+                <Smartphone className="h-6 w-6 text-[#DA7756] dark:text-[#E5E5E5]" />
               </div>
               <h3 className="text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Apps Interactivas</h3>
             </div>
@@ -135,7 +135,7 @@ export default async function HomePage() {
             </ul>
             {isLoggedIn && (
               <Link href="/apps" className="block mt-4">
-                <button className="text-sm font-medium text-[#2ca58d] dark:text-[#2ca58d] hover:underline flex items-center gap-1">
+                <button className="text-sm font-medium text-[#DA7756] dark:text-[#DA7756] hover:underline flex items-center gap-1">
                   Explorar apps <ArrowRight className="h-4 w-4" />
                 </button>
               </Link>
@@ -173,7 +173,7 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
             <div className="flex items-center gap-3 mb-2">
-              <Play className="h-5 w-5 text-[#2ca58d] dark:text-[#E5E5E5]" />
+              <Play className="h-5 w-5 text-[#DA7756] dark:text-[#E5E5E5]" />
               <h4 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Videos de Alta Calidad</h4>
             </div>
             <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0]">
@@ -198,7 +198,7 @@ export default async function HomePage() {
         <PromoVideo />
 
         {/* Noticias */}
-        <div className="bg-white dark:bg-[#2A2A2A] p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#2ca58d]/30">
+        <div className="bg-white dark:bg-[#2A2A2A] p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
           <div className="flex items-center gap-2 mb-4 sm:mb-6">
             <Bell className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756] dark:text-[#ECECEC]" />
             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Noticias</h2>
@@ -219,10 +219,10 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="p-4 bg-[#2ca58d]/10 dark:bg-[#252525] border border-[#2ca58d]/20 dark:border-[#2ca58d]/30 rounded-xl">
+            <div className="p-4 bg-[#DA7756]/10 dark:bg-[#252525] border border-[#DA7756]/20 dark:border-[#DA7756]/30 rounded-xl">
               <div className="flex items-start gap-3">
-                <div className="p-2 bg-[#2ca58d]/20 dark:bg-[#2ca58d]/20 rounded-lg">
-                  <Play className="h-4 w-4 text-[#2ca58d] dark:text-[#ECECEC]" />
+                <div className="p-2 bg-[#DA7756]/20 dark:bg-[#DA7756]/20 rounded-lg">
+                  <Play className="h-4 w-4 text-[#DA7756] dark:text-[#ECECEC]" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-[#1A1915] dark:text-[#ECECEC]">10 Apps Interactivas</p>
@@ -234,10 +234,10 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="p-4 bg-[#F5F4F0] dark:bg-[#252525] border border-[#E5E4E0] dark:border-[#2ca58d]/30 rounded-xl">
+            <div className="p-4 bg-[#F5F4F0] dark:bg-[#252525] border border-[#E5E4E0] dark:border-[#333333] rounded-xl">
               <div className="flex items-start gap-3">
-                <div className="p-2 bg-[#E5E4E0] dark:bg-[#2ca58d]/20 rounded-lg">
-                  <GraduationCap className="h-4 w-4 text-[#706F6C] dark:text-[#B4B4B4]" />
+                <div className="p-2 bg-[#E5E4E0] dark:bg-[#333333] rounded-lg">
+                  <GraduationCap className="h-4 w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-[#1A1915] dark:text-[#ECECEC]">Context Engineering</p>
@@ -254,9 +254,9 @@ export default async function HomePage() {
 
       {/* Sección informativa para usuarios nuevos */}
       {isLoggedIn && isNewUser && (
-        <div className="bg-gradient-to-br from-[#2ca58d]/10 to-[#DA7756]/10 dark:from-[#2ca58d]/20 dark:to-[#DA7756]/20 border border-[#2ca58d]/30 dark:border-[#2ca58d]/40 p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl">
+        <div className="bg-gradient-to-br from-[#DA7756]/5 to-[#DA7756]/10 dark:from-[#DA7756]/10 dark:to-[#DA7756]/20 border border-[#DA7756]/20 dark:border-[#DA7756]/30 p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl">
           <div className="flex items-start gap-4 mb-6">
-            <div className="p-3 bg-[#2ca58d] dark:bg-[#2ca58d] rounded-xl">
+            <div className="p-3 bg-[#DA7756] dark:bg-[#DA7756] rounded-xl">
               <Info className="h-6 w-6 text-white" />
             </div>
             <div className="flex-1">
@@ -291,8 +291,8 @@ export default async function HomePage() {
             {/* Apps Interactivas */}
             <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-[#2ca58d]/20 dark:bg-[#2ca58d]/30 rounded-lg">
-                  <Smartphone className="h-5 w-5 text-[#2ca58d] dark:text-[#E5E5E5]" />
+                <div className="p-2 bg-[#DA7756]/20 dark:bg-[#DA7756]/30 rounded-lg">
+                  <Smartphone className="h-5 w-5 text-[#DA7756] dark:text-[#E5E5E5]" />
                 </div>
                 <h3 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Apps Interactivas</h3>
               </div>
@@ -300,7 +300,7 @@ export default async function HomePage() {
                 10 herramientas prácticas: Respiración Guiada, Las 4 Palancas, Re-etiquetado y más. Practica y gana XP.
               </p>
               <Link href="/apps">
-                <button className="text-sm font-medium text-[#2ca58d] dark:text-[#2ca58d] hover:underline flex items-center gap-1">
+                <button className="text-sm font-medium text-[#DA7756] dark:text-[#DA7756] hover:underline flex items-center gap-1">
                   Explorar apps <ArrowRight className="h-4 w-4" />
                 </button>
               </Link>
@@ -327,8 +327,8 @@ export default async function HomePage() {
             {/* Cómo empezar */}
             <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-[#2ca58d]/20 dark:bg-[#2ca58d]/30 rounded-lg">
-                  <Target className="h-5 w-5 text-[#2ca58d] dark:text-[#E5E5E5]" />
+                <div className="p-2 bg-[#DA7756]/20 dark:bg-[#DA7756]/30 rounded-lg">
+                  <Target className="h-5 w-5 text-[#DA7756] dark:text-[#E5E5E5]" />
                 </div>
                 <h3 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Cómo empezar</h3>
               </div>
@@ -344,26 +344,26 @@ export default async function HomePage() {
 
       {/* CTA Section para usuarios no registrados */}
       {!isLoggedIn && (
-        <div className="bg-white dark:bg-[#2A2A2A] p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#2ca58d]/30">
+        <div className="bg-white dark:bg-[#2A2A2A] p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
           <div className="text-center py-6 sm:py-12 px-2 sm:px-4">
             <div className="max-w-md mx-auto">
-              <div className="w-14 h-14 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#252525] dark:border dark:border-[#2ca58d]/30 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+              <div className="w-14 h-14 sm:w-20 sm:h-20 bg-[#F5F4F0] dark:bg-[#252525] dark:border dark:border-[#333333] rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                 <Lock className="h-7 w-7 sm:h-10 sm:w-10 text-[#9B9A97] dark:text-[#7A7A76]" />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC] mb-2 sm:mb-3">Comienza Ahora</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC] mb-2 sm:mb-3">Acceso Exclusivo para Alumnos</h3>
               <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#B4B4B4] mb-5 sm:mb-8">
-                Regístrate gratuitamente y accede a todo el contenido. Tu cuenta será aprobada y recibirás acceso completo a las {totalSessions} sesiones formativas.
+                Esta plataforma es exclusiva para participantes del Seminario Internacional de Inteligencia Energetica. Si ya eres alumno, inicia sesion para acceder a las {totalSessions} sesiones formativas.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <Link href="/register">
+                <Link href="/login">
                   <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[#DA7756] dark:bg-[#DA7756] text-white dark:text-white rounded-full font-semibold hover:bg-[#C4684A] dark:hover:bg-[#C4684A] transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98] text-sm sm:text-base">
-                    Registrarse Gratis
+                    Iniciar Sesion
                     <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
                   </button>
                 </Link>
-                <Link href="/login">
-                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white dark:bg-[#252525] text-[#1A1915] dark:text-[#E5E5E5] border-2 border-[#E5E4E0] dark:border-[#2ca58d]/30 rounded-full font-semibold hover:border-[#DA7756] dark:hover:border-[#2ca58d]/50 hover:bg-[#FAF9F7] dark:hover:bg-[#2A2A2A] transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] text-sm sm:text-base">
-                    Ya tengo cuenta
+                <Link href="/register">
+                  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white dark:bg-[#252525] text-[#1A1915] dark:text-[#E5E5E5] border-2 border-[#E5E4E0] dark:border-[#333333] rounded-full font-semibold hover:border-[#DA7756] dark:hover:border-[#DA7756] hover:bg-[#FAF9F7] dark:hover:bg-[#2A2A2A] transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] text-sm sm:text-base">
+                    Crear cuenta de alumno
                   </button>
                 </Link>
               </div>
