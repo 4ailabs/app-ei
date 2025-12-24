@@ -1810,44 +1810,51 @@ export const sessions: Session[] = [
       {
         id: "v7-1",
         title: "¿Qué es Context Engineering?",
+        cloudflareStreamId: "6b5e915d5225af8be140d29a78375079",
         duration: "",
-        description: "Próximamente - Introducción a la ingeniería del contexto para optimizar el entorno y la respuesta energética"
+        description: "Introducción a la ingeniería del contexto para optimizar el entorno y la respuesta energética"
       },
       {
         id: "v7-2",
         title: "El Test Muscular como Herramienta de Acceso",
+        cloudflareStreamId: "b7422dc9ad218883e7edf8cc9fdf2e5d",
         duration: "",
-        description: "Próximamente - Comprendiendo cómo el test muscular proporciona acceso a información del sistema mente-cuerpo"
+        description: "Comprendiendo cómo el test muscular proporciona acceso a información del sistema mente-cuerpo"
       },
       {
         id: "v7-3",
         title: "Fase 1: ¿CUÁNDO? — Los 4 Niveles Temporales",
+        cloudflareStreamId: "0364df3582c9862611f8a10fbcd94186",
         duration: "",
-        description: "Próximamente - Los cuatro niveles de análisis y la primera coordenada temporal"
+        description: "Los cuatro niveles de análisis y la primera coordenada temporal"
       },
       {
         id: "v7-4",
         title: "Fase 2: ¿QUÉ TIPO? — Los 13 Hologramas",
+        cloudflareStreamId: "c84f4a135bc4a4560b0872514229c9d8",
         duration: "",
-        description: "Próximamente - Los 13 hologramas y patrones de identificación"
+        description: "Los 13 hologramas y patrones de identificación"
       },
       {
         id: "v7-5",
         title: "Fase 3: ¿QUÉ SENSACIÓN? — Las 20 Sensaciones",
+        cloudflareStreamId: "20e4d5f678c573c858a9277a4c4d9903",
         duration: "",
-        description: "Próximamente - El vocabulario del cuerpo: las 20 sensaciones y su significado"
+        description: "El vocabulario del cuerpo: las 20 sensaciones y su significado"
       },
       {
         id: "v7-6",
         title: "Fases 4-7: Personas, Evento, Significado, Función",
+        cloudflareStreamId: "3883922a6519e4becce5fc0d5459244b",
         duration: "",
-        description: "Próximamente - Las últimas cuatro fases: identificación de personas, eventos, significado y función"
+        description: "Las últimas cuatro fases: identificación de personas, eventos, significado y función"
       },
       {
         id: "v7-7",
         title: "Demo: Context Engineering Completo",
+        cloudflareStreamId: "f02f9277bc53dc0cd52bde6c87e97b2e",
         duration: "",
-        description: "Próximamente - Demostración práctica completa del proceso de Context Engineering"
+        description: "Demostración práctica completa del proceso de Context Engineering"
       }
     ],
     audios: [],
@@ -1858,6 +1865,17 @@ export const sessions: Session[] = [
         title: "Las 7 Fases del Context Engineering",
         description: "Guía completa de las 7 fases para transformar tu contexto.",
         pdfUrl: ""
+      }
+    ],
+    pdfs: [
+      {
+        id: "pdf7-1",
+        title: "Kit de Tarjetas - Context Engineering",
+        url: "/protocols/context-engineering-tarjetas.html",
+        description: "13 tarjetas de referencia rápida para el diagnóstico con test muscular.",
+        pages: 13,
+        category: "referencia",
+        type: "slide"
       }
     ],
     apps: []
