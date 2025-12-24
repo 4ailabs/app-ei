@@ -1,15 +1,25 @@
 import { auth } from "@/lib/auth-server"
 import { sessions } from "@/data/sessions"
-import { GraduationCap, Bell, Play, Sparkles, Lock, ArrowRight, BookOpen } from "lucide-react"
+import { GraduationCap, Bell, Play, Sparkles, Lock, ArrowRight, BookOpen, Info, Award, Smartphone, Video, FileText, Target } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { PromoVideo } from "@/components/PromoVideo"
+import { prisma } from "@/lib/prisma"
 
 export default async function HomePage() {
   const session = await auth()
   const isLoggedIn = !!session
 
   const totalSessions = sessions.length
+
+  // Verificar si es un usuario nuevo (sin progreso)
+  let isNewUser = false
+  if (session?.user?.id) {
+    const userProgress = await prisma.progress.count({
+      where: { userId: session.user.id }
+    })
+    isNewUser = userProgress === 0
+  }
 
   return (
     <div className="w-full space-y-4 sm:space-y-6 lg:space-y-8 mt-4 sm:mt-8 lg:mt-20">
@@ -126,6 +136,96 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* Sección informativa para usuarios nuevos */}
+      {isLoggedIn && isNewUser && (
+        <div className="bg-gradient-to-br from-[#2ca58d]/10 to-[#DA7756]/10 dark:from-[#2ca58d]/20 dark:to-[#DA7756]/20 border border-[#2ca58d]/30 dark:border-[#2ca58d]/40 p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl">
+          <div className="flex items-start gap-4 mb-6">
+            <div className="p-3 bg-[#2ca58d] dark:bg-[#2ca58d] rounded-xl">
+              <Info className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">
+                ¡Bienvenido a la plataforma!
+              </h2>
+              <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0]">
+                Te ayudamos a empezar con todo lo que necesitas saber.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+            {/* Sesiones */}
+            <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-[#DA7756]/20 dark:bg-[#DA7756]/30 rounded-lg">
+                  <BookOpen className="h-5 w-5 text-[#DA7756] dark:text-[#E5E5E5]" />
+                </div>
+                <h3 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sesiones Formativas</h3>
+              </div>
+              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+                Accede a {totalSessions} sesiones con videos educativos, audios guiados, PDFs, protocolos y material descargable.
+              </p>
+              <Link href="/sesiones">
+                <button className="text-sm font-medium text-[#DA7756] dark:text-[#DA7756] hover:underline flex items-center gap-1">
+                  Ver sesiones <ArrowRight className="h-4 w-4" />
+                </button>
+              </Link>
+            </div>
+
+            {/* Apps Interactivas */}
+            <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-[#2ca58d]/20 dark:bg-[#2ca58d]/30 rounded-lg">
+                  <Smartphone className="h-5 w-5 text-[#2ca58d] dark:text-[#E5E5E5]" />
+                </div>
+                <h3 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Apps Interactivas</h3>
+              </div>
+              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+                10 herramientas prácticas: Respiración Guiada, Las 4 Palancas, Re-etiquetado y más. Practica y gana XP.
+              </p>
+              <Link href="/apps">
+                <button className="text-sm font-medium text-[#2ca58d] dark:text-[#2ca58d] hover:underline flex items-center gap-1">
+                  Explorar apps <ArrowRight className="h-4 w-4" />
+                </button>
+              </Link>
+            </div>
+
+            {/* Sistema de XP */}
+            <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-[#DA7756]/20 dark:bg-[#DA7756]/30 rounded-lg">
+                  <Award className="h-5 w-5 text-[#DA7756] dark:text-[#E5E5E5]" />
+                </div>
+                <h3 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sistema de XP</h3>
+              </div>
+              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+                Gana experiencia (XP) usando las apps. Al alcanzar 500 XP, desbloqueas contenido premium exclusivo.
+              </p>
+              <Link href="/premium">
+                <button className="text-sm font-medium text-[#DA7756] dark:text-[#DA7756] hover:underline flex items-center gap-1">
+                  Ver contenido premium <ArrowRight className="h-4 w-4" />
+                </button>
+              </Link>
+            </div>
+
+            {/* Cómo empezar */}
+            <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-[#2ca58d]/20 dark:bg-[#2ca58d]/30 rounded-lg">
+                  <Target className="h-5 w-5 text-[#2ca58d] dark:text-[#E5E5E5]" />
+                </div>
+                <h3 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Cómo empezar</h3>
+              </div>
+              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+                1. Explora las sesiones formativas<br />
+                2. Prueba las apps interactivas<br />
+                3. Gana XP y desbloquea premium
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* CTA Section for non-logged in users */}
       {!isLoggedIn && (
