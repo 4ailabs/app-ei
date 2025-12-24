@@ -85,11 +85,11 @@ export default async function HomePage() {
                   <Sparkles className="h-4 w-4 text-[#DA7756] dark:text-[#ECECEC]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Nuevo Contenido</p>
+                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sistema de XP y Premium</p>
                   <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-1">
-                    Se agregaron nuevos protocolos a la sesión de TRSB
+                    Gana experiencia en las apps y desbloquea contenido exclusivo al alcanzar 500 XP
                   </p>
-                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Hace 2 días</p>
+                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Nuevo</p>
                 </div>
               </div>
             </div>
@@ -97,14 +97,14 @@ export default async function HomePage() {
             <div className="p-4 bg-[#2ca58d]/10 dark:bg-[#252525] border border-[#2ca58d]/20 dark:border-[#2ca58d]/30 rounded-xl">
               <div className="flex items-start gap-3">
                 <div className="p-2 bg-[#2ca58d]/20 dark:bg-[#2ca58d]/20 rounded-lg">
-                  <Bell className="h-4 w-4 text-[#2ca58d] dark:text-[#ECECEC]" />
+                  <Play className="h-4 w-4 text-[#2ca58d] dark:text-[#ECECEC]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#ECECEC]">Recordatorio</p>
+                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#ECECEC]">10 Apps Interactivas</p>
                   <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-1">
-                    Sesión en vivo este viernes a las 18:00 hrs
+                    Herramientas prácticas disponibles: Respiración Guiada, Las 4 Palancas, Re-etiquetado y más
                   </p>
-                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Hace 1 semana</p>
+                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Disponible</p>
                 </div>
               </div>
             </div>
@@ -115,11 +115,11 @@ export default async function HomePage() {
                   <GraduationCap className="h-4 w-4 text-[#706F6C] dark:text-[#B4B4B4]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#ECECEC]">Actualización</p>
+                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#ECECEC]">Context Engineering</p>
                   <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-1">
-                    Nuevos PDFs disponibles en todas las sesiones
+                    Videos y kit de tarjetas disponibles en la Sesión 7 para transformar tu contexto
                   </p>
-                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Hace 2 semanas</p>
+                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Actualizado</p>
                 </div>
               </div>
             </div>
