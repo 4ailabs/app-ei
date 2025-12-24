@@ -7,31 +7,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Base colors */
+            /* Estilo Claude - Minimalista */
             --bg-primary: #FAF9F7;
-            --bg-card: #FFFFFF;
+            --bg-card: white;
             --bg-section: #F5F4F0;
-            --bg-tools: #FFFEF2;
             --text-primary: #1A1915;
             --text-secondary: #706F6C;
             --text-muted: #9B9A97;
             --border: #E5E4E0;
 
-            /* Phase colors */
-            --sage: #87A878;
-            --sage-light: #E8F0E5;
-            --amber: #D4A259;
-            --amber-light: #FDF6E9;
-            --coral: #E8998D;
-            --coral-light: #FDF0EE;
+            /* Solo un color de acento - naranja coral */
+            --accent: #DA7756;
+            --accent-light: rgba(218, 119, 86, 0.1);
+            --accent-hover: #C4654A;
 
-            /* Status colors */
-            --success: #87A878;
-            --warning: #D4A259;
-            --danger: #E8998D;
-
-            /* Header */
-            --header-bg: #374151;
+            /* Header oscuro */
+            --header-bg: #1A1915;
 
             /* Safe area for notch devices */
             --safe-area-top: env(safe-area-inset-top, 0px);
@@ -40,17 +31,15 @@
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-primary: #121212;
-                --bg-card: #1E1E1E;
-                --bg-section: #252525;
-                --bg-tools: #2A2A20;
-                --text-primary: #ECECEC;
-                --text-secondary: #B4B4B4;
+                --bg-primary: #1A1A1A;
+                --bg-card: #252525;
+                --bg-section: #333333;
+                --text-primary: #E5E5E5;
+                --text-secondary: #A0A0A0;
                 --text-muted: #808080;
                 --border: #333333;
-                --sage-light: rgba(135, 168, 120, 0.2);
-                --amber-light: rgba(212, 162, 89, 0.2);
-                --coral-light: rgba(232, 153, 141, 0.2);
+                --header-bg: #0F0F0F;
+                --accent-light: rgba(218, 119, 86, 0.15);
             }
         }
 
@@ -221,17 +210,19 @@
         .timer-controls {
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.12);
-            padding: 8px 12px;
-            border-radius: 24px;
+            gap: 10px;
+            background: rgba(255,255,255,0.15);
+            padding: 10px 16px;
+            border-radius: 28px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         @media (min-width: 768px) {
             .timer-controls {
-                gap: 10px;
-                padding: 10px 16px;
-                border-radius: 28px;
+                gap: 12px;
+                padding: 12px 20px;
+                border-radius: 32px;
             }
         }
 
@@ -284,28 +275,31 @@
         }
 
         .timer-display {
-            font-size: 16px;
-            color: rgba(255,255,255,0.95);
+            font-size: 18px;
+            color: white;
             font-variant-numeric: tabular-nums;
-            font-weight: 700;
-            min-width: 70px;
+            font-weight: 800;
+            min-width: 80px;
             text-align: center;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         @media (min-width: 768px) {
             .timer-display {
-                font-size: 20px;
-                min-width: 85px;
+                font-size: 22px;
+                min-width: 95px;
             }
         }
 
         .timer-display.running {
-            color: #87A878;
+            color: #7AB86A;
+            text-shadow: 0 0 10px rgba(122, 184, 106, 0.5);
         }
 
         .timer-display.paused {
             animation: blink 1s infinite;
+            color: #E4A84A;
         }
 
         @keyframes blink {
@@ -337,7 +331,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--amber);
+            background: var(--accent);
         }
 
         .mobile-phase-text {
@@ -363,9 +357,10 @@
 
         /* Phase Navigator - Mobile: horizontal scroll, Desktop: vertical sidebar */
         .phase-navigator {
-            background: #F3F4F6;
+            background: var(--bg-section);
             padding: 16px;
             flex-shrink: 0;
+            border-right: 1px solid var(--border);
         }
 
         @media (min-width: 768px) {
@@ -379,8 +374,8 @@
 
         .nav-title {
             font-size: 10px;
-            font-weight: 600;
-            color: var(--text-muted);
+            font-weight: 700;
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 12px;
@@ -423,29 +418,30 @@
         .phase-card {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 16px;
+            gap: 12px;
+            padding: 16px 18px;
             border-radius: 14px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            background: white;
-            border: 1px solid transparent;
+            transition: all 0.25s ease;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             flex-shrink: 0;
-            min-width: 150px;
+            min-width: 160px;
             scroll-snap-align: start;
             position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         @media (min-width: 768px) {
             .phase-card {
                 min-width: auto;
-                padding: 14px 16px;
-                gap: 12px;
+                padding: 16px 18px;
+                gap: 14px;
             }
         }
 
         .phase-card:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
         @media (min-width: 768px) {
@@ -453,27 +449,37 @@
                 transform: none;
             }
             .phase-card:hover {
-                border-color: var(--border);
+                border-color: var(--accent);
+                box-shadow: 0 4px 12px rgba(218, 119, 86, 0.15);
             }
         }
 
         .phase-card.completed {
-            opacity: 0.7;
+            opacity: 0.85;
+            background: var(--accent-light);
         }
 
         .phase-card.completed .phase-indicator {
-            background: var(--sage);
+            background: var(--accent);
             color: white;
+            box-shadow: 0 2px 8px rgba(90, 154, 74, 0.3);
         }
 
         .phase-card.current {
-            background: white;
-            border-left: 3px solid var(--amber);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: var(--accent-light);
+            border: 2px solid var(--accent);
+            box-shadow: 0 4px 16px rgba(218, 119, 86, 0.2);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .phase-card.current {
+                background: rgba(218, 119, 86, 0.1);
+            }
         }
 
         .phase-card.upcoming {
-            opacity: 0.6;
+            opacity: 0.7;
+            background: var(--bg-section);
         }
 
         .phase-card.upcoming .phase-indicator {
@@ -482,49 +488,37 @@
         }
 
         .phase-indicator {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             flex-shrink: 0;
+            transition: all 0.2s ease;
         }
 
         @media (min-width: 768px) {
             .phase-indicator {
-                width: 30px;
-                height: 30px;
-                font-size: 13px;
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
             }
         }
 
-        .phase-card.sage .phase-indicator {
-            background: var(--sage);
+        .phase-card .phase-indicator {
+            background: var(--accent);
             color: white;
-        }
-        .phase-card.amber .phase-indicator {
-            background: var(--amber);
-            color: white;
-        }
-        .phase-card.coral .phase-indicator {
-            background: var(--coral);
-            color: white;
+            box-shadow: 0 2px 8px rgba(218, 119, 86, 0.25);
         }
 
-        .phase-card.upcoming.sage .phase-indicator {
-            border-color: var(--sage);
-            color: var(--sage);
-        }
-        .phase-card.upcoming.amber .phase-indicator {
-            border-color: var(--amber);
-            color: var(--amber);
-        }
-        .phase-card.upcoming.coral .phase-indicator {
-            border-color: var(--coral);
-            color: var(--coral);
+        .phase-card.upcoming .phase-indicator {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            box-shadow: none;
         }
 
         .phase-info {
@@ -533,7 +527,7 @@
         }
 
         .phase-number {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-primary);
             white-space: nowrap;
@@ -543,13 +537,28 @@
 
         @media (min-width: 768px) {
             .phase-number {
-                font-size: 14px;
+                font-size: 15px;
             }
         }
 
-        .phase-card.completed .phase-number,
+        .phase-card.completed .phase-number {
+            color: var(--accent-hover);
+            font-weight: 500;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .phase-card.completed .phase-number {
+                color: var(--accent);
+            }
+        }
+
         .phase-card.upcoming .phase-number {
-            color: var(--text-secondary);
+            color: var(--text-muted);
+        }
+
+        .phase-card.current .phase-number {
+            color: var(--accent);
+            font-weight: 700;
         }
 
         /* Checkmark icon */
@@ -560,7 +569,7 @@
 
         /* Center Column - Current Phase Detail */
         .current-phase-detail {
-            background: white;
+            background: var(--bg-card);
             padding: 24px 20px;
             overflow-y: auto;
             flex: 1;
@@ -587,40 +596,41 @@
         }
 
         .phase-color-bar {
-            height: 5px;
+            height: 6px;
             border-radius: 3px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         @media (min-width: 768px) {
             .phase-color-bar {
-                height: 6px;
-                margin-bottom: 20px;
+                height: 8px;
+                margin-bottom: 24px;
             }
         }
 
-        .phase-color-bar.sage { background: var(--sage); }
-        .phase-color-bar.amber { background: var(--amber); }
-        .phase-color-bar.coral { background: var(--coral); }
+        .phase-color-bar {
+            background: linear-gradient(90deg, var(--accent-hover), var(--accent));
+        }
 
         .phase-title {
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: 800;
             color: var(--text-primary);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             line-height: 1.3;
+            letter-spacing: -0.02em;
         }
 
         @media (min-width: 768px) {
             .phase-title {
-                font-size: 24px;
-                margin-bottom: 8px;
+                font-size: 28px;
+                margin-bottom: 10px;
             }
         }
 
-        .phase-title.sage { color: var(--sage); }
-        .phase-title.amber { color: var(--amber); }
-        .phase-title.coral { color: var(--coral); }
+        .phase-title {
+            color: var(--accent);
+        }
 
         .content-section {
             margin-bottom: 24px;
@@ -633,30 +643,46 @@
         }
 
         .section-label {
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-label::before {
+            content: "";
+            display: block;
+            width: 4px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 2px;
         }
 
         @media (min-width: 768px) {
             .section-label {
-                font-size: 11px;
-                margin-bottom: 12px;
+                font-size: 12px;
+                margin-bottom: 14px;
+            }
+            .section-label::before {
+                height: 18px;
             }
         }
 
         .section-text {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-primary);
             line-height: 1.7;
+            font-weight: 500;
         }
 
         @media (min-width: 768px) {
             .section-text {
-                font-size: 16px;
+                font-size: 17px;
             }
         }
 
@@ -667,28 +693,38 @@
 
         .protocol-list li {
             position: relative;
-            padding-left: 28px;
-            margin-bottom: 12px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
+            padding-left: 36px;
+            margin-bottom: 14px;
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-weight: 500;
         }
 
         @media (min-width: 768px) {
             .protocol-list li {
-                font-size: 15px;
-                margin-bottom: 14px;
-                padding-left: 32px;
+                font-size: 16px;
+                margin-bottom: 16px;
+                padding-left: 40px;
             }
         }
 
         .protocol-list li::before {
             counter-increment: protocol;
-            content: counter(protocol) ".";
+            content: counter(protocol);
             position: absolute;
             left: 0;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-weight: 700;
+            color: white;
+            background: var(--accent);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            top: 0;
         }
 
         .monitor-grid {
@@ -704,92 +740,170 @@
             }
         }
 
+        .monitor-column {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
         .monitor-column h4 {
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         @media (min-width: 768px) {
             .monitor-column h4 {
-                font-size: 13px;
-                margin-bottom: 12px;
+                font-size: 14px;
+                margin-bottom: 14px;
             }
         }
 
+        .monitor-column.continue {
+            background: var(--accent-light);
+            border: 1px solid var(--accent);
+        }
+
         .monitor-column.continue h4 {
-            color: var(--success);
+            color: var(--accent);
+        }
+
+        .monitor-column.intervene {
+            background: var(--accent-light);
+            border: 1px solid var(--accent);
         }
 
         .monitor-column.intervene h4 {
-            color: var(--danger);
+            color: var(--accent);
         }
 
         .monitor-column ul {
             list-style: none;
-            font-size: 12px;
-            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .monitor-column.continue ul,
+        .monitor-column.intervene ul {
+            color: var(--text-primary);
         }
 
         @media (min-width: 768px) {
             .monitor-column ul {
-                font-size: 14px;
+                font-size: 15px;
             }
         }
 
         .monitor-column ul li {
-            margin-bottom: 8px;
-            padding-left: 14px;
+            margin-bottom: 10px;
+            padding-left: 20px;
             position: relative;
-            line-height: 1.5;
+            line-height: 1.6;
+            font-weight: 450;
         }
 
         @media (min-width: 768px) {
             .monitor-column ul li {
-                margin-bottom: 10px;
-                padding-left: 16px;
+                margin-bottom: 12px;
+                padding-left: 22px;
             }
         }
 
-        .monitor-column ul li::before {
-            content: "•";
+        .monitor-column.continue ul li::before {
+            content: "";
             position: absolute;
             left: 0;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            top: 8px;
+        }
+
+        .monitor-column.intervene ul li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            top: 8px;
         }
 
         .completion-box {
-            background: var(--sage-light);
-            border: 1px solid var(--sage);
-            border-radius: 14px;
-            padding: 16px 20px;
-            font-size: 13px;
-            color: #4A6741;
+            background: var(--accent-light);
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 20px 24px;
+            font-size: 15px;
+            color: var(--accent-hover);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .completion-box::before {
+            content: "";
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
         }
 
         @media (min-width: 768px) {
             .completion-box {
-                font-size: 15px;
-                padding: 18px 24px;
-                border-radius: 16px;
+                font-size: 16px;
+                padding: 22px 28px;
+                border-radius: 18px;
+            }
+            .completion-box::before {
+                width: 32px;
+                height: 32px;
+                right: 28px;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .completion-box {
+                color: var(--accent);
             }
         }
 
         .completion-box strong {
-            display: block;
-            font-size: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-            color: var(--sage);
+            letter-spacing: 0.8px;
+            margin-bottom: 10px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .completion-box strong::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
         }
 
         @media (min-width: 768px) {
             .completion-box strong {
-                font-size: 11px;
-                margin-bottom: 8px;
+                font-size: 12px;
+                margin-bottom: 12px;
             }
         }
 
@@ -890,8 +1004,8 @@
 
         .tool-label {
             font-size: 10px;
-            font-weight: 600;
-            color: var(--text-muted);
+            font-weight: 700;
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 10px;
@@ -905,37 +1019,48 @@
         }
 
         .scale-box {
-            background: white;
-            border-radius: 14px;
-            padding: 18px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
             text-align: center;
             border: 1px solid var(--border);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .scale-box:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .scale-box:active {
+            transform: scale(0.98);
         }
 
         @media (min-width: 768px) {
             .scale-box {
-                padding: 22px;
-                border-radius: 16px;
+                padding: 24px;
+                border-radius: 18px;
             }
         }
 
         .scale-value {
-            font-size: 38px;
+            font-size: 44px;
             font-weight: 800;
             line-height: 1;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         @media (min-width: 768px) {
             .scale-value {
-                font-size: 48px;
-                margin-bottom: 12px;
+                font-size: 54px;
+                margin-bottom: 14px;
             }
         }
 
-        .scale-value.amber { color: var(--amber); }
-        .scale-value.sage { color: var(--sage); }
-        .scale-value.muted { color: var(--text-muted); }
+        .scale-value.high { color: var(--accent); }
+        .scale-value.low { color: var(--text-secondary); }
 
         .scale-indicator {
             display: flex;
@@ -946,89 +1071,96 @@
         }
 
         .scale-indicator span {
-            font-size: 10px;
-            color: var(--text-muted);
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
         }
 
         @media (min-width: 768px) {
             .scale-indicator span {
-                font-size: 11px;
+                font-size: 12px;
             }
         }
 
         .scale-bar {
-            height: 8px;
+            height: 10px;
             background: var(--bg-section);
-            border-radius: 4px;
+            border-radius: 5px;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         @media (min-width: 768px) {
             .scale-bar {
-                height: 10px;
-                border-radius: 5px;
-                margin-bottom: 12px;
+                height: 12px;
+                border-radius: 6px;
+                margin-bottom: 14px;
             }
         }
 
         .scale-fill {
             height: 100%;
-            border-radius: 4px;
+            border-radius: 5px;
             transition: width 0.3s ease;
         }
 
         @media (min-width: 768px) {
             .scale-fill {
-                border-radius: 5px;
+                border-radius: 6px;
             }
         }
 
-        .scale-fill.amber { background: var(--amber); }
-        .scale-fill.sage { background: var(--sage); }
-        .scale-fill.muted { background: var(--text-muted); }
+        .scale-fill.high { background: linear-gradient(90deg, var(--accent-hover), var(--accent)); }
+        .scale-fill.low { background: var(--text-secondary); }
 
         .scale-target {
-            font-size: 10px;
-            color: var(--text-muted);
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            background: var(--bg-section);
+            padding: 4px 10px;
+            border-radius: 12px;
+            display: inline-block;
         }
 
         @media (min-width: 768px) {
             .scale-target {
                 font-size: 12px;
+                padding: 5px 12px;
             }
         }
 
         .resources-list {
-            background: white;
-            border-radius: 14px;
+            background: var(--bg-card);
+            border-radius: 16px;
             border: 1px solid var(--border);
             overflow: hidden;
         }
 
         @media (min-width: 768px) {
             .resources-list {
-                border-radius: 16px;
+                border-radius: 18px;
             }
         }
 
         .resource-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            font-size: 13px;
-            color: var(--text-secondary);
+            gap: 14px;
+            padding: 16px 18px;
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: all 0.2s ease;
             border-bottom: 1px solid var(--border);
         }
 
         @media (min-width: 768px) {
             .resource-item {
-                padding: 16px 18px;
-                font-size: 14px;
-                gap: 12px;
+                padding: 18px 20px;
+                font-size: 15px;
+                gap: 14px;
             }
         }
 
@@ -1037,7 +1169,7 @@
         }
 
         .resource-item:active {
-            background: var(--bg-section);
+            background: var(--accent-light);
         }
 
         @media (min-width: 768px) {
@@ -1045,67 +1177,197 @@
                 background: transparent;
             }
             .resource-item:hover {
-                background: var(--bg-section);
-                color: var(--text-primary);
+                background: var(--accent-light);
+                color: var(--accent);
+                padding-left: 24px;
             }
         }
 
         .resource-item svg {
-            width: 16px;
-            height: 16px;
-            color: var(--amber);
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
             flex-shrink: 0;
         }
 
         @media (min-width: 768px) {
             .resource-item svg {
-                width: 18px;
-                height: 18px;
+                width: 22px;
+                height: 22px;
             }
         }
 
         .next-phase-box {
-            background: white;
-            border-radius: 14px;
-            padding: 16px 18px;
-            border: 1px solid var(--border);
+            background: var(--accent-light);
+            border-radius: 16px;
+            padding: 18px 20px;
+            border: 2px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .next-phase-box::after {
+            content: "";
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-top: 2px solid var(--accent);
+            border-right: 2px solid var(--accent);
+            transform: translateY(-50%) rotate(45deg);
+            opacity: 0.5;
         }
 
         @media (min-width: 768px) {
             .next-phase-box {
-                padding: 20px 22px;
-                border-radius: 16px;
+                padding: 22px 24px;
+                border-radius: 18px;
+            }
+            .next-phase-box::after {
+                width: 10px;
+                height: 10px;
+                right: 24px;
             }
         }
 
         .next-phase-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
             margin-bottom: 6px;
         }
 
         @media (min-width: 768px) {
             .next-phase-title {
-                font-size: 15px;
+                font-size: 16px;
                 margin-bottom: 8px;
             }
         }
 
         .next-phase-desc {
-            font-size: 12px;
-            color: var(--text-muted);
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 450;
+            padding-right: 30px;
         }
 
         @media (min-width: 768px) {
             .next-phase-desc {
-                font-size: 13px;
+                font-size: 14px;
             }
+        }
+
+        /* XP Display */
+        .xp-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: var(--accent-light);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .xp-display svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .xp-earned {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-card);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 32px 48px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: xpPopIn 0.4s ease-out;
+        }
+
+        @keyframes xpPopIn {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            70% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .xp-earned-amount {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .xp-earned-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .xp-earned-detail {
+            margin-top: 16px;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .xp-earned-close {
+            margin-top: 20px;
+            padding: 10px 24px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .xp-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .xp-toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 100;
+            animation: toastSlide 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @keyframes toastSlide {
+            from { transform: translateX(-50%) translateY(20px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        .xp-toast svg {
+            width: 18px;
+            height: 18px;
         }
 
         /* Bottom Bar */
         .bottom-bar {
-            background: var(--bg-section);
+            background: var(--bg-card);
             padding: 16px 20px;
             padding-bottom: calc(16px + var(--safe-area-bottom));
             display: flex;
@@ -1128,30 +1390,32 @@
         }
 
         .nav-hint {
-            font-size: 13px;
-            color: var(--text-muted);
+            font-size: 14px;
+            color: var(--text-primary);
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 18px;
-            border-radius: 12px;
-            background: white;
+            gap: 10px;
+            padding: 14px 20px;
+            border-radius: 14px;
+            background: var(--bg-card);
             border: 1px solid var(--border);
+            font-weight: 600;
         }
 
         @media (min-width: 768px) {
             .nav-hint {
-                font-size: 13px;
-                padding: 10px 16px;
-                background: white;
+                font-size: 14px;
+                padding: 12px 20px;
+                background: var(--bg-card);
                 border: 1px solid var(--border);
-                border-radius: 10px;
+                border-radius: 14px;
             }
             .nav-hint:hover {
-                border-color: var(--text-muted);
-                color: var(--text-primary);
+                border-color: var(--accent);
+                color: var(--accent);
+                box-shadow: 0 4px 12px rgba(218, 119, 86, 0.15);
             }
         }
 
@@ -1168,32 +1432,33 @@
 
         .nav-hint.active {
             color: white;
-            background: var(--sage);
-            border-color: var(--sage);
-            font-weight: 600;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            border-color: var(--accent);
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(43, 138, 62, 0.3);
         }
 
         @media (min-width: 768px) {
             .nav-hint.active {
                 color: white;
-                background: var(--sage);
-                border-color: var(--sage);
+                background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+                border-color: var(--accent);
             }
             .nav-hint.active:hover {
-                background: #7A9A6C;
-                border-color: #7A9A6C;
+                background: linear-gradient(135deg, var(--accent-hover), var(--accent));
+                box-shadow: 0 6px 16px rgba(43, 138, 62, 0.4);
             }
         }
 
         .nav-hint svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
         }
 
         @media (min-width: 768px) {
             .nav-hint svg {
-                width: 16px;
-                height: 16px;
+                width: 18px;
+                height: 18px;
             }
         }
 
@@ -1216,7 +1481,7 @@
             transform: translateY(-50%);
             width: 6px;
             height: 6px;
-            background: var(--amber);
+            background: var(--accent);
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
@@ -1253,9 +1518,307 @@
         .phase-list {
             scroll-behavior: smooth;
         }
+
+        /* Welcome Screen Styles */
+        .welcome-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .welcome-overlay.hidden {
+            display: none;
+        }
+
+        .welcome-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 32px 28px;
+            max-width: 520px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+        }
+
+        @media (min-width: 768px) {
+            .welcome-card {
+                padding: 40px 36px;
+            }
+        }
+
+        .welcome-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .welcome-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent), #C4654A);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 16px rgba(218, 119, 86, 0.3);
+        }
+
+        .welcome-icon svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+        }
+
+        .welcome-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        @media (min-width: 768px) {
+            .welcome-title {
+                font-size: 28px;
+            }
+        }
+
+        .welcome-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .welcome-section {
+            margin-bottom: 24px;
+        }
+
+        .welcome-section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .welcome-section-title::before {
+            content: "";
+            width: 4px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .welcome-text {
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-weight: 450;
+        }
+
+        .welcome-features {
+            display: grid;
+            gap: 12px;
+        }
+
+        .welcome-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--bg-section);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .welcome-feature-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .welcome-feature-icon {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .welcome-feature-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .welcome-feature-text {
+            flex: 1;
+        }
+
+        .welcome-feature-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .welcome-feature-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 450;
+        }
+
+        .welcome-start-btn {
+            width: 100%;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, var(--accent), #C4654A);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 16px rgba(218, 119, 86, 0.3);
+            margin-top: 28px;
+        }
+
+        .welcome-start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(218, 119, 86, 0.4);
+        }
+
+        .welcome-start-btn:active {
+            transform: translateY(0);
+        }
+
+        .welcome-start-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .welcome-tip {
+            margin-top: 20px;
+            padding: 14px 16px;
+            background: var(--accent-light);
+            border-radius: 12px;
+            border: 1px solid var(--accent);
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 450;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .welcome-tip svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
     </style>
 </head>
 <body>
+    <!-- Welcome Screen -->
+    <div class="welcome-overlay" id="welcome-overlay">
+        <div class="welcome-card">
+            <div class="welcome-header">
+                <div class="welcome-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h1 class="welcome-title">Guía de Sesión TRSB</h1>
+                <p class="welcome-subtitle">Técnica de Reprocesamiento Somato-Cognitivo Bilateral</p>
+            </div>
+
+            <div class="welcome-section">
+                <div class="welcome-section-title">¿Qué es este Dashboard?</div>
+                <p class="welcome-text">
+                    Esta es una guía interactiva para conducir sesiones de TRSB. Te acompaña paso a paso a través de las 8 fases del protocolo, mostrándote qué hacer en cada momento y qué señales observar.
+                </p>
+            </div>
+
+            <div class="welcome-section">
+                <div class="welcome-section-title">Cómo usarlo</div>
+                <div class="welcome-features">
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"/>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                            </svg>
+                        </div>
+                        <div class="welcome-feature-text">
+                            <div class="welcome-feature-title">Sigue las 8 fases</div>
+                            <div class="welcome-feature-desc">Navega con las flechas o toca cada fase en el menú lateral</div>
+                        </div>
+                    </div>
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <div class="welcome-feature-text">
+                            <div class="welcome-feature-title">Usa el cronómetro</div>
+                            <div class="welcome-feature-desc">Registra la duración de tu sesión con el timer en la barra superior</div>
+                        </div>
+                    </div>
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                            </svg>
+                        </div>
+                        <div class="welcome-feature-text">
+                            <div class="welcome-feature-title">Registra las escalas</div>
+                            <div class="welcome-feature-desc">NEA (perturbacion) y NCI (creencia positiva) - toca para actualizar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="welcome-start-btn" id="start-session-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                    <polygon points="5,3 19,12 5,21"/>
+                </svg>
+                Comenzar Sesión
+            </button>
+
+            <div class="welcome-tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 16v-4"/>
+                    <path d="M12 8h.01"/>
+                </svg>
+                <span>Este dashboard es una guía de referencia. Adapta siempre el protocolo a las necesidades específicas de cada sesión.</span>
+            </div>
+        </div>
+    </div>
+
     <div class="dashboard">
         <!-- Header Bar -->
         <header class="header-bar">
@@ -1275,14 +1838,20 @@
 
             <div class="mobile-phase-indicator">
                 <div class="mobile-phase-dot"></div>
-                <span class="mobile-phase-text">Fase 3</span>
+                <span class="mobile-phase-text">Fase 1</span>
             </div>
 
             <div class="header-center">
-                <span class="current-phase-label">Fase Actual: 3 - Procesamiento Adaptativo</span>
+                <span class="current-phase-label">Fase Actual: 1 - Evaluación Inicial</span>
             </div>
 
             <div class="header-right">
+                <div class="xp-display" id="xp-display" title="XP ganado en esta sesion">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    <span id="session-xp">0 XP</span>
+                </div>
                 <div class="timer-controls">
                     <button class="timer-btn" id="timer-toggle" title="Iniciar/Pausar">
                         <svg class="play-icon" id="play-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none">
@@ -1312,32 +1881,24 @@
             <nav class="phase-navigator">
                 <div class="nav-title">Fases</div>
                 <div class="phase-list" id="phase-list">
-                    <!-- Phase 1 - Completed -->
-                    <div class="phase-card completed sage" data-phase="1">
-                        <div class="phase-indicator">
-                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                                <path d="M20 6L9 17l-5-5"/>
-                            </svg>
-                        </div>
+                    <!-- Phase 1 - Current (starts here) -->
+                    <div class="phase-card current" data-phase="1">
+                        <div class="phase-indicator">1</div>
                         <div class="phase-info">
                             <div class="phase-number">1. Evaluación</div>
                         </div>
                     </div>
 
-                    <!-- Phase 2 - Completed -->
-                    <div class="phase-card completed sage" data-phase="2">
-                        <div class="phase-indicator">
-                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                                <path d="M20 6L9 17l-5-5"/>
-                            </svg>
-                        </div>
+                    <!-- Phase 2 - Upcoming -->
+                    <div class="phase-card upcoming" data-phase="2">
+                        <div class="phase-indicator">2</div>
                         <div class="phase-info">
                             <div class="phase-number">2. Mapeo</div>
                         </div>
                     </div>
 
-                    <!-- Phase 3 - Current -->
-                    <div class="phase-card current amber" data-phase="3">
+                    <!-- Phase 3 - Upcoming -->
+                    <div class="phase-card upcoming" data-phase="3">
                         <div class="phase-indicator">3</div>
                         <div class="phase-info">
                             <div class="phase-number">3. Procesamiento</div>
@@ -1345,7 +1906,7 @@
                     </div>
 
                     <!-- Phase 4 - Upcoming -->
-                    <div class="phase-card upcoming amber" data-phase="4">
+                    <div class="phase-card upcoming" data-phase="4">
                         <div class="phase-indicator">4</div>
                         <div class="phase-info">
                             <div class="phase-number">4. Consolidación</div>
@@ -1353,7 +1914,7 @@
                     </div>
 
                     <!-- Phase 5 - Upcoming -->
-                    <div class="phase-card upcoming amber" data-phase="5">
+                    <div class="phase-card upcoming" data-phase="5">
                         <div class="phase-indicator">5</div>
                         <div class="phase-info">
                             <div class="phase-number">5. Integración Som.</div>
@@ -1361,7 +1922,7 @@
                     </div>
 
                     <!-- Phase 6 - Upcoming -->
-                    <div class="phase-card upcoming coral" data-phase="6">
+                    <div class="phase-card upcoming" data-phase="6">
                         <div class="phase-indicator">6</div>
                         <div class="phase-info">
                             <div class="phase-number">6. Estabilización</div>
@@ -1369,7 +1930,7 @@
                     </div>
 
                     <!-- Phase 7 - Upcoming -->
-                    <div class="phase-card upcoming coral" data-phase="7">
+                    <div class="phase-card upcoming" data-phase="7">
                         <div class="phase-indicator">7</div>
                         <div class="phase-info">
                             <div class="phase-number">7. Verificación</div>
@@ -1377,7 +1938,7 @@
                     </div>
 
                     <!-- Phase 8 - Upcoming -->
-                    <div class="phase-card upcoming coral" data-phase="8">
+                    <div class="phase-card upcoming" data-phase="8">
                         <div class="phase-indicator">8</div>
                         <div class="phase-info">
                             <div class="phase-number">8. Conclusión</div>
@@ -1402,32 +1963,32 @@
                 <div class="tools-content" id="tools-content">
                     <div class="tools-grid-mobile">
                         <div class="tool-section">
-                            <div class="tool-label">NEA Actual</div>
+                            <div class="tool-label">NEA - Nivel de Perturbacion</div>
                             <div class="scale-box">
-                                <div class="scale-value amber" id="nea-value">5</div>
+                                <div class="scale-value high" id="nea-value">5</div>
                                 <div class="scale-indicator">
                                     <span>0</span>
                                     <span>10</span>
                                 </div>
                                 <div class="scale-bar">
-                                    <div class="scale-fill amber" id="nea-bar" style="width: 50%"></div>
+                                    <div class="scale-fill high" id="nea-bar" style="width: 50%"></div>
                                 </div>
                                 <div class="scale-target">Objetivo: 0-2</div>
                             </div>
                         </div>
 
                         <div class="tool-section">
-                            <div class="tool-label">NCI Actual</div>
+                            <div class="tool-label">NCI - Creencia Positiva</div>
                             <div class="scale-box">
-                                <div class="scale-value muted" id="nci-value">3</div>
+                                <div class="scale-value low" id="nci-value">3</div>
                                 <div class="scale-indicator">
-                                    <span>0</span>
-                                    <span>10</span>
+                                    <span>1</span>
+                                    <span>7</span>
                                 </div>
                                 <div class="scale-bar">
-                                    <div class="scale-fill muted" id="nci-bar" style="width: 30%"></div>
+                                    <div class="scale-fill low" id="nci-bar" style="width: 30%"></div>
                                 </div>
-                                <div class="scale-target">Objetivo: 8-10</div>
+                                <div class="scale-target">Objetivo: 6-7</div>
                             </div>
                         </div>
                     </div>
@@ -1465,8 +2026,8 @@
                     <div class="tool-section">
                         <div class="tool-label">Siguiente Fase</div>
                         <div class="next-phase-box" id="next-phase-box">
-                            <div class="next-phase-title">Fase 4: Consolidación Cognitiva</div>
-                            <div class="next-phase-desc">Fortalecer creencia adaptativa</div>
+                            <div class="next-phase-title">Fase 2: Mapeo Somático</div>
+                            <div class="next-phase-desc">Localizar la sensación corporal asociada...</div>
                         </div>
                     </div>
                 </div>
@@ -1503,67 +2064,63 @@
                 id: 1,
                 name: "Evaluación Inicial",
                 shortName: "Evaluación",
-                color: "sage",
                 objetivo: "Establecer la memoria objetivo y evaluar el estado actual del paciente",
                 protocolo: [
                     "Identificar memoria perturbadora específica",
-                    "Establecer imagen representativa",
-                    "Identificar creencia negativa (CN) asociada",
-                    "Formular creencia positiva (CP) deseada",
-                    "Medir NEA inicial (0-10)",
-                    "Medir NCI de la CP (1-7)"
+                    "Establecer imagen representativa del evento",
+                    "Identificar la creencia negativa asociada (ej: 'soy incapaz')",
+                    "Formular la creencia positiva deseada (ej: 'soy capaz')",
+                    "Medir NEA inicial: nivel de perturbacion (0-10)",
+                    "Medir NCI: que tan verdadera siente la creencia positiva (1-7)"
                 ],
-                monitorContinue: ["Paciente regulado", "Memoria claramente identificada", "CN y CP formuladas"],
-                monitorIntervene: ["Confusión o bloqueo", "Activación excesiva", "Dificultad para acceder a memoria"],
+                monitorContinue: ["Paciente regulado", "Memoria claramente identificada", "Creencias formuladas"],
+                monitorIntervene: ["Confusion o bloqueo", "Activacion excesiva", "Dificultad para acceder a memoria"],
                 criterio: "Memoria objetivo clara, NEA y NCI establecidos, paciente estable"
             },
             {
                 id: 2,
                 name: "Mapeo Somático",
                 shortName: "Mapeo",
-                color: "sage",
-                objetivo: "Localizar la sensación corporal asociada a la memoria",
+                objetivo: "Localizar donde se siente la perturbacion en el cuerpo",
                 protocolo: [
-                    "Traer imagen + creencia negativa a la mente",
-                    "Escanear el cuerpo de arriba a abajo",
-                    "Identificar dónde se siente la perturbación",
-                    "Describir la sensación (tipo, intensidad, textura)",
-                    "Validar la localización somática"
+                    "Pedir que traiga la imagen + creencia negativa a la mente",
+                    "Guiar un escaneo del cuerpo de arriba a abajo",
+                    "Preguntar: ¿donde sientes la perturbacion?",
+                    "Describir la sensacion (tipo, intensidad, textura, color)",
+                    "Validar la localizacion: 'Muy bien, ahi lo sientes'"
                 ],
-                monitorContinue: ["Sensación claramente localizada", "Paciente puede describir la sensación", "Mantiene regulación"],
-                monitorIntervene: ["Sensación difusa o ausente", "Disociación", "Activación fuera de ventana"],
-                criterio: "Sensación corporal localizada y descrita claramente"
+                monitorContinue: ["Sensacion claramente localizada", "Puede describir la sensacion", "Mantiene regulacion"],
+                monitorIntervene: ["Sensacion difusa o ausente", "Signos de disociacion", "Activacion fuera de ventana"],
+                criterio: "Sensacion corporal localizada y descrita claramente"
             },
             {
                 id: 3,
                 name: "Procesamiento Adaptativo",
                 shortName: "Procesamiento",
-                color: "amber",
-                objetivo: "Reducir NEA de memoria objetivo a 0-2",
+                objetivo: "Reducir el nivel de perturbacion (NEA) a 0-2",
                 protocolo: [
-                    "Traer imagen + creencia + sensación corporal",
-                    "Iniciar estimulación bilateral (24-36 movimientos)",
-                    "Pausar: \"¿Qué notas ahora?\"",
-                    "Validar, continuar ciclos hasta NEA 0-2"
+                    "Traer imagen + creencia + sensacion corporal a la mente",
+                    "Iniciar movimiento bilateral: tapping, ocular o auditivo (24-36 ciclos)",
+                    "Pausar y preguntar: '¿Que notas ahora?'",
+                    "Validar la experiencia, continuar ciclos hasta NEA llegue a 0-2"
                 ],
-                monitorContinue: ["Cambios en narrativa", "Suspiros, relajación", "Insights espontáneos"],
-                monitorIntervene: ["NEA aumenta sostenidamente", "Respiración acelerada", "Señales de disociación"],
+                monitorContinue: ["Cambios en la narrativa", "Suspiros y relajacion", "Insights espontaneos"],
+                monitorIntervene: ["NEA aumenta sostenidamente", "Respiracion acelerada", "Signos de disociacion"],
                 criterio: "NEA = 0-2 al pensar en imagen original"
             },
             {
                 id: 4,
                 name: "Consolidación Cognitiva",
                 shortName: "Consolidación",
-                color: "amber",
-                objetivo: "Fortalecer la creencia positiva hasta NCI 6-7",
+                objetivo: "Fortalecer la creencia positiva hasta que se sienta verdadera (NCI 6-7)",
                 protocolo: [
-                    "Traer imagen original + creencia positiva",
-                    "Evaluar NCI actual de la CP",
-                    "Sets de estimulación bilateral mientras sostiene CP",
-                    "Reevaluar NCI después de cada set",
-                    "Continuar hasta NCI = 6-7"
+                    "Traer imagen original junto con la creencia positiva",
+                    "Preguntar: '¿Que tan verdadera sientes ahora la creencia positiva?' (1-7)",
+                    "Sets de movimiento bilateral mientras sostiene la creencia positiva",
+                    "Reevaluar NCI despues de cada set",
+                    "Continuar hasta que NCI llegue a 6-7"
                 ],
-                monitorContinue: ["NCI aumenta progresivamente", "Paciente reporta más convicción", "Coherencia cuerpo-mente"],
+                monitorContinue: ["NCI aumenta progresivamente", "Reporta mas conviccion", "Coherencia cuerpo-mente"],
                 monitorIntervene: ["NCI estancado", "Aparecen nuevas creencias bloqueantes", "Incongruencia"],
                 criterio: "NCI = 6-7, creencia positiva se siente verdadera"
             },
@@ -1571,75 +2128,152 @@
                 id: 5,
                 name: "Integración Somática",
                 shortName: "Integración Som.",
-                color: "amber",
-                objetivo: "Verificar que no haya tensión residual en el cuerpo",
+                objetivo: "Verificar que no quede tension residual en el cuerpo",
                 protocolo: [
-                    "Mantener imagen + CP en mente",
-                    "Escaneo corporal completo",
-                    "Identificar cualquier tensión residual",
-                    "Si hay tensión: sets adicionales focalizados",
-                    "Verificar cuerpo limpio"
+                    "Pedir que mantenga la imagen + creencia positiva en mente",
+                    "Guiar escaneo corporal de cabeza a pies",
+                    "Preguntar: '¿Sientes alguna tension o incomodidad?'",
+                    "Si hay tension: hacer sets adicionales enfocados en esa zona",
+                    "Verificar que el cuerpo este 'limpio' de malestar"
                 ],
-                monitorContinue: ["Cuerpo relajado", "Sin tensiones residuales", "Sensación de ligereza"],
-                monitorIntervene: ["Tensión persistente", "Nueva activación somática", "Malestar físico"],
-                criterio: "Escaneo corporal limpio, sin tensión residual"
+                monitorContinue: ["Cuerpo relajado", "Sin tensiones residuales", "Sensacion de ligereza"],
+                monitorIntervene: ["Tension persistente", "Nueva activacion somatica", "Malestar fisico"],
+                criterio: "Escaneo corporal limpio, sin tension residual"
             },
             {
                 id: 6,
                 name: "Estabilización",
                 shortName: "Estabilización",
-                color: "coral",
-                objetivo: "Asegurar que el paciente esté regulado y estable",
+                objetivo: "Asegurar que el paciente este regulado y presente",
                 protocolo: [
-                    "Técnica de lugar seguro o recurso",
-                    "Orientación al presente (5-4-3-2-1)",
-                    "Respiración reguladora",
-                    "Verificar estado de regulación",
-                    "Psicoeducación sobre procesamiento continuo"
+                    "Aplicar tecnica de lugar seguro o recurso interno",
+                    "Orientacion al presente con 5-4-3-2-1 (5 cosas que ves, 4 que tocas...)",
+                    "Respiracion reguladora: inhalar 4, sostener 4, exhalar 6",
+                    "Verificar: '¿Como te sientes ahora? ¿Estas aqui conmigo?'",
+                    "Explicar que puede continuar procesando en suenos o dias siguientes"
                 ],
-                monitorContinue: ["Paciente orientado", "Respiración normalizada", "Contacto ocular presente"],
-                monitorIntervene: ["Desorientación", "Activación residual", "Dificultad para conectar con presente"],
-                criterio: "Paciente completamente regulado y orientado al presente"
+                monitorContinue: ["Orientado al presente", "Respiracion normalizada", "Contacto ocular presente"],
+                monitorIntervene: ["Desorientacion", "Activacion residual", "Dificultad para conectar con presente"],
+                criterio: "Paciente regulado y orientado al presente"
             },
             {
                 id: 7,
                 name: "Verificación Final",
                 shortName: "Verificación",
-                color: "coral",
                 objetivo: "Confirmar que el procesamiento fue completo",
                 protocolo: [
-                    "Reevaluar NEA (debe ser 0-2)",
-                    "Reevaluar NCI (debe ser 6-7)",
-                    "Verificar escaneo corporal limpio",
-                    "Confirmar integración cognitiva-somática",
-                    "Documentar resultados"
+                    "Reevaluar NEA: '¿Que tan perturbadora es ahora la imagen?' (0-10)",
+                    "Reevaluar NCI: '¿Que tan verdadera es la creencia positiva?' (1-7)",
+                    "Verificar escaneo corporal: '¿Queda alguna molestia en el cuerpo?'",
+                    "Confirmar integracion: cuerpo y mente alineados",
+                    "Documentar resultados finales"
                 ],
-                monitorContinue: ["Todos los indicadores en rango", "Paciente reporta alivio", "Coherencia total"],
-                monitorIntervene: ["NEA > 2", "NCI < 6", "Tensión corporal residual"],
-                criterio: "NEA 0-2, NCI 6-7, cuerpo limpio, integración completa"
+                monitorContinue: ["Todos los indicadores en rango", "Reporta alivio", "Coherencia total"],
+                monitorIntervene: ["NEA > 2", "NCI < 6", "Tension corporal residual"],
+                criterio: "NEA 0-2, NCI 6-7, cuerpo limpio, integracion completa"
             },
             {
                 id: 8,
                 name: "Conclusión y Cierre",
                 shortName: "Conclusión",
-                color: "coral",
-                objetivo: "Cerrar la sesión de forma segura y planificar seguimiento",
+                objetivo: "Cerrar la sesion de forma segura y planificar seguimiento",
                 protocolo: [
-                    "Resumen de lo trabajado",
-                    "Instrucciones post-sesión",
-                    "Técnicas de autocuidado para la semana",
-                    "Acordar próxima sesión",
-                    "Cierre ritual (respiración, gratitud)"
+                    "Hacer resumen de lo trabajado y los logros",
+                    "Dar instrucciones post-sesion: descansar, hidratarse, no tomar decisiones importantes",
+                    "Ensenar tecnica de autocuidado para la semana",
+                    "Acordar proxima sesion",
+                    "Cierre ritual: respiracion profunda y agradecimiento"
                 ],
-                monitorContinue: ["Paciente agradecido", "Claridad sobre siguiente paso", "Estado positivo"],
+                monitorContinue: ["Expresion de gratitud", "Claridad sobre siguiente paso", "Estado positivo"],
                 monitorIntervene: ["Preguntas sin resolver", "Ansiedad por el futuro", "Resistencia al cierre"],
-                criterio: "Sesión cerrada, paciente con instrucciones claras"
+                criterio: "Sesion cerrada, con instrucciones claras"
             }
         ];
 
-        let currentPhase = 3;
-        let completedPhases = [1, 2];
+        let currentPhase = 1;
+        let completedPhases = [];
         let toolsOpen = false;
+
+        // Sistema de XP
+        const XP_PER_PHASE = 10;  // XP por completar cada fase
+        const XP_BONUS_COMPLETE = 30; // Bonus por completar las 8 fases
+        let sessionXP = 0;
+        let xpSynced = false;
+
+        function updateXPDisplay() {
+            document.getElementById('session-xp').textContent = sessionXP + ' XP';
+        }
+
+        function showXPToast(amount, message) {
+            const toast = document.createElement('div');
+            toast.className = 'xp-toast';
+            toast.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+                +${amount} XP ${message ? '- ' + message : ''}
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        function showSessionComplete() {
+            const overlay = document.createElement('div');
+            overlay.className = 'xp-overlay';
+            overlay.id = 'xp-overlay';
+
+            const modal = document.createElement('div');
+            modal.className = 'xp-earned';
+            modal.innerHTML = `
+                <div class="xp-earned-amount">+${sessionXP}</div>
+                <div class="xp-earned-label">XP Ganados</div>
+                <div class="xp-earned-detail">Sesion TRSB completada</div>
+                <button class="xp-earned-close" id="xp-close-btn">Continuar</button>
+            `;
+
+            document.body.appendChild(overlay);
+            document.body.appendChild(modal);
+
+            document.getElementById('xp-close-btn').addEventListener('click', () => {
+                overlay.remove();
+                modal.remove();
+            });
+
+            overlay.addEventListener('click', () => {
+                overlay.remove();
+                modal.remove();
+            });
+        }
+
+        async function syncXP() {
+            if (xpSynced || sessionXP === 0) return;
+
+            try {
+                const response = await fetch('/api/xp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        appName: 'trsb-dashboard',
+                        xpGained: sessionXP,
+                        details: `Completo ${completedPhases.length} fases en ${formatTime(timerSeconds)}`
+                    })
+                });
+
+                if (response.ok) {
+                    xpSynced = true;
+                    console.log('XP sincronizado correctamente');
+                }
+            } catch (error) {
+                console.log('No se pudo sincronizar XP (usuario no autenticado o error de red)');
+            }
+        }
+
+        function formatTime(seconds) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
 
         // Tools toggle for mobile
         const toolsToggle = document.getElementById('tools-toggle');
@@ -1659,8 +2293,8 @@
 
             detail.innerHTML = `
                 <div class="phase-header">
-                    <div class="phase-color-bar ${phase.color}"></div>
-                    <h2 class="phase-title ${phase.color}">FASE ${phase.id}: ${phase.name.toUpperCase()}</h2>
+                    <div class="phase-color-bar"></div>
+                    <h2 class="phase-title">FASE ${phase.id}: ${phase.name.toUpperCase()}</h2>
                 </div>
 
                 <div class="content-section">
@@ -1716,9 +2350,9 @@
                 `Fase Actual: ${phase.id} - ${phase.name}`;
             document.querySelector('.mobile-phase-text').textContent = `Fase ${phase.id}`;
 
-            // Update mobile phase dot color
+            // Update mobile phase dot color (using accent)
             const phaseDot = document.querySelector('.mobile-phase-dot');
-            phaseDot.style.background = getComputedStyle(document.documentElement).getPropertyValue(`--${phase.color}`);
+            phaseDot.style.background = getComputedStyle(document.documentElement).getPropertyValue('--accent');
 
             // Update next phase box
             const nextPhase = phases[phaseNum];
@@ -1784,6 +2418,27 @@
         function markComplete() {
             if (!completedPhases.includes(currentPhase)) {
                 completedPhases.push(currentPhase);
+
+                // Dar XP por completar fase
+                sessionXP += XP_PER_PHASE;
+                updateXPDisplay();
+                showXPToast(XP_PER_PHASE, `Fase ${currentPhase} completada`);
+
+                // Si completo todas las fases, dar bonus
+                if (completedPhases.length === 8) {
+                    setTimeout(() => {
+                        sessionXP += XP_BONUS_COMPLETE;
+                        updateXPDisplay();
+                        showXPToast(XP_BONUS_COMPLETE, 'Bonus: Sesion completa');
+
+                        // Sincronizar XP y mostrar resumen
+                        setTimeout(() => {
+                            syncXP();
+                            showSessionComplete();
+                        }, 1500);
+                    }, 1000);
+                }
+
                 if (currentPhase < 8) {
                     currentPhase++;
                 }
@@ -1890,6 +2545,23 @@
         // Inicializar display
         updateTimerDisplay();
 
+        // Welcome Screen - Start Session Button
+        const welcomeOverlay = document.getElementById('welcome-overlay');
+        const startSessionBtn = document.getElementById('start-session-btn');
+
+        // Check if user has seen welcome before (this session)
+        const hasSeenWelcome = sessionStorage.getItem('trsb-welcome-seen');
+        if (hasSeenWelcome) {
+            welcomeOverlay.classList.add('hidden');
+        }
+
+        startSessionBtn.addEventListener('click', () => {
+            welcomeOverlay.classList.add('hidden');
+            sessionStorage.setItem('trsb-welcome-seen', 'true');
+            // Start timer automatically when beginning session
+            startTimer();
+        });
+
         // Botón de regreso
         document.getElementById('back-btn').addEventListener('click', () => {
             if (window.history.length > 1) {
@@ -1899,7 +2571,7 @@
             }
         });
 
-        // NEA/NCI interactive (demo)
+        // NEA/NCI interactive
         document.querySelectorAll('.scale-box').forEach(box => {
             box.style.cursor = 'pointer';
             box.addEventListener('click', function() {
@@ -1908,27 +2580,33 @@
                 const isNEA = valueEl.id === 'nea-value';
 
                 let val = parseInt(valueEl.textContent);
-                val = (val + 1) % 11;
-                valueEl.textContent = val;
-                barEl.style.width = (val * 10) + '%';
 
-                // Update color based on value
                 if (isNEA) {
-                    valueEl.style.color = '';
-                    barEl.style.background = '';
+                    // NEA: escala 0-10
+                    val = (val + 1) % 11;
+                    barEl.style.width = (val * 10) + '%';
+                    // For NEA: low values (0-2) are good, high values are concerning
                     if (val <= 2) {
-                        valueEl.className = 'scale-value sage';
-                        barEl.className = 'scale-fill sage';
-                    } else if (val <= 5) {
-                        valueEl.className = 'scale-value amber';
-                        barEl.className = 'scale-fill amber';
+                        valueEl.className = 'scale-value low';
+                        barEl.className = 'scale-fill low';
                     } else {
-                        valueEl.className = 'scale-value';
-                        valueEl.style.color = '#E8998D';
-                        barEl.className = 'scale-fill';
-                        barEl.style.background = '#E8998D';
+                        valueEl.className = 'scale-value high';
+                        barEl.className = 'scale-fill high';
+                    }
+                } else {
+                    // NCI: escala 1-7
+                    val = val >= 7 ? 1 : val + 1;
+                    barEl.style.width = ((val / 7) * 100) + '%';
+                    // For NCI: high values (6-7) are good, low values need work
+                    if (val >= 6) {
+                        valueEl.className = 'scale-value high';
+                        barEl.className = 'scale-fill high';
+                    } else {
+                        valueEl.className = 'scale-value low';
+                        barEl.className = 'scale-fill low';
                     }
                 }
+                valueEl.textContent = val;
             });
         });
 
@@ -1940,6 +2618,22 @@
                 toolsOpen = false;
             }
         });
+
+        // Sincronizar XP al salir de la pagina
+        window.addEventListener('beforeunload', () => {
+            if (sessionXP > 0 && !xpSynced) {
+                // Usar sendBeacon para enviar datos antes de cerrar
+                const data = JSON.stringify({
+                    appName: 'trsb-dashboard',
+                    xpGained: sessionXP,
+                    details: `Completo ${completedPhases.length} fases en ${formatTime(timerSeconds)}`
+                });
+                navigator.sendBeacon('/api/xp', new Blob([data], { type: 'application/json' }));
+            }
+        });
+
+        // Inicializar display de XP
+        updateXPDisplay();
     </script>
 </body>
 </html>
