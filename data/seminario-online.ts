@@ -49,6 +49,13 @@ export const seminarioOnline: DiaSeminarioOnline[] = [
         cloudflareStreamId: "aefa8bea28f24c1b5d7bf14d5d04c3ec",
         order: 1,
         description: "Primera parte del seminario"
+      },
+      {
+        id: "sp-v1-2",
+        title: "Día 1 Módulo 2",
+        cloudflareStreamId: "68fb84b41e490ca9c6b835aef9564e0b",
+        order: 2,
+        description: "Segunda parte del seminario"
       }
     ],
     slides: [
