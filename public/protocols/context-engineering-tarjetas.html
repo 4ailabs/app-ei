@@ -47,7 +47,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 1rem;
-            padding-bottom: 120px;
+            padding-bottom: 2rem;
         }
 
         /* Header */
@@ -71,13 +71,14 @@
 
         .badge {
             display: inline-block;
-            background: var(--accent);
-            color: white;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             padding: 0.25rem 0.75rem;
             border-radius: 999px;
             font-size: 0.75rem;
             font-weight: 600;
             margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
         }
 
         /* Card Grid */
@@ -95,11 +96,17 @@
             padding: 1.25rem;
             cursor: pointer;
             transition: all 0.2s ease;
+            text-decoration: none;
+            display: block;
         }
 
         .card-thumb:hover {
-            border-color: var(--accent);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-thumb:hover h3 {
+            color: var(--accent);
         }
 
         .card-thumb:active {
@@ -112,12 +119,13 @@
             justify-content: center;
             width: 2rem;
             height: 2rem;
-            background: var(--accent);
-            color: white;
+            background: var(--bg-secondary);
+            color: var(--accent);
             border-radius: 0.5rem;
             font-size: 0.875rem;
             font-weight: 700;
             margin-bottom: 0.75rem;
+            border: 1px solid var(--border-color);
         }
 
         .card-thumb h3 {
@@ -132,87 +140,6 @@
             color: var(--text-secondary);
         }
 
-        /* Full Card Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            padding: 1rem;
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-card);
-            border-radius: 1.5rem;
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: modalIn 0.2s ease;
-        }
-
-        @keyframes modalIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .modal-header {
-            background: var(--accent);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 1.5rem 1.5rem 0 0;
-            position: sticky;
-            top: 0;
-        }
-
-        .modal-header .card-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            opacity: 0.9;
-            margin-bottom: 0.25rem;
-        }
-
-        .modal-header h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 2rem;
-            height: 2rem;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            border-radius: 0.5rem;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
 
         /* Card Content Styles */
         .phase-list {
@@ -234,16 +161,16 @@
             min-width: 2rem;
             height: 2rem;
             background: var(--bg-secondary);
-            color: var(--text-primary);
+            color: var(--accent);
             border-radius: 50%;
             font-size: 0.875rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .phase-content h4 {
             font-size: 0.95rem;
             font-weight: 600;
-            color: var(--text-primary);
+            color: var(--accent);
             margin-bottom: 0.25rem;
         }
 
@@ -255,10 +182,11 @@
         .result-box {
             margin-top: 1.5rem;
             padding: 1rem;
-            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            color: white;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             border-radius: 0.75rem;
             font-size: 0.9rem;
+            border: 1px solid var(--border-color);
         }
 
         .result-box strong {
@@ -300,7 +228,7 @@
             top: 0.6rem;
             width: 4px;
             height: 4px;
-            background: var(--accent);
+            background: var(--text-tertiary);
             border-radius: 50%;
         }
 
@@ -314,7 +242,7 @@
         }
 
         .test-result .yes {
-            color: var(--accent);
+            color: var(--text-primary);
             font-weight: 600;
         }
 
@@ -323,11 +251,12 @@
         }
 
         .principle-box {
-            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            color: white;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             padding: 1rem;
             border-radius: 0.75rem;
             font-size: 0.85rem;
+            border: 1px solid var(--border-color);
         }
 
         .principle-box strong {
@@ -346,7 +275,7 @@
             padding: 0.75rem 1rem;
             background: var(--bg-secondary);
             border-radius: 0.5rem;
-            border-left: 3px solid var(--accent);
+            border: 1px solid var(--border-color);
         }
 
         .phrase-label {
@@ -386,11 +315,12 @@
             justify-content: center;
             min-width: 1.5rem;
             height: 1.5rem;
-            background: var(--accent);
-            color: white;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             border-radius: 0.25rem;
             font-size: 0.7rem;
             font-weight: 600;
+            border: 1px solid var(--border-color);
         }
 
         .grid-item-text {
@@ -439,7 +369,7 @@
         .function-marker {
             width: 6px;
             height: 6px;
-            background: var(--accent);
+            background: var(--text-tertiary);
             border-radius: 2px;
             margin-top: 0.5rem;
             flex-shrink: 0;
@@ -467,13 +397,14 @@
 
         .phrase-variable {
             display: inline-block;
-            background: var(--accent);
-            color: white;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             padding: 0.15rem 0.5rem;
             border-radius: 0.25rem;
             font-size: 0.85rem;
             font-weight: 600;
             margin: 0 0.1rem;
+            border: 1px solid var(--border-color);
         }
 
         .phrase-note {
@@ -501,12 +432,13 @@
         }
 
         .belief-badge {
-            background: var(--accent);
-            color: white;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             padding: 0.2rem 0.5rem;
             border-radius: 0.25rem;
             font-size: 0.7rem;
             font-weight: 600;
+            border: 1px solid var(--border-color);
         }
 
         .belief-title {
@@ -521,55 +453,6 @@
             font-style: italic;
         }
 
-        /* Navigation */
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-card);
-            border-top: 1px solid var(--border-color);
-            padding: 0.75rem 1rem;
-            padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 50;
-        }
-
-        .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.25rem;
-            background: var(--bg-secondary);
-            border: none;
-            border-radius: 0.75rem;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .nav-btn:hover {
-            background: var(--accent);
-            color: white;
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        .nav-btn:disabled:hover {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-
-        .nav-counter {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
 
         /* Levels Grid */
         .levels-list {
@@ -593,17 +476,18 @@
             justify-content: center;
             min-width: 2.5rem;
             height: 2.5rem;
-            background: var(--accent);
-            color: white;
+            background: var(--bg-primary);
+            color: var(--accent);
             border-radius: 0.5rem;
             font-size: 1.25rem;
             font-weight: 700;
+            border: 2px solid var(--border-color);
         }
 
         .level-content h4 {
             font-size: 1rem;
             font-weight: 600;
-            color: var(--text-primary);
+            color: var(--accent);
             margin-bottom: 0.25rem;
         }
 
@@ -629,7 +513,7 @@
             padding: 1rem;
             background: var(--bg-secondary);
             border-radius: 0.75rem;
-            border-left: 3px solid var(--accent);
+            border: 1px solid var(--border-color);
         }
 
         .verification-question {
@@ -645,7 +529,7 @@
         }
 
         .verification-answer .yes {
-            color: var(--accent);
+            color: var(--text-primary);
             font-weight: 600;
         }
 
@@ -693,39 +577,6 @@
                 padding: 1rem;
             }
 
-            /* Modal fullscreen on mobile */
-            .modal-overlay {
-                padding: 0;
-            }
-
-            .modal-content {
-                border-radius: 0;
-                max-height: 100vh;
-                height: 100vh;
-            }
-
-            .modal-header {
-                border-radius: 0;
-                padding: 1.25rem;
-                padding-top: max(1.25rem, calc(env(safe-area-inset-top) + 0.5rem));
-            }
-
-            .modal-header h2 {
-                font-size: 1.1rem;
-                padding-right: 2rem;
-            }
-
-            .modal-body {
-                padding: 1rem;
-                padding-bottom: 100px;
-            }
-
-            .modal-close {
-                top: max(0.75rem, calc(env(safe-area-inset-top) + 0.25rem));
-                width: 2.5rem;
-                height: 2.5rem;
-            }
-
             /* Single column grids on small screens */
             .items-grid {
                 grid-template-columns: 1fr;
@@ -737,16 +588,6 @@
 
             .grid-item-text {
                 font-size: 0.9rem;
-            }
-
-            /* Larger touch targets */
-            .nav-btn {
-                padding: 0.875rem 1rem;
-                min-height: 48px;
-            }
-
-            .nav-bar {
-                padding: 0.5rem;
             }
 
             /* Level items stack better */
@@ -777,21 +618,11 @@
                 padding: 0.1rem 0.4rem;
             }
         }
-
-        /* Swipe hint animation */
-        @keyframes swipeHint {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-5px); }
-        }
-
-        .modal-content.swipe-hint {
-            animation: swipeHint 0.3s ease;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="javascript:history.back()" class="back-link">
+        <a href="#" id="backLink" class="back-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
@@ -809,35 +640,6 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal-overlay" id="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="card-label" id="modalLabel"></span>
-                <h2 id="modalTitle"></h2>
-                <button class="modal-close" onclick="closeModal()">x</button>
-            </div>
-            <div class="modal-body" id="modalBody"></div>
-        </div>
-    </div>
-
-    <!-- Navigation -->
-    <div class="nav-bar">
-        <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-            Anterior
-        </button>
-        <span class="nav-counter" id="navCounter">-</span>
-        <button class="nav-btn" id="nextBtn" onclick="navigate(1)">
-            Siguiente
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-        </button>
-    </div>
-
     <script>
         // Card Data
         const cards = [
@@ -851,7 +653,7 @@
                             <div class="phase-number">1</div>
                             <div class="phase-content">
                                 <h4>CUANDO?</h4>
-                                <p>Nivel temporal: Transgeneracional - Gestacional - Infancia - Adulto</p>
+                                <p>Nivel temporal: Presente - Pasado Personal - Transgeneracional - Sistema Actual</p>
                             </div>
                         </div>
                         <div class="phase-item">
@@ -1026,41 +828,53 @@
             {
                 id: 5,
                 title: "Los 4 Niveles Temporales",
-                summary: "Transgeneracional, Gestacional, Infancia, Adulto",
+                summary: "Presente, Pasado Personal, Transgeneracional, Sistema Actual",
                 content: `
+                    <p style="margin-bottom: 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                        <strong>SECUENCIA TEMPORAL:</strong><br>
+                        1. PRESENTE → 2. PASADO PERSONAL → 3. TRANSGENERACIONAL → 4. SISTEMA ACTUAL
+                    </p>
                     <div class="levels-list">
                         <div class="level-item">
                             <div class="level-number">1</div>
                             <div class="level-content">
-                                <h4>TRANSGENERACIONAL</h4>
-                                <p>Herencia de ancestros: padres, abuelos, bisabuelos.</p>
-                                <span class="detail">Patrones familiares, secretos, traumas no resueltos del linaje.</span>
+                                <h4>PRESENTE</h4>
+                                <p><strong>Rango:</strong> Ultimos 21 dias | <strong>Tipo:</strong> Sintoma PRIMARIO (logico con contexto)</p>
+                                <span class="detail">Respuesta actual a circunstancia reciente. Tiene logica cuando conoces el contexto. Es adaptativo y reciente. Si se resuelve circunstancia, sintoma desaparece.</span>
+                                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary);"><strong>Intervencion:</strong> Estabilizacion, contencion, recursos. TRSB/PONS si procesamiento incompleto.</p>
                             </div>
                         </div>
                         <div class="level-item">
                             <div class="level-number">2</div>
                             <div class="level-content">
-                                <h4>GESTACIONAL</h4>
-                                <p>Desde la concepcion hasta el nacimiento.</p>
-                                <span class="detail">Estres materno, emociones durante embarazo, circunstancias del parto.</span>
+                                <h4>PASADO PERSONAL</h4>
+                                <p><strong>Rango:</strong> De 21 dias → hasta concepcion | <strong>Tipo:</strong> Sintoma SECUNDARIO (sin logica presente)</p>
+                                <span class="detail">Conflicto del pasado no procesado. No tiene logica con el presente. Es cronico o recurrente. Persiste aunque cambien circunstancias.</span>
+                                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary);"><strong>Intervencion:</strong> NIVEL PRINCIPAL de trabajo con TRSB/PONS. Recesion de edad con test muscular.</p>
                             </div>
                         </div>
                         <div class="level-item">
                             <div class="level-number">3</div>
                             <div class="level-content">
-                                <h4>INFANCIA</h4>
-                                <p>De 0 a 12 anos aproximadamente.</p>
-                                <span class="detail">Eventos formativos, relaciones primarias, experiencias escolares.</span>
+                                <h4>TRANSGENERACIONAL</h4>
+                                <p><strong>Rango:</strong> Del linaje (padres → tatarabuelos) | <strong>Tipo:</strong> Patron que se REPITE generacionalmente</p>
+                                <span class="detail">Patrones heredados de ancestros. Traumas familiares no resueltos. 'Lealtades invisibles'. El cliente 'sabe' sin saber por que.</span>
+                                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary);"><strong>Intervencion:</strong> Constelaciones, genograma, frases liberacion. TRSB con imagen simbolica del ancestro.</p>
                             </div>
                         </div>
                         <div class="level-item">
                             <div class="level-number">4</div>
                             <div class="level-content">
-                                <h4>ADULTO</h4>
-                                <p>Desde los 12 anos en adelante.</p>
-                                <span class="detail">Adolescencia y vida adulta: relaciones, trabajo, perdidas, decisiones.</span>
+                                <h4>SISTEMA ACTUAL</h4>
+                                <p><strong>Rango:</strong> Relaciones y contexto presente | <strong>Tipo:</strong> FUNCION del sintoma HOY</p>
+                                <span class="detail">¿Para que sirve el sintoma HOY? ¿Que permite hacer o no hacer? ¿Que mantiene en el sistema? ¿Que evita o que recibe?</span>
+                                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary);"><strong>Intervencion:</strong> SIEMPRE explorar independiente del origen. Terapia sistemica, ganancias secundarias.</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="result-box" style="margin-top: 1.5rem;">
+                        <strong>NOTA CRITICA:</strong>
+                        El Nivel 4 (FUNCION) se explora SIEMPRE, independientemente de donde se origino el conflicto.
                     </div>
                 `
             },
@@ -1361,113 +1175,77 @@
             }
         ];
 
-        let currentCard = null;
+        // Handle back navigation
+        function setupBackLink() {
+            const backLink = document.getElementById('backLink');
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session');
+
+            // Función para manejar el click
+            function handleBackClick(e) {
+                e.preventDefault();
+                
+                if (sessionId) {
+                    // Si hay parámetro de sesión, volver a esa sesión específica
+                    window.location.href = `/sesiones/${sessionId}`;
+                    return;
+                }
+                
+                // Ignorar referrer si viene de una tarjeta (para evitar loops)
+                const isFromCard = document.referrer && document.referrer.includes('/cards/card-');
+                
+                // Intentar extraer sessionId del referrer si existe y NO viene de una tarjeta
+                if (document.referrer && !isFromCard) {
+                    const referrerMatch = document.referrer.match(/\/sesiones\/(\d+)/);
+                    if (referrerMatch && referrerMatch[1]) {
+                        window.location.href = `/sesiones/${referrerMatch[1]}`;
+                        return;
+                    }
+                    
+                    // Si el referrer incluye /sesiones/, usarlo
+                    if (document.referrer.includes('/sesiones/')) {
+                        window.location.href = document.referrer;
+                        return;
+                    }
+                }
+                
+                // Si viene de una tarjeta, NO usar history.back() (evitar loop)
+                // Ir directamente a la lista de sesiones
+                window.location.href = '/sesiones';
+            }
+            
+            // Asignar el handler
+            backLink.onclick = handleBackClick;
+            
+            // Establecer href como fallback (para que funcione si JavaScript está deshabilitado)
+            if (sessionId) {
+                backLink.href = `/sesiones/${sessionId}`;
+            } else if (document.referrer && document.referrer.includes('/sesiones/')) {
+                backLink.href = document.referrer;
+            } else {
+                backLink.href = '/sesiones';
+            }
+        }
 
         // Render card thumbnails
         function renderCards() {
             const grid = document.getElementById('cardsGrid');
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session');
+            const sessionParam = sessionId ? `?session=${sessionId}` : '';
+            
             grid.innerHTML = cards.map(card => `
-                <div class="card-thumb" onclick="openCard(${card.id})">
+                <a href="cards/card-${String(card.id).padStart(2, '0')}.html${sessionParam}" target="_blank" class="card-thumb">
                     <div class="card-number">${String(card.id).padStart(2, '0')}</div>
                     <h3>${card.title}</h3>
                     <p>${card.summary}</p>
-                </div>
+                </a>
             `).join('');
         }
 
-        // Open card modal
-        function openCard(id) {
-            const card = cards.find(c => c.id === id);
-            if (!card) return;
-
-            currentCard = id;
-            document.getElementById('modalLabel').textContent = `TARJETA ${String(id).padStart(2, '0')}`;
-            document.getElementById('modalTitle').textContent = card.title;
-            document.getElementById('modalBody').innerHTML = card.content;
-            document.getElementById('modal').classList.add('active');
-            updateNav();
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Close modal
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-            currentCard = null;
-            updateNav();
-            document.body.style.overflow = '';
-        }
-
-        // Navigate between cards
-        function navigate(direction) {
-            if (currentCard === null) return;
-            const newId = currentCard + direction;
-            if (newId >= 1 && newId <= cards.length) {
-                openCard(newId);
-            }
-        }
-
-        // Update navigation state
-        function updateNav() {
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const counter = document.getElementById('navCounter');
-
-            if (currentCard === null) {
-                prevBtn.disabled = true;
-                nextBtn.disabled = true;
-                counter.textContent = '-';
-            } else {
-                prevBtn.disabled = currentCard <= 1;
-                nextBtn.disabled = currentCard >= cards.length;
-                counter.textContent = `${currentCard} / ${cards.length}`;
-            }
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-            if (e.key === 'ArrowLeft') navigate(-1);
-            if (e.key === 'ArrowRight') navigate(1);
-        });
-
-        // Close modal on overlay click
-        document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target.id === 'modal') closeModal();
-        });
-
-        // Touch/Swipe support for mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-        const modalContent = document.querySelector('.modal-content');
-
-        modalContent.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-
-        modalContent.addEventListener('touchend', (e) => {
-            if (currentCard === null) return;
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
-
-            if (Math.abs(diff) < swipeThreshold) return;
-
-            if (diff > 0 && currentCard < cards.length) {
-                // Swipe left -> next
-                navigate(1);
-            } else if (diff < 0 && currentCard > 1) {
-                // Swipe right -> previous
-                navigate(-1);
-            }
-        }
-
         // Initialize
+        setupBackLink();
         renderCards();
-        updateNav();
     </script>
 </body>
 </html>

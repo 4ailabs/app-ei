@@ -218,6 +218,7 @@ export default async function SessionPage({ params, searchParams }: SessionPageP
             sessionData={sessionData}
             contentCounts={contentCounts}
             defaultTab={tab}
+            sessionId={sessionId}
           />
         </div>
       </div>

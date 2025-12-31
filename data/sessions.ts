@@ -1893,7 +1893,7 @@ export const sessions: Session[] = [
     title: "Miracle Question (La Pregunta del Milagro)",
     description: "Técnica de proyección para identificar objetivos y soluciones ideales.",
     day: 5,
-    imageUrl: "",
+    imageUrl: "/images/sessions/session-8.png",
     pdfUrl: "",
     pdfs: [
       {

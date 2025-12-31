@@ -31,6 +31,7 @@ export const SEMINARIO_BACKGROUND_VIDEO_ID = "cab0ffefc4cee4a08a7f4bf41a78b7bc"
 export interface DiaSeminarioOnline {
   day: number // 1, 2, o 3
   title: string // Ej: "Día 1: Introducción"
+  description?: string // Descripción breve de qué se aprende en este día
   date?: string // Fecha del seminario (opcional)
   videos: VideoSeminarioOnline[] // Videos recuperados
   audios: AudioSeminarioOnline[] // Audios del seminario
@@ -40,7 +41,8 @@ export interface DiaSeminarioOnline {
 export const seminarioOnline: DiaSeminarioOnline[] = [
   {
     day: 1,
-    title: "Día 1 - Sesión 1",
+    title: "Fundamentos y Regulación",
+    description: "Fundamentos de la regulación del sistema nervioso: neurocepción, ventana de tolerancia y las cuatro palancas del bienestar.",
     date: undefined,
     videos: [
       {
@@ -212,7 +214,8 @@ export const seminarioOnline: DiaSeminarioOnline[] = [
   },
   {
     day: 2,
-    title: "Día 2 - Sesión 2",
+    title: "Técnicas TRSB y PONS",
+    description: "Técnicas avanzadas TRSB y PONS para la regulación del sistema nervioso y transformación de patrones.",
     videos: [],
     audios: [
       {
@@ -268,7 +271,8 @@ export const seminarioOnline: DiaSeminarioOnline[] = [
   },
   {
     day: 3,
-    title: "Día 3 - Sesión 3",
+    title: "Integración y Práctica",
+    description: "Integración y práctica de las herramientas aprendidas para el bienestar sostenible.",
     videos: [],
     audios: []
   }

@@ -16,9 +16,6 @@
             --border: #E5E4E0;
             --accent: #DA7756;
             --accent-light: #E89A7F;
-            --success: #2ca58d;
-            --warning: #F59E0B;
-            --purple: #8B5CF6;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -338,13 +335,13 @@
         }
 
         .role-card.guide {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            background: var(--bg-section);
+            border: 1px solid var(--border);
         }
 
         .role-card.explorer {
-            background: linear-gradient(135deg, rgba(44, 165, 141, 0.1) 0%, rgba(44, 165, 141, 0.05) 100%);
-            border: 1px solid rgba(44, 165, 141, 0.2);
+            background: var(--bg-section);
+            border: 1px solid var(--border);
         }
 
         .role-header {
@@ -364,11 +361,11 @@
         }
 
         .role-card.guide .role-icon {
-            background: var(--purple);
+            background: var(--accent);
         }
 
         .role-card.explorer .role-icon {
-            background: var(--success);
+            background: var(--accent);
         }
 
         .role-icon svg {
@@ -407,11 +404,11 @@
         }
 
         .role-card.guide .role-list li::before {
-            background: var(--purple);
+            background: var(--accent);
         }
 
         .role-card.explorer .role-list li::before {
-            background: var(--success);
+            background: var(--accent);
         }
 
         /* Golden Rule */
@@ -681,8 +678,8 @@
 
         /* Why Important Box */
         .why-box {
-            background: linear-gradient(135deg, rgba(44, 165, 141, 0.1) 0%, rgba(44, 165, 141, 0.02) 100%);
-            border: 1px solid rgba(44, 165, 141, 0.3);
+            background: var(--bg-section);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 20px;
             margin-top: 24px;
@@ -691,7 +688,7 @@
         .why-box h4 {
             font-size: 14px;
             font-weight: 700;
-            color: var(--success);
+            color: var(--accent);
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -715,7 +712,7 @@
             content: '-';
             position: absolute;
             left: 0;
-            color: var(--success);
+            color: var(--accent);
             font-weight: 700;
         }
 
@@ -777,8 +774,8 @@
 
         /* Warning Box */
         .warning-box {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.02) 100%);
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            background: linear-gradient(135deg, rgba(218, 119, 86, 0.1) 0%, rgba(218, 119, 86, 0.02) 100%);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 24px;
@@ -794,7 +791,7 @@
         .warning-icon {
             width: 36px;
             height: 36px;
-            background: var(--warning);
+            background: var(--accent);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -810,7 +807,7 @@
         .warning-title {
             font-size: 14px;
             font-weight: 700;
-            color: var(--warning);
+            color: var(--accent);
         }
 
         .warning-text {
@@ -859,7 +856,7 @@
         }
 
         .error-solution {
-            background: rgba(44, 165, 141, 0.1);
+            background: var(--bg-section);
             border-radius: 10px;
             padding: 12px 14px;
             font-size: 13px;
@@ -868,7 +865,7 @@
         }
 
         .error-solution strong {
-            color: var(--success);
+            color: var(--accent);
         }
 
         /* Worksheet Section */
@@ -1174,8 +1171,8 @@
                     Desarrollada por Steve de Shazer e Insoo Kim Berg en el Brief Family Therapy Center de Milwaukee en 1984, esta técnica ha sido validada por cuatro décadas de práctica clínica y, más recientemente, por la neurociencia moderna.
                 </p>
 
-                <div class="intro-box" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.02) 100%); border: 1px solid rgba(139, 92, 246, 0.2);">
-                    <h3 style="color: var(--purple);">
+                <div class="intro-box" style="background: var(--bg-section); border: 1px solid var(--border);">
+                    <h3 style="color: var(--accent);">
                         <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
                             <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
@@ -1429,7 +1426,7 @@
         <!-- Phase 4 - Most Important -->
         <div class="phase-card">
             <div class="phase-header important">
-                <div class="phase-number star">⭐</div>
+                <div class="phase-number">4</div>
                 <div class="phase-title-group">
                     <span class="phase-badge">La Fase Más Poderosa</span>
                     <h2 class="phase-title">Búsqueda de Excepciones</h2>
@@ -1550,8 +1547,8 @@
                 </div>
 
                 <div class="intro-box" style="margin-top: 20px;">
-                    <p><strong style="color: #ef4444;">NO usar:</strong> "¿Cómo está?" • "¿Cómo le fue?" • "¿Mejoró algo?"</p>
-                    <p style="margin-top: 8px;"><strong style="color: var(--success);">SÍ usar:</strong> "¿Qué está MEJOR?" — presupone mejora y orienta el cerebro a buscar evidencia de cambio.</p>
+                    <p><strong style="color: var(--text-secondary);">NO usar:</strong> "¿Cómo está?" • "¿Cómo le fue?" • "¿Mejoró algo?"</p>
+                    <p style="margin-top: 8px;"><strong style="color: var(--accent);">SÍ usar:</strong> "¿Qué está MEJOR?" — presupone mejora y orienta el cerebro a buscar evidencia de cambio.</p>
                 </div>
             </div>
         </div>
@@ -1649,20 +1646,12 @@
             </div>
 
             <div class="worksheet-actions">
-                <a href="/protocols/pregunta-milagro-slides.html" class="worksheet-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                        <line x1="8" y1="21" x2="16" y2="21"/>
-                        <line x1="12" y1="17" x2="12" y2="21"/>
-                    </svg>
-                    Ver Manual (Slides)
-                </a>
-                <a href="/protocols/pregunta-milagro-formulario-app.html" class="worksheet-btn worksheet-btn-secondary">
+                <a href="/protocols/pregunta-milagro-formulario-app.html" class="worksheet-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
                         <polyline points="14 2 14 8 20 8"/>
                     </svg>
-                    Formulario (Terapeutas)
+                    Ver Formulario (Terapeutas)
                 </a>
             </div>
         </div>

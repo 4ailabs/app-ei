@@ -34,6 +34,7 @@ interface SessionContentTabsProps {
   sessionData: Session
   contentCounts: ContentCounts
   defaultTab?: string
+  sessionId?: number
 }
 
 // Helper function to determine default tab
@@ -49,7 +50,7 @@ function getDefaultTab(contentCounts: ContentCounts): string {
   return "videos"
 }
 
-export function SessionContentTabs({ sessionData, contentCounts, defaultTab: propDefaultTab }: SessionContentTabsProps) {
+export function SessionContentTabs({ sessionData, contentCounts, defaultTab: propDefaultTab, sessionId }: SessionContentTabsProps) {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -233,7 +234,7 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
                   <p className="text-xs sm:text-sm text-[#706F6C] dark:text-[#A0A0A0]">{contentCounts.protocols} protocolos</p>
                 </div>
               </div>
-              <ProtocolSection protocols={sessionData.protocols || []} moduleNumber={sessionData.moduleNumber} />
+              <ProtocolSection protocols={sessionData.protocols || []} moduleNumber={sessionData.moduleNumber} sessionId={sessionId} />
             </div>
           ) : (
             <div className="text-center py-12 sm:py-16">

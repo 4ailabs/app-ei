@@ -135,7 +135,12 @@ export function PDFSection({ pdfUrl, pdfs, title = "Manual de la Sesión", sessi
                       <Button
                         onClick={() => {
                           setViewed(true)
-                          window.location.href = pdf.url!
+                          let finalUrl = pdf.url!
+                          // Si es el protocolo de tarjetas y hay sessionId, agregar el parámetro
+                          if (sessionId && pdf.url!.includes('context-engineering-tarjetas.html')) {
+                            finalUrl = `${pdf.url!}?session=${sessionId}`
+                          }
+                          window.location.href = finalUrl
                         }}
                         variant="outline"
                         size="default"
