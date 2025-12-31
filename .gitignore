@@ -58,6 +58,7 @@ next-env.d.ts
 # OS
 Thumbs.db
 .DS_Store
+._*
 .AppleDouble
 .LSOverride
 prisma/prisma/dev.db
