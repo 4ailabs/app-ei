@@ -63,27 +63,39 @@ export async function GET(request: NextRequest) {
     // Obtener estadísticas de progreso para cada usuario
     const usersWithStats = await Promise.all(
       users.map(async (user) => {
-        const progress = await prisma.progress.findMany({
-          where: { userId: user.id },
-          select: {
-            sessionId: true,
-            completed: true,
-          },
-        })
+        try {
+          const progress = await prisma.progress.findMany({
+            where: { userId: user.id },
+            select: {
+              completed: true,
+            },
+          })
 
-        const completedSessions = progress.filter((p) => p.completed).length
-        const totalSessions = 9 // Número total de sesiones
+          const completedSessions = progress.filter((p) => p.completed).length
+          const totalSessions = 9 // Número total de sesiones
 
-        return {
-          ...user,
-          stats: {
-            totalSessions,
-            completedSessions,
-            progressPercentage: totalSessions > 0
-              ? Math.round((completedSessions / totalSessions) * 100)
-              : 0,
-            totalProgress: progress.length,
-          },
+          return {
+            ...user,
+            stats: {
+              totalSessions,
+              completedSessions,
+              progressPercentage: totalSessions > 0
+                ? Math.round((completedSessions / totalSessions) * 100)
+                : 0,
+              totalProgress: progress.length,
+            },
+          }
+        } catch (error) {
+          // Si hay error obteniendo progreso, devolver usuario sin estadísticas
+          return {
+            ...user,
+            stats: {
+              totalSessions: 9,
+              completedSessions: 0,
+              progressPercentage: 0,
+              totalProgress: 0,
+            },
+          }
         }
       })
     )
