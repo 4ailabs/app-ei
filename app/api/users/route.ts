@@ -68,10 +68,6 @@ export async function GET(request: NextRequest) {
           select: {
             sessionId: true,
             completed: true,
-            pdfViewed: true,
-            videosViewed: true,
-            audiosViewed: true,
-            themesViewed: true,
           },
         })
 
@@ -83,8 +79,8 @@ export async function GET(request: NextRequest) {
           stats: {
             totalSessions,
             completedSessions,
-            progressPercentage: totalSessions > 0 
-              ? Math.round((completedSessions / totalSessions) * 100) 
+            progressPercentage: totalSessions > 0
+              ? Math.round((completedSessions / totalSessions) * 100)
               : 0,
             totalProgress: progress.length,
           },

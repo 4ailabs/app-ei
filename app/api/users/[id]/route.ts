@@ -45,10 +45,6 @@ export async function GET(
       select: {
         sessionId: true,
         completed: true,
-        pdfViewed: true,
-        videosViewed: true,
-        audiosViewed: true,
-        themesViewed: true,
       },
     })
 
