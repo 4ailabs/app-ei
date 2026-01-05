@@ -193,78 +193,73 @@ export default async function HomePage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         {/* Video de Introducción */}
-        <div className="lg:col-span-1">
-          <PromoVideo />
-        </div>
+        <PromoVideo />
 
         {/* Noticias */}
-        <div className="lg:col-span-2 bg-white dark:bg-[#2A2A2A] p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
+        <div className="bg-white dark:bg-[#2A2A2A] p-6 sm:p-8 rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
           <div className="flex items-center gap-3 mb-6 sm:mb-8">
             <Bell className="h-5 w-5 sm:h-6 sm:w-6 text-[#DA7756] dark:text-[#ECECEC]" />
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Noticias</h2>
           </div>
-          <div className="space-y-4 sm:space-y-5">
-            <div className="p-5 sm:p-6 bg-gradient-to-r from-[#DA7756]/20 to-[#DA7756]/10 dark:from-[#DA7756]/20 dark:to-[#252525] border-2 border-[#DA7756]/40 dark:border-[#DA7756]/40 rounded-xl">
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="p-2 bg-[#DA7756]/30 dark:bg-[#DA7756]/30 rounded-lg">
-                  <Calendar className="h-6 w-6 text-[#DA7756] dark:text-[#ECECEC]" />
+          <div className="space-y-3">
+            <div className="p-4 bg-gradient-to-r from-[#DA7756]/20 to-[#DA7756]/10 dark:from-[#DA7756]/20 dark:to-[#252525] border-2 border-[#DA7756]/40 dark:border-[#DA7756]/40 rounded-lg">
+              <div className="flex items-start gap-3">
+                <div className="p-1.5 bg-[#DA7756]/30 dark:bg-[#DA7756]/30 rounded-lg flex-shrink-0">
+                  <Calendar className="h-5 w-5 text-[#DA7756] dark:text-[#ECECEC]" />
                 </div>
-                <div className="flex-1">
-                  <p className="text-base sm:text-lg font-bold text-[#DA7756] dark:text-[#DA7756]">SESIÓN 4 - 31 DE ENERO 2026</p>
-                  <p className="text-base font-semibold text-[#1A1915] dark:text-[#E5E5E5] mt-3">Presencial y Online</p>
-                  <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mt-3 space-y-1">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-[#DA7756] dark:text-[#DA7756]">SESIÓN 4 - 31 DE ENERO 2026</p>
+                  <p className="text-xs font-semibold text-[#1A1915] dark:text-[#E5E5E5] mt-2">Presencial y Online</p>
+                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-2 space-y-0.5">
                     <span className="block">Centrobioenergetica - Acapulco 36, Piso 8</span>
                     <span className="block">10:00 AM - 6:00 PM</span>
                     <span className="block">Disponible para participantes online</span>
                   </p>
-                  <p className="text-sm font-semibold text-[#DA7756] dark:text-[#DA7756] mt-3">Próximo evento</p>
+                  <p className="text-xs font-semibold text-[#DA7756] dark:text-[#DA7756] mt-2">Próximo evento</p>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 bg-[#DA7756]/10 dark:bg-[#252525] border border-[#DA7756]/20 dark:border-[#DA7756]/30 rounded-xl">
-              <div className="flex items-start gap-3">
-                <div className="p-2 bg-[#DA7756]/20 dark:bg-[#DA7756]/20 rounded-lg">
+            <div className="p-3 bg-[#DA7756]/10 dark:bg-[#252525] border border-[#DA7756]/20 dark:border-[#DA7756]/30 rounded-lg">
+              <div className="flex items-start gap-2">
+                <div className="p-1.5 bg-[#DA7756]/20 dark:bg-[#DA7756]/20 rounded-lg flex-shrink-0">
                   <Sparkles className="h-4 w-4 text-[#DA7756] dark:text-[#ECECEC]" />
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sistema de XP y Premium</p>
-                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-1">
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sistema de XP y Premium</p>
+                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-0.5">
                     Gana experiencia en las apps y desbloquea contenido exclusivo al alcanzar 500 XP
                   </p>
-                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Nuevo</p>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 bg-[#DA7756]/10 dark:bg-[#252525] border border-[#DA7756]/20 dark:border-[#DA7756]/30 rounded-xl">
-              <div className="flex items-start gap-3">
-                <div className="p-2 bg-[#DA7756]/20 dark:bg-[#DA7756]/20 rounded-lg">
+            <div className="p-3 bg-[#DA7756]/10 dark:bg-[#252525] border border-[#DA7756]/20 dark:border-[#DA7756]/30 rounded-lg">
+              <div className="flex items-start gap-2">
+                <div className="p-1.5 bg-[#DA7756]/20 dark:bg-[#DA7756]/20 rounded-lg flex-shrink-0">
                   <Play className="h-4 w-4 text-[#DA7756] dark:text-[#ECECEC]" />
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#ECECEC]">10 Apps Interactivas</p>
-                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-1">
-                    Herramientas prácticas disponibles: Respiración Guiada, Las 4 Palancas, Re-etiquetado y más
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-[#1A1915] dark:text-[#ECECEC]">10 Apps Interactivas</p>
+                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-0.5">
+                    Herramientas prácticas: Respiración Guiada, Las 4 Palancas, Re-etiquetado y más
                   </p>
-                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Disponible</p>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 bg-[#F5F4F0] dark:bg-[#252525] border border-[#E5E4E0] dark:border-[#333333] rounded-xl">
-              <div className="flex items-start gap-3">
-                <div className="p-2 bg-[#E5E4E0] dark:bg-[#333333] rounded-lg">
+            <div className="p-3 bg-[#F5F4F0] dark:bg-[#252525] border border-[#E5E4E0] dark:border-[#333333] rounded-lg">
+              <div className="flex items-start gap-2">
+                <div className="p-1.5 bg-[#E5E4E0] dark:bg-[#333333] rounded-lg flex-shrink-0">
                   <GraduationCap className="h-4 w-4 text-[#706F6C] dark:text-[#A0A0A0]" />
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#ECECEC]">Context Engineering</p>
-                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-1">
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-[#1A1915] dark:text-[#ECECEC]">Context Engineering</p>
+                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-0.5">
                     Videos y kit de tarjetas disponibles en la Sesión 7 para transformar tu contexto
                   </p>
-                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Actualizado</p>
                 </div>
               </div>
             </div>
