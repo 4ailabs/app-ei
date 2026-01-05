@@ -204,17 +204,20 @@ export default async function HomePage() {
             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Noticias</h2>
           </div>
           <div className="space-y-3 sm:space-y-4">
-            <div className="p-4 bg-[#DA7756]/10 dark:bg-[#252525] border border-[#DA7756]/20 dark:border-[#DA7756]/30 rounded-xl">
+            <div className="p-4 bg-gradient-to-r from-[#DA7756]/20 to-[#DA7756]/10 dark:from-[#DA7756]/20 dark:to-[#252525] border-2 border-[#DA7756]/40 dark:border-[#DA7756]/40 rounded-xl">
               <div className="flex items-start gap-3">
-                <div className="p-2 bg-[#DA7756]/20 dark:bg-[#DA7756]/20 rounded-lg">
-                  <Calendar className="h-4 w-4 text-[#DA7756] dark:text-[#ECECEC]" />
+                <div className="p-2 bg-[#DA7756]/30 dark:bg-[#DA7756]/30 rounded-lg">
+                  <Calendar className="h-5 w-5 text-[#DA7756] dark:text-[#ECECEC]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sesión 4 - 31 de Enero</p>
-                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-1">
-                    Próxima sesión presencial y online del seminario internacional
+                  <p className="text-sm font-bold text-[#DA7756] dark:text-[#DA7756]">SESIÓN 4 - 31 DE ENERO 2026</p>
+                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5] mt-2">Presencial y Online</p>
+                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-2 space-y-1">
+                    <span className="block">📍 Centrobioenergetica - Acapulco 36, Piso 8</span>
+                    <span className="block">⏰ 10:00 AM - 6:00 PM</span>
+                    <span className="block">🌐 Disponible para participantes online</span>
                   </p>
-                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Próximo evento</p>
+                  <p className="text-xs font-semibold text-[#DA7756] dark:text-[#DA7756] mt-3">¡Próximo evento!</p>
                 </div>
               </div>
             </div>
