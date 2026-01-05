@@ -99,6 +99,20 @@ export const authOptions: NextAuthConfig = {
         token.id = user.id
         token.isAdmin = (user as any).isAdmin || false
       }
+      // Siempre verificar el rol actual en la BD para mantenerlo actualizado
+      if (token.id) {
+        try {
+          const dbUser = await prisma.user.findUnique({
+            where: { id: token.id as string },
+            select: { isAdmin: true }
+          })
+          if (dbUser) {
+            token.isAdmin = dbUser.isAdmin
+          }
+        } catch (error) {
+          console.error("Error refreshing admin status in JWT:", error)
+        }
+      }
       return token
     },
     async session({ session, token }) {
