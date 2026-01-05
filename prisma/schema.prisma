@@ -80,7 +80,7 @@ model VerificationToken {
 model Progress {
   id            String   @id @default(cuid())
   userId        String
-  sessionId     Int
+  sessionId     Int?
   pdfViewed     Boolean  @default(false)
   videosViewed  Boolean  @default(false)
   audiosViewed  Boolean  @default(false)
