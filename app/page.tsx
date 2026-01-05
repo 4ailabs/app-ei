@@ -193,12 +193,14 @@ export default async function HomePage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         {/* Video de Introducción */}
-        <PromoVideo />
+        <div className="lg:col-span-1">
+          <PromoVideo />
+        </div>
 
         {/* Noticias */}
-        <div className="bg-white dark:bg-[#2A2A2A] p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
+        <div className="lg:col-span-3 bg-white dark:bg-[#2A2A2A] p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
           <div className="flex items-center gap-2 mb-4 sm:mb-6">
             <Bell className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756] dark:text-[#ECECEC]" />
             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Noticias</h2>

@@ -16,13 +16,13 @@ export function PromoVideo() {
   const videoUrl = getCloudflareStreamUrl(PROMO_VIDEO_ID)
 
   return (
-    <div className="lg:col-span-2 bg-white dark:bg-[#252525] p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-sm">
-      <div className="flex items-center gap-2 mb-3 sm:mb-4">
-        <Play className="h-4 w-4 sm:h-5 sm:w-5 text-[#DA7756] dark:text-[#ECECEC]" />
-        <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Video de Introducción</h2>
+    <div className="bg-white dark:bg-[#252525] p-4 sm:p-5 lg:p-6 rounded-2xl sm:rounded-3xl shadow-sm">
+      <div className="flex items-center gap-2 mb-3">
+        <Play className="h-4 w-4 text-[#DA7756] dark:text-[#ECECEC]" />
+        <h2 className="text-sm sm:text-base lg:text-lg font-bold text-[#1A1915] dark:text-[#ECECEC]">Video de Introducción</h2>
       </div>
       <div
-        className="aspect-video w-full rounded-lg sm:rounded-xl overflow-hidden bg-[#F5F4F0] dark:bg-[#252525]"
+        className="aspect-video w-full rounded-lg overflow-hidden bg-[#F5F4F0] dark:bg-[#252525]"
       >
         {videoUrl ? (
           <iframe
@@ -46,7 +46,7 @@ export function PromoVideo() {
           </div>
         )}
       </div>
-      <p className="text-[#706F6C] dark:text-[#A0A0A0] mt-3 sm:mt-4 text-xs sm:text-sm">
+      <p className="text-[#706F6C] dark:text-[#A0A0A0] mt-2 text-xs">
         Descubre los fundamentos de la Inteligencia Energética.
       </p>
     </div>
