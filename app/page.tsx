@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth-server"
 import { sessions } from "@/data/sessions"
-import { GraduationCap, Bell, Play, Sparkles, Lock, ArrowRight, BookOpen, Info, Award, Smartphone, Video, FileText, Target } from "lucide-react"
+import { GraduationCap, Bell, Play, Sparkles, Lock, ArrowRight, BookOpen, Info, Award, Smartphone, Video, FileText, Target, Calendar } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { PromoVideo } from "@/components/PromoVideo"
@@ -204,6 +204,21 @@ export default async function HomePage() {
             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Noticias</h2>
           </div>
           <div className="space-y-3 sm:space-y-4">
+            <div className="p-4 bg-[#DA7756]/10 dark:bg-[#252525] border border-[#DA7756]/20 dark:border-[#DA7756]/30 rounded-xl">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-[#DA7756]/20 dark:bg-[#DA7756]/20 rounded-lg">
+                  <Calendar className="h-4 w-4 text-[#DA7756] dark:text-[#ECECEC]" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sesión 4 - 31 de Enero</p>
+                  <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-1">
+                    Próxima sesión presencial y online del seminario internacional
+                  </p>
+                  <p className="text-xs text-[#9B9A97] dark:text-[#8C8C8C] mt-2">Próximo evento</p>
+                </div>
+              </div>
+            </div>
+
             <div className="p-4 bg-[#DA7756]/10 dark:bg-[#252525] border border-[#DA7756]/20 dark:border-[#DA7756]/30 rounded-xl">
               <div className="flex items-start gap-3">
                 <div className="p-2 bg-[#DA7756]/20 dark:bg-[#DA7756]/20 rounded-lg">
