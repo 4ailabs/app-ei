@@ -213,9 +213,9 @@ export default async function HomePage() {
                   <p className="text-sm font-bold text-[#DA7756] dark:text-[#DA7756]">SESIÓN 4 - 31 DE ENERO 2026</p>
                   <p className="text-sm font-semibold text-[#1A1915] dark:text-[#E5E5E5] mt-2">Presencial y Online</p>
                   <p className="text-xs text-[#706F6C] dark:text-[#A0A0A0] mt-2 space-y-1">
-                    <span className="block">📍 Centrobioenergetica - Acapulco 36, Piso 8</span>
-                    <span className="block">⏰ 10:00 AM - 6:00 PM</span>
-                    <span className="block">🌐 Disponible para participantes online</span>
+                    <span className="block">Centrobioenergetica - Acapulco 36, Piso 8</span>
+                    <span className="block">10:00 AM - 6:00 PM</span>
+                    <span className="block">Disponible para participantes online</span>
                   </p>
                   <p className="text-xs font-semibold text-[#DA7756] dark:text-[#DA7756] mt-3">¡Próximo evento!</p>
                 </div>
