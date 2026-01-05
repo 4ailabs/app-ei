@@ -34,30 +34,41 @@ export async function POST(request: Request) {
     const body = await request.json()
     const { sessionId, pdfViewed, videosViewed, audiosViewed, themesViewed, completed } = body
 
-    const progress = await prisma.progress.upsert({
+    // Primero intentar encontrar un registro existente
+    const existingProgress = await prisma.progress.findFirst({
       where: {
-        userId_sessionId: {
-          userId: session.user.id,
-          sessionId: parseInt(sessionId),
-        },
-      },
-      update: {
-        pdfViewed: pdfViewed ?? undefined,
-        videosViewed: videosViewed ?? undefined,
-        audiosViewed: audiosViewed ?? undefined,
-        themesViewed: themesViewed ?? undefined,
-        completed: completed ?? undefined,
-      },
-      create: {
         userId: session.user.id,
         sessionId: parseInt(sessionId),
-        pdfViewed: pdfViewed ?? false,
-        videosViewed: videosViewed ?? false,
-        audiosViewed: audiosViewed ?? false,
-        themesViewed: themesViewed ?? false,
-        completed: completed ?? false,
       },
     })
+
+    let progress
+    if (existingProgress) {
+      // Si existe, actualizar
+      progress = await prisma.progress.update({
+        where: { id: existingProgress.id },
+        data: {
+          pdfViewed: pdfViewed ?? undefined,
+          videosViewed: videosViewed ?? undefined,
+          audiosViewed: audiosViewed ?? undefined,
+          themesViewed: themesViewed ?? undefined,
+          completed: completed ?? undefined,
+        },
+      })
+    } else {
+      // Si no existe, crear
+      progress = await prisma.progress.create({
+        data: {
+          userId: session.user.id,
+          sessionId: parseInt(sessionId),
+          pdfViewed: pdfViewed ?? false,
+          videosViewed: videosViewed ?? false,
+          audiosViewed: audiosViewed ?? false,
+          themesViewed: themesViewed ?? false,
+          completed: completed ?? false,
+        },
+      })
+    }
 
     return NextResponse.json(progress)
   } catch (error) {
