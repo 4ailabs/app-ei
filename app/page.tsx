@@ -22,7 +22,7 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="w-full space-y-4 sm:space-y-6 lg:space-y-8 mt-4 sm:mt-8 lg:mt-20">
+    <div className="w-full space-y-6 sm:space-y-8 lg:space-y-12 mt-4 sm:mt-8 lg:mt-20">
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-[#DA7756] via-[#C4684A] to-[#B85D45] dark:from-[#252525] dark:via-[#2A2A2A] dark:to-[#333333] dark:border dark:border-[#DA7756]/30 p-4 sm:p-6 lg:p-12 rounded-2xl sm:rounded-3xl text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
@@ -43,7 +43,7 @@ export default async function HomePage() {
               {isLoggedIn ? "Bienvenido de nuevo" : "Bienvenido"}
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 sm:mb-4">
+          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 sm:mb-6">
             Seminario Internacional de<br />Inteligencia Energética
           </h1>
           <p className="text-sm sm:text-lg lg:text-xl text-white/80 max-w-3xl mb-4 sm:mb-6">
@@ -80,11 +80,11 @@ export default async function HomePage() {
 
       {/* Sección de características - Visible para todos */}
       <div className="bg-gradient-to-br from-[#DA7756]/5 to-[#DA7756]/10 dark:from-[#DA7756]/10 dark:to-[#DA7756]/20 border border-[#DA7756]/20 dark:border-[#DA7756]/30 p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-3">
+        <div className="text-center mb-10 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-3 sm:mb-4">
             ¿Qué encontrarás en la plataforma?
           </h2>
-          <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0] max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0] max-w-2xl mx-auto leading-relaxed">
             Todo lo que necesitas para tu desarrollo en Inteligencia Energética en un solo lugar
           </p>
         </div>
@@ -92,16 +92,16 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
           {/* Sesiones Formativas */}
           <div className="bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-3 mb-4">
               <div className="p-2.5 bg-[#DA7756]/20 dark:bg-[#DA7756]/30 rounded-lg">
                 <BookOpen className="h-6 w-6 text-[#DA7756] dark:text-[#E5E5E5]" />
               </div>
               <h3 className="text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sesiones Formativas</h3>
             </div>
-            <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+            <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-4 leading-relaxed">
               {totalSessions} sesiones completas con videos educativos, audios guiados, PDFs descargables, protocolos interactivos y temas explorables.
             </p>
-            <ul className="text-xs text-[#706F6C] dark:text-[#A0A0A0] space-y-1">
+            <ul className="text-xs text-[#706F6C] dark:text-[#A0A0A0] space-y-2">
               <li>• Videos de alta calidad</li>
               <li>• Meditaciones y audios guiados</li>
               <li>• Material descargable</li>
@@ -118,16 +118,16 @@ export default async function HomePage() {
 
           {/* Apps Interactivas */}
           <div className="bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-3 mb-4">
               <div className="p-2.5 bg-[#DA7756]/20 dark:bg-[#DA7756]/30 rounded-lg">
                 <Smartphone className="h-6 w-6 text-[#DA7756] dark:text-[#E5E5E5]" />
               </div>
               <h3 className="text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Apps Interactivas</h3>
             </div>
-            <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+            <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-4 leading-relaxed">
               10 herramientas prácticas para regular tu sistema nervioso, trabajar con estados emocionales y desarrollar nuevas habilidades.
             </p>
-            <ul className="text-xs text-[#706F6C] dark:text-[#A0A0A0] space-y-1">
+            <ul className="text-xs text-[#706F6C] dark:text-[#A0A0A0] space-y-2">
               <li>• Respiración Guiada</li>
               <li>• Las 4 Palancas</li>
               <li>• Re-etiquetado con IA</li>
@@ -144,16 +144,16 @@ export default async function HomePage() {
 
           {/* Sistema de XP y Premium */}
           <div className="bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-3 mb-4">
               <div className="p-2.5 bg-[#DA7756]/20 dark:bg-[#DA7756]/30 rounded-lg">
                 <Award className="h-6 w-6 text-[#DA7756] dark:text-[#E5E5E5]" />
               </div>
               <h3 className="text-lg font-semibold text-[#1A1915] dark:text-[#E5E5E5]">XP y Premium</h3>
             </div>
-            <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+            <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-4 leading-relaxed">
               Gana experiencia usando las apps y desbloquea contenido premium exclusivo al alcanzar 500 XP.
             </p>
-            <ul className="text-xs text-[#706F6C] dark:text-[#A0A0A0] space-y-1">
+            <ul className="text-xs text-[#706F6C] dark:text-[#A0A0A0] space-y-2">
               <li>• Gana XP practicando</li>
               <li>• Contenido exclusivo</li>
               <li>• Actualizaciones semanales</li>
@@ -170,23 +170,23 @@ export default async function HomePage() {
         </div>
 
         {/* Beneficios adicionales */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-2">
           <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-3 mb-3">
               <Play className="h-5 w-5 text-[#DA7756] dark:text-[#E5E5E5]" />
               <h4 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Videos de Alta Calidad</h4>
             </div>
-            <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0]">
+            <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed">
               Accede a videos educativos con integración de Cloudflare Stream para una reproducción fluida y de alta calidad.
             </p>
           </div>
 
           <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-3 mb-3">
               <FileText className="h-5 w-5 text-[#DA7756] dark:text-[#E5E5E5]" />
               <h4 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Material Descargable</h4>
             </div>
-            <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0]">
+            <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed">
               PDFs, protocolos, guías y manuales que puedes descargar y consultar cuando quieras.
             </p>
           </div>
@@ -203,7 +203,7 @@ export default async function HomePage() {
             <Bell className="h-5 w-5 sm:h-6 sm:w-6 text-[#DA7756] dark:text-[#ECECEC]" />
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1A1915] dark:text-[#ECECEC]">Noticias</h2>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="p-4 bg-gradient-to-r from-[#DA7756]/20 to-[#DA7756]/10 dark:from-[#DA7756]/20 dark:to-[#252525] border-2 border-[#DA7756]/40 dark:border-[#DA7756]/40 rounded-lg">
               <div className="flex items-start gap-3">
                 <div className="p-1.5 bg-[#DA7756]/30 dark:bg-[#DA7756]/30 rounded-lg flex-shrink-0">
@@ -270,21 +270,21 @@ export default async function HomePage() {
       {/* Sección informativa para usuarios nuevos */}
       {isLoggedIn && isNewUser && (
         <div className="bg-gradient-to-br from-[#DA7756]/5 to-[#DA7756]/10 dark:from-[#DA7756]/10 dark:to-[#DA7756]/20 border border-[#DA7756]/20 dark:border-[#DA7756]/30 p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl">
-          <div className="flex items-start gap-4 mb-6">
+          <div className="flex items-start gap-4 mb-8">
             <div className="p-3 bg-[#DA7756] dark:bg-[#DA7756] rounded-xl">
               <Info className="h-6 w-6 text-white" />
             </div>
             <div className="flex-1">
-              <h2 className="text-xl sm:text-2xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-3">
                 ¡Bienvenido a la plataforma!
               </h2>
-              <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0]">
+              <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed">
                 Te ayudamos a empezar con todo lo que necesitas saber.
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8">
             {/* Sesiones */}
             <div className="bg-white/60 dark:bg-[#1A1A1A]/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-[#E5E4E0] dark:border-[#333333]">
               <div className="flex items-center gap-3 mb-3">
@@ -293,7 +293,7 @@ export default async function HomePage() {
                 </div>
                 <h3 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sesiones Formativas</h3>
               </div>
-              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-4 leading-relaxed">
                 Accede a {totalSessions} sesiones con videos educativos, audios guiados, PDFs, protocolos y material descargable.
               </p>
               <Link href="/sesiones">
@@ -311,7 +311,7 @@ export default async function HomePage() {
                 </div>
                 <h3 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Apps Interactivas</h3>
               </div>
-              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-4 leading-relaxed">
                 10 herramientas prácticas: Respiración Guiada, Las 4 Palancas, Re-etiquetado y más. Practica y gana XP.
               </p>
               <Link href="/apps">
@@ -329,7 +329,7 @@ export default async function HomePage() {
                 </div>
                 <h3 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Sistema de XP</h3>
               </div>
-              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-4 leading-relaxed">
                 Gana experiencia (XP) usando las apps. Al alcanzar 500 XP, desbloqueas contenido premium exclusivo.
               </p>
               <Link href="/premium">
@@ -347,7 +347,7 @@ export default async function HomePage() {
                 </div>
                 <h3 className="font-semibold text-[#1A1915] dark:text-[#E5E5E5]">Cómo empezar</h3>
               </div>
-              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] mb-3">
+              <p className="text-sm text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed">
                 1. Explora las sesiones formativas<br />
                 2. Prueba las apps interactivas<br />
                 3. Gana XP y desbloquea premium
