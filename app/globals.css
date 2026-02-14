@@ -468,6 +468,138 @@ input:focus {
   background: #5A5A5A;
 }
 
+/* Session Module Header Refinements */
+.session-header-gradient {
+  position: relative;
+}
+
+.session-header-gradient::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(218, 119, 86, 0.08) 0%, rgba(218, 119, 86, 0.02) 100%);
+  pointer-events: none;
+}
+
+.session-image-banner {
+  position: relative;
+}
+
+.session-image-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(218, 119, 86, 0.1) 0%, rgba(218, 119, 86, 0.02) 50%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+}
+
+/* Quick Stats Bar Enhancement */
+.quick-stats-bar {
+  background: linear-gradient(135deg, rgba(218, 119, 86, 0.04) 0%, rgba(218, 119, 86, 0.01) 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .quick-stats-bar {
+  background: linear-gradient(135deg, rgba(218, 119, 86, 0.06) 0%, rgba(218, 119, 86, 0.02) 100%);
+}
+
+/* Content Badge Enhancement */
+.content-badge-enhanced {
+  background: rgba(218, 119, 86, 0.12);
+  border: 1.5px solid rgba(218, 119, 86, 0.25);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-badge-enhanced:hover {
+  background: rgba(218, 119, 86, 0.18);
+  border-color: rgba(218, 119, 86, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(218, 119, 86, 0.15);
+}
+
+.dark .content-badge-enhanced {
+  background: rgba(218, 119, 86, 0.15);
+  border-color: rgba(218, 119, 86, 0.35);
+}
+
+.dark .content-badge-enhanced:hover {
+  background: rgba(218, 119, 86, 0.22);
+  border-color: rgba(218, 119, 86, 0.5);
+  box-shadow: 0 4px 12px rgba(218, 119, 86, 0.25);
+}
+
+/* Session Tabs Navigation Polish */
+.session-tabs-container {
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #F5F4F0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .session-tabs-container {
+  background: #333333;
+}
+
+.session-tab-indicator {
+  position: relative;
+  overflow: hidden;
+}
+
+.session-tab-indicator::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #DA7756;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.session-tab-indicator.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Smooth Tab Content Transitions */
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.session-tab-content {
+  animation: tabFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Tab Count Badge */
+.tab-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.375rem;
+  background: rgba(218, 119, 86, 0.2);
+  border-radius: 0.375rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #DA7756;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .tab-count-badge {
+  background: rgba(218, 119, 86, 0.3);
+  color: #E89A7F;
+}
+
 /* iOS Safe Areas para iPhone con notch/Dynamic Island */
 .pb-safe {
   padding-bottom: max(env(safe-area-inset-bottom, 0px), 0.5rem);

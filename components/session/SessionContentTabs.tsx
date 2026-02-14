@@ -103,45 +103,52 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
     <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-10 shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
       <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
         {/* Orden: Videos → Audios → Temas → Protocolos → Material → Recursos */}
-        <TabsList className="grid w-full h-auto bg-[#F5F4F0] dark:bg-[#333333] p-1 sm:p-1.5 gap-1 sm:gap-1.5 mb-6 sm:mb-8 lg:mb-10 rounded-xl sm:rounded-2xl grid-cols-3 sm:grid-cols-4 lg:grid-cols-7">
-          <TabsTrigger value="videos" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+        <TabsList className="session-tabs-container grid w-full h-auto p-1 sm:p-1.5 gap-1 sm:gap-1.5 mb-6 sm:mb-8 lg:mb-10 grid-cols-3 sm:grid-cols-4 lg:grid-cols-7">
+          <TabsTrigger value="videos" className={`flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5] transition-all ${contentCounts.videos > 0 ? 'opacity-100' : 'opacity-50'}`}>
             <Video className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            {contentCounts.videos > 0 && <span className="tab-count-badge">{contentCounts.videos}</span>}
             <span className="hidden sm:inline">Videos</span>
             <span className="sm:hidden text-[10px]">Video</span>
           </TabsTrigger>
-          <TabsTrigger value="audios" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+          <TabsTrigger value="audios" className={`flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5] transition-all ${contentCounts.audios > 0 ? 'opacity-100' : 'opacity-50'}`}>
             <Headphones className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            {contentCounts.audios > 0 && <span className="tab-count-badge">{contentCounts.audios}</span>}
             <span className="hidden sm:inline">Audios</span>
             <span className="sm:hidden text-[10px]">Audio</span>
           </TabsTrigger>
-          <TabsTrigger value="themes" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+          <TabsTrigger value="themes" className={`flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5] transition-all ${contentCounts.themes > 0 ? 'opacity-100' : 'opacity-50'}`}>
             <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            {contentCounts.themes > 0 && <span className="tab-count-badge">{contentCounts.themes}</span>}
             <span className="hidden sm:inline">Temas</span>
             <span className="sm:hidden text-[10px]">Temas</span>
           </TabsTrigger>
-          <TabsTrigger value="protocols" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+          <TabsTrigger value="protocols" className={`flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5] transition-all ${contentCounts.protocols > 0 ? 'opacity-100' : 'opacity-50'}`}>
             <ClipboardList className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            {contentCounts.protocols > 0 && <span className="tab-count-badge">{contentCounts.protocols}</span>}
             <span className="hidden sm:inline">Protocolos</span>
             <span className="sm:hidden text-[10px]">Prot.</span>
           </TabsTrigger>
-          <TabsTrigger value="pdf" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+          <TabsTrigger value="pdf" className={`flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5] transition-all ${contentCounts.pdf > 0 ? 'opacity-100' : 'opacity-50'}`}>
             <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            {contentCounts.pdf > 0 && <span className="tab-count-badge">{contentCounts.pdf}</span>}
             <span className="hidden sm:inline">Material</span>
             <span className="sm:hidden text-[10px]">PDF</span>
           </TabsTrigger>
-          <TabsTrigger value="additionalResources" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+          <TabsTrigger value="additionalResources" className={`flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5] transition-all ${contentCounts.additionalResources > 0 ? 'opacity-100' : 'opacity-50'}`}>
             <FolderPlus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            {contentCounts.additionalResources > 0 && <span className="tab-count-badge">{contentCounts.additionalResources}</span>}
             <span className="hidden sm:inline">Recursos</span>
             <span className="sm:hidden text-[10px]">Extra</span>
           </TabsTrigger>
-          <TabsTrigger value="apps" className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5]">
+          <TabsTrigger value="apps" className={`flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-white dark:data-[state=active]:bg-[#1A1A1A] data-[state=active]:shadow-sm rounded-lg text-[#706F6C] dark:text-[#A0A0A0] data-[state=active]:text-[#1A1915] dark:data-[state=active]:text-[#E5E5E5] transition-all ${contentCounts.apps > 0 ? 'opacity-100' : 'opacity-50'}`}>
             <Smartphone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            {contentCounts.apps > 0 && <span className="tab-count-badge">{contentCounts.apps}</span>}
             <span className="hidden sm:inline">Apps</span>
             <span className="sm:hidden text-[10px]">Apps</span>
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="videos" className="mt-0">
+        <TabsContent value="videos" className="mt-0 session-tab-content">
           {contentCounts.videos > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
@@ -168,7 +175,7 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           )}
         </TabsContent>
 
-        <TabsContent value="audios" className="mt-0">
+        <TabsContent value="audios" className="mt-0 session-tab-content">
           {contentCounts.audios > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
@@ -195,7 +202,7 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           )}
         </TabsContent>
 
-        <TabsContent value="themes" className="mt-0">
+        <TabsContent value="themes" className="mt-0 session-tab-content">
           {contentCounts.themes > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
@@ -222,7 +229,7 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           )}
         </TabsContent>
 
-        <TabsContent value="protocols" className="mt-0">
+        <TabsContent value="protocols" className="mt-0 session-tab-content">
           {contentCounts.protocols > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
@@ -249,7 +256,7 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           )}
         </TabsContent>
 
-        <TabsContent value="pdf" className="mt-0">
+        <TabsContent value="pdf" className="mt-0 session-tab-content">
           {contentCounts.pdf > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
@@ -276,7 +283,7 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           )}
         </TabsContent>
 
-        <TabsContent value="additionalResources" className="mt-0">
+        <TabsContent value="additionalResources" className="mt-0 session-tab-content">
           {contentCounts.additionalResources > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
@@ -310,7 +317,7 @@ export function SessionContentTabs({ sessionData, contentCounts, defaultTab: pro
           )}
         </TabsContent>
 
-        <TabsContent value="apps" className="mt-0">
+        <TabsContent value="apps" className="mt-0 session-tab-content">
           {contentCounts.apps > 0 ? (
             <div className="space-y-5 sm:space-y-7 lg:space-y-8">
               <div className="flex items-center gap-2.5 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 pb-3 sm:pb-5 lg:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">

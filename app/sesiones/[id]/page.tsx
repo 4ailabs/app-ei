@@ -51,10 +51,10 @@ function ContentBadge({
   return (
     <Link
       href={`/sesiones/${sessionId}?tab=${tabId}`}
-      className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-[#F5F4F0] dark:bg-[#333333] hover:bg-[#DA7756]/10 dark:hover:bg-[#DA7756]/20 rounded-lg sm:rounded-xl transition-colors group"
+      className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 content-badge-enhanced rounded-lg sm:rounded-xl group"
     >
-      <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-[#DA7756]" />
-      <span className="text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-[#DA7756] font-medium text-xs sm:text-sm">{count} {label}</span>
+      <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-[#DA7756] transition-colors" />
+      <span className="text-[#706F6C] dark:text-[#A0A0A0] group-hover:text-[#DA7756] font-medium text-xs sm:text-sm transition-colors">{count} {label}</span>
     </Link>
   )
 }
@@ -122,10 +122,10 @@ export default async function SessionPage({ params, searchParams }: SessionPageP
 
         <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8 lg:space-y-12">
           {/* Session Header with Image */}
-          <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#333333]">
+          <div className="bg-white dark:bg-[#252525] rounded-2xl sm:rounded-3xl overflow-hidden animate-fade-in-up shadow-sm border border-[#E5E4E0] dark:border-[#333333] session-header-gradient">
             {/* Session Image Banner */}
             {sessionData.imageUrl && (
-              <div className="relative h-48 sm:h-64 lg:h-96 overflow-hidden">
+              <div className="relative h-48 sm:h-64 lg:h-96 overflow-hidden session-image-banner">
                 <img
                   src={sessionData.imageUrl}
                   alt={sessionData.title}
@@ -179,7 +179,7 @@ export default async function SessionPage({ params, searchParams }: SessionPageP
             )}
 
             {/* Quick Stats Bar */}
-            <div className="px-3 sm:px-6 lg:px-10 py-3 sm:py-5 lg:py-7 bg-[#FAF9F7] dark:bg-[#2A2A2A] border-t border-[#E5E4E0] dark:border-[#333333]">
+            <div className="px-3 sm:px-6 lg:px-10 py-3 sm:py-5 lg:py-7 quick-stats-bar border-t border-[#E5E4E0] dark:border-[#333333]">
               <div className="flex flex-wrap items-center gap-3 sm:gap-6 lg:gap-10 text-xs sm:text-sm">
                 <div className="flex items-center gap-1.5 sm:gap-2 text-[#706F6C] dark:text-[#A0A0A0]">
                   <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
