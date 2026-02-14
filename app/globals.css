@@ -28,6 +28,11 @@
   /* Fuente Inter */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+
+  /* Accesibilidad - contraste mejorado para dark mode */
+  --text-dark-primary: #F2F2F2;
+  --text-dark-secondary: #B8B8B8;
+  --border-dark-subtle: #3F3F3F;
 }
 
 /* Modo Oscuro estilo Claude - basado en la interfaz real */
@@ -52,6 +57,11 @@
   --text-muted: #808080;
   --success: #5BB98C;
   --success-dark: #4CA97C;
+
+  /* Accesibilidad - contraste mejorado */
+  --text-dark-primary: #F2F2F2;
+  --text-dark-secondary: #B8B8B8;
+  --border-dark-subtle: #3F3F3F;
 }
 
 @theme inline {
@@ -204,7 +214,7 @@ body {
   background-clip: text;
 }
 
-/* Cards con hover mejorado */
+/* Cards con hover mejorado - Estilo Claude */
 .card-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -212,6 +222,27 @@ body {
 .card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Card refinada con transiciones suaves */
+.card-refined {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-color: #E5E4E0;
+}
+
+.card-refined:hover {
+  border-color: rgba(218, 119, 86, 0.3);
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.dark .card-refined {
+  border-color: #333333;
+}
+
+.dark .card-refined:hover {
+  border-color: rgba(218, 119, 86, 0.4);
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.35);
 }
 
 /* Botones con efecto shine */
@@ -276,6 +307,41 @@ input:focus {
   outline: none;
   ring: 2px;
   ring-color: var(--primary);
+}
+
+/* Accesibilidad - Contraste mejorado en Dark Mode */
+.text-accessible-secondary {
+  color: #706F6C;
+}
+
+.dark .text-accessible-secondary {
+  color: #B8B8B8;
+}
+
+.text-accessible-muted {
+  color: #9B9A97;
+}
+
+.dark .text-accessible-muted {
+  color: #A8A8A8;
+}
+
+/* Border mejorado en Dark Mode */
+.border-accessible {
+  border-color: #E5E4E0;
+}
+
+.dark .border-accessible {
+  border-color: #3F3F3F;
+}
+
+/* Icon backgrounds con mejor iconografía */
+.icon-box-refined {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-box-refined:hover {
+  transform: scale(1.05);
 }
 
 /* Scrollbar personalizada */
