@@ -58,31 +58,6 @@ export const seminarioOnline: DiaSeminarioOnline[] = [
         cloudflareStreamId: "68fb84b41e490ca9c6b835aef9564e0b",
         order: 2,
         description: "Segunda parte del seminario"
-      },
-      {
-        id: "sp-v1-3",
-        title: "Día 1 Módulo 3",
-        order: 3,
-        description: "Tercera parte del seminario"
-      },
-      {
-        id: "sp-v1-4-1",
-        title: "Día 1 Módulo 4 - Parte 1",
-        cloudflareStreamId: "766291ebe8d4bd0730e5abb050972b98",
-        order: 4,
-        description: "Cuarta parte del seminario - Sesión 4"
-      },
-      {
-        id: "sp-v1-4-2",
-        title: "Día 1 Módulo 4 - Parte 2",
-        order: 5,
-        description: "Cuarta parte del seminario - Sesión 4 (Próximamente)"
-      },
-      {
-        id: "sp-v1-4-3",
-        title: "Día 1 Módulo 4 - Parte 3",
-        order: 6,
-        description: "Cuarta parte del seminario - Sesión 4 (Próximamente)"
       }
     ],
     slides: [
@@ -298,6 +273,28 @@ export const seminarioOnline: DiaSeminarioOnline[] = [
     day: 3,
     title: "Integración y Práctica",
     description: "Integración y práctica de las herramientas aprendidas para el bienestar sostenible.",
+    videos: [],
+    audios: []
+  },
+  {
+    day: 4,
+    title: "Sesión 4: Continuación de la Transformación",
+    description: "Cuarta sesión del seminario enfocada en la profundización de las herramientas de bienestar.",
+    videos: [
+      {
+        id: "sp-v4-1",
+        title: "Sesión 4 - Módulo 1",
+        cloudflareStreamId: "766291ebe8d4bd0730e5abb050972b98",
+        order: 1,
+        description: "Primera parte de la cuarta sesión"
+      }
+    ],
+    audios: []
+  },
+  {
+    day: 5,
+    title: "Sesión 5: Próximamente",
+    description: "La quinta sesión del seminario estará disponible en un mes.",
     videos: [],
     audios: []
   }

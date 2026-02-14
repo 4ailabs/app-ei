@@ -53,7 +53,7 @@ export default async function SeminarioOnlinePage() {
               {/* Descripción */}
               <div className="mb-5 sm:mb-6">
                 <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed">
-                  Un viaje profundo de tres días explorando la neurociencia del bienestar, técnicas avanzadas de regulación
+                  Un viaje profundo de cinco días explorando la neurociencia del bienestar, técnicas avanzadas de regulación
                   del sistema nervioso y herramientas prácticas para la transformación personal sostenible.
                 </p>
               </div>
