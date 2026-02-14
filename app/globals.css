@@ -344,6 +344,98 @@ input:focus {
   transform: scale(1.05);
 }
 
+/* Bloque Header Refinements */
+.bloque-header {
+  background: linear-gradient(135deg, rgba(218, 119, 86, 0.05) 0%, rgba(218, 119, 86, 0.02) 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .bloque-header {
+  background: linear-gradient(135deg, rgba(218, 119, 86, 0.08) 0%, rgba(218, 119, 86, 0.03) 100%);
+}
+
+.bloque-header:hover {
+  background: linear-gradient(135deg, rgba(218, 119, 86, 0.08) 0%, rgba(218, 119, 86, 0.04) 100%);
+}
+
+.bloque-number {
+  background: linear-gradient(135deg, #DA7756 0%, #C4684A 100%);
+  box-shadow: 0 8px 16px -4px rgba(218, 119, 86, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bloque-number:hover {
+  box-shadow: 0 12px 24px -6px rgba(218, 119, 86, 0.4);
+  transform: translateY(-2px);
+}
+
+.bloque-progress-bar {
+  height: 4px;
+  background: #E5E4E0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.dark .bloque-progress-bar {
+  background: #333333;
+}
+
+.bloque-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #DA7756 0%, #C4684A 100%);
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* SessionCard Badge Refinements */
+.session-badge {
+  background: rgba(218, 119, 86, 0.25);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(218, 119, 86, 0.4);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.session-badge:hover {
+  background: rgba(218, 119, 86, 0.35);
+  border-color: rgba(218, 119, 86, 0.6);
+}
+
+.dark .session-badge {
+  background: rgba(218, 119, 86, 0.3);
+  border-color: rgba(218, 119, 86, 0.5);
+}
+
+.dark .session-badge:hover {
+  background: rgba(218, 119, 86, 0.4);
+  border-color: rgba(218, 119, 86, 0.7);
+}
+
+/* Progress Navigation Refinements */
+.progress-dot {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-dot-active {
+  background: #DA7756;
+  box-shadow: 0 2px 8px rgba(218, 119, 86, 0.4);
+}
+
+.progress-dot-inactive {
+  background: #E5E4E0;
+}
+
+.dark .progress-dot-inactive {
+  background: #404040;
+}
+
+.progress-dot-inactive:hover {
+  background: rgba(218, 119, 86, 0.3);
+}
+
+.dark .progress-dot-inactive:hover {
+  background: rgba(218, 119, 86, 0.4);
+}
+
 /* Scrollbar personalizada */
 ::-webkit-scrollbar {
   width: 8px;

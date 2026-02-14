@@ -53,11 +53,11 @@ export function SessionCard({ session, progress, index = 0, compact = false }: S
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
             <div className="absolute bottom-2.5 sm:bottom-4 left-2.5 sm:left-4 right-2.5 sm:right-4 flex flex-wrap gap-1.5 sm:gap-2">
-              <span className="text-[10px] sm:text-xs font-semibold text-white uppercase tracking-wide px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg bg-white/20 backdrop-blur-sm inline-block">
+              <span className="session-badge text-[10px] sm:text-xs font-semibold text-white uppercase tracking-wide px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg inline-block">
                 Día {session.day}
               </span>
               {session.moduleNumber && (
-                <span className="text-[10px] sm:text-xs font-semibold text-white uppercase tracking-wide px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg bg-black/40 backdrop-blur-sm inline-block">
+                <span className="session-badge text-[10px] sm:text-xs font-semibold text-white uppercase tracking-wide px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg inline-block">
                   Módulo {session.moduleNumber}
                 </span>
               )}
@@ -68,11 +68,11 @@ export function SessionCard({ session, progress, index = 0, compact = false }: S
         <div className="p-4 sm:p-5 lg:p-8 flex flex-col flex-grow min-h-0">
           {!session.imageUrl && (
             <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 flex-shrink-0">
-              <span className="text-[10px] sm:text-xs font-semibold text-[#706F6C] dark:text-[#A0A0A0] uppercase tracking-wide px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md bg-[#F5F4F0] dark:bg-[#333333]">
+              <span className="session-badge text-[10px] sm:text-xs font-semibold text-[#1A1915] dark:text-[#E5E5E5] uppercase tracking-wide px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md">
                 Día {session.day}
               </span>
               {session.moduleNumber && (
-                <span className="text-[10px] sm:text-xs font-semibold text-[#706F6C] dark:text-[#A0A0A0] uppercase tracking-wide px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md bg-[#E5E4E0] dark:bg-[#4A4A4A]">
+                <span className="session-badge text-[10px] sm:text-xs font-semibold text-[#1A1915] dark:text-[#E5E5E5] uppercase tracking-wide px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md">
                   Módulo {session.moduleNumber}
                 </span>
               )}

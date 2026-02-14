@@ -91,19 +91,19 @@ export function SessionsByBloqueTabs({ bloquesData }: SessionsByBloqueTabsProps)
         </div>
       </div>
 
-      {/* Bloque Header */}
-      <div className="bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm border-2 border-[#DA7756] dark:border-[#DA7756]">
-        <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-5">
-          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#DA7756] rounded-lg sm:rounded-xl flex items-center justify-center font-bold text-xl sm:text-2xl text-white flex-shrink-0">
+      {/* Bloque Header - IMPROVED */}
+      <div className="bloque-header bg-white dark:bg-[#252525] rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm border-2 border-[#DA7756] dark:border-[#DA7756]">
+        <div className="flex items-start gap-3 sm:gap-4 mb-5 sm:mb-6">
+          <div className="bloque-number w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl flex items-center justify-center font-bold text-xl sm:text-2xl text-white flex-shrink-0">
             {currentBloque.id}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h2 className="text-lg sm:text-2xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-1">
+                <h2 className="text-lg sm:text-2xl font-bold text-[#1A1915] dark:text-[#E5E5E5] mb-2">
                   {currentBloque.title}
                 </h2>
-                <p className="text-xs sm:text-sm text-[#DA7756] dark:text-[#DA7756] font-medium">
+                <p className="text-xs sm:text-sm text-[#DA7756] dark:text-[#DA7756] font-medium mb-1">
                   {currentBloque.description}
                 </p>
               </div>
@@ -118,14 +118,29 @@ export function SessionsByBloqueTabs({ bloquesData }: SessionsByBloqueTabsProps)
         </div>
 
         {/* Intro Text */}
-        <div className="pt-4 sm:pt-5 border-t border-[#E5E4E0] dark:border-[#333333]">
+        <div className="pt-4 sm:pt-5 mb-5 sm:mb-6 border-t border-[#E5E4E0] dark:border-[#333333]">
           <p className="text-sm sm:text-base text-[#706F6C] dark:text-[#A0A0A0] leading-relaxed">
             {currentBloque.intro}
           </p>
         </div>
 
+        {/* Progress Bar - NEW */}
+        <div className="flex items-center justify-between gap-3 pb-5 sm:pb-6 border-b border-[#E5E4E0] dark:border-[#333333]">
+          <div className="flex-1">
+            <div className="bloque-progress-bar">
+              <div
+                className="bloque-progress-fill"
+                style={{ width: `${(currentIndex + 1) / bloquesData.length * 100}%` }}
+              />
+            </div>
+          </div>
+          <span className="text-xs font-semibold text-[#706F6C] dark:text-[#A0A0A0] whitespace-nowrap">
+            Bloque {currentBloque.id} de {bloquesData.length}
+          </span>
+        </div>
+
         {/* Mobile session count */}
-        <div className="flex sm:hidden items-center gap-2 mt-4 pt-4 border-t border-[#E5E4E0] dark:border-[#333333]">
+        <div className="flex sm:hidden items-center gap-2 mt-4 pt-3">
           <GraduationCap className="h-4 w-4 text-[#DA7756]" />
           <span className="text-sm font-semibold text-[#DA7756]">
             {currentBloque.sessions.length} sesiones en este bloque
@@ -186,14 +201,14 @@ export function SessionsByBloqueTabs({ bloquesData }: SessionsByBloqueTabsProps)
         )}
       </div>
 
-      {/* Quick Navigation Footer */}
-      <div className="flex items-center justify-between pt-4 border-t border-[#E5E4E0] dark:border-[#333333]">
+      {/* Quick Navigation Footer - IMPROVED */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0 pt-6 sm:pt-8 border-t border-[#E5E4E0] dark:border-[#333333]">
         <button
           onClick={goToPrevious}
           disabled={!hasPrevious}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
             hasPrevious
-              ? "bg-[#F5F4F0] dark:bg-[#333333] text-[#706F6C] dark:text-[#A0A0A0] hover:bg-[#E5E4E0] dark:hover:bg-[#404040]"
+              ? "bg-[#F5F4F0] dark:bg-[#333333] text-[#706F6C] dark:text-[#A0A0A0] hover:bg-[#E5E4E0] dark:hover:bg-[#404040] hover:text-[#1A1915] dark:hover:text-[#E5E5E5]"
               : "opacity-0 pointer-events-none"
           }`}
         >
@@ -202,19 +217,26 @@ export function SessionsByBloqueTabs({ bloquesData }: SessionsByBloqueTabsProps)
           <span className="sm:hidden">Anterior</span>
         </button>
 
-        <div className="flex items-center gap-1.5">
-          {bloquesData.map((bloque) => (
-            <button
-              key={bloque.id}
-              onClick={() => setActiveBloque(bloque.id)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                activeBloque === bloque.id
-                  ? "bg-[#DA7756] w-6"
-                  : "bg-[#E5E4E0] dark:bg-[#404040] hover:bg-[#DA7756]/50"
-              }`}
-              aria-label={`Ir al bloque ${bloque.id}`}
-            />
-          ))}
+        {/* Progress Indicators - IMPROVED */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5">
+            {bloquesData.map((bloque) => (
+              <button
+                key={bloque.id}
+                onClick={() => setActiveBloque(bloque.id)}
+                className={`progress-dot w-2.5 h-2.5 rounded-full transition-all ${
+                  activeBloque === bloque.id
+                    ? "progress-dot-active w-8"
+                    : "progress-dot-inactive"
+                }`}
+                aria-label={`Ir al bloque ${bloque.id}`}
+                title={`Bloque ${bloque.id}: ${bloque.shortTitle}`}
+              />
+            ))}
+          </div>
+          <span className="text-xs font-semibold text-[#706F6C] dark:text-[#A0A0A0] ml-2">
+            {currentIndex + 1}/{bloquesData.length}
+          </span>
         </div>
 
         <button
@@ -222,7 +244,7 @@ export function SessionsByBloqueTabs({ bloquesData }: SessionsByBloqueTabsProps)
           disabled={!hasNext}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
             hasNext
-              ? "bg-[#F5F4F0] dark:bg-[#333333] text-[#706F6C] dark:text-[#A0A0A0] hover:bg-[#E5E4E0] dark:hover:bg-[#404040]"
+              ? "bg-[#F5F4F0] dark:bg-[#333333] text-[#706F6C] dark:text-[#A0A0A0] hover:bg-[#E5E4E0] dark:hover:bg-[#404040] hover:text-[#1A1915] dark:hover:text-[#E5E5E5]"
               : "opacity-0 pointer-events-none"
           }`}
         >
