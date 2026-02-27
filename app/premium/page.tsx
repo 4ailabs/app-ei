@@ -51,7 +51,7 @@ const premiumContent = {
             description: "Resumen descargable de las técnicas más efectivas del programa.",
             pages: 12,
             url: "#",
-            isNew: true
+            isNew: false
         },
         {
             id: "p2",
@@ -60,6 +60,22 @@ const premiumContent = {
             pages: 24,
             url: "#",
             isNew: false
+        },
+        {
+            id: "p3",
+            title: "Base de Conocimiento: Sesión 4 — Módulo 1",
+            description: "Documento de referencia con los contenidos y conceptos clave del Módulo 1 de la Sesión 4 del seminario online.",
+            pages: 0,
+            url: "https://docs.google.com/document/d/1IMTjlSj8KNTG0pZx0IU_RvfCjS-YJewF/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
+            isNew: true
+        },
+        {
+            id: "p4",
+            title: "Base de Conocimiento: Sesión 4 — Módulo 2",
+            description: "Documento de referencia con los contenidos y conceptos clave del Módulo 2 de la Sesión 4 del seminario online.",
+            pages: 0,
+            url: "https://docs.google.com/document/d/1dnaMhQkVIDJi0X41L4obg9Bz2OZZTsc3/edit?usp=sharing&ouid=114176032425837283836&rtpof=true&sd=true",
+            isNew: true
         }
     ]
 }
