@@ -287,6 +287,27 @@ export const seminarioOnline: DiaSeminarioOnline[] = [
         cloudflareStreamId: "766291ebe8d4bd0730e5abb050972b98",
         order: 1,
         description: "Primera parte de la cuarta sesión"
+      },
+      {
+        id: "sp-v4-2",
+        title: "Sesión 4 - Módulo 2",
+        cloudflareStreamId: "3367d1c5d07502ba9446fa6edd8fcb91",
+        order: 2,
+        description: "Segunda parte de la cuarta sesión"
+      },
+      {
+        id: "sp-v4-3",
+        title: "Sesión 4 - Módulo 3",
+        cloudflareStreamId: "e8ac3cfef6e3f88e23d83c3db06104f7",
+        order: 3,
+        description: "Tercera parte de la cuarta sesión"
+      },
+      {
+        id: "sp-v4-4",
+        title: "Sesión 4 - Módulo 4",
+        cloudflareStreamId: "6d334fd084a40e59ef0876a18731eeb9",
+        order: 4,
+        description: "Cuarta parte de la cuarta sesión"
       }
     ],
     audios: []
